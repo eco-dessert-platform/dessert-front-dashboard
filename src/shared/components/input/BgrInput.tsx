@@ -24,19 +24,24 @@ const BgrInput = ({
     disabled = false,
     type = 'text',
     error,
+    errorMessage,
+    helperText,
     className = '',
     ...restProps
 }: BgrInputProps) => {
     return (
         <div
-            className={`flex flex-col items-start gap-1 self-stretch ${className}`}
+            className={cn(
+                'flex flex-col items-start gap-1 self-stretch',
+                className,
+            )}
         >
             {label && <BgrLabel label={label} required={required} />}
             <Input
                 type={type}
                 className={cn(
-                    'text-title-16-r flex flex-1/2 items-center gap-1.5 rounded-[10px] border border-gray-300 px-3 py-2 text-gray-800 placeholder:text-gray-400 disabled:bg-gray-100 disabled:text-gray-400',
-                    error && 'border-red-500',
+                    'text-title-16-r flex items-center gap-1.5 rounded-[10px] border border-gray-300 bg-white px-3 py-2 text-gray-800 placeholder:text-gray-400 disabled:bg-gray-100 disabled:text-gray-400',
+                    error && 'border-error-500',
                 )}
                 placeholder={placeholder}
                 value={value}
@@ -44,6 +49,16 @@ const BgrInput = ({
                 disabled={disabled}
                 {...restProps}
             />
+            {error && errorMessage && (
+                <span className="text-body-12-r text-error-500">
+                    {errorMessage}
+                </span>
+            )}
+            {!error && helperText && (
+                <span className="text-body-12-r text-gray-500">
+                    {helperText}
+                </span>
+            )}
         </div>
     )
 }

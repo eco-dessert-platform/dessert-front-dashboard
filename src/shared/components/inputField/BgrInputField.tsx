@@ -29,14 +29,13 @@ export default function BgrInputField({
     onChange,
 }: BgrInputFieldProps) {
     return (
-        <div className="w-full">
+        <div className="flex w-full flex-col gap-1">
             {label && <BgrLabel label={label} required={required} />}
             <div className="flex w-full items-start gap-2 self-stretch">
                 <BgrInput
                     className="w-full"
                     placeholder={placeholder}
                     error={error}
-                    errorMessage={errorMessage}
                     value={value}
                     onChange={onChange}
                 />
@@ -44,20 +43,21 @@ export default function BgrInputField({
                     title={buttonText}
                     size="md"
                     onClick={onButtonClick}
+                    disabled={!value?.trim()}
                 />
             </div>
 
-            {error ? (
-                <span className="text-body-12-r text-red-500">
-                    {errorMessage}
-                </span>
-            ) : (
-                helperText && (
-                    <span className="text-body-12-r text-gray-500">
-                        {helperText}
-                    </span>
-                )
-            )}
+            {error
+                ? errorMessage && (
+                      <span className="text-body-12-r text-error-500">
+                          {errorMessage}
+                      </span>
+                  )
+                : helperText && (
+                      <span className="text-body-12-r text-gray-500">
+                          {helperText}
+                      </span>
+                  )}
         </div>
     )
 }
