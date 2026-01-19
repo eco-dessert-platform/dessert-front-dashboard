@@ -65,7 +65,7 @@ export default defineConfig({
                         '@radix-ui/react-tabs',
                         '@radix-ui/react-tooltip',
                     ],
-                }
+                },
             },
         },
     },
@@ -131,14 +131,17 @@ function getUsedFonts(html: string): string[] {
 }
 
 // 커스텀 플러그인: 빌드 후 robots.txt 복사
-function copyRobotsTxt() {
+function copyRobotsTxt(): Plugin {
     return {
         name: 'copy-robots-txt',
         closeBundle() {
-            copyFileSync(
-                resolve(__dirname, 'robots.txt'),
-                resolve(__dirname, 'dist/robots.txt'),
-            )
+            const distPath = resolve(__dirname, 'dist')
+            const robotsPath = resolve(__dirname, 'robots.txt')
+            const targetPath = resolve(distPath, 'robots.txt')
+
+            if (fs.existsSync(distPath) && fs.existsSync(robotsPath)) {
+                copyFileSync(robotsPath, targetPath)
+            }
         },
     }
 }
