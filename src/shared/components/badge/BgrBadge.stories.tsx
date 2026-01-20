@@ -1,102 +1,196 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import BgrBadge from './BgrBadge'
+import { Meta, StoryObj } from '@storybook/react'
+import { BgrBadge } from './BgrBadge'
 
 const meta = {
     title: 'Components/BgrBadge',
     component: BgrBadge,
-    parameters: {
-        layout: 'centered',
-    },
     tags: ['autodocs'],
     argTypes: {
         variant: {
             control: 'select',
-            options: ['success', 'warning', 'error', 'info', 'default'],
+            options: ['gray', 'grayDark', 'yellow', 'green', 'red', 'dark'],
+            description: '배지 색상 테마',
         },
-        size: {
+        appearance: {
             control: 'select',
-            options: ['sm', 'md'],
+            options: ['outline', 'text'],
+            description: '배지 스타일',
+        },
+        children: {
+            control: 'text',
+            description: '배지 텍스트 내용',
         },
     },
 } satisfies Meta<typeof BgrBadge>
 
 export default meta
+
 type Story = StoryObj<typeof meta>
 
+type CustomStory = Omit<Story, 'args'> & { args?: Story['args'] }
+
+/**
+ * ============================================
+ * 1. Default
+ * ============================================
+ */
 export const Default: Story = {
     args: {
-        children: 'Badge',
-        variant: 'default',
-        size: 'md',
+        variant: 'green',
+        appearance: 'outline',
+        children: '커스텀 배지',
     },
 }
 
-export const Success: Story = {
-    args: {
-        children: 'Success',
-        variant: 'success',
-        size: 'md',
-    },
-}
-
-export const Warning: Story = {
-    args: {
-        children: 'Warning',
-        variant: 'warning',
-        size: 'md',
-    },
-}
-
-export const Error: Story = {
-    args: {
-        children: 'Error',
-        variant: 'error',
-        size: 'md',
-    },
-}
-
-export const Info: Story = {
-    args: {
-        children: 'Info',
-        variant: 'info',
-        size: 'md',
-    },
-}
-
-export const Small: Story = {
-    args: {
-        children: 'Small Badge',
-        variant: 'default',
-        size: 'sm',
-    },
-}
-
-export const AllVariants: Story = {
-    args: {
-        children: 'All Variants',
-        variant: 'default',
-    },
+/**
+ * ============================================
+ * 2. Order Outline
+ * ============================================
+ */
+export const OrderOutline: CustomStory = {
     render: () => (
-        <div className="flex flex-col gap-4">
-            <div className="flex gap-2 items-center">
-                <BgrBadge variant="default">Default</BgrBadge>
-                <BgrBadge variant="success">Success</BgrBadge>
-                <BgrBadge variant="warning">Warning</BgrBadge>
-                <BgrBadge variant="error">Error</BgrBadge>
-                <BgrBadge variant="info">Info</BgrBadge>
-            </div>
-            <div className="flex gap-2 items-center">
-                <BgrBadge variant="default" size="sm">
-                    Small
-                </BgrBadge>
-                <BgrBadge variant="success" size="sm">
-                    Small
-                </BgrBadge>
-                <BgrBadge variant="warning" size="sm">
-                    Small
-                </BgrBadge>
-            </div>
+        <div className="flex flex-wrap gap-2">
+            <BgrBadge variant="gray" appearance="outline">
+                결제완료
+            </BgrBadge>
+            <BgrBadge variant="yellow" appearance="outline">
+                발주확인
+            </BgrBadge>
+            <BgrBadge variant="green" appearance="outline">
+                상품회수
+            </BgrBadge>
+            <BgrBadge variant="green" appearance="outline">
+                상품확인
+            </BgrBadge>
+            <BgrBadge variant="dark" appearance="outline">
+                구매확정
+            </BgrBadge>
+            <BgrBadge variant="red" appearance="outline">
+                취소요청
+            </BgrBadge>
+            <BgrBadge variant="grayDark" appearance="outline">
+                반품요청
+            </BgrBadge>
+            <BgrBadge variant="grayDark" appearance="outline">
+                교환요청
+            </BgrBadge>
         </div>
     ),
 }
 
+/**
+ * ============================================
+ * 3. Sale Outline
+ * ============================================
+ */
+export const SaleOutline: CustomStory = {
+    render: () => (
+        <div className="flex flex-wrap gap-2">
+            <BgrBadge variant="green" appearance="outline">
+                판매중
+            </BgrBadge>
+            <BgrBadge variant="red" appearance="outline">
+                품절
+            </BgrBadge>
+            <BgrBadge variant="yellow" appearance="outline">
+                판매대기
+            </BgrBadge>
+            <BgrBadge variant="grayDark" appearance="outline">
+                판매중지
+            </BgrBadge>
+            <BgrBadge variant="gray" appearance="outline">
+                판매금지
+            </BgrBadge>
+        </div>
+    ),
+}
+
+/**
+ * ============================================
+ * 4. Order Cancel
+ * ============================================
+ */
+export const CancelOrder: CustomStory = {
+    render: () => (
+        <div className="flex flex-wrap gap-2">
+            <BgrBadge variant="red" appearance="outline">
+                취소요청
+            </BgrBadge>
+            <BgrBadge variant="gray" appearance="text">
+                취소 진행
+            </BgrBadge>
+            <BgrBadge variant="green" appearance="text">
+                취소 완료
+            </BgrBadge>
+            <BgrBadge variant="red" appearance="text">
+                취소 거절
+            </BgrBadge>
+        </div>
+    ),
+}
+
+/**
+ * ============================================
+ * 5. Order Return
+ * ============================================
+ */
+export const ReturnOrder: CustomStory = {
+    render: () => (
+        <div className="flex flex-wrap gap-2">
+            <BgrBadge variant="dark" appearance="outline">
+                반품요청
+            </BgrBadge>
+            <BgrBadge variant="green" appearance="text">
+                반품 승인
+            </BgrBadge>
+            <BgrBadge variant="gray" appearance="text">
+                반품 진행
+            </BgrBadge>
+            <BgrBadge variant="gray" appearance="text">
+                반품 보류
+            </BgrBadge>
+            <BgrBadge variant="red" appearance="text">
+                반품 반려
+            </BgrBadge>
+            <BgrBadge variant="green" appearance="text">
+                반품 완료
+            </BgrBadge>
+            <BgrBadge variant="red" appearance="text">
+                반품 거절
+            </BgrBadge>
+        </div>
+    ),
+}
+
+/**
+ * ============================================
+ * 6. Order Exchange
+ * ============================================
+ */
+export const ExchangeOrder: CustomStory = {
+    render: () => (
+        <div className="flex flex-wrap gap-2">
+            <BgrBadge variant="dark" appearance="outline">
+                교환요청
+            </BgrBadge>
+            <BgrBadge variant="green" appearance="text">
+                교환 승인
+            </BgrBadge>
+            <BgrBadge variant="gray" appearance="text">
+                교환 진행
+            </BgrBadge>
+            <BgrBadge variant="gray" appearance="text">
+                교환 보류
+            </BgrBadge>
+            <BgrBadge variant="red" appearance="text">
+                교환 반려
+            </BgrBadge>
+            <BgrBadge variant="green" appearance="text">
+                교환 완료
+            </BgrBadge>
+            <BgrBadge variant="red" appearance="text">
+                교환 거절
+            </BgrBadge>
+        </div>
+    ),
+}
