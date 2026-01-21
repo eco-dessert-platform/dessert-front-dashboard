@@ -43,7 +43,7 @@ const meta = {
 } satisfies Meta<typeof BgrToast>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof BgrToast>
 
 export const Success: Story = {
     args: {
