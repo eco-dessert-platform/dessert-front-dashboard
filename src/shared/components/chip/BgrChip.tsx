@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { cn } from 'src/shared/lib/shadcn/lib/utils'
 import { X } from 'lucide-react'
 
 interface BgrChipProps {
@@ -29,16 +30,21 @@ const BgrChip = ({
     }
 
     const sizeClasses = {
-        sm: 'px-2 py-1 text-[10px] rounded-full',
-        md: 'px-3 py-1.5 text-[12px] rounded-full',
+        sm: 'px-2 py-1 text-body-10-r rounded-full',
+        md: 'px-3 py-1.5 text-body-12-r rounded-full',
+    }
+
+    const closeClasses = {
+        sm: 'w-3 h-3',
+        md: 'w-4 h-4'
     }
 
     return (
         <span
             className={clsx(
                 'inline-flex items-center justify-center gap-1 border border-solid transition-colors duration-150',
-                selected ? variantClasses.selected.default : variantClasses.base.default,
                 sizeClasses[size],
+                selected ? variantClasses.selected.default : variantClasses.base.default,
                 className,
             )}
         >
@@ -50,7 +56,9 @@ const BgrChip = ({
                     className="flex items-center justify-center hover:opacity-70 transition-opacity"
                     aria-label="닫기"
                 >
-                    <X className="w-4 h-4" />
+                    <X className={cn(
+                        closeClasses[size]
+                    )} />
                 </button>
             )}
         </span>

@@ -76,6 +76,9 @@ export const AllVariants: Story = {
                 <BgrChip selected>Active</BgrChip>
             </div>
             <div className="flex gap-2 items-center flex-wrap">
+                <BgrChip selected={false} size='sm' closable onClose={fn()}>
+                    Closable
+                </BgrChip>
                 <BgrChip selected={false} closable onClose={fn()}>
                     Closable
                 </BgrChip>
