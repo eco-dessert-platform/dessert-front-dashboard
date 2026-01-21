@@ -1,7 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import BgrInputField from './BgrInputField'
 import { fn } from '@storybook/test'
-import { useState } from 'react'
+import { useState, useEffect, ComponentProps } from 'react'
+
+const BgrInputFieldInteractive = (
+    args: ComponentProps<typeof BgrInputField>,
+) => {
+    const [value, setValue] = useState(args.value || '')
+
+    useEffect(() => {
+        setValue(args.value || '')
+    }, [args.value])
+
+    return (
+        <div
+            className={args.layout === 'horizontal' ? 'w-[600px]' : 'w-[400px]'}
+        >
+            <BgrInputField
+                {...args}
+                value={value}
+                onChange={(e) => {
+                    setValue(e.target.value)
+                    args.onChange?.(e)
+                }}
+            />
+        </div>
+    )
+}
 
 const meta = {
     title: 'Components/BgrInputField',
@@ -11,6 +36,11 @@ const meta = {
     },
     tags: ['autodocs'],
     argTypes: {
+        layout: {
+            description: '레이아웃 방향',
+            control: 'radio',
+            options: ['vertical', 'horizontal'],
+        },
         label: {
             description: '상단 라벨 텍스트',
             control: 'text',
@@ -42,6 +72,10 @@ const meta = {
             description: '에러 메시지 문구',
             control: 'text',
         },
+        maxLength: {
+            description: '최대 입력 글자 수',
+            control: 'number',
+        },
         value: {
             description: '입력 값',
             control: 'text',
@@ -51,8 +85,13 @@ const meta = {
         },
     },
     args: {
+        label: 'Label',
+        buttonText: 'Button',
+        helperText: 'helper text',
         onButtonClick: fn(),
+        layout: 'vertical',
     },
+    render: (args) => <BgrInputFieldInteractive {...args} />,
 } satisfies Meta<typeof BgrInputField>
 
 export default meta
@@ -60,53 +99,31 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
     args: {
-        label: '닉네임 중복 확인',
-        placeholder: '닉네임을 입력해 보세요',
-        buttonText: '중복확인',
-        required: true,
-        helperText: '텍스트를 입력하면 버튼이 활성화됩니다.',
+        placeholder: 'Input text',
+        value: '',
     },
-    render: (args) => {
-        const [value, setValue] = useState('')
-        return (
-            <div className="w-[400px]">
-                <BgrInputField
-                    {...args}
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                />
-            </div>
-        )
+}
+
+export const Completed: Story = {
+    args: {
+        placeholder: 'Input text',
+        value: 'Input text',
+    },
+}
+
+export const Disabled: Story = {
+    args: {
+        placeholder: 'Input text',
+        value: 'Input text',
+        disabled: true,
     },
 }
 
 export const Error: Story = {
     args: {
-        label: '휴대폰 번호',
-        placeholder: '숫자만 입력해주세요',
-        buttonText: '인증요청',
-    },
-
-    render: (args) => {
-        const [value, setValue] = useState('')
-        // 숫자가 아닌 문자가 포함되어 있는지 체크
-        const isNotNumeric = value.length > 0 && !/^\d+$/.test(value)
-
-        return (
-            <div className="w-[400px]">
-                <BgrInputField
-                    {...args}
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    error={isNotNumeric}
-                    errorMessage={
-                        isNotNumeric
-                            ? '숫자만 입력 가능합니다.'
-                            : args.errorMessage
-                    }
-                    helperText="숫자만 입력하면 에러가 사라집니다."
-                />
-            </div>
-        )
+        placeholder: 'Input text',
+        value: 'Input text',
+        error: true,
+        errorMessage: 'error text',
     },
 }

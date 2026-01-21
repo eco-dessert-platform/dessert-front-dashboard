@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { useState, useEffect, ComponentProps } from 'react'
 import BgrInput from './BgrInput'
 
 const meta = {
@@ -45,6 +46,10 @@ const meta = {
             description: '에러 메시지 문구',
             control: 'text',
         },
+        maxLength: {
+            description: '최대 입력 글자 수',
+            control: 'number',
+        },
         helperText: {
             description: '하단 안내 문구',
             control: 'text',
@@ -55,43 +60,77 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const BgrInputInteractive = (args: ComponentProps<typeof BgrInput>) => {
+    const [value, setValue] = useState(args.value || '')
+
+    useEffect(() => {
+        setValue(args.value || '')
+    }, [args.value])
+
+    return (
+        <div className="w-[400px]">
+            <BgrInput
+                {...args}
+                value={value}
+                onChange={(e) => {
+                    setValue(e.target.value)
+                    args.onChange?.(e)
+                }}
+            />
+        </div>
+    )
+}
+
 export const Default: Story = {
     args: {
-        label: '일반 입력',
-        placeholder: '내용을 입력해주세요',
-        required: true,
+        label: 'Label',
+        placeholder: 'Input text',
+        helperText: 'helper text',
+        value: '',
     },
+    render: (args) => <BgrInputInteractive {...args} />,
 }
 
-export const Password: Story = {
+export const Completed: Story = {
     args: {
-        label: '비밀번호',
-        type: 'password',
-        placeholder: '비밀번호를 입력해주세요',
+        label: 'Label',
+        placeholder: 'Input text',
+        helperText: 'helper text',
+        value: 'Input text',
     },
-}
-
-export const Error: Story = {
-    args: {
-        label: '에러 상태',
-        placeholder: '에러가 발생한 입력창',
-        error: true,
-        errorMessage: '에러가 발생했습니다.',
-    },
+    render: (args) => (
+        <div className="w-[400px]">
+            <BgrInput {...args} />
+        </div>
+    ),
 }
 
 export const Disabled: Story = {
     args: {
-        label: '비활성화 상태',
-        placeholder: '비활성화 되었습니다',
+        label: 'Label',
+        placeholder: 'Input text',
+        helperText: 'helper text',
+        value: 'Input text',
         disabled: true,
     },
+    render: (args) => (
+        <div className="w-[400px]">
+            <BgrInput {...args} />
+        </div>
+    ),
 }
 
-export const WithHelperText: Story = {
+export const Error: Story = {
     args: {
-        label: '닉네임',
-        placeholder: '닉네임을 입력해주세요',
-        helperText: '한글, 영문, 숫자 포함 2~10자',
+        label: 'Label',
+        placeholder: 'Input text',
+        value: 'Input text',
+        error: true,
+        errorMessage: 'error text',
     },
+    render: (args) => (
+        <div className="w-[400px]">
+            <BgrInput {...args} />
+        </div>
+    ),
 }
