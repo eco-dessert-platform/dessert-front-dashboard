@@ -13,10 +13,21 @@ const meta = {
         disabled: {
             control: 'boolean',
         },
+        type: {
+            control: 'select',
+            options: ['list', 'checkbox'],
+        },
     },
     args: {
         onSelect: fn(),
     },
+    decorators: [
+        (Story) => (
+            <div className="h-[300px] w-[300px]">
+                <Story />
+            </div>
+        ),
+    ],
 } satisfies Meta<typeof BgrDropdown>
 
 export default meta
@@ -31,26 +42,10 @@ const defaultOptions = [
 export const Default: Story = {
     args: {
         options: defaultOptions,
+        value: 'option1',
         placeholder: '선택하세요',
     },
-    render: (args) => (
-        <div className="w-[300px]">
-            <BgrDropdown {...args} />
-        </div>
-    ),
-}
-
-export const WithValue: Story = {
-    args: {
-        options: defaultOptions,
-        value: 'option2',
-        placeholder: '선택하세요',
-    },
-    render: (args) => (
-        <div className="w-[300px]">
-            <BgrDropdown {...args} />
-        </div>
-    ),
+    render: (args) => <BgrDropdown {...args} />,
 }
 
 export const Disabled: Story = {
@@ -59,11 +54,7 @@ export const Disabled: Story = {
         disabled: true,
         placeholder: '선택하세요',
     },
-    render: (args) => (
-        <div className="w-[300px]">
-            <BgrDropdown {...args} />
-        </div>
-    ),
+    render: (args) => <BgrDropdown {...args} />,
 }
 
 export const ManyOptions: Story = {
@@ -75,13 +66,23 @@ export const ManyOptions: Story = {
             { label: 'Option 4', value: 'option4' },
             { label: 'Option 5', value: 'option5' },
             { label: 'Option 6', value: 'option6' },
+            { label: 'Option 7', value: 'option7' },
+            { label: 'Option 8', value: 'option8' },
+            { label: 'Option 9', value: 'option9' },
+            { label: 'Option 10', value: 'option10' },
         ],
+        value: 'option3',
         placeholder: '선택하세요',
     },
-    render: (args) => (
-        <div className="w-[300px]">
-            <BgrDropdown {...args} />
-        </div>
-    ),
+    render: (args) => <BgrDropdown {...args} />,
 }
 
+export const Checkbox: Story = {
+    args: {
+        options: defaultOptions,
+        type: 'checkbox',
+        value: 'option1',
+        placeholder: '카테고리 선택',
+    },
+    render: (args) => <BgrDropdown {...args} />,
+}
