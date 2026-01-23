@@ -15,7 +15,7 @@ const meta = {
     argTypes: {
         variant: {
             control: 'select',
-            options: ['success', 'error', 'download'],
+            options: ['success', 'error', 'info'],
         },
     },
     args: {
@@ -72,32 +72,24 @@ export const Error: Story = {
 export const ErrorMessage: Story = {
     args: {
         message: '주문상태 수정 중 일시적인 오류가 발생했습니다.',
-        subMessage:'다시 한 번 시도해주세요',
+        subMessage: '다시 한 번 시도해주세요',
         variant: 'error',
         onClose: fn(),
     },
 }
 
-// export const Warning: Story = {
-//     args: {
-//         message: '주의가 필요합니다.',
-//         variant: 'warning',
-//         onClose: fn(),
-//     },
-// }
-
-export const Download: Story = {
+export const Info: Story = {
     args: {
         message: '엑셀이 다운로드 되었습니다.',
-        variant: 'download',
+        variant: 'info',
         onClose: fn(),
     },
 }
-export const DownloadMessage: Story = {
+export const InfoMessage: Story = {
     args: {
         message: '엑셀이 다운로드 되었습니다.',
-        subMessage:'마이페이지에서 확인 가능합니다.',
-        variant: 'download',
+        subMessage: '마이페이지에서 확인 가능합니다.',
+        variant: 'info',
         onClose: fn(),
     },
 }
@@ -120,7 +112,7 @@ export const AllVariants: Story = {
         <div className="flex flex-col gap-4">
             <BgrToast message="Success" variant="success" onClose={fn()} />
             <BgrToast message="Error" variant="error" onClose={fn()} />
-            <BgrToast message="download" variant="download" onClose={fn()} />
+            <BgrToast message="info" variant="info" onClose={fn()} />
         </div>
     ),
 }
@@ -134,41 +126,46 @@ export const WithHelperFunctions: Story = {
         <div className="flex flex-col gap-4">
             <button
                 onClick={() => bgrToast.success('성공 메시지')}
-                className="px-4 py-2 bg-green-500 text-white rounded"
+                className="rounded bg-green-500 px-4 py-2 text-white"
             >
                 Show Success Toast
             </button>
             <button
-                onClick={() => bgrToast.success('성공 메시지','성공 메시지 입니다.')}
-                className="px-4 py-2 bg-green-500 text-white rounded"
+                onClick={() =>
+                    bgrToast.success('성공 메시지', '성공 메시지 입니다.')
+                }
+                className="rounded bg-green-500 px-4 py-2 text-white"
             >
                 Show Success Toast2
             </button>
             <button
                 onClick={() => bgrToast.error('오류 메시지')}
-                className="px-4 py-2 bg-red-500 text-white rounded"
+                className="rounded bg-red-500 px-4 py-2 text-white"
             >
                 Show Error Toast
             </button>
             <button
-                onClick={() => bgrToast.error('오류 메시지','오류 메시지 입니다.')}
-                className="px-4 py-2 bg-red-500 text-white rounded"
+                onClick={() =>
+                    bgrToast.error('오류 메시지', '오류 메시지 입니다.')
+                }
+                className="rounded bg-red-500 px-4 py-2 text-white"
             >
                 Show Error Toast2
             </button>
             <button
-                onClick={() => bgrToast.download('다운로드 메시지')}
-                className="px-4 py-2 bg-gray-800 text-white rounded"
+                onClick={() => bgrToast.info('다운로드 메시지')}
+                className="rounded bg-gray-800 px-4 py-2 text-white"
             >
-                Show Download Toast
+                Show info Toast
             </button>
             <button
-                onClick={() => bgrToast.download('다운로드 메시지','무언가 다운로드 되었습니다.')}
-                className="px-4 py-2 bg-gray-800 text-white rounded"
+                onClick={() =>
+                    bgrToast.info('info 메시지', '무언가 다운로드 되었습니다.')
+                }
+                className="rounded bg-gray-800 px-4 py-2 text-white"
             >
-                Show Download Toast2
+                Show Info Toast2
             </button>
         </div>
     ),
 }
-

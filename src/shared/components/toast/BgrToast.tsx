@@ -5,7 +5,7 @@ import { toast, ToastOptions, Id } from 'react-toastify'
 interface BgrToastProps {
     message: string
     subMessage?: string
-    variant?: 'success' | 'error' | 'download'
+    variant?: 'success' | 'error' | 'info'
     onClose?: () => void
     className?: string
 }
@@ -29,7 +29,7 @@ const BgrToast = ({
             subMessageColor: 'text-gray-800',
         },
 
-        download: {
+        info: {
             default:
                 'bg-gray-800 border-gray-800 text-white border border-solid',
             subMessageColor: 'text-white opacity-60',
@@ -47,7 +47,7 @@ const BgrToast = ({
                 'M8.59961 0C13.3493 0 17.1992 3.84996 17.1992 8.59961C17.1992 13.3493 13.3493 17.1992 8.59961 17.1992C3.84996 17.1992 0 13.3493 0 8.59961C6.44306e-08 3.84996 3.84996 6.44285e-08 8.59961 0ZM8.59863 11.7021C8.04921 11.7021 7.60352 12.1271 7.60352 12.6514C7.60357 13.1756 8.04924 13.6006 8.59863 13.6006H8.6084C9.15779 13.6006 9.60346 13.1756 9.60352 12.6514C9.60352 12.1271 9.15782 11.7021 8.6084 11.7021H8.59863ZM8.59863 3.60059C8.04924 3.60059 7.60357 4.02556 7.60352 4.5498V8.60059C7.60366 9.12477 8.0493 9.5498 8.59863 9.5498C9.14783 9.54965 9.59263 9.12467 9.59277 8.60059V4.5498C9.59272 4.02565 9.14788 3.60074 8.59863 3.60059Z',
             color: '#EC0000',
         },
-        download: {
+        info: {
             svgCode: '',
             color: '',
         },
@@ -56,9 +56,7 @@ const BgrToast = ({
     const iconClasses = {
         success: 'text-green-500',
         error: 'text-primary-500',
-        warning: 'text-yellow-500',
-        info: 'text-blue-500',
-        download: 'text-white',
+        info: 'text-white',
     }
 
     const Icon = iconMap[variant]
@@ -75,7 +73,7 @@ const BgrToast = ({
             role="alert"
         >
             <div className="flex min-w-0 flex-1 items-start gap-1.5">
-                {variant !== 'download' && Icon.svgCode && (
+                {variant !== 'info' && Icon.svgCode && (
                     <div className="relative top-0.5 h-4.5 w-4.5 shrink-0">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +118,7 @@ const BgrToast = ({
 // react-toastify와 통합된 헬퍼 함수들
 const createToastHelper = (
     message: string,
-    variant: 'success' | 'error' | 'download',
+    variant: 'success' | 'error' | 'info',
     options?: ToastOptions,
     subMessage?: string,
 ): Id => {
@@ -165,12 +163,12 @@ export const bgrToast = {
     ): Id => {
         return createToastHelper(message, 'error', options, subMessage)
     },
-    download: (
+    info: (
         message: string,
         subMessage?: string,
         options?: ToastOptions,
     ): Id => {
-        return createToastHelper(message, 'download', options, subMessage)
+        return createToastHelper(message, 'info', options, subMessage)
     },
 }
 
