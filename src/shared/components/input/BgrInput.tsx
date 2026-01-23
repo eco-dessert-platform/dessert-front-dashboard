@@ -36,14 +36,14 @@ const BgrInput = ({
             <div className="relative w-full">
                 <Input
                     type={type}
-                    className={cn(
-                        'text-title-16-r flex h-[42px] items-center gap-1.5 rounded-[10px] border border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all duration-200 placeholder:text-gray-400',
+                    className={`text-title-16-r ${cn(
+                        'flex h-input items-center gap-input-gap rounded-input border border-gray-300 bg-white px-input-px py-input-py text-gray-900 transition-all duration-200 placeholder:text-gray-400',
                         'focus-visible:border-gray-800 focus-visible:ring-4 focus-visible:ring-gray-600/40 focus-visible:ring-offset-0',
                         'disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-400',
                         error &&
-                            'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
+                        'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
                         maxLength && 'pr-14',
-                    )}
+                    )}`}
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
