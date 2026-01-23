@@ -12,7 +12,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// 1. 전체 Position Story(Position)
 export const AllPositions: Story = {
     args: {
         children: null,
@@ -20,45 +19,42 @@ export const AllPositions: Story = {
     },
     render: () => (
         <div className="p-20">
-            <div className="flex flex-col items-center gap-20">
-                {/* Top */}
-                <div className="flex flex-col items-center gap-4">
-                    <BgrTooltip content="Top Position" position="top">
-                        <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
-                            Top
-                        </button>
-                    </BgrTooltip>
-                </div>
+            {/* Top */}
+            <div className="flex flex-col items-center gap-4">
+                <BgrTooltip content="Top Position" position="top">
+                    <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
+                        Top
+                    </button>
+                </BgrTooltip>
+            </div>
 
-                {/* Left & Right */}
-                <div className="flex items-center gap-40">
-                    <BgrTooltip content="Left Position" position="left">
-                        <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
-                            Left
-                        </button>
-                    </BgrTooltip>
+            {/* Left & Right */}
+            <div className="flex items-center gap-40">
+                <BgrTooltip content="Left Position" position="left">
+                    <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
+                        Left
+                    </button>
+                </BgrTooltip>
 
-                    <BgrTooltip content="Right Position" position="right">
-                        <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
-                            Right
-                        </button>
-                    </BgrTooltip>
-                </div>
+                <BgrTooltip content="Right Position" position="right">
+                    <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
+                        Right
+                    </button>
+                </BgrTooltip>
+            </div>
 
-                {/* Bottom */}
-                <div className="flex flex-col items-center gap-4">
-                    <BgrTooltip content="Bottom Position" position="bottom">
-                        <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
-                            Bottom
-                        </button>
-                    </BgrTooltip>
-                </div>
+            {/* Bottom */}
+            <div className="flex flex-col items-center gap-4">
+                <BgrTooltip content="Bottom Position" position="bottom">
+                    <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
+                        Bottom
+                    </button>
+                </BgrTooltip>
             </div>
         </div>
     ),
 }
 
-// 2. 모든 Align 조합 Story(Position × Align)
 export const AllAlignments: Story = {
     args: {
         children: null,
@@ -269,44 +265,40 @@ export const AllAlignments: Story = {
     ),
 }
 
-// 3. 긴 글에 대응하는 Story
 export const LongContentTooltip: Story = {
     args: {
         children: null,
         content: '',
     },
     render: () => (
-        <div className="p-20">
-            <div className="max-w-md space-y-4">
-                <div className="flex items-center gap-2">
-                    <label className="text-sm font-medium">상품 정보</label>
-                    <BgrTooltip
-                        content={
-                            <div className="space-y-2">
-                                <p className="font-semibold">
-                                    상품 제작 및 취소 안내
-                                </p>
-                                <ul className="list-inside list-disc space-y-1 text-xs">
-                                    <li>
-                                        상품 제작이 시작된 이후에는 주문 취소가
-                                        불가능하며, 반품 절차로만 진행이
-                                        가능합니다.
-                                    </li>
-                                    <li>
-                                        단, 제작 시간 중에 접수된 주문은 다음
-                                        제작 시작 전까지 취소가 가능합니다.
-                                    </li>
-                                </ul>
-                            </div>
-                        }
-                        position="top"
-                        align="center"
-                    >
-                        <button className="text-gray-400 hover:text-gray-600">
-                            <span className="text-lg">ⓘ</span>
-                        </button>
-                    </BgrTooltip>
-                </div>
+        <div className="max-w-md space-y-4">
+            <div className="flex items-center gap-2">
+                <label className="text-sm font-medium">상품 정보</label>
+                <BgrTooltip
+                    content={
+                        <div className="space-y-2">
+                            <p className="font-semibold">
+                                상품 제작 및 취소 안내
+                            </p>
+                            <ul className="list-inside list-disc space-y-1 text-xs">
+                                <li>
+                                    상품 제작이 시작된 이후에는 주문 취소가
+                                    불가능하며, 반품 절차로만 진행이 가능합니다.
+                                </li>
+                                <li>
+                                    단, 제작 시간 중에 접수된 주문은 다음 제작
+                                    시작 전까지 취소가 가능합니다.
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    position="top"
+                    align="center"
+                >
+                    <button className="text-gray-400 hover:text-gray-600">
+                        <span className="text-lg">ⓘ</span>
+                    </button>
+                </BgrTooltip>
             </div>
         </div>
     ),
