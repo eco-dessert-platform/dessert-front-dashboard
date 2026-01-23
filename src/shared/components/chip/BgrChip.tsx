@@ -1,43 +1,50 @@
 import clsx from 'clsx'
+import { cn } from 'src/shared/lib/shadcn/lib/utils'
 import { X } from 'lucide-react'
 
 interface BgrChipProps {
     children: React.ReactNode
-    variant?: 'default' | 'primary' | 'secondary'
     size?: 'sm' | 'md'
     closable?: boolean
+    selected?: boolean
     onClose?: () => void
     className?: string
 }
 
 const BgrChip = ({
     children,
-    variant = 'default',
     size = 'md',
     closable = false,
+    selected = false,
     onClose,
     className = '',
 }: BgrChipProps) => {
+
     const variantClasses = {
-        default:
-            'bg-white border-gray-200 text-gray-800 border border-solid',
-        primary:
-            'bg-white border-primary-500 text-primary-500 border border-solid',
-        secondary:
-            'bg-gray-50 border-gray-300 text-gray-800 border border-solid',
+        base : {
+            default : 'bg-white border-gray-200 text-gray-800 font-normal hover:bg-gray-50 active:bg-gray-200',
+        },
+        selected : {
+            default : 'bg-white border-primary-500 text-primary-500 font-semibold hover:bg-gray-50 active:bg-gray-200',
+        }
     }
 
     const sizeClasses = {
-        sm: 'px-3 py-1.5 text-body-12-sb rounded-full',
-        md: 'px-3 py-1.5 text-body-12-sb rounded-full',
+        sm: 'px-2 py-1 text-body-10-r rounded-full',
+        md: 'px-3 py-1.5 text-body-12-r rounded-full',
+    }
+
+    const closeClasses = {
+        sm: 'w-3 h-3',
+        md: 'w-4 h-4'
     }
 
     return (
         <span
             className={clsx(
-                'inline-flex items-center justify-center gap-2',
-                variantClasses[variant],
+                'inline-flex items-center justify-center gap-1 border border-solid transition-colors duration-150',
                 sizeClasses[size],
+                selected ? variantClasses.selected.default : variantClasses.base.default,
                 className,
             )}
         >
@@ -49,7 +56,9 @@ const BgrChip = ({
                     className="flex items-center justify-center hover:opacity-70 transition-opacity"
                     aria-label="닫기"
                 >
-                    <X className="w-3 h-3" />
+                    <X className={cn(
+                        closeClasses[size]
+                    )} />
                 </button>
             )}
         </span>
