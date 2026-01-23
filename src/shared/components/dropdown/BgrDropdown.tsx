@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
-import { ChevronDown, Check } from 'lucide-react'
+import DownArrowIcon from 'src/assets/icons/arrow/down-arrow.svg?react'
+import CheckboxOnIcon from 'src/assets/icons/icn-check-on.svg?react'
+import CheckboxOffIcon from 'src/assets/icons/icn-check-off.svg?react'
+import CheckIcon from 'src/assets/icons/icon-check.svg?react'
 import { cn } from 'src/shared/lib/shadcn/lib/utils'
 
 interface BgrDropdownOption {
@@ -79,7 +82,7 @@ const BgrDropdown = ({
                 >
                     {selectedOption ? selectedOption.label : placeholder}
                 </span>
-                <ChevronDown
+                <DownArrowIcon
                     className={cn(
                         'h-5 w-5 shrink-0 text-gray-600 transition-transform duration-200',
                         isOpen && 'rotate-180',
@@ -95,7 +98,7 @@ const BgrDropdown = ({
                         'animate-in fade-in zoom-in-95 duration-200',
                     )}
                 >
-                    <ul className="max-h-[240px] overflow-y-auto">
+                    <ul className="max-h-[178px] overflow-y-auto">
                         {options.map((option) => {
                             const isSelected = option.value === value
                             return (
@@ -114,27 +117,19 @@ const BgrDropdown = ({
                                         )}`}
                                     >
                                         {type === 'checkbox' && (
-                                            <div
-                                                className={cn(
-                                                    'flex h-4 w-4 shrink-0 items-center justify-center rounded-[4px] border transition-colors',
-                                                    isSelected
-                                                        ? 'border-primary-500 bg-primary-500'
-                                                        : 'border-gray-200 bg-gray-100',
-                                                )}
-                                            >
-                                                {isSelected && (
-                                                    <Check
-                                                        className="h-3 w-3 text-white"
-                                                        strokeWidth={3}
-                                                    />
+                                            <div className="flex h-4 w-4 shrink-0 items-center justify-center">
+                                                {isSelected ? (
+                                                    <CheckboxOnIcon className="h-4 w-4" />
+                                                ) : (
+                                                    <CheckboxOffIcon className="h-4 w-4" />
                                                 )}
                                             </div>
                                         )}
-                                        <span className="flex-1 truncate">
+                                        <span className="flex-1 truncate text-left">
                                             {option.label}
                                         </span>
                                         {type === 'list' && isSelected && (
-                                            <Check className="text-primary-500 h-4 w-4 shrink-0" />
+                                            <CheckIcon className="h-4 w-4 shrink-0 text-primary-500" />
                                         )}
                                     </button>
                                 </li>
