@@ -1,5 +1,5 @@
-import { Button } from 'src/shared/lib/shadcn/components/ui/button'
 import clsx from 'clsx'
+import { Button } from 'src/shared/lib/shadcn/components/ui/button'
 
 interface BgrButtonProps {
     title: string
@@ -31,7 +31,7 @@ const BgrButton = ({
     const sizeClasses = {
         sm: 'h-[30px] px-2.5 py-2 rounded-[8px]',
         md: 'h-[42px] px-4 py-3 rounded-[10px]',
-        lg: 'h-[56px] px-4 py-4 rounded-[12px]',
+        lg: 'h-button-lg px-4 py-4 rounded-[12px]',
     }
 
     const typoClasses = {
