@@ -75,13 +75,11 @@ function BgrLnb() {
                     className="gap-button-sm-px flex flex-col"
                 >
                     {MENU_LIST.map((menu) => (
-                        <div key={menu.group}>
                             <MenuItem
                                 key={menu.group}
                                 title={menu.group}
                                 items={menu.items}
                             />
-                        </div>
                     ))}
                 </Accordion>
             </div>
