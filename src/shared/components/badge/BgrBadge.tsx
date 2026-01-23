@@ -1,5 +1,5 @@
 import { cva, VariantProps } from 'class-variance-authority'
-import { forwardRef, HTMLAttributes } from 'react'
+import React, { HTMLAttributes } from 'react'
 import { cn } from 'src/shared/lib/shadcn/lib/utils'
 
 const bgrBadgeVariants = cva(
@@ -97,21 +97,27 @@ interface bgrBadgeProps
     extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
         VariantProps<typeof bgrBadgeVariants> {
     content: string
+    ref?: React.Ref<HTMLDivElement>
 }
 
-const BgrBadge = forwardRef<HTMLDivElement, bgrBadgeProps>(
-    ({ className, variant, color, content, ...props }, ref) => {
-        return (
-            <div
-                ref={ref}
-                className={cn(bgrBadgeVariants({ variant, color }), className)}
-                {...props}
-            >
-                {content}
-            </div>
-        )
-    },
-)
+const BgrBadge = ({
+    variant = 'outline',
+    color,
+    content,
+    className,
+    ref,
+    ...props
+}: bgrBadgeProps) => {
+    return (
+        <div
+            ref={ref}
+            className={cn(bgrBadgeVariants({ variant, color }), className)}
+            {...props}
+        >
+            {content}
+        </div>
+    )
+}
 
 BgrBadge.displayName = 'BgrBadge'
 
