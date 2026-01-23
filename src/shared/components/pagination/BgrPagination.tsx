@@ -27,7 +27,7 @@ const BgrPagination = ({
     // disabled 스타일 헬퍼
     const getDisabledStyle = (isDisabled: boolean) => {
         return isDisabled
-            ? 'cursor-not-allowed opacity-50'
+            ? 'cursor-not-allowed text-gray-300'
             : 'cursor-pointer hover:bg-gray-50'
     }
 
