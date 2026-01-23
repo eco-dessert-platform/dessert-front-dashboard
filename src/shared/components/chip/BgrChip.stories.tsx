@@ -10,9 +10,8 @@ const meta = {
     },
     tags: ['autodocs'],
     argTypes: {
-        variant: {
-            control: 'select',
-            options: ['default', 'primary', 'secondary'],
+        selected: {
+            control: 'boolean'
         },
         size: {
             control: 'select',
@@ -33,34 +32,24 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
     args: {
         children: 'Chip',
-        variant: 'default',
         size: 'md',
         closable: false,
+        selected: false,
     },
 }
 
-export const Primary: Story = {
+export const Selected: Story = {
     args: {
-        children: 'Primary Chip',
-        variant: 'primary',
+        children: 'Selected Chip',
         size: 'md',
-        closable: false,
-    },
+        selected: true
+    }
 }
 
-export const Secondary: Story = {
-    args: {
-        children: 'Secondary Chip',
-        variant: 'secondary',
-        size: 'md',
-        closable: false,
-    },
-}
 
 export const Closable: Story = {
     args: {
         children: 'Closable Chip',
-        variant: 'default',
         size: 'md',
         closable: true,
         onClose: fn(),
@@ -70,7 +59,6 @@ export const Closable: Story = {
 export const Small: Story = {
     args: {
         children: 'Small Chip',
-        variant: 'default',
         size: 'sm',
         closable: false,
     },
@@ -83,15 +71,18 @@ export const AllVariants: Story = {
     render: () => (
         <div className="flex flex-col gap-4">
             <div className="flex gap-2 items-center flex-wrap">
-                <BgrChip variant="default">Default</BgrChip>
-                <BgrChip variant="primary">Primary</BgrChip>
-                <BgrChip variant="secondary">Secondary</BgrChip>
+                <BgrChip selected={false} size='sm'>Small</BgrChip>
+                <BgrChip selected={false}>Default</BgrChip>
+                <BgrChip selected>Active</BgrChip>
             </div>
             <div className="flex gap-2 items-center flex-wrap">
-                <BgrChip variant="default" closable onClose={fn()}>
+                <BgrChip selected={false} size='sm' closable onClose={fn()}>
                     Closable
                 </BgrChip>
-                <BgrChip variant="primary" closable onClose={fn()}>
+                <BgrChip selected={false} closable onClose={fn()}>
+                    Closable
+                </BgrChip>
+                <BgrChip selected closable onClose={fn()}>
                     Closable Primary
                 </BgrChip>
             </div>
