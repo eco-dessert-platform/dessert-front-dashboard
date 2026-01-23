@@ -61,15 +61,15 @@ const BgrDropdown = ({
                 type="button"
                 disabled={disabled}
                 onClick={() => setIsOpen(!isOpen)}
-                className={cn(
-                    'flex h-[42px] w-full items-center justify-between rounded-[10px] border px-3 py-2 transition-all duration-200',
-                    'text-title-16-r text-gray-900',
+                className={`text-title-16-r ${cn(
+                    'flex h-input w-full items-center justify-between rounded-input border px-input-px py-input-py transition-all duration-200',
+                    'text-gray-900',
                     'border-gray-300 bg-white',
                     'font-pretendard hover:border-gray-400 focus:border-gray-500 focus:outline-none',
                     isOpen && 'border-gray-500',
                     disabled &&
-                        'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400',
-                )}
+                    'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400',
+                )}`}
             >
                 <span
                     className={cn(
@@ -91,7 +91,7 @@ const BgrDropdown = ({
                 <div
                     className={cn(
                         'z-dropdown absolute left-0 mt-1 w-full p-1',
-                        'rounded-[10px] border border-gray-200 bg-white shadow-md',
+                        'rounded-input border border-gray-200 bg-white shadow-md',
                         'animate-in fade-in zoom-in-95 duration-200',
                     )}
                 >
@@ -104,14 +104,14 @@ const BgrDropdown = ({
                                         type="button"
                                         disabled={option.disabled}
                                         onClick={() => handleSelect(option)}
-                                        className={cn(
+                                        className={`text-title-14-r ${cn(
                                             'flex h-[38px] w-full items-center gap-2 rounded-sm px-[10px] py-[6px] transition-colors duration-200',
-                                            'text-title-14-r text-left text-gray-800',
+                                            'text-left text-gray-800',
                                             'hover:bg-gray-50',
                                             isSelected && 'bg-gray-100',
                                             option.disabled &&
-                                                'cursor-not-allowed opacity-50',
-                                        )}
+                                            'cursor-not-allowed opacity-50',
+                                        )}`}
                                     >
                                         {type === 'checkbox' && (
                                             <div
