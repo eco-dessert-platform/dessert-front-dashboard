@@ -1,64 +1,123 @@
-import clsx from 'clsx'
-import { ReactNode } from 'react'
+import * as React from 'react'
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+import { cn } from 'src/shared/lib/shadcn/lib/utils'
 
-interface BgrTooltipProps {
-    children: ReactNode
-    content: string | ReactNode
-    position?: 'top' | 'bottom' | 'left' | 'right'
+type TooltipPosition = 'top' | 'bottom' | 'left' | 'right'
+type TooltipAlign = 'start' | 'center' | 'end'
+
+export interface BgrTooltipProps {
+    children: React.ReactNode
+    content: React.ReactNode | string
+    position?: TooltipPosition
+    align?: TooltipAlign
+    sideOffset?: number
+    delayDuration?: number
     className?: string
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
 }
 
-const BgrTooltip = ({
+/**
+ * Left/Right Position에서 align을 반전
+ * - start → end (위)
+ * - end → start (아래)
+ */
+const convertAlignPosition = (
+    position: TooltipPosition,
+    align: TooltipAlign,
+): TooltipAlign => {
+    if (position === 'left' || position === 'right') {
+        if (align === 'start') return 'end'
+        if (align === 'end') return 'start'
+    }
+    return align
+}
+
+/**
+ * Top/Bottom Position에서 Arrow offset 계산
+ * - start: 30px (왼쪽)
+ * - end: 30px (오른쪽)
+ */
+const getAlignOffset = (
+    position: TooltipPosition,
+    align: TooltipAlign,
+): number => {
+    if (align === 'center') return 0
+
+    // Top/Bottom: 더 많이 이동 (30px)
+    if (position === 'top' || position === 'bottom') {
+        return 30
+    }
+
+    // Left/Right: 기본 Radix 동작 사용
+    return 0
+}
+
+export const BgrTooltip = ({
     children,
     content,
     position = 'top',
-    className = '',
+    align = 'center',
+    sideOffset = 2,
+    delayDuration = 0,
+    className,
+    open,
+    onOpenChange,
 }: BgrTooltipProps) => {
-    const positionClasses = {
-        top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
-        bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
-        left: 'right-full top-1/2 -translate-y-1/2 mr-2',
-        right: 'left-full top-1/2 -translate-y-1/2 ml-2',
-    }
-
-    const arrowClasses = {
-        top: 'top-full left-1/2 -translate-x-1/2 border-t-black/70 border-l-transparent border-r-transparent border-b-transparent',
-        bottom: 'bottom-full left-1/2 -translate-x-1/2 border-b-black/70 border-l-transparent border-r-transparent border-t-transparent',
-        left: 'left-full top-1/2 -translate-y-1/2 border-l-black/70 border-t-transparent border-b-transparent border-r-transparent',
-        right: 'right-full top-1/2 -translate-y-1/2 border-r-black/70 border-t-transparent border-b-transparent border-l-transparent',
-    }
+    const convertAlign = convertAlignPosition(position, align)
+    const alignOffset = getAlignOffset(position, align)
 
     return (
-        <div className={clsx('relative inline-block group', className)}>
-            {children}
-            <div
-                className={clsx(
-                    'absolute z-50 hidden group-hover:block',
-                    'bg-black/70 text-white text-body-10-r',
-                    'px-2 py-1.5 rounded-[4px]',
-                    'max-w-[200px] whitespace-pre-wrap',
-                    'shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_3px_10px_0px_rgba(0,0,0,0.1)]',
-                    positionClasses[position],
-                )}
-                role="tooltip"
-            >
-                <div className="relative">
-                    {typeof content === 'string' ? (
-                        <p className="mb-0">{content}</p>
-                    ) : (
-                        content
-                    )}
-                    <div
-                        className={clsx(
-                            'absolute w-0 h-0 border-4',
-                            arrowClasses[position],
+        <TooltipPrimitive.Provider
+            delayDuration={delayDuration}
+            skipDelayDuration={300}
+        >
+            <TooltipPrimitive.Root open={open} onOpenChange={onOpenChange}>
+                <TooltipPrimitive.Trigger asChild>
+                    {children}
+                </TooltipPrimitive.Trigger>
+
+                <TooltipPrimitive.Portal>
+                    <TooltipPrimitive.Content
+                        side={position}
+                        align={convertAlign}
+                        alignOffset={alignOffset}
+                        sideOffset={sideOffset}
+                        collisionPadding={10}
+                        className={cn(
+                            'relative z-50',
+                            'px-2 py-1.5',
+                            'rounded-sm',
+
+                            // ! Opacity/Black 관련 컬러가 현재 프로젝트 tailwind 설정에 존재하지 않음
+                            // ! 예슬님이 디자인 시스템의 컬러를 추가하면 수정 예정
+                            'bg-gray-700 text-white',
+                            // ! tailwind-merge + custom tailwind className 충돌 문제를 먼저 해결해야
+                            // ! variables.pcss에서 설정한 커스텀 타이포그라피 사용 가능
+                            // ! 현재는 하드코딩으로 작성, 추후 이슈가 해결되면 text-body-10-r 사용 예정
+                            'text-[10px] leading-[160%] font-normal tracking-[-0.02em]',
+                            'max-w-[200px] wrap-break-word',
+                            // Shadow
+                            // ! 디자인 시스템의 컴포넌트에는 level 형식으로 정의되어 있지만, 실제 shadow 관련 design token을 찾을 수 없음
+                            // ! 현재는 shadow를 하드코딩으로 진행함.
+                            'shadow-[0_3px_10px_0_rgba(0,0,0,0.1),0_2px_4px_0_rgba(0,0,0,0.08)]',
+                            className,
                         )}
-                    />
-                </div>
-            </div>
-        </div>
+                    >
+                        {content}
+
+                        <TooltipPrimitive.Arrow
+                            // ! Opacity/Black 관련 컬러가 현재 프로젝트 tailwind 설정에 존재하지 않음
+                            // ! 예슬님이 디자인 시스템의 컬러를 추가하면 수정 예정
+                            className="fill-gray-700"
+                            width={6}
+                            height={3}
+                        />
+                    </TooltipPrimitive.Content>
+                </TooltipPrimitive.Portal>
+            </TooltipPrimitive.Root>
+        </TooltipPrimitive.Provider>
     )
 }
 
 export default BgrTooltip
-
