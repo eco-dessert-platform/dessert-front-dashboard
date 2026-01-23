@@ -5,7 +5,6 @@ import { cn } from 'src/shared/lib/shadcn/lib/utils'
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right'
 type TooltipAlign = 'start' | 'center' | 'end'
 
-// Context 타입 정의
 interface BgrTooltipContextValue {
     position: TooltipPosition
     align: TooltipAlign
@@ -15,7 +14,6 @@ interface BgrTooltipContextValue {
     onOpenChange?: (open: boolean) => void
 }
 
-// Context 생성
 const BgrTooltipContext = React.createContext<
     BgrTooltipContextValue | undefined
 >(undefined)
@@ -103,7 +101,6 @@ const BgrTooltipTrigger = ({
     )
 }
 
-// Content Component
 interface BgrTooltipContentProps {
     children: React.ReactNode
     className?: string
@@ -123,14 +120,14 @@ const BgrTooltipContent = ({ children, className }: BgrTooltipContentProps) => {
                 'relative z-50',
                 'px-2 py-1.5',
                 'rounded-sm',
+
                 // ! Opacity/Black 관련 컬러가 현재 프로젝트 tailwind 설정에 존재하지 않음
                 'bg-gray-700 text-white',
                 'max-w-[200px] wrap-break-word',
-                // Shadow
+
                 // ! 디자인 시스템의 컴포넌트에는 level 형식으로 정의되어 있지만, 실제 shadow 관련 design token을 찾을 수 없음
                 // ! 현재는 shadow를 하드코딩으로 진행함.
                 'shadow-[0_3px_10px_0_rgba(0,0,0,0.1),0_2px_4px_0_rgba(0,0,0,0.08)]',
-                // Animation
                 'animate-in fade-in-0 zoom-in-95',
                 className,
             )}`}
@@ -144,7 +141,7 @@ const BgrTooltipContent = ({ children, className }: BgrTooltipContentProps) => {
         </TooltipPrimitive.Content>
     )
 }
-// Compound Component 조합
+
 export const BgrTooltip = {
     Root: BgrTooltipRoot,
     Trigger: BgrTooltipTrigger,
