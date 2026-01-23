@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
 import BgrToast from './BgrToast'
-import { bgrToast } from './BgrToast'
+import { bgrToast } from './BgrToastHelper'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
