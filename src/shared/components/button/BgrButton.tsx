@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { Button } from 'src/shared/lib/shadcn/components/ui/button'
 
 interface BgrButtonProps {
     title: string
@@ -29,9 +28,9 @@ const BgrButton = ({
     className = '',
 }: BgrButtonProps) => {
     const sizeClasses = {
-        sm: 'h-[30px] px-2.5 py-2 rounded-[8px]',
-        md: 'h-[42px] px-4 py-3 rounded-[10px]',
-        lg: 'h-button-lg px-4 py-4 rounded-[12px]',
+        sm: 'h-button-sm min-w-[56px] px-2.5 py-2 rounded-[8px]',
+        md: 'h-button-md min-w-[90px] px-4 py-3 rounded-[10px]',
+        lg: 'h-button-lg min-w-[180px] px-4 py-4 rounded-[12px]',
     }
 
     const typoClasses = {
@@ -52,7 +51,7 @@ const BgrButton = ({
     }
 
     return (
-        <Button
+        <button
             onClick={onClick}
             disabled={disabled}
             className={clsx(
@@ -67,7 +66,7 @@ const BgrButton = ({
             {leftIcon && leftIcon}
             <span className={typoClasses[size]}>{title}</span>
             {rightIcon && rightIcon}
-        </Button>
+        </button>
     )
 }
 
