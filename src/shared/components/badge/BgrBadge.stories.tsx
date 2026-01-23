@@ -29,11 +29,6 @@ type Story = StoryObj<typeof meta>
 
 type CustomStory = Omit<Story, 'args'> & { args?: Story['args'] }
 
-/**
- * ============================================
- * 1. Default
- * ============================================
- */
 export const Default: Story = {
     args: {
         color: 'green',
@@ -42,11 +37,6 @@ export const Default: Story = {
     },
 }
 
-/**
- * ============================================
- * 2. Order Outline
- * ============================================
- */
 export const OrderOutline: CustomStory = {
     render: () => (
         <div className="flex flex-wrap gap-2">
@@ -62,11 +52,6 @@ export const OrderOutline: CustomStory = {
     ),
 }
 
-/**
- * ============================================
- * 3. Sale Outline
- * ============================================
- */
 export const SaleOutline: CustomStory = {
     render: () => (
         <div className="flex flex-wrap gap-2">
@@ -79,11 +64,6 @@ export const SaleOutline: CustomStory = {
     ),
 }
 
-/**
- * ============================================
- * 4. Order Cancel
- * ============================================
- */
 export const CancelOrder: CustomStory = {
     render: () => (
         <div className="flex flex-wrap gap-2">
@@ -95,11 +75,6 @@ export const CancelOrder: CustomStory = {
     ),
 }
 
-/**
- * ============================================
- * 5. Order Return
- * ============================================
- */
 export const ReturnOrder: CustomStory = {
     render: () => (
         <div className="flex flex-wrap gap-2">
@@ -114,11 +89,6 @@ export const ReturnOrder: CustomStory = {
     ),
 }
 
-/**
- * ============================================
- * 6. Order Exchange
- * ============================================
- */
 export const ExchangeOrder: CustomStory = {
     render: () => (
         <div className="flex flex-wrap gap-2">
