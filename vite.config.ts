@@ -65,7 +65,7 @@ export default defineConfig({
                         '@radix-ui/react-tabs',
                         '@radix-ui/react-tooltip',
                     ],
-                },
+                }
             },
         },
     },
