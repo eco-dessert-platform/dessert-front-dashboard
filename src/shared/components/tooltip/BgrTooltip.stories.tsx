@@ -1,111 +1,330 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import BgrTooltip from './BgrTooltip'
-import BgrButton from '../button/BgrButton'
+import { BgrTooltip } from './BgrTooltip'
 
 const meta = {
     title: 'Components/BgrTooltip',
-    component: BgrTooltip,
+    component: BgrTooltip.Root,
     parameters: {
         layout: 'centered',
     },
     tags: ['autodocs'],
-    argTypes: {
-        position: {
-            control: 'select',
-            options: ['top', 'bottom', 'left', 'right'],
-        },
-    },
-} satisfies Meta<typeof BgrTooltip>
+} satisfies Meta<typeof BgrTooltip.Root>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-    args: {
-        content: 'This is a tooltip',
-        position: 'top',
-        children: <BgrButton title="Hover me" />,
-    },
-}
-
-export const Top: Story = {
-    args: {
-        content: 'Tooltip on top',
-        position: 'top',
-        children: <BgrButton title="Hover me" />,
-    },
-}
-
-export const Bottom: Story = {
-    args: {
-        content: 'Tooltip on bottom',
-        position: 'bottom',
-        children: <BgrButton title="Hover me" />,
-    },
-}
-
-export const Left: Story = {
-    args: {
-        content: 'Tooltip on left',
-        position: 'left',
-        children: <BgrButton title="Hover me" />,
-    },
-}
-
-export const Right: Story = {
-    args: {
-        content: 'Tooltip on right',
-        position: 'right',
-        children: <BgrButton title="Hover me" />,
-    },
-}
-
-export const LongText: Story = {
-    args: {
-        content:
-            'This is a very long tooltip text that will wrap to multiple lines if needed',
-        position: 'top',
-        children: <BgrButton title="Hover me" />,
-    },
-}
-
-export const WithReactNode: Story = {
-    args: {
-        content: (
-            <div>
-                <strong>Bold text</strong>
-                <br />
-                Regular text
-            </div>
-        ),
-        position: 'top',
-        children: <BgrButton title="Hover me" />,
-    },
-}
-
 export const AllPositions: Story = {
     args: {
-        content: 'All Positions',
-        position: 'top',
-        children: <BgrButton title="Hover me" />,
+        children: null,
     },
     render: () => (
-        <div className="flex flex-col gap-8 items-center p-8">
-            <BgrTooltip content="Top tooltip" position="top">
-                <BgrButton title="Top" />
-            </BgrTooltip>
-            <div className="flex gap-4">
-                <BgrTooltip content="Left tooltip" position="left">
-                    <BgrButton title="Left" />
-                </BgrTooltip>
-                <BgrTooltip content="Right tooltip" position="right">
-                    <BgrButton title="Right" />
-                </BgrTooltip>
+        <>
+            {/* Top */}
+            <div className="flex flex-col items-center gap-4">
+                <BgrTooltip.Root position="top">
+                    <BgrTooltip.Trigger>
+                        <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
+                            Top
+                        </button>
+                    </BgrTooltip.Trigger>
+                    <BgrTooltip.Content>
+                        <p>Top Position</p>
+                    </BgrTooltip.Content>
+                </BgrTooltip.Root>
             </div>
-            <BgrTooltip content="Bottom tooltip" position="bottom">
-                <BgrButton title="Bottom" />
-            </BgrTooltip>
+
+            {/* Left & Right */}
+            <div className="flex items-center gap-40">
+                <BgrTooltip.Root position="left">
+                    <BgrTooltip.Trigger>
+                        <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
+                            Left
+                        </button>
+                    </BgrTooltip.Trigger>
+                    <BgrTooltip.Content>
+                        <p>Left Position</p>
+                    </BgrTooltip.Content>
+                </BgrTooltip.Root>
+
+                <BgrTooltip.Root position="right">
+                    <BgrTooltip.Trigger>
+                        <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
+                            Right
+                        </button>
+                    </BgrTooltip.Trigger>
+                    <BgrTooltip.Content>
+                        <p>Right Position</p>
+                    </BgrTooltip.Content>
+                </BgrTooltip.Root>
+            </div>
+
+            {/* Bottom */}
+            <div className="flex flex-col items-center gap-4">
+                <BgrTooltip.Root position="bottom">
+                    <BgrTooltip.Trigger>
+                        <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
+                            Bottom
+                        </button>
+                    </BgrTooltip.Trigger>
+                    <BgrTooltip.Content>
+                        <p>Bottom Position</p>
+                    </BgrTooltip.Content>
+                </BgrTooltip.Root>
+            </div>
+        </>
+    ),
+}
+
+export const AllAlignments: Story = {
+    args: {
+        children: null,
+    },
+    render: () => (
+        <div className="space-y-16 p-20">
+            {/* Top Position */}
+            <div>
+                <h3 className="mb-6 text-center text-lg font-bold">
+                    Top Position
+                </h3>
+                <div className="flex justify-center gap-8">
+                    <div className="flex flex-col items-center gap-2">
+                        <BgrTooltip.Root position="top" align="start">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    start
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>Start (왼쪽)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                        <span className="text-xs text-gray-500">왼쪽</span>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-2">
+                        <BgrTooltip.Root position="top" align="center">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    center
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>Center (중앙)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                        <span className="text-xs text-gray-500">중앙</span>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-2">
+                        <BgrTooltip.Root position="top" align="end">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    end
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>End (오른쪽)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                        <span className="text-xs text-gray-500">오른쪽</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Right Position */}
+            <div>
+                <h3 className="mb-6 text-center text-lg font-bold">
+                    Right Position
+                </h3>
+                <div className="flex flex-col items-center gap-8">
+                    <div className="flex items-center gap-2">
+                        <span className="min-w-[40px] text-right text-xs text-gray-500">
+                            위
+                        </span>
+                        <BgrTooltip.Root position="right" align="start">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    start
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>Start (위)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <span className="min-w-[40px] text-right text-xs text-gray-500">
+                            중앙
+                        </span>
+                        <BgrTooltip.Root position="right" align="center">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    center
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>Center (중앙)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <span className="min-w-[40px] text-right text-xs text-gray-500">
+                            아래
+                        </span>
+                        <BgrTooltip.Root position="right" align="end">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    end
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>End (아래)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                    </div>
+                </div>
+            </div>
+
+            {/* Bottom Position */}
+            <div>
+                <h3 className="mb-6 text-center text-lg font-bold">
+                    Bottom Position
+                </h3>
+                <div className="flex justify-center gap-8">
+                    <div className="flex flex-col items-center gap-2">
+                        <BgrTooltip.Root position="bottom" align="start">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    start
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>Start (왼쪽)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                        <span className="text-xs text-gray-500">왼쪽</span>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-2">
+                        <BgrTooltip.Root position="bottom" align="center">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    center
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>Center (중앙)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                        <span className="text-xs text-gray-500">중앙</span>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-2">
+                        <BgrTooltip.Root position="bottom" align="end">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    end
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>End (오른쪽)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                        <span className="text-xs text-gray-500">오른쪽</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Left Position */}
+            <div>
+                <h3 className="mb-6 text-center text-lg font-bold">
+                    Left Position
+                </h3>
+                <div className="flex flex-col items-center gap-8">
+                    <div className="flex items-center gap-2">
+                        <BgrTooltip.Root position="left" align="start">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    start
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>Start (위)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                        <span className="min-w-[40px] text-xs text-gray-500">
+                            위
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <BgrTooltip.Root position="left" align="center">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    center
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>Center (중앙)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                        <span className="min-w-[40px] text-xs text-gray-500">
+                            중앙
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <BgrTooltip.Root position="left" align="end">
+                            <BgrTooltip.Trigger>
+                                <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
+                                    end
+                                </button>
+                            </BgrTooltip.Trigger>
+                            <BgrTooltip.Content>
+                                <p>End (아래)</p>
+                            </BgrTooltip.Content>
+                        </BgrTooltip.Root>
+                        <span className="min-w-[40px] text-xs text-gray-500">
+                            아래
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     ),
 }
 
+export const LongContentTooltip: Story = {
+    args: {
+        children: null,
+    },
+    render: () => (
+        <div className="flex items-center gap-2">
+            <label className="text-sm font-medium">상품 정보</label>
+            <BgrTooltip.Root position="top" align="center">
+                <BgrTooltip.Trigger>
+                    <button className="text-gray-400 hover:text-gray-600">
+                        <span className="text-lg">ⓘ</span>
+                    </button>
+                </BgrTooltip.Trigger>
+                <BgrTooltip.Content>
+                    <div className="space-y-2">
+                        <p className="font-semibold">상품 제작 및 취소 안내</p>
+                        <ul className="list-inside list-disc space-y-1 text-xs">
+                            <li>
+                                상품 제작이 시작된 이후에는 주문 취소가
+                                불가능하며, 반품 절차로만 진행이 가능합니다.
+                            </li>
+                            <li>
+                                단, 제작 시간 중에 접수된 주문은 다음 제작 시작
+                                전까지 취소가 가능합니다.
+                            </li>
+                        </ul>
+                    </div>
+                </BgrTooltip.Content>
+            </BgrTooltip.Root>
+        </div>
+    ),
+}
