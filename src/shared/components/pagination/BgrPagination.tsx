@@ -1,11 +1,9 @@
 import clsx from 'clsx'
 import { cn } from 'src/shared/lib/shadcn/lib/utils'
-import {
-    ChevronLeft,
-    ChevronsLeft,
-    ChevronRight,
-    ChevronsRight,
-} from 'lucide-react'
+import DoubleForwardArrow from 'src/assets/icons/arrow/double-forward-arrow.svg?react'
+import DoubleNextArrow from 'src/assets/icons/arrow/double-next-arrow.svg?react'
+import ForwardArrow from 'src/assets/icons/arrow/forward-arrow.svg?react'
+import NextArrow from 'src/assets/icons/arrow/next-arrow.svg?react'
 
 export interface BgrPaginationProps {
     currentPage: number
@@ -24,7 +22,7 @@ const BgrPagination = ({
 
     // 공통 버튼 스타일
     const baseButtonStyle =
-        'flex h-[30px] w-[30px] items-center justify-center rounded-[8px] p-[10px] transition-colors'
+        'flex h-[30px] w-[30px] items-center justify-center rounded-[8px] p-[5px] transition-colors'
 
     // disabled 스타일 헬퍼
     const getDisabledStyle = (isDisabled: boolean) => {
@@ -82,7 +80,7 @@ const BgrPagination = ({
                 aria-label="Go to first page group"
                 title="첫 페이지 그룹"
             >
-                <ChevronsLeft className="h-4 w-4" />
+                <DoubleForwardArrow className="h-5 w-5" />
             </button>
 
             {/* < 버튼: 이전 페이지로 이동 (-1) */}
@@ -96,7 +94,7 @@ const BgrPagination = ({
                 aria-label="Go to previous page"
                 title="이전 페이지"
             >
-                <ChevronLeft className="h-4 w-4" />
+                <ForwardArrow className="h-5 w-5" />
             </button>
 
             {/* 페이지 번호 버튼들 */}
@@ -132,7 +130,7 @@ const BgrPagination = ({
                 aria-label="Go to next page"
                 title="다음 페이지"
             >
-                <ChevronRight className="h-4 w-4" />
+                <NextArrow className="h-5 w-5" />
             </button>
 
             {/* >> 버튼: 마지막 그룹으로 이동 */}
@@ -143,7 +141,7 @@ const BgrPagination = ({
                 aria-label="Go to last page group"
                 title="마지막 페이지 그룹"
             >
-                <ChevronsRight className="h-4 w-4" />
+                <DoubleNextArrow className="h-5 w-5" />
             </button>
         </nav>
     )
