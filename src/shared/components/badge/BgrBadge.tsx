@@ -20,6 +20,10 @@ const bgrBadgeVariants = cva(
     {
         variants: {
             variant: {
+                outline: 'border-[0.5px]',
+                text: 'border-0 bg-white',
+            },
+            color: {
                 gray: '',
                 grayDark: '',
                 yellow: '',
@@ -27,87 +31,80 @@ const bgrBadgeVariants = cva(
                 red: '',
                 dark: '',
             },
-            appearance: {
-                outline: 'border-[0.5px]',
-                text: 'border-0 bg-white',
-            },
         },
         compoundVariants: [
             // Gray outline
             {
-                variant: 'gray',
-                appearance: 'outline',
+                variant: 'outline',
+                color: 'gray',
                 class: ['bg-gray-200', 'border-gray-600', 'text-gray-600'],
             },
             // Gray Dark outline
             {
-                variant: 'grayDark',
-                appearance: 'outline',
+                variant: 'outline',
+                color: 'grayDark',
                 class: ['bg-gray-300', 'border-gray-600', 'text-gray-800'],
             },
             // Yellow outline
             {
-                variant: 'yellow',
-                appearance: 'outline',
+                variant: 'outline',
+                color: 'yellow',
                 class: ['bg-yellow-50', 'border-yellow-800', 'text-yellow-800'],
             },
             // Green outline
             {
-                variant: 'green',
-                appearance: 'outline',
+                variant: 'outline',
+                color: 'green',
                 class: ['bg-green-50', 'border-green-800', 'text-green-800'],
             },
             // Red outline
             {
-                variant: 'red',
-                appearance: 'outline',
+                variant: 'outline',
+                color: 'red',
                 class: ['bg-red-50', 'border-red-600', 'text-red-600'],
             },
             // Dark outline
             {
-                variant: 'dark',
-                appearance: 'outline',
+                variant: 'outline',
+                color: 'dark',
                 class: ['bg-gray-600', 'border-gray-600', 'text-white'],
             },
             // Text variants (non-outline)
             {
-                variant: 'gray',
-                appearance: 'text',
+                variant: 'text',
+                color: 'gray',
                 class: 'text-gray-800',
             },
             {
-                variant: 'green',
-                appearance: 'text',
+                variant: 'text',
+                color: 'green',
                 class: 'text-green-800',
             },
             {
-                variant: 'red',
-                appearance: 'text',
+                variant: 'text',
+                color: 'red',
                 class: 'text-red-500',
             },
         ],
         defaultVariants: {
-            variant: 'gray',
-            appearance: 'outline',
+            color: 'gray',
+            variant: 'outline',
         },
     },
 )
 
 interface bgrBadgeProps
-    extends HTMLAttributes<HTMLDivElement>,
+    extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
         VariantProps<typeof bgrBadgeVariants> {
     children: ReactNode
 }
 
 const BgrBadge = forwardRef<HTMLDivElement, bgrBadgeProps>(
-    ({ className, variant, appearance, children, ...props }, ref) => {
+    ({ className, variant, color, children, ...props }, ref) => {
         return (
             <div
                 ref={ref}
-                className={cn(
-                    bgrBadgeVariants({ variant, appearance }),
-                    className,
-                )}
+                className={cn(bgrBadgeVariants({ variant, color }), className)}
                 {...props}
             >
                 {children}
