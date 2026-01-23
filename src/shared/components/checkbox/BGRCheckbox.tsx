@@ -1,38 +1,67 @@
 import * as Checkbox from '@radix-ui/react-checkbox'
-import { Check } from 'lucide-react'
-import clsx from 'clsx'
+import CheckboxOffIcon from 'src/assets/icons/icn-check-off.svg?react'
+import CheckboxMultipleIcon from 'src/assets/icons/icn-check-on-multiple.svg?react'
+import CheckboxOnOutlineIcon from 'src/assets/icons/icn-check-on-outline.svg?react'
+import CheckboxOnFilledIcon from 'src/assets/icons/icn-check-on.svg?react'
+import { cn } from 'src/shared/lib/shadcn/lib/utils'
 
-interface BGRCheckboxProps {
-    checked?: boolean
-    onCheckedChange?: (checked: boolean) => void
-    id?: string
+interface BgrCheckboxProps {
     className?: string
+    checked?: Checkbox.CheckedState
+    onCheckedChange?: (checked: Checkbox.CheckedState) => void
     disabled?: boolean
+    size?: 'm' | 'l'
+    label?: string
+    variant?: 'default' | 'multiple'
 }
 
-export default function BGRCheckbox({
+export default function BgrCheckbox({
+    className,
     checked,
     onCheckedChange,
-    className,
+    disabled = false,
+    size = 'l',
+    label,
+    variant = 'default',
     ...rest
-}: BGRCheckboxProps) {
+}: BgrCheckboxProps) {
     return (
-        <Checkbox.Root
-            checked={checked}
-            onCheckedChange={onCheckedChange}
-            className={clsx(
-                'flex h-5 w-5 items-center justify-center rounded border-2 border-gray-300 bg-white transition-all',
-                'data-[state=checked]:border-black data-[state=checked]:bg-black',
-                'hover:border-gray-400',
-                'focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none',
-                'disabled:cursor-not-allowed disabled:opacity-50',
+        <label
+            className={cn(
+                'flex items-center gap-2',
+                disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
                 className,
             )}
-            {...rest}
         >
-            <Checkbox.Indicator className="flex items-center justify-center">
-                <Check className="h-4 w-4 text-white" strokeWidth={3} />
-            </Checkbox.Indicator>
-        </Checkbox.Root>
+            <Checkbox.Root
+                checked={checked}
+                onCheckedChange={onCheckedChange}
+                disabled={disabled}
+                className={cn(
+                    'group relative flex h-4 w-4 shrink-0 items-center justify-center focus:outline-none',
+                )}
+                {...rest}
+            >
+                <CheckboxOffIcon className="h-full w-full group-data-[state=checked]:hidden group-data-[state=indeterminate]:hidden" />
+                <Checkbox.Indicator className="h-full w-full" asChild>
+                    {variant === 'multiple' ? (
+                        checked === 'indeterminate' ? (
+                            <CheckboxMultipleIcon className="h-full w-full" />
+                        ) : (
+                            <CheckboxOnOutlineIcon className="h-full w-full" />
+                        )
+                    ) : (
+                        <CheckboxOnFilledIcon className="h-full w-full" />
+                    )}
+                </Checkbox.Indicator>
+            </Checkbox.Root>
+            {label && (
+                <span
+                    className={`${cn('text-gray-900')} ${size === 'l' ? 'text-title-16-r' : 'text-body-12-r'}`}
+                >
+                    {label}
+                </span>
+            )}
+        </label>
     )
 }
