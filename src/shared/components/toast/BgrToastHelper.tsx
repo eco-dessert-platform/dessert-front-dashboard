@@ -36,7 +36,7 @@ const createToastHelper = (
 
 export const bgrToast = {
     /**
-     * 성공 토스트 입니다.
+     * 성공 토스트 입니다
      *
      * @param message - 메인 메시지
      * @param subMessage - 보조 메시지 (선택)
