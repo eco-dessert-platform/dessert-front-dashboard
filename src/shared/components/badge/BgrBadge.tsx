@@ -93,7 +93,7 @@ const bgrBadgeVariants = cva(
     },
 )
 
-interface bgrBadgeProps
+interface BgrBadgeProps
     extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
         VariantProps<typeof bgrBadgeVariants> {
     content: string
@@ -107,7 +107,7 @@ const BgrBadge = ({
     className,
     ref,
     ...props
-}: bgrBadgeProps) => {
+}: BgrBadgeProps) => {
     return (
         <div
             ref={ref}
