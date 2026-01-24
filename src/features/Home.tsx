@@ -1,5 +1,7 @@
+import BgrLayout from "src/shared/layout/BgrLayout"
+
 const Home = () => {
-    return <div></div>
+    return <BgrLayout>asdf</BgrLayout>
 }
 
 export default Home
