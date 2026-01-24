@@ -4,8 +4,9 @@ import BgrToast from './BgrToast'
 // react-toastify와 통합된 헬퍼 함수들
 const createToastHelper = (
     message: string,
-    variant: 'success' | 'error' | 'warning' | 'info',
+    variant: 'success' | 'error' | 'info',
     options?: ToastOptions,
+    subMessage?: string,
 ): Id => {
     const toastIdRef: { current: Id | null } = { current: null }
 
@@ -13,6 +14,7 @@ const createToastHelper = (
         return (
             <BgrToast
                 message={message}
+                subMessage={subMessage}
                 variant={variant}
                 onClose={() => {
                     if (toastIdRef.current !== null) {
@@ -32,16 +34,13 @@ const createToastHelper = (
 }
 
 export const bgrToast = {
-    success: (message: string, options?: ToastOptions): Id => {
-        return createToastHelper(message, 'success', options)
+    success: (message: string,  subMessage?: string, options?: ToastOptions): Id => {
+        return createToastHelper(message, 'success', options, subMessage)
     },
-    error: (message: string, options?: ToastOptions): Id => {
-        return createToastHelper(message, 'error', options)
+    error: (message: string, subMessage?: string, options?: ToastOptions): Id => {
+        return createToastHelper(message, 'error', options, subMessage)
     },
-    warning: (message: string, options?: ToastOptions): Id => {
-        return createToastHelper(message, 'warning', options)
-    },
-    info: (message: string, options?: ToastOptions): Id => {
-        return createToastHelper(message, 'info', options)
+    info: (message: string, subMessage?: string, options?: ToastOptions): Id => {
+        return createToastHelper(message, 'info', options, subMessage)
     },
 }
