@@ -122,3 +122,4 @@ const BgrBadge = ({
 BgrBadge.displayName = 'BgrBadge'
 
 export { BgrBadge }
+export default BgrBadge
