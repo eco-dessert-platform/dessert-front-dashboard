@@ -314,7 +314,7 @@ const DefaultTable = () => {
         toggleRow,
     })
 
-    return <BgrTable data={tableData} columns={columns} />
+    return <BgrTable data={tableData} columns={columns} topArea={<TopArea />} />
 }
 
 export const Default: Story = {
@@ -335,5 +335,11 @@ function ToggleSale({ checked, onCheckedChange }: { checked: boolean, onCheckedC
           />
           <span className="text-body-12-r text-gray-700">판매중지</span>
         </div>
+    )
+}
+
+function TopArea() {
+    return (
+       <BgrButton title="top area button" />
     )
 }

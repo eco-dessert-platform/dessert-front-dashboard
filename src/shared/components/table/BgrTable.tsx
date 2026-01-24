@@ -16,9 +16,11 @@ declare module '@tanstack/react-table' {
 interface BgrTableProps<T> {
     data: T[]
     columns: ColumnDef<T>[]
+    topArea?: React.ReactNode
 }
 
-function BgrTable<T>({ data, columns }: BgrTableProps<T>) {
+
+function BgrTable<T>({ data, columns, topArea }: BgrTableProps<T>) {
     const table = useReactTable<T>({
         data,
         columns,
@@ -27,6 +29,12 @@ function BgrTable<T>({ data, columns }: BgrTableProps<T>) {
     const { getHeaderGroups, getRowModel } = table
 
     return (
+            <div className="rounded-md border border-gray-300 overflow-hidden">
+                {topArea && (
+                    <div className="flex items-center justify-between border-b border-gray-200 pt-4 pb-3 px-6 ">
+                    {topArea}
+                    </div>
+                )}
             <table className="min-w-max border-collapse overflow-x-auto">
                 <thead>
                     {getHeaderGroups().map((headerGroup) => (
@@ -53,7 +61,7 @@ function BgrTable<T>({ data, columns }: BgrTableProps<T>) {
                 </thead>
                 <tbody>
                     {getRowModel().rows.map((row) => (
-                        <tr key={row.id} className="border-b border-gray-300">
+                        <tr key={row.id} className="border-b border-gray-300 last:border-b-0">
                             {row.getVisibleCells().map((cell) => {
                                 const rowSpan =
                                     cell.column.columnDef.meta?.getRowSpan?.(
@@ -89,6 +97,7 @@ function BgrTable<T>({ data, columns }: BgrTableProps<T>) {
                     ))}
                 </tbody>
             </table>
+            </div>
     )
 }
 
