@@ -79,15 +79,12 @@ yarn test         # 테스트 실행
 4. Push to the branch
 5. Create a Pull Request
 
+
 ## 📞 Support
 
 - **Documentation**: [한국어](./doc/kor/README.md) | [English](./doc/eg/README.md)
 - **Issues**: [GitHub Issues](../../issues)
 - **Discussions**: [GitHub Discussions](../../discussions)
-
-## 📄 License
-
-This project is licensed under the MIT License.
 
 ---
 

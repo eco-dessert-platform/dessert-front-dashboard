@@ -64,6 +64,7 @@
         "@storybook/react-vite": "^8.6.12",
         "@storybook/test": "^8.6.12",
         "@tailwindcss/vite": "^4.0.17",
+        "@types/aws-lambda": "^8.10.143",
         "@types/culori": "^4",
         "@types/node": "^22.13.14",
         "@types/react": "^19.0.10",
