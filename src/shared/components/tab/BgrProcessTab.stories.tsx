@@ -25,23 +25,9 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Step1: Story = {
+export const Default: Story = {
   args: {
     currentStep: 1,
-    steps: ['판매자 인증', '스토어 정보 등록', '회원가입 완료'],
-  },
-}
-
-export const Step2: Story = {
-  args: {
-    currentStep: 2,
-    steps: ['판매자 인증', '스토어 정보 등록', '회원가입 완료'],
-  },
-}
-
-export const Step3: Story = {
-  args: {
-    currentStep: 3,
     steps: ['판매자 인증', '스토어 정보 등록', '회원가입 완료'],
   },
 }
