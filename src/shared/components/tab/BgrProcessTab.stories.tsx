@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { BgrProcessTab } from './BgrProcessTab'
 
 const meta = {
-  title: 'Components/BgrProcessTab',
+  title: 'Components/Tabs/BgrProcessTab',
   component: BgrProcessTab,
   tags: ['autodocs'],
   argTypes: {

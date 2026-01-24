@@ -8,7 +8,7 @@ type BgrLineTabsStoryProps = React.ComponentProps<typeof BgrLineTabs> & {
 }
 
 const meta = {
-  title: 'Components/BgrLineTabs',
+  title: 'Components/Tabs/BgrLineTab',
   component: BgrLineTabs,
   tags: ['autodocs'],
   parameters: {

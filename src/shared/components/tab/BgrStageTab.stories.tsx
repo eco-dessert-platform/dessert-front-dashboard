@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { BgrStageTab } from './BgrStageTab'
 
 const meta = {
-  title: 'Components/BgrStageTab',
+  title: 'Components/Tabs/BgrStageTab',
   component: BgrStageTab,
   tags: ['autodocs'],
   argTypes: {

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { BgrBtnTabs, BgrBtnTabsList, BgrBtnTabsTrigger } from './BgrBtnTab'
 
 const meta = {
-  title: 'Components/BgrBtnTabs',
+  title: 'Components/Tabs/BgrBtnTab',
   component: BgrBtnTabs,
   tags: ['autodocs'],
   parameters: {
