@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
-import BgrCheckbox from './BgrCheckbox'
+import BgrCheckbox from './BBgrCheckbox'
 
 const meta: Meta<typeof BgrCheckbox> = {
   title: 'Components/BgrCheckbox',
