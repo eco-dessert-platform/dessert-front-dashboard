@@ -1,36 +1,29 @@
-import * as React from 'react'
 import {
     ChevronDownIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
 } from 'lucide-react'
+import * as React from 'react'
 import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker'
 
 import { cn } from 'src/shared/lib/shadcn/lib/utils.ts'
-import {
-    Button,
-    buttonVariants,
-} from 'src/shared/lib/shadcn/components/ui/button'
 
 function Calendar({
     className,
     classNames,
     showOutsideDays = true,
     captionLayout = 'label',
-    buttonVariant = 'ghost',
     formatters,
     components,
     ...props
-}: React.ComponentProps<typeof DayPicker> & {
-    buttonVariant?: React.ComponentProps<typeof Button>['variant']
-}) {
+}: React.ComponentProps<typeof DayPicker> ) {
     const defaultClassNames = getDefaultClassNames()
 
     return (
         <DayPicker
             showOutsideDays={showOutsideDays}
             className={cn(
-                'bg-background group/calendar [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent',
+                'bg-background group/calendar [--cell-size:--spacing(8)] in-data-[slot=card-content]:bg-transparent',
                 String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
                 String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
                 className,
@@ -56,12 +49,10 @@ function Calendar({
                     defaultClassNames.nav,
                 ),
                 button_previous: cn(
-                    buttonVariants({ variant: buttonVariant }),
                     'size-(--cell-size) aria-disabled:opacity-50 p-0 select-none',
                     defaultClassNames.button_previous,
                 ),
                 button_next: cn(
-                    buttonVariants({ variant: buttonVariant }),
                     'size-(--cell-size) aria-disabled:opacity-50 p-0 select-none',
                     defaultClassNames.button_next,
                 ),
@@ -205,10 +196,8 @@ function CalendarDayButton({
     }, [modifiers.focused])
 
     return (
-        <Button
+        <button
             ref={ref}
-            variant="ghost"
-            size="icon"
             data-day={day.date.toLocaleDateString()}
             data-selected-single={
                 modifiers.selected &&
