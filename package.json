@@ -59,13 +59,7 @@
         "vaul": "^1.1.2"
     },
     "devDependencies": {
-        "@chromatic-com/storybook": "^3",
         "@eslint/js": "^9.21.0",
-        "@storybook/addon-a11y": "^8.6.12",
-        "@storybook/addon-essentials": "^8.6.12",
-        "@storybook/addon-onboarding": "^8.6.12",
-        "@storybook/blocks": "^8.6.12",
-        "@storybook/experimental-addon-test": "^8.6.12",
         "@storybook/react": "^8.6.12",
         "@storybook/react-vite": "^8.6.12",
         "@storybook/test": "^8.6.12",

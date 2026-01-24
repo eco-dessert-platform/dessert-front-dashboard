@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
 import { useState } from 'react'
-import { BgrPagination } from './BgrPagination'
 import type { BgrPaginationProps } from './BgrPagination'
+import { BgrPagination } from './BgrPagination'
 
 const meta = {
     title: 'Components/BgrPagination',
@@ -12,7 +11,7 @@ const meta = {
     },
     tags: ['autodocs'],
     args: {
-        onPageChange: fn(),
+        onPageChange: () => {},
     },
 } satisfies Meta<typeof BgrPagination>
 
