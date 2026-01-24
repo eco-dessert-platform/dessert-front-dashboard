@@ -1,8 +1,8 @@
-import react from '@vitejs/plugin-react-swc'
-import path, { resolve } from 'path'
 import tailwindcss from '@tailwindcss/vite'
-import { defineConfig, Plugin } from 'vite'
+import react from '@vitejs/plugin-react-swc'
 import fs, { copyFileSync } from 'fs'
+import path, { resolve } from 'path'
+import { defineConfig, Plugin } from 'vite'
 import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
@@ -65,7 +65,7 @@ export default defineConfig({
                         '@radix-ui/react-tabs',
                         '@radix-ui/react-tooltip',
                     ],
-                },
+                }
             },
         },
     },

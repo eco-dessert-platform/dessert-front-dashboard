@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { shallowEqual } from 'react-redux'
+import { sellerAction } from 'src/features/seller/sellerReducer'
 import {
     useAppDispatch,
     useAppSelector,
 } from 'src/global/store/redux/reduxHooks.tsx'
-import { shallowEqual } from 'react-redux'
-import { sellerAction } from 'src/features/seller/sellerReducer'
 
 const SellerProfile = () => {
     const dispatch = useAppDispatch()
-    const { sellerProfile, updateSellerProfileResult } = useAppSelector(
+    const { sellerProfile } = useAppSelector(
         ({ sellerReducer }) => ({
             sellerProfile: sellerReducer.sellerProfile,
             updateSellerProfileResult: sellerReducer.updateSellerProfileResult,

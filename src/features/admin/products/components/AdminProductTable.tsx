@@ -1,12 +1,12 @@
-import { useMemo, useEffect, useCallback } from 'react'
 import { createColumnHelper } from '@tanstack/react-table'
-import { Button } from 'src/shared/lib/shadcn/components/ui/button'
-import { SSdataTable } from 'src/shared/components/table/SSdataTable'
+import { useCallback, useEffect, useMemo } from 'react'
+import { shallowEqual } from 'react-redux'
 import {
     useAppDispatch,
     useAppSelector,
 } from 'src/global/store/redux/reduxHooks.tsx'
-import { shallowEqual } from 'react-redux'
+import { SSdataTable } from 'src/shared/components/table/SSdataTable'
+import { Button } from 'src/shared/lib/shadcn/components/ui/button'
 import { adminProductsAction } from '../adminProductsReducer'
 import { AdminProductSearchFilter } from '../type/adminProductFilterType'
 import type { AdminProductItem } from '../type/adminProductType'
@@ -200,13 +200,16 @@ export default function AdminProductTable() {
         )
     }, [selectedProductIds.length, allProductIds.length])
 
-    const getSelectionState = (productId: string, optionId?: string) => {
-        const isProductSelected = selectedProductIds.includes(productId)
-        const isOptionSelected = optionId
-            ? selectedOptionIds.includes(`${productId}:${optionId}`)
-            : false
-        return { isProductSelected, isOptionSelected }
-    }
+    const getSelectionState = useCallback(
+        (productId: string, optionId?: string) => {
+            const isProductSelected = selectedProductIds.includes(productId)
+            const isOptionSelected = optionId
+                ? selectedOptionIds.includes(`${productId}:${optionId}`)
+                : false
+            return { isProductSelected, isOptionSelected }
+        },
+        [selectedProductIds, selectedOptionIds],
+    )
 
     const columns = useMemo(() => {
         return [
