@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import { AlertCircle, CheckCircle2, Info, X, XCircle } from 'lucide-react'
-import React from 'react'
 
 interface BgrToastProps {
     message: string

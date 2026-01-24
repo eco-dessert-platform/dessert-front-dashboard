@@ -1,5 +1,5 @@
 import { Id, toast, ToastOptions } from 'react-toastify'
-import BgrToast from './BgrToast.tsx'
+import BgrToast from './BgrToast'
 
 // react-toastify와 통합된 헬퍼 함수들
 const createToastHelper = (

@@ -4,7 +4,7 @@ import {
     useAppDispatch,
     useAppSelector,
 } from 'src/global/store/redux/reduxHooks.tsx'
-import { bgrToast } from 'src/shared/components/toast/bgrToast'
+import { bgrToast } from 'src/shared/components/toast/toast'
 import { adminProductsAction } from '../adminProductsReducer'
 import { AdminProductSearchFilter } from '../type/adminProductFilterType'
 import type { AdminAPIResponse } from '../type/adminProductType'
