@@ -1,5 +1,5 @@
-> 제목
-	✨ Feat, 🐛 Fix, 📦 Chore, ♻️ Refactor, 💄 Style, 📝 Doc, 🧪 Test, 🚨 Hotfix, 📖 Storybook, ⛑️ QA
+## PR 제목 타입
+> ✨ Feat, 🐛 Fix, 📦 Chore, ♻️ Refactor, 💄 Style, 📝 Doc, 🧪 Test, 🚨 Hotfix, 📖 Storybook, ⛑️ QA
 
 ## 이슈 번호
 
