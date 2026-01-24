@@ -1,4 +1,3 @@
-import { Button } from 'src/shared/lib/shadcn/components/ui/button.tsx'
 import { Input } from 'src/shared/lib/shadcn/components/ui/input.tsx'
 import BgrLabel from '../label/BgrLabel'
 
@@ -33,7 +32,7 @@ const AddressInput = ({
                             readOnly
                             disabled={disabled}
                         />
-                        <Button
+                        <button
                             className="bg-primary-500 flex min-w-[90px] items-center justify-center rounded-[10px] px-4 py-2"
                             onClick={onPostalCodeSearch}
                             disabled={disabled}
@@ -41,7 +40,7 @@ const AddressInput = ({
                             <p className="text-title-16-m text-white">
                                 우편번호 검색
                             </p>
-                        </Button>
+                        </button>
                     </div>
                 </div>
 
