@@ -12,7 +12,7 @@ const meta: Meta<typeof BgrCheckbox> = {
   argTypes: {
     size: {
       control: 'radio',
-      options: ['m', 'l'],
+      options: ['md', 'lg'],
       description: '체크박스 크기 및 라벨 폰트 크기',
     },
     checked: {
@@ -28,15 +28,15 @@ const meta: Meta<typeof BgrCheckbox> = {
       control: 'text',
       description: '라벨 텍스트',
     },
-    variant: {
+    type: {
       control: 'radio',
-      options: ['default', 'multiple'],
+      options: ['single', 'multiple'],
       description: '체크박스 스타일 타입',
     },
   },
   args: {
     onCheckedChange: fn(),
-    variant: 'default',
+    type: 'single',
   },
 }
 
@@ -46,7 +46,7 @@ type Story = StoryObj<typeof BgrCheckbox>
 export const Default: Story = {
   args: {
     checked: false,
-    label: 'ChebkBox',
+    label: 'CheckBox',
   },
 }
 
@@ -54,19 +54,14 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     checked: false,
-    label: 'ChebkBox',
+    label: 'CheckBox',
   },
 }
 
 export const Selected: Story = {
   render: (args) => (
     <div className="flex flex-col gap-4">
-      <BgrCheckbox
-        {...args}
-        variant="default"
-        checked={true}
-        label="ChebkBox"
-      />
+      <BgrCheckbox {...args} type="single" checked={true} label="CheckBox" />
     </div>
   ),
 }
@@ -74,17 +69,12 @@ export const Selected: Story = {
 export const VariantMultiple: Story = {
   render: (args) => (
     <div className="flex flex-col gap-4">
+      <BgrCheckbox {...args} type="multiple" checked={true} label="CheckBox" />
       <BgrCheckbox
         {...args}
-        variant="multiple"
-        checked={true}
-        label="ChebkBox"
-      />
-      <BgrCheckbox
-        {...args}
-        variant="multiple"
+        type="multiple"
         checked="indeterminate"
-        label="ChebkBox"
+        label="CheckBox"
       />
     </div>
   ),
