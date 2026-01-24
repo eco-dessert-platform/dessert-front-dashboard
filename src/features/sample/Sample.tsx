@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
-import { useAppDispatch } from 'src/global/store/redux/reduxHooks.tsx'
-import { sampleAction } from 'src/features/sample/sampleReducer.ts'
+import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import { Card } from 'src/shared/lib/shadcn/components/ui/card.tsx'
+import { sampleAction } from 'src/features/sample/sampleReducer.ts'
+import { useAppDispatch } from 'src/global/store/redux/reduxHooks.tsx'
 import { Button } from 'src/shared/lib/shadcn/components/ui/button.tsx'
+import { Card } from 'src/shared/lib/shadcn/components/ui/card.tsx'
 
 const Sample = () => {
     const navigate = useNavigate()
@@ -18,11 +18,6 @@ const Sample = () => {
     // 카운터 값
     const [count, setCount] = useState(0)
 
-    // 증가 함수
-    const increment = () => setCount(count + 1)
-
-    // 감소 함수
-    const decrement = () => setCount(count - 1)
 
     // ------------------------ 다른 기능 ------------------------
 
@@ -32,7 +27,7 @@ const Sample = () => {
         return () => {
             dispatch(sampleAction.initialize('value'))
         }
-    }, [])
+    }, [dispatch])
     const notify = () => toast('Wow so easy !')
 
     return (

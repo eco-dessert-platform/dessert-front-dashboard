@@ -1,13 +1,12 @@
 import WhHeader from 'src/shared/layout/WhHeader.tsx'
 
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 interface WhLayoutProps {
     children?: ReactNode
-    title?: string
 }
 
-const WhLayout = ({ children, title }: WhLayoutProps) => {
+const WhLayout = ({ children }: WhLayoutProps) => {
     return (
         <div>
             <WhHeader />

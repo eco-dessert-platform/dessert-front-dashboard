@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react'
-import { useAppDispatch } from 'src/global/store/redux/reduxHooks.tsx'
 import { routerAction } from 'src/global/router/routerReducer.tsx'
+import { useAppDispatch } from 'src/global/store/redux/reduxHooks.tsx'
 
 const useRouteListener = () => {
     const dispatch = useAppDispatch()
@@ -48,7 +48,7 @@ const useRouteListener = () => {
 
     useLayoutEffect(() => {
         dispatch(routerAction.locationChange(route))
-    }, [route])
+    }, [route,dispatch])
 }
 
 export default useRouteListener

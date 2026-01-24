@@ -1,8 +1,7 @@
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { ChevronDown } from 'lucide-react'
-import BgrLabel from '../label/BgrLabel'
 import { cn } from 'src/shared/lib/shadcn/lib/utils'
-import clsx from 'clsx'
+import BgrLabel from '../label/BgrLabel'
 
 interface BgrSelectOption {
     label: string

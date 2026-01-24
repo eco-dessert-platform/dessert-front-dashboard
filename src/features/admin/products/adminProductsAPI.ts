@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios'
 import { client } from 'src/global/api/client.tsx'
-import type { AdminProductSearchFilter } from './type/adminProductFilterType'
 import {
     AdminAPIResponse,
     AdminDeleteOptionsRequest,
@@ -13,7 +12,6 @@ import { MOCK_PRODUCT_LIST } from './data/adminProductsMockData'
 
 // 상품 목록 조회 API
 export const getAdminProductList = (
-    params: AdminProductSearchFilter,
 ): Promise<AxiosResponse<AdminProductListResponse>> => {
     // API 연동
     // return client.get('/api/v1/admin/products', { params })

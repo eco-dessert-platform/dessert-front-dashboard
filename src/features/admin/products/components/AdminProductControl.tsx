@@ -1,13 +1,14 @@
-import { useEffect, useMemo, useCallback } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import { shallowEqual } from 'react-redux'
 import {
     useAppDispatch,
     useAppSelector,
 } from 'src/global/store/redux/reduxHooks.tsx'
-import { shallowEqual } from 'react-redux'
+import { bgrToast } from 'src/shared/components/toast/bgrToast'
 import { adminProductsAction } from '../adminProductsReducer'
 import { AdminProductSearchFilter } from '../type/adminProductFilterType'
+import type { AdminAPIResponse } from '../type/adminProductType'
 import AdminProductControlButton from './AdminProductControlButton'
-import { bgrToast } from 'src/shared/components/toast/BgrToast'
 
 const getInitialFilterValue = (): AdminProductSearchFilter => ({
     page: 0,
@@ -43,9 +44,16 @@ const AdminProductControl = () => {
     }, [dispatch])
 
     // 공통 결과 처리 핸들러
+    type AdminResultState = {
+        data: AdminAPIResponse<null> | null
+        loading: boolean
+        error: boolean
+        errorMsg: string
+    }
+
     const handleResult = useCallback(
         (
-            res: any,
+            res: AdminResultState | null,
             successMsg: string,
             actionType: Parameters<typeof adminProductsAction.initialize>[0],
         ) => {

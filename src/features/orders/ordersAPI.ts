@@ -1,12 +1,9 @@
 import { AxiosResponse } from 'axios'
-import { client } from 'src/global/api/client.tsx'
 import { createMockResponse } from 'src/shared/utils/mockResponse'
-import { MOCK_ORDER_LIST, MOCK_ORDER_COMPLETED } from './data/ordersMockData'
-import type { OrderSearchFilter } from './type/orderFilterType'
+import { MOCK_ORDER_COMPLETED, MOCK_ORDER_LIST } from './data/ordersMockData'
 
 // 주문 목록 조회 API
 export const getOrderList = (
-    payload: OrderSearchFilter,
 ): Promise<AxiosResponse<typeof MOCK_ORDER_LIST>> => {
     // TODO: 실제 API 연동 시 아래 주석 해제
     // return client.get('/orders', { params: payload })
@@ -17,7 +14,6 @@ export const getOrderList = (
 
 // 완료된 주문 목록 조회 API
 export const getOrderCompletedList = (
-    payload: OrderSearchFilter,
 ): Promise<AxiosResponse<typeof MOCK_ORDER_COMPLETED>> => {
     // TODO: 실제 API 연동 시 아래 주석 해제
     // return client.get('/orders/completed', { params: payload })

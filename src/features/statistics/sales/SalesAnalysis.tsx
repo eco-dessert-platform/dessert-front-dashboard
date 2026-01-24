@@ -1,10 +1,25 @@
+import { format } from 'date-fns'
+import { ko } from 'date-fns/locale'
+import { CalendarDays } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
+import { type DateRange } from 'react-day-picker'
+import { shallowEqual } from 'react-redux'
+import {
+    Bar,
+    CartesianGrid,
+    ComposedChart,
+    Line,
+    XAxis,
+    YAxis,
+} from 'recharts'
+import InfoIconSvg from 'src/assets/icons/info-icon.svg?react'
+import { statisticsAction } from 'src/features/statistics/statisticsReducer'
 import {
     useAppDispatch,
     useAppSelector,
 } from 'src/global/store/redux/reduxHooks.tsx'
-import { shallowEqual } from 'react-redux'
-import { statisticsAction } from 'src/features/statistics/statisticsReducer'
+import { Button } from 'src/shared/lib/shadcn/components/ui/button'
+import { Calendar } from 'src/shared/lib/shadcn/components/ui/calendar'
 import {
     Card,
     CardContent,
@@ -18,26 +33,11 @@ import {
     type ChartConfig,
 } from 'src/shared/lib/shadcn/components/ui/chart'
 import { Skeleton } from 'src/shared/lib/shadcn/components/ui/skeleton'
-import { Button } from 'src/shared/lib/shadcn/components/ui/button'
-import {
-    Line,
-    Bar,
-    ComposedChart,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-} from 'recharts'
-import { format } from 'date-fns'
-import { ko } from 'date-fns/locale'
-import { type DateRange } from 'react-day-picker'
-import { Calendar } from 'src/shared/lib/shadcn/components/ui/calendar'
-import { CalendarDays, Clock } from 'lucide-react'
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
 } from 'src/shared/lib/shadcn/components/ui/tooltip'
-import InfoIconSvg from 'src/assets/icons/info-icon.svg?react'
 
 // 정보 아이콘 컴포넌트
 const InfoIcon = ({ className }: { className?: string }) => {
@@ -168,7 +168,7 @@ const SalesAnalysis = () => {
         to: new Date(2025, 2, 7), // 2025.03.07
     })
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
-    
+
     // 각 그래프별 기간 선택 상태
     const [chartPeriods, setChartPeriods] = useState<Record<string, PeriodType>>({
         payment: 'day',
@@ -198,27 +198,27 @@ const SalesAnalysis = () => {
     // 일별 결제금액 데이터
     const dailyPaymentData = useMemo(() => {
         if (!salesAnalysis?.data) return []
-        
-        const data = Array.isArray(salesAnalysis.data) 
-            ? salesAnalysis.data 
-            : (salesAnalysis.data as { items?: unknown[]; data?: unknown[] })?.items || 
+
+        const data = Array.isArray(salesAnalysis.data)
+            ? salesAnalysis.data
+            : (salesAnalysis.data as { items?: unknown[]; data?: unknown[] })?.items ||
               (salesAnalysis.data as { items?: unknown[]; data?: unknown[] })?.data || []
-        
+
         const mapped = data.map((item: Record<string, unknown>) => ({
             date: (item.date || item.period || item.label || '') as string,
             payment: (item.payment || item.paymentAmount || item.amount || 0) as number,
         }))
-        
+
         // 7일간 평균 계산
         const average = mapped.length > 0
             ? mapped.reduce((sum: number, item: { payment: number }) => sum + item.payment, 0) / mapped.length
             : 0
-        
+
         return mapped.map((item: { date: string; payment: number }) => ({
             ...item,
             average: Math.round(average),
-            dateLabel: item.date.includes('-') 
-                ? item.date.split('-').slice(1).join('.') 
+            dateLabel: item.date.includes('-')
+                ? item.date.split('-').slice(1).join('.')
                 : item.date,
         }))
     }, [salesAnalysis?.data])
@@ -226,18 +226,18 @@ const SalesAnalysis = () => {
     // 일별 결제자수 및 결제수 데이터
     const dailyPayerData = useMemo(() => {
         if (!salesAnalysis?.data) return []
-        
-        const data = Array.isArray(salesAnalysis.data) 
-            ? salesAnalysis.data 
-            : (salesAnalysis.data as { items?: unknown[]; data?: unknown[] })?.items || 
+
+        const data = Array.isArray(salesAnalysis.data)
+            ? salesAnalysis.data
+            : (salesAnalysis.data as { items?: unknown[]; data?: unknown[] })?.items ||
               (salesAnalysis.data as { items?: unknown[]; data?: unknown[] })?.data || []
-        
+
         return data.map((item: Record<string, unknown>) => ({
             date: (item.date || item.period || item.label || '') as string,
             payers: (item.payers || item.payerCount || 0) as number,
             payments: (item.payments || item.paymentCount || 0) as number,
-            dateLabel: (item.date as string)?.includes('-') 
-                ? (item.date as string).split('-').slice(1).join('.') 
+            dateLabel: (item.date as string)?.includes('-')
+                ? (item.date as string).split('-').slice(1).join('.')
                 : (item.date as string),
         }))
     }, [salesAnalysis?.data])
@@ -259,24 +259,24 @@ const SalesAnalysis = () => {
     // 일별 환불율 데이터
     const refundData = useMemo(() => {
         if (!salesAnalysis?.data) return []
-        
-        const data = Array.isArray(salesAnalysis.data) 
-            ? salesAnalysis.data 
-            : (salesAnalysis.data as { items?: unknown[]; data?: unknown[] })?.items || 
+
+        const data = Array.isArray(salesAnalysis.data)
+            ? salesAnalysis.data
+            : (salesAnalysis.data as { items?: unknown[]; data?: unknown[] })?.items ||
               (salesAnalysis.data as { items?: unknown[]; data?: unknown[] })?.data || []
-        
+
         return data.map((item: Record<string, unknown>) => {
             const payment = (item.payment || item.paymentAmount || 0) as number
             const refund = (item.refund || item.refundAmount || 0) as number
             const rate = payment > 0 ? (refund / payment) * 100 : 0
-            
+
             return {
                 date: (item.date || item.period || item.label || '') as string,
                 payment,
                 refund,
                 rate: Math.round(rate * 10) / 10,
-                dateLabel: (item.date as string)?.includes('-') 
-                    ? (item.date as string).split('-').slice(1).join('.') 
+                dateLabel: (item.date as string)?.includes('-')
+                    ? (item.date as string).split('-').slice(1).join('.')
                     : (item.date as string),
             }
         })
@@ -323,7 +323,7 @@ const SalesAnalysis = () => {
                                 </div>
                             )}
                         </div>
-                
+
                     </div>
                 </div>
             </div>
@@ -356,8 +356,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, payment: 'day' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none border-r border-gray-200 bg-white ${
-                                chartPeriods.payment === 'day' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.payment === 'day'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -368,8 +368,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, payment: 'week' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none border-r border-gray-200 bg-white ${
-                                chartPeriods.payment === 'week' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.payment === 'week'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -380,8 +380,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, payment: 'month' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none bg-white ${
-                                chartPeriods.payment === 'month' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.payment === 'month'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -473,8 +473,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, payer: 'day' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none border-r border-gray-200 bg-white ${
-                                chartPeriods.payer === 'day' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.payer === 'day'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -485,8 +485,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, payer: 'week' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none border-r border-gray-200 bg-white ${
-                                chartPeriods.payer === 'week' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.payer === 'week'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -497,8 +497,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, payer: 'month' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none bg-white ${
-                                chartPeriods.payer === 'month' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.payer === 'month'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -588,8 +588,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, weekday: 'day' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none border-r border-gray-200 bg-white ${
-                                chartPeriods.weekday === 'day' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.weekday === 'day'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -600,8 +600,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, weekday: 'week' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none border-r border-gray-200 bg-white ${
-                                chartPeriods.weekday === 'week' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.weekday === 'week'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -612,8 +612,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, weekday: 'month' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none bg-white ${
-                                chartPeriods.weekday === 'month' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.weekday === 'month'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -627,9 +627,9 @@ const SalesAnalysis = () => {
                     ) : weekdayData.length > 0 ? (
                         <div className="flex flex-col gap-5 items-center w-full">
                             <ChartContainer config={weekdayChartConfig} className="h-[284px] w-full">
-                                <ComposedChart 
-                                    data={weekdayData} 
-                                    barCategoryGap="5%" 
+                                <ComposedChart
+                                    data={weekdayData}
+                                    barCategoryGap="5%"
                                     barGap={0}
                                     margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
                                 >
@@ -741,8 +741,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, refund: 'day' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none border-r border-gray-200 bg-white ${
-                                chartPeriods.refund === 'day' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.refund === 'day'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -753,8 +753,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, refund: 'week' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none border-r border-gray-200 bg-white ${
-                                chartPeriods.refund === 'week' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.refund === 'week'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >
@@ -765,8 +765,8 @@ const SalesAnalysis = () => {
                             size="sm"
                             onClick={() => setChartPeriods({ ...chartPeriods, refund: 'month' })}
                             className={`h-8 px-2.5 py-1.5 rounded-none bg-white ${
-                                chartPeriods.refund === 'month' 
-                                    ? 'text-gray-800' 
+                                chartPeriods.refund === 'month'
+                                    ? 'text-gray-800'
                                     : 'text-gray-300'
                             }`}
                         >

@@ -1,8 +1,8 @@
 import { reduxMaker } from 'src/global/store/redux/reduxUtils.ts'
 import {
-    getAdminProductList,
-    deleteAdminProducts,
     deleteAdminProductOptions,
+    deleteAdminProducts,
+    getAdminProductList,
     updateAdminProductStock,
 } from './adminProductsAPI'
 
@@ -41,13 +41,13 @@ const localState = {
 }
 
 const localReducers = {
-    setSelectedProductIds: (state: any, action: { payload: string[] }) => {
+    setSelectedProductIds: (state: typeof localState, action: { payload: string[] }) => {
         state.selectedProductIds = action.payload
     },
-    setSelectedOptionIds: (state: any, action: { payload: string[] }) => {
+    setSelectedOptionIds: (state: typeof localState, action: { payload: string[] }) => {
         state.selectedOptionIds = action.payload
     },
-    clearSelections: (state: any) => {
+    clearSelections: (state: typeof localState) => {
         state.selectedProductIds = []
         state.selectedOptionIds = []
     },
