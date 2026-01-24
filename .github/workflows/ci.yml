@@ -1,6 +1,5 @@
-# .github/workflows/chromatic.yml
 
-name: 'Chromatic'
+name: CI
 
 on:
     push:
@@ -9,6 +8,16 @@ on:
         branches: [develop]
 
 jobs:
+    lint:
+      runs-on: ubuntu-22.04
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'npm'
+        - run: npm ci
+        - run: npm run lint
     chromatic:
         name: Run Chromatic
         runs-on: ubuntu-latest
@@ -31,3 +40,5 @@ jobs:
               with:
                   # ⚠️ 토큰은 보안을 위해 GitHub Secrets에 등록하는 것이 좋습니다.
                   projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+                  exitOnceUploaded: true # 업로드 후 UI 테스트 승인 대기 없이 바로 완료
+                  autoAcceptChanges: true # 모든 UI 변경사항을 자동으로 승인 처리

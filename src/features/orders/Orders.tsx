@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
 import { sub } from 'date-fns'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { shallowEqual } from 'react-redux'
 import {
     useAppDispatch,
     useAppSelector,
 } from 'src/global/store/redux/reduxHooks.tsx'
-import { shallowEqual } from 'react-redux'
 
 import {
     BgrTabs,
@@ -12,19 +12,10 @@ import {
     BgrTabsTrigger,
 } from 'src/shared/components/tab/BGRtab.tsx'
 import { Button } from 'src/shared/lib/shadcn/components/ui/button'
-import OrderFilter from './components/OrderFilter'
 import OrderControlButtons from './components/OrderControlButtons'
+import OrderFilter from './components/OrderFilter'
 import OrderModals from './components/orderModals/OrderModals.tsx'
 import OrderTable from './components/OrderTable'
-import { ordersAction } from './ordersReducer'
-import { useOrderSelection } from './hooks/useOrderSelection'
-import { useOrderModal } from './hooks/useOrderModal'
-import {
-    extractAllOrderNumbers,
-    transformOrderToTableRows,
-} from './utils/orderUtils'
-import type { TabCategory } from './type/orderStatusType'
-import type { OrderSearchFilter } from './type/orderFilterType'
 import {
     DATE_RANGE,
     FILTER_DEFAULTS,
@@ -32,11 +23,20 @@ import {
     TAB_CATEGORY,
 } from './constants/orderConstants'
 import { SearchType } from './constants/orderEnums'
-import { ORDER_TABS } from './constants/orderTabs'
 import {
     ORDER_STATUS_OPTIONS,
     SEARCH_OPTIONS,
 } from './constants/orderFilterOptions'
+import { ORDER_TABS } from './constants/orderTabs'
+import { useOrderModal } from './hooks/useOrderModal'
+import { useOrderSelection } from './hooks/useOrderSelection'
+import { ordersAction } from './ordersReducer'
+import type { OrderSearchFilter } from './type/orderFilterType'
+import type { TabCategory } from './type/orderStatusType'
+import {
+    extractAllOrderNumbers,
+    transformOrderToTableRows,
+} from './utils/orderUtils'
 
 const getInitialFilterValue = (): OrderSearchFilter => ({
     orderStatus: FILTER_DEFAULTS.ORDER_STATUS,
@@ -101,7 +101,7 @@ const Orders = () => {
         dispatch(ordersAction.getOrderList(filterValue))
     }, [dispatch])
 
-    const handleOrderAction = useCallback((actionType: string) => {
+    const handleOrderAction = useCallback(() => {
         // TODO :: 주문 상태 변경 API 작업 완료되면 작업 필요
     }, [])
 
