@@ -1,2 +1,1 @@
 yarn lint --max-warnings=0
-yarn build-storybook

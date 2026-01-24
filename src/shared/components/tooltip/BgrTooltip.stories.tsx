@@ -3,7 +3,7 @@ import { BgrTooltip } from './BgrTooltip'
 
 const meta = {
     title: 'Components/BgrTooltip',
-    component: BgrTooltip.Root,
+    component: BgrTooltip,
     parameters: {
         layout: 'centered',
     },
@@ -102,7 +102,7 @@ export const AllAlignments: Story = {
                     </div>
 
                     <div className="flex flex-col items-center gap-2">
-                        <BgrTooltip.Root position="top" align="center">
+                        <BgrTooltip position="top" align="center">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     center
@@ -111,12 +111,12 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>Center (중앙)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                         <span className="text-xs text-gray-500">중앙</span>
                     </div>
 
                     <div className="flex flex-col items-center gap-2">
-                        <BgrTooltip.Root position="top" align="end">
+                        <BgrTooltip position="top" align="end">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     end
@@ -125,7 +125,7 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>End (오른쪽)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                         <span className="text-xs text-gray-500">오른쪽</span>
                     </div>
                 </div>
@@ -141,7 +141,7 @@ export const AllAlignments: Story = {
                         <span className="min-w-[40px] text-right text-xs text-gray-500">
                             위
                         </span>
-                        <BgrTooltip.Root position="right" align="start">
+                        <BgrTooltip position="right" align="start">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     start
@@ -150,14 +150,14 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>Start (위)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <span className="min-w-[40px] text-right text-xs text-gray-500">
                             중앙
                         </span>
-                        <BgrTooltip.Root position="right" align="center">
+                        <BgrTooltip position="right" align="center">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     center
@@ -166,14 +166,14 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>Center (중앙)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <span className="min-w-[40px] text-right text-xs text-gray-500">
                             아래
                         </span>
-                        <BgrTooltip.Root position="right" align="end">
+                        <BgrTooltip position="right" align="end">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     end
@@ -182,7 +182,7 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>End (아래)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                     </div>
                 </div>
             </div>
@@ -194,7 +194,7 @@ export const AllAlignments: Story = {
                 </h3>
                 <div className="flex justify-center gap-8">
                     <div className="flex flex-col items-center gap-2">
-                        <BgrTooltip.Root position="bottom" align="start">
+                        <BgrTooltip position="bottom" align="start">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     start
@@ -203,12 +203,12 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>Start (왼쪽)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                         <span className="text-xs text-gray-500">왼쪽</span>
                     </div>
 
                     <div className="flex flex-col items-center gap-2">
-                        <BgrTooltip.Root position="bottom" align="center">
+                        <BgrTooltip position="bottom" align="center">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     center
@@ -217,12 +217,12 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>Center (중앙)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                         <span className="text-xs text-gray-500">중앙</span>
                     </div>
 
                     <div className="flex flex-col items-center gap-2">
-                        <BgrTooltip.Root position="bottom" align="end">
+                        <BgrTooltip position="bottom" align="end">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     end
@@ -231,7 +231,7 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>End (오른쪽)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                         <span className="text-xs text-gray-500">오른쪽</span>
                     </div>
                 </div>
@@ -244,7 +244,7 @@ export const AllAlignments: Story = {
                 </h3>
                 <div className="flex flex-col items-center gap-8">
                     <div className="flex items-center gap-2">
-                        <BgrTooltip.Root position="left" align="start">
+                        <BgrTooltip position="left" align="start">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     start
@@ -253,14 +253,14 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>Start (위)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                         <span className="min-w-[40px] text-xs text-gray-500">
                             위
                         </span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <BgrTooltip.Root position="left" align="center">
+                        <BgrTooltip position="left" align="center">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     center
@@ -269,14 +269,14 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>Center (중앙)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                         <span className="min-w-[40px] text-xs text-gray-500">
                             중앙
                         </span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <BgrTooltip.Root position="left" align="end">
+                        <BgrTooltip position="left" align="end">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     end
@@ -285,7 +285,7 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>End (아래)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                         <span className="min-w-[40px] text-xs text-gray-500">
                             아래
                         </span>
@@ -303,7 +303,7 @@ export const LongContentTooltip: Story = {
     render: () => (
         <div className="flex items-center gap-2">
             <label className="text-sm font-medium">상품 정보</label>
-            <BgrTooltip.Root position="top" align="center">
+            <BgrTooltip position="top" align="center">
                 <BgrTooltip.Trigger>
                     <button className="text-gray-400 hover:text-gray-600">
                         <span className="text-lg">ⓘ</span>
@@ -324,7 +324,7 @@ export const LongContentTooltip: Story = {
                         </ul>
                     </div>
                 </BgrTooltip.Content>
-            </BgrTooltip.Root>
+            </BgrTooltip>
         </div>
     ),
 }
