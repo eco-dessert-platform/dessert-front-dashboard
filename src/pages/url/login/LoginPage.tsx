@@ -1,13 +1,13 @@
 import ImagePlaceholder from 'src/features/auth/components/ImagePlaceholderProps'
+import AuthCard from 'src/features/auth/components/layout/AuthCard'
 import AuthContentWrapper from 'src/features/auth/components/layout/AuthContentWrapper'
 import AuthPageContainer from 'src/features/auth/components/layout/AuthPageContainer'
 import { BgrLoginFooter } from 'src/features/auth/components/layout/BgrLoginFooter'
-import BgrHeader from 'src/shared/layout/BgrHeader'
-import AuthCard from 'src/features/auth/components/layout/AuthCard'
-import { AUTH_MESSAGES } from 'src/features/auth/locales/authMessages'
-import { useSocialLogin } from 'src/features/auth/hooks/useSocialLogin'
-import KakaoLoginButton from 'src/features/auth/components/ui/check/buttons/KakaoLoginButton'
 import GoogleLoginButton from 'src/features/auth/components/ui/check/buttons/GoogleLoginButton'
+import KakaoLoginButton from 'src/features/auth/components/ui/check/buttons/KakaoLoginButton'
+import { useSocialLogin } from 'src/features/auth/hooks/useSocialLogin'
+import { AUTH_MESSAGES } from 'src/features/auth/locales/authMessages'
+import BgrHeader from 'src/shared/components/header/BgrHeader'
 
 const LoginPage = () => {
     useSocialLogin()

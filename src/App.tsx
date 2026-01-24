@@ -1,13 +1,9 @@
-import { RouterProvider } from 'react-router'
-import router from 'src/global/router/router.tsx'
-import useRouteListener from 'src/global/router/useRouteListener.tsx'
-import { Bounce, ToastContainer } from 'react-toastify'
-import { ThemeProvider } from 'src/shared/lib/shadcn/components/ThemeProvider.tsx'
 import { useEffect } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Bounce, ToastContainer } from 'react-toastify'
+import HomePage from 'src/pages/HomePage'
 
 function App() {
-    useRouteListener()
-
     // 새로 고침시 애니메이션, 임시 배경색상 처리
     useEffect(() => {
         requestAnimationFrame(() => {
@@ -26,8 +22,12 @@ function App() {
     }, [])
 
     return (
-        <ThemeProvider defaultTheme={'light'}>
-            <RouterProvider router={router} />
+        <>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                </Routes>
+            </BrowserRouter>
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -42,7 +42,7 @@ function App() {
                 transition={Bounce}
                 toastClassName="!p-0 !bg-transparent !shadow-none !min-w-0"
             />
-        </ThemeProvider>
+        </>
     )
 }
 

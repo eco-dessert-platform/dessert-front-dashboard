@@ -1,9 +1,9 @@
 import logoutIcon from 'src/assets/icons/logout.svg'
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
 } from 'src/shared/lib/shadcn/components/ui/accordion'
 
 const MENU_LIST = [
@@ -68,7 +68,7 @@ const MENU_LIST = [
 
 function BgrLnb() {
     return (
-        <nav className="border-border relative flex h-screen w-[240px] flex-col border-r">
+        <nav className="border-border relative flex h-[calc(100vh-80px)] w-[240px] flex-col border-r">
             <div className="flex-1 overflow-y-auto px-3 py-4">
                 <Accordion
                     type="multiple"
