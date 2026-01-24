@@ -8,7 +8,7 @@ const meta = {
         layout: 'centered',
     },
     tags: ['autodocs'],
-} satisfies Meta<typeof BgrTooltip.Root>
+} satisfies Meta<typeof BgrTooltip>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -21,7 +21,7 @@ export const AllPositions: Story = {
         <>
             {/* Top */}
             <div className="flex flex-col items-center gap-4">
-                <BgrTooltip.Root position="top">
+                <BgrTooltip position="top">
                     <BgrTooltip.Trigger>
                         <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
                             Top
@@ -30,12 +30,12 @@ export const AllPositions: Story = {
                     <BgrTooltip.Content>
                         <p>Top Position</p>
                     </BgrTooltip.Content>
-                </BgrTooltip.Root>
+                </BgrTooltip>
             </div>
 
             {/* Left & Right */}
             <div className="flex items-center gap-40">
-                <BgrTooltip.Root position="left">
+                <BgrTooltip position="left">
                     <BgrTooltip.Trigger>
                         <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
                             Left
@@ -44,9 +44,9 @@ export const AllPositions: Story = {
                     <BgrTooltip.Content>
                         <p>Left Position</p>
                     </BgrTooltip.Content>
-                </BgrTooltip.Root>
+                </BgrTooltip>
 
-                <BgrTooltip.Root position="right">
+                <BgrTooltip position="right">
                     <BgrTooltip.Trigger>
                         <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
                             Right
@@ -55,12 +55,12 @@ export const AllPositions: Story = {
                     <BgrTooltip.Content>
                         <p>Right Position</p>
                     </BgrTooltip.Content>
-                </BgrTooltip.Root>
+                </BgrTooltip>
             </div>
 
             {/* Bottom */}
             <div className="flex flex-col items-center gap-4">
-                <BgrTooltip.Root position="bottom">
+                <BgrTooltip position="bottom">
                     <BgrTooltip.Trigger>
                         <button className="rounded-lg bg-gray-700 px-6 py-3 text-white">
                             Bottom
@@ -69,7 +69,7 @@ export const AllPositions: Story = {
                     <BgrTooltip.Content>
                         <p>Bottom Position</p>
                     </BgrTooltip.Content>
-                </BgrTooltip.Root>
+                </BgrTooltip>
             </div>
         </>
     ),
@@ -88,7 +88,7 @@ export const AllAlignments: Story = {
                 </h3>
                 <div className="flex justify-center gap-8">
                     <div className="flex flex-col items-center gap-2">
-                        <BgrTooltip.Root position="top" align="start">
+                        <BgrTooltip position="top" align="start">
                             <BgrTooltip.Trigger>
                                 <button className="rounded-lg bg-gray-700 px-6 py-3 text-sm text-white">
                                     start
@@ -97,7 +97,7 @@ export const AllAlignments: Story = {
                             <BgrTooltip.Content>
                                 <p>Start (왼쪽)</p>
                             </BgrTooltip.Content>
-                        </BgrTooltip.Root>
+                        </BgrTooltip>
                         <span className="text-xs text-gray-500">왼쪽</span>
                     </div>
 
