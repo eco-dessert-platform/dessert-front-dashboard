@@ -1,8 +1,8 @@
-import react from '@vitejs/plugin-react-swc'
-import path, { resolve } from 'path'
 import tailwindcss from '@tailwindcss/vite'
-import { defineConfig, Plugin } from 'vite'
+import react from '@vitejs/plugin-react-swc'
 import fs, { copyFileSync } from 'fs'
+import path, { resolve } from 'path'
+import { defineConfig, Plugin } from 'vite'
 import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
@@ -131,14 +131,17 @@ function getUsedFonts(html: string): string[] {
 }
 
 // 커스텀 플러그인: 빌드 후 robots.txt 복사
-function copyRobotsTxt() {
+function copyRobotsTxt(): Plugin {
     return {
         name: 'copy-robots-txt',
         closeBundle() {
-            copyFileSync(
-                resolve(__dirname, 'robots.txt'),
-                resolve(__dirname, 'dist/robots.txt'),
-            )
+            const distPath = resolve(__dirname, 'dist')
+            const robotsPath = resolve(__dirname, 'robots.txt')
+            const targetPath = resolve(distPath, 'robots.txt')
+
+            if (fs.existsSync(distPath) && fs.existsSync(robotsPath)) {
+                copyFileSync(robotsPath, targetPath)
+            }
         },
     }
 }

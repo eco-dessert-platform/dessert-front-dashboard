@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
-import BgrToast from './BgrToast'
-import { bgrToast } from './BgrToastHelper'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import BgrToast from './BgrToast.tsx'
+import { bgrToast } from './toast-helper.tsx'
 
 const meta = {
     title: 'Components/BgrToast',

@@ -1,10 +1,10 @@
+import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import React from 'react'
-import { ColumnDef } from '@tanstack/react-table'
 import { Button } from 'src/shared/lib/shadcn/components/ui/button.tsx'
 
 // 사용자 정의 렌더링 함수를 포함하는 헤더 포맷 옵션 인터페이스
-interface HeaderFormatOptions<T extends object> {
+interface HeaderFormatOptions {
     label: string
     align?: 'left' | 'center' | 'right'
     sort?: boolean
@@ -13,7 +13,7 @@ interface HeaderFormatOptions<T extends object> {
 
 // 헤더 포맷터 생성기
 export const createHeaderFormatter = <T extends object>(
-    options: HeaderFormatOptions<T>,
+    options: HeaderFormatOptions,
 ): Partial<ColumnDef<T>> => ({
     header: ({ column }) => {
         const { label, align = 'left', sort = false, customHeader } = options

@@ -9,6 +9,9 @@ import {
     SortingState,
     useReactTable,
 } from '@tanstack/react-table'
+import clsx from 'clsx'
+import React from 'react'
+import { Input } from 'src/shared/lib/shadcn/components/ui/input.tsx'
 import {
     Table,
     TableBody,
@@ -17,12 +20,9 @@ import {
     TableHeader,
     TableRow,
 } from 'src/shared/lib/shadcn/components/ui/table.tsx'
-import { DataTableProps } from './options/types.ts'
 import { renderPagination } from './options/pagination.tsx'
+import { DataTableProps } from './options/types.ts'
 import { VirtualizedTable } from './options/virtualized.tsx'
-import React from 'react'
-import { Input } from 'src/shared/lib/shadcn/components/ui/input.tsx'
-import clsx from 'clsx'
 
 declare module '@tanstack/react-table' {
     interface ColumnMeta<TData extends RowData, TValue> {
@@ -39,6 +39,8 @@ declare module '@tanstack/react-table' {
          * 예: meta: { width: 50 } → <col style={{ width: '50px' }} />
          */
         width?: number
+        // 제네릭 사용 처리(타입만 사용, 런타임 영향 없음)
+        _typeHint?: { data?: TData; value?: TValue }
     }
 }
 

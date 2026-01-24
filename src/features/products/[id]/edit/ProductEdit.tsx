@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
+import { shallowEqual } from 'react-redux'
 import { useParams } from 'react-router'
+import { productsAction } from 'src/features/products/productsReducer'
 import {
     useAppDispatch,
     useAppSelector,
 } from 'src/global/store/redux/reduxHooks.tsx'
-import { shallowEqual } from 'react-redux'
-import { productsAction } from 'src/features/products/productsReducer'
 
 const ProductEdit = () => {
     const { id } = useParams<{ id: string }>()
     const dispatch = useAppDispatch()
-    const { product, updateProductResult } = useAppSelector(
+    const { product } = useAppSelector(
         ({ productsReducer }) => ({
             product: productsReducer.product,
             updateProductResult: productsReducer.updateProductResult,
@@ -27,7 +27,7 @@ const ProductEdit = () => {
     const handleSubmit = () => {
         if (!id) return
         // TODO: 상품 수정 로직 구현
-        const formData = new FormData()
+
         // formData.append(...)
         // dispatch(productsAction.updateProduct({ id: Number(id), data: formData }))
     }
