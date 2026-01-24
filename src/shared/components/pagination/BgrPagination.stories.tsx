@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
 import { useState } from 'react'
-import BgrPagination from './BgrPagination'
 import type { BgrPaginationProps } from './BgrPagination'
+import { BgrPagination } from './BgrPagination'
 
 const meta = {
     title: 'Components/BgrPagination',
@@ -12,7 +11,7 @@ const meta = {
     },
     tags: ['autodocs'],
     args: {
-        onPageChange: fn(),
+        onPageChange: () => {},
     },
 } satisfies Meta<typeof BgrPagination>
 
@@ -86,6 +85,29 @@ export const LastGroup: Story = {
         totalPages: 15,
     },
     render: LastGroupComponent,
+}
+
+// 단일 페이지 (이동할 페이지가 없는 경우)
+const SinglePageComponent = (args: BgrPaginationProps) => {
+    const [currentPage, setCurrentPage] = useState(args.currentPage)
+    return (
+        <BgrPagination
+            {...args}
+            currentPage={currentPage}
+            onPageChange={(page) => {
+                setCurrentPage(page)
+                args.onPageChange?.(page)
+            }}
+        />
+    )
+}
+
+export const SinglePage: Story = {
+    args: {
+        currentPage: 1,
+        totalPages: 1,
+    },
+    render: SinglePageComponent,
 }
 
 // 5페이지 이하 (그룹이 하나만 있는 경우)

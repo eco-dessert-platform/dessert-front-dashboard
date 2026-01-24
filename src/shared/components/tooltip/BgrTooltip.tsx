@@ -1,5 +1,5 @@
-import * as React from 'react'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+import * as React from 'react'
 import { cn } from 'src/shared/lib/shadcn/lib/utils'
 
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right'
@@ -142,8 +142,13 @@ const BgrTooltipContent = ({ children, className }: BgrTooltipContentProps) => {
     )
 }
 
-export const BgrTooltip = {
-    Root: BgrTooltipRoot,
-    Trigger: BgrTooltipTrigger,
-    Content: BgrTooltipContent,
+type BgrTooltipCompound = typeof BgrTooltipRoot & {
+    Trigger: typeof BgrTooltipTrigger
+    Content: typeof BgrTooltipContent
 }
+
+const BgrTooltip = BgrTooltipRoot as BgrTooltipCompound
+BgrTooltip.Trigger = BgrTooltipTrigger
+BgrTooltip.Content = BgrTooltipContent
+
+export { BgrTooltip }

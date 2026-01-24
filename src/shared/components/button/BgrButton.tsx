@@ -1,5 +1,4 @@
-import { Button } from 'src/shared/lib/shadcn/components/ui/button'
-import clsx from 'clsx'
+import { cn } from 'src/shared/lib/shadcn/lib/utils'
 
 interface BgrButtonProps {
     title: string
@@ -29,9 +28,9 @@ const BgrButton = ({
     className = '',
 }: BgrButtonProps) => {
     const sizeClasses = {
-        sm: 'h-[30px] px-2.5 py-2 rounded-[8px]',
-        md: 'h-[42px] px-4 py-3 rounded-[10px]',
-        lg: 'h-[56px] px-4 py-4 rounded-[12px]',
+        sm: 'h-button-sm min-w-[56px] px-2.5 py-2 rounded-[8px]',
+        md: 'h-button-md min-w-[90px] px-4 py-3 rounded-[10px]',
+        lg: 'h-button-lg min-w-[180px] px-4 py-4 rounded-[12px]',
     }
 
     const typoClasses = {
@@ -52,22 +51,21 @@ const BgrButton = ({
     }
 
     return (
-        <Button
+        <button
             onClick={onClick}
             disabled={disabled}
-            className={clsx(
+            className={cn(
                 'flex items-center justify-center gap-2 border disabled:opacity-50',
                 sizeClasses[size],
                 variantClasses[variant],
                 roundedFull && 'rounded-full',
-
                 className,
             )}
         >
             {leftIcon && leftIcon}
             <span className={typoClasses[size]}>{title}</span>
             {rightIcon && rightIcon}
-        </Button>
+        </button>
     )
 }
 

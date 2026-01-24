@@ -1,4 +1,3 @@
-import { Button } from 'src/shared/lib/shadcn/components/ui/button.tsx'
 import { Input } from 'src/shared/lib/shadcn/components/ui/input.tsx'
 
 interface FileUploadInputProps {
@@ -47,7 +46,7 @@ const FileUploadInput = ({
                     readOnly
                     disabled={disabled}
                 />
-                <Button
+                <button
                     className="flex min-w-[90px] items-center justify-center rounded-[10px] border border-gray-300 bg-gray-300 px-4 py-2"
                     disabled={disabled}
                     onClick={() => {
@@ -61,7 +60,7 @@ const FileUploadInput = ({
                     <span className="text-title-16-m text-white">
                         {buttonText}
                     </span>
-                </Button>
+                </button>
             </div>
             {helperText && (
                 <span className="text-body-12-r text-gray-500">
