@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useCallback, useState } from 'react'
 import { getRowSpanForGroup } from '../../utils/tableSpan'
-import { BgrBadge } from '../badge/BgrBadge'
 import BgrButton from '../button/BgrButton'
 
+import BgrBadge from '../badge/BgrBadge'
 import BgrCheckbox from '../checkbox/BBgrCheckbox'
 import BgrTable from './BgrTable'
 
