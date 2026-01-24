@@ -1,5 +1,9 @@
 import clsx from 'clsx'
-import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight } from 'lucide-react'
+import { cn } from 'src/shared/lib/shadcn/lib/utils'
+import DoubleForwardArrow from 'src/assets/icons/arrow/double-forward-arrow.svg?react'
+import DoubleNextArrow from 'src/assets/icons/arrow/double-next-arrow.svg?react'
+import ForwardArrow from 'src/assets/icons/arrow/forward-arrow.svg?react'
+import NextArrow from 'src/assets/icons/arrow/next-arrow.svg?react'
 
 export interface BgrPaginationProps {
     currentPage: number
@@ -15,6 +19,17 @@ const BgrPagination = ({
     className = '',
 }: BgrPaginationProps) => {
     const GROUP_SIZE = 5
+
+    // 공통 버튼 스타일
+    const baseButtonStyle =
+        'flex h-[30px] w-[30px] items-center justify-center rounded-[8px] p-[5px] transition-colors'
+
+    // disabled 스타일 헬퍼
+    const getDisabledStyle = (isDisabled: boolean) => {
+        return isDisabled
+            ? 'cursor-not-allowed text-gray-300'
+            : 'cursor-pointer hover:bg-gray-50'
+    }
 
     const handlePageChange = (page: number) => {
         if (page >= 1 && page <= totalPages && page !== currentPage) {
@@ -45,82 +60,58 @@ const BgrPagination = ({
     // 마지막 그룹인지 확인
     const isLastGroup = currentGroup === totalGroups
 
-    // 다음 그룹의 첫 페이지 계산
-    const getNextGroupFirstPage = () => {
-        if (isLastGroup) return totalPages
-        return currentGroup * GROUP_SIZE + 1
+    // 마지막 그룹의 첫 페이지 계산
+    const getLastGroupFirstPage = () => {
+        return (totalGroups - 1) * GROUP_SIZE + 1
     }
 
     const currentGroupPages = getCurrentGroupPages()
 
     return (
         <nav
-            className={clsx('flex items-center', className)}
-            aria-label="페이지네이션"
-            style={{ gap: '4px' }}
+            className={cn('flex items-center gap-1', className)}
+            aria-label="Pagination"
         >
-            {/* << 버튼: 첫 페이지로 이동 */}
+            {/* << 버튼: 첫 번째 그룹으로 이동 */}
             <button
-                type="button"
                 onClick={() => handlePageChange(1)}
                 disabled={isFirstGroup}
-                className={clsx(
-                    'flex items-center justify-center w-[30px] h-[30px] p-[10px] rounded-[8px]',
-                    'transition-colors',
-                    isFirstGroup
-                        ? 'cursor-not-allowed'
-                        : 'hover:bg-gray-50 cursor-pointer',
-                )}
-                aria-label="첫 페이지 그룹"
+                className={cn(baseButtonStyle, getDisabledStyle(isFirstGroup))}
+                aria-label="Go to first page group"
+                title="첫 페이지 그룹"
             >
-                <ChevronsLeft
-                    className={clsx(
-                        'w-5 h-5',
-                        isFirstGroup ? 'text-gray-300' : 'text-gray-900',
-                    )}
-                />
+                <DoubleForwardArrow className="h-5 w-5" />
             </button>
 
-            {/* < 버튼: 이전 페이지로 이동 */}
+            {/* < 버튼: 이전 페이지로 이동 (-1) */}
             <button
-                type="button"
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={clsx(
-                    'flex items-center justify-center w-[30px] h-[30px] p-[10px] rounded-[8px]',
-                    'transition-colors',
-                    currentPage === 1
-                        ? 'cursor-not-allowed'
-                        : 'hover:bg-gray-50 cursor-pointer',
+                className={cn(
+                    baseButtonStyle,
+                    getDisabledStyle(currentPage === 1),
                 )}
-                aria-label="이전 페이지"
+                aria-label="Go to previous page"
+                title="이전 페이지"
             >
-                <ChevronLeft
-                    className={clsx(
-                        'w-5 h-5',
-                        currentPage === 1 ? 'text-gray-300' : 'text-gray-900',
-                    )}
-                />
+                <ForwardArrow className="h-5 w-5" />
             </button>
 
             {/* 페이지 번호 버튼들 */}
             {currentGroupPages.map((pageNumber) => {
                 const isActive = pageNumber === currentPage
-
                 return (
                     <button
                         key={pageNumber}
-                        type="button"
                         onClick={() => handlePageChange(pageNumber)}
                         disabled={isActive}
                         className={clsx(
-                            'flex items-center justify-center w-[30px] h-[30px] p-[10px] rounded-[8px]',
-                            'transition-colors',
+                            baseButtonStyle,
                             isActive
                                 ? 'bg-primary-50 text-primary-500 text-title-14-m cursor-default'
-                                : 'text-title-14-r text-gray-800 hover:bg-gray-50 cursor-pointer',
+                                : 'text-title-14-r cursor-pointer text-gray-800 hover:bg-gray-50',
                         )}
-                        aria-label={`${pageNumber}페이지`}
+                        aria-label={`Go to page ${pageNumber}`}
                         aria-current={isActive ? 'page' : undefined}
                     >
                         {pageNumber}
@@ -128,56 +119,32 @@ const BgrPagination = ({
                 )
             })}
 
-            {/* > 버튼: 다음 그룹의 첫 페이지로 이동 */}
+            {/* > 버튼: 다음 페이지로 이동 (+1) ✅ */}
             <button
-                type="button"
-                onClick={() => handlePageChange(getNextGroupFirstPage())}
-                disabled={isLastGroup}
-                className={clsx(
-                    'flex items-center justify-center w-[30px] h-[30px] p-[10px] rounded-[8px]',
-                    'transition-colors',
-                    isLastGroup
-                        ? 'cursor-not-allowed'
-                        : 'hover:bg-gray-50 cursor-pointer',
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={cn(
+                    baseButtonStyle,
+                    getDisabledStyle(currentPage === totalPages),
                 )}
-                aria-label="다음 페이지 그룹"
+                aria-label="Go to next page"
+                title="다음 페이지"
             >
-                <ChevronRight
-                    className={clsx(
-                        'w-5 h-5',
-                        isLastGroup ? 'text-gray-300' : 'text-gray-900',
-                    )}
-                />
+                <NextArrow className="h-5 w-5" />
             </button>
 
-            {/* >> 버튼: 마지막 그룹의 첫 페이지로 이동 */}
+            {/* >> 버튼: 마지막 그룹으로 이동 */}
             <button
-                type="button"
-                onClick={() => {
-                    const lastGroupFirstPage =
-                        (totalGroups - 1) * GROUP_SIZE + 1
-                    handlePageChange(lastGroupFirstPage)
-                }}
+                onClick={() => handlePageChange(getLastGroupFirstPage())}
                 disabled={isLastGroup}
-                className={clsx(
-                    'flex items-center justify-center w-[30px] h-[30px] p-[10px] rounded-[8px]',
-                    'transition-colors',
-                    isLastGroup
-                        ? 'cursor-not-allowed'
-                        : 'hover:bg-gray-50 cursor-pointer',
-                )}
-                aria-label="마지막 페이지 그룹"
+                className={cn(baseButtonStyle, getDisabledStyle(isLastGroup))}
+                aria-label="Go to last page group"
+                title="마지막 페이지 그룹"
             >
-                <ChevronsRight
-                    className={clsx(
-                        'w-5 h-5',
-                        isLastGroup ? 'text-gray-300' : 'text-gray-900',
-                    )}
-                />
+                <DoubleNextArrow className="h-5 w-5" />
             </button>
         </nav>
     )
 }
 
-export default BgrPagination
-
+export { BgrPagination }
