@@ -2,9 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useCallback, useState } from 'react'
 import { getRowSpanForGroup } from '../../utils/tableSpan'
-import BgrBadge from '../badge/BgrBadge'
+import { BgrBadge } from '../badge/BgrBadge'
 import BgrButton from '../button/BgrButton'
-import BGRCheckbox from '../checkbox/BGRCheckbox'
+
+import BgrCheckbox from '../checkbox/BBgrCheckbox'
 import BgrTable from './BgrTable'
 
 // TODO: type은 api responese 타입으로 수정
@@ -37,35 +38,35 @@ const StatusCell = ({ status }: StatusCellProps) => {
     case 'onSale':
       return (
         <div className="flex flex-col items-center gap-1">
-          <BgrBadge variant="success">판매중</BgrBadge>
+          <BgrBadge color="green" variant="outline" content="판매중" />
           <ToggleSale checked={checked} onCheckedChange={toggleSale} />
         </div>
       )
     case 'stopSale':
       return (
         <div className="flex flex-col items-center gap-1">
-          <BgrBadge variant="default">판매중지</BgrBadge>
+          <BgrBadge color="grayDark" variant="outline" content="판매중지" />
           <ToggleSale checked={checked} onCheckedChange={toggleSale} />
         </div>
       )
     case 'soldOut':
       return (
         <div className="flex flex-col items-center gap-1">
-          <BgrBadge variant="error">품절</BgrBadge>
+          <BgrBadge color="red" variant="outline" content="품절" />
           <ToggleSale checked={checked} onCheckedChange={toggleSale} />
         </div>
       )
     case 'pending':
       return (
         <div className="flex flex-col items-center gap-1">
-          <BgrBadge variant="warning">판매대기</BgrBadge>
+          <BgrBadge color="yellow" variant="outline" content="판매대기" />
           <ToggleSale checked={checked} onCheckedChange={toggleSale} />
         </div>
       )
     case 'banned':
       return (
         <div className="flex flex-col items-center gap-1">
-          <BgrBadge variant="error">판매금지</BgrBadge>
+          <BgrBadge color="gray" variant="outline" content="판매금지" />
           <ToggleSale checked={checked} onCheckedChange={toggleSale} />
         </div>
       )
@@ -92,10 +93,10 @@ const exampleColumns = ({
   {
     id: 'select',
     header: () => (
-      <BGRCheckbox checked={allSelected} onCheckedChange={toggleAll} />
+      <BgrCheckbox checked={allSelected} onCheckedChange={toggleAll} />
     ),
     cell: ({ row }) => (
-      <BGRCheckbox
+      <BgrCheckbox
         checked={selectedIds.includes(row.original.id)}
         onCheckedChange={(checked) => toggleRow(row.original.id, checked)}
       />
@@ -329,7 +330,7 @@ function ToggleSale({
 }) {
   return (
     <div className="flex items-center gap-1">
-      <BGRCheckbox checked={checked} onCheckedChange={onCheckedChange} />
+      <BgrCheckbox checked={checked} onCheckedChange={(checked) => onCheckedChange(checked === true)} />
       <span className="text-body-12-r text-gray-700">판매중지</span>
     </div>
   )
