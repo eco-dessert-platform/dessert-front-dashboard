@@ -4,7 +4,11 @@ import { LoginFooter } from 'src/features/auth/login/login-footer'
 import { SocialLoginButtons } from 'src/features/auth/login/social-login-buttons'
 import { AUTH_MESSAGES } from 'src/features/auth/login/schema/contracts'
 import AuthLoginImage from 'src/features/auth/login/login-image'
-import { AuthPageContainer, AuthContentWrapper, AuthCard } from 'src/shared/ui'
+import {
+  AuthPageContainer,
+  AuthContentWrapper,
+  AuthCard,
+} from 'src/features/auth/ui'
 
 const AuthPage = () => {
   useSocialLogin()

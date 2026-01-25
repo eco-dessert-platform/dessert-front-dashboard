@@ -4,7 +4,7 @@ import { Bounce, ToastContainer } from 'react-toastify'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import HomePage from 'src/pages/HomePage'
 import AuthPage from 'src/pages/auth/auth-page'
-import NotFoundPage from 'src/pages/error/NotFoundPage'
+import NotFoundPage from 'src/pages/error/not-found-page'
 
 const router = createBrowserRouter([
   {

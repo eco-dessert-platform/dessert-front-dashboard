@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { kakaoLogin, googleLogin } from './auth-api'
 import { useAuthStore } from './auth-store'
-import { setCookie, getExpFromToken } from 'src/global/store/cookie/cookieUtils'
+import { setCookie, getExpFromToken } from 'src/shared/utils/cookieUtils'
 import { authKeys } from './key'
 
 export const useKakaoLoginMutation = () => {

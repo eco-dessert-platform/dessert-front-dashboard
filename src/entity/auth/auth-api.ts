@@ -5,7 +5,7 @@ import {
   client,
   googleOAuthClient,
   kakaoOAuthClient,
-} from 'src/global/api/client'
+} from 'src/shared/utils/axios'
 
 export const kakaoLogin = async (
   code: string,
