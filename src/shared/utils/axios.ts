@@ -1,5 +1,5 @@
-import { getCookie } from '@/global/store/cookie/cookieUtils'
 import axios from 'axios'
+import { getCookie } from 'src/shared/utils/cookieUtils'
 
 const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL
 
