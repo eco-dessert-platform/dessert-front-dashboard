@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from 'src/shared/lib/shadcn/lib/utils'
 import { X } from 'lucide-react'
 
 interface BgrToastProps {
@@ -60,7 +60,7 @@ const BgrToast = ({
 
   return (
     <div
-      className={clsx(
+      className={cn(
         'rounded-unit-10 flex items-center gap-4 p-3',
         'shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_3px_10px_0px_rgba(0,0,0,0.1)]',
         'max-w-[400px] min-w-[240px]',
@@ -85,7 +85,7 @@ const BgrToast = ({
           <p className="text-title-14-b">{message}</p>
           {subMessage && (
             <p
-              className={clsx(
+              className={cn(
                 'text-body-12-r',
                 variantClasses[variant].subMessageColor,
               )}
@@ -102,10 +102,7 @@ const BgrToast = ({
           className="shrink-0 transition-opacity hover:opacity-70"
           aria-label="닫기"
         >
-          <X
-            className={clsx('h-5 w-5', iconClasses[variant])}
-            strokeWidth={1}
-          />
+          <X className={cn('h-5 w-5', iconClasses[variant])} strokeWidth={1} />
         </button>
       )}
     </div>
