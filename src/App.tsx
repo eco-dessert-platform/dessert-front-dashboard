@@ -1,9 +1,25 @@
 import { useEffect, useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import HomePage from 'src/pages/HomePage'
 import AuthPage from 'src/pages/auth/auth-page'
+import NotFoundPage from 'src/pages/error/NotFoundPage'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />,
+  },
+  {
+    path: '/login',
+    element: <AuthPage />,
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
+  },
+])
 
 function App() {
   const [queryClient] = useState(() => new QueryClient())
@@ -27,12 +43,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<AuthPage />} />
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router} />
       <ToastContainer
         position="top-right"
         autoClose={5000}

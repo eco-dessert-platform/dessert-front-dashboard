@@ -17,7 +17,7 @@ const AuthPage = () => {
     <AuthPageContainer>
       <BgrHeader />
 
-      <AuthContentWrapper centered fullHeight>
+      <AuthContentWrapper centered>
         <AuthCard className="max-w-[1240px]">
           <ImagePlaceholder className="hidden max-h-[746px] max-w-[595px] lg:block" />
 
