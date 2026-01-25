@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -23,23 +23,6 @@ const router = createBrowserRouter([
 
 function App() {
   const [queryClient] = useState(() => new QueryClient())
-
-  // 새로 고침시 애니메이션, 임시 배경색상 처리
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const root = document.documentElement
-        const computedBg =
-          getComputedStyle(root).getPropertyValue('--background')
-
-        if (computedBg?.trim()) {
-          root.style.backgroundColor = ''
-          document.body.classList.remove('preload')
-          document.documentElement.classList.remove('theme-instant')
-        }
-      })
-    })
-  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
