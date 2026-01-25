@@ -19,9 +19,9 @@
 ```
 src/styles/
 ├── index.css           # 메인 엔트리
-├── typography.pcss     # 폰트 정의 (Pretendard)
+├── fonts.pcss          # 폰트 정의 (Pretendard)
 ├── base.pcss           # 기본 스타일 및 전환 효과
-├── variables.pcss      # 커스텀 디자인 토큰
+├── typography.pcss     # 커스텀 디자인 토큰
 └── reset.css           # CSS 리셋
 
 src/shared/lib/shadcn/styles/
@@ -34,9 +34,9 @@ src/shared/lib/shadcn/styles/
 /* src/styles/index.css */
 @import 'tailwindcss'; /* 1. TailwindCSS v4 */
 @import 'tw-animate-css'; /* 2. 애니메이션 */
-@import 'src/styles/typography.pcss'; /* 3. 폰트 */
+@import 'src/styles/fonts.pcss'; /* 3. 폰트 */
 @import 'src/shared/lib/shadcn/styles/shadcn.pcss'; /* 4. 테마 변수 */
-@import './variables.pcss'; /* 5. 커스텀 변수 */
+@import './typography.pcss'; /* 5. 커스텀 변수 */
 @import './base.pcss'; /* 6. 기본 스타일 */
 ```
 
@@ -57,18 +57,18 @@ src/shared/lib/shadcn/styles/
 
 /* 라이트 모드 */
 :root {
-    --background: oklch(1 0 0); /* 흰색 배경 */
-    --foreground: oklch(0.145 0 0); /* 검은색 텍스트 */
-    --primary: oklch(0.205 0 0);
-    /* ... */
+  --background: oklch(1 0 0); /* 흰색 배경 */
+  --foreground: oklch(0.145 0 0); /* 검은색 텍스트 */
+  --primary: oklch(0.205 0 0);
+  /* ... */
 }
 
 /* 다크 모드 */
 .dark {
-    --background: oklch(0.145 0 0); /* 검은색 배경 */
-    --foreground: oklch(0.985 0 0); /* 흰색 텍스트 */
-    --primary: oklch(0.922 0 0);
-    /* ... */
+  --background: oklch(0.145 0 0); /* 검은색 배경 */
+  --foreground: oklch(0.985 0 0); /* 흰색 텍스트 */
+  --primary: oklch(0.922 0 0);
+  /* ... */
 }
 ```
 
@@ -112,41 +112,37 @@ src/shared/lib/shadcn/styles/
 
 ```html
 <html lang="en" class="theme-instant">
-    <head>
-        <script>
-            ;(() => {
-                try {
-                    // 1. localStorage에서 테마 읽기
-                    const theme =
-                        localStorage.getItem('vite-ui-theme') || 'system'
+  <head>
+    <script>
+      ;(() => {
+        try {
+          // 1. localStorage에서 테마 읽기
+          const theme = localStorage.getItem('vite-ui-theme') || 'system'
 
-                    // 2. 시스템 다크모드 설정 확인
-                    const prefersDark = window.matchMedia(
-                        '(prefers-color-scheme: dark)',
-                    ).matches
+          // 2. 시스템 다크모드 설정 확인
+          const prefersDark = window.matchMedia(
+            '(prefers-color-scheme: dark)',
+          ).matches
 
-                    // 3. 최종 테마 결정
-                    const isDark =
-                        theme === 'dark' || (theme === 'system' && prefersDark)
+          // 3. 최종 테마 결정
+          const isDark = theme === 'dark' || (theme === 'system' && prefersDark)
 
-                    // 4. HTML 클래스 즉시 적용
-                    document.documentElement.classList.add(
-                        isDark ? 'dark' : 'light',
-                    )
+          // 4. HTML 클래스 즉시 적용
+          document.documentElement.classList.add(isDark ? 'dark' : 'light')
 
-                    // 5. 배경색 즉시 적용 (FOUC 방지)
-                    document.documentElement.style.backgroundColor = isDark
-                        ? 'oklch(0.145 0 0)'
-                        : ''
-                } catch (e) {
-                    console.warn('Early theme apply failed', e)
-                }
-            })()
-        </script>
-    </head>
-    <body class="preload">
-        <!-- ... -->
-    </body>
+          // 5. 배경색 즉시 적용 (FOUC 방지)
+          document.documentElement.style.backgroundColor = isDark
+            ? 'oklch(0.145 0 0)'
+            : ''
+        } catch (e) {
+          console.warn('Early theme apply failed', e)
+        }
+      })()
+    </script>
+  </head>
+  <body class="preload">
+    <!-- ... -->
+  </body>
 </html>
 ```
 
@@ -165,41 +161,41 @@ src/shared/lib/shadcn/styles/
 .theme-instant *,
 .theme-instant *::before,
 .theme-instant *::after {
-    transition: none !important;
+  transition: none !important;
 }
 
 /* 초기 렌더링 숨김 */
 body.preload {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 /* 일반 전환 효과 */
 @layer base {
-    * {
-        @apply transition-colors duration-300 ease-in-out;
-    }
+  * {
+    @apply transition-colors duration-300 ease-in-out;
+  }
 }
 ```
 
 ## 🎨 커스텀 색상
 
-### 프로젝트 고유 색상 (variables.pcss)
+### 프로젝트 고유 색상 (typography.pcss)
 
 ```css
 @theme {
-    /* 브랜드 컬러 */
-    --color-primary-500: #f04c28;
-    --color-gray-100: #f5f5f5;
+  /* 브랜드 컬러 */
+  --color-primary-500: #f04c28;
+  --color-gray-100: #f5f5f5;
 
-    /* 카카오 브랜드 */
-    --color-kakao: #fee500;
+  /* 카카오 브랜드 */
+  --color-kakao: #fee500;
 
-    /* 타이포그래피 */
-    --text-14: 14px;
-    --text-16: 16px;
+  /* 타이포그래피 */
+  --text-14: 14px;
+  --text-16: 16px;
 
-    /* 커스텀 애니메이션 */
-    --animate-heart-pop: heart-pop 0.3s ease-in-out;
+  /* 커스텀 애니메이션 */
+  --animate-heart-pop: heart-pop 0.3s ease-in-out;
 }
 ```
 
@@ -224,13 +220,13 @@ body.preload {
 
 ```css
 :root {
-    --background: oklch(1 0 0);
-    --primary: oklch(0.54 0.22 13.45); /* 새로운 primary 색상 */
+  --background: oklch(1 0 0);
+  --primary: oklch(0.54 0.22 13.45); /* 새로운 primary 색상 */
 }
 
 .dark {
-    --background: oklch(0.11 0 0);
-    --primary: oklch(0.7 0.19 13.45); /* 다크모드 primary */
+  --background: oklch(0.11 0 0);
+  --primary: oklch(0.7 0.19 13.45); /* 다크모드 primary */
 }
 ```
 
@@ -270,18 +266,18 @@ function ThemeCustomizer() {
 - 100~900 폰트 웨이트 지원
 - WOFF2 형식으로 빠른 로딩
 
-**정의** (typography.pcss):
+**정의** (fonts.pcss):
 
 ```css
 @font-face {
-    font-family: 'Pretendard';
-    src:
-        url('/src/assets/fonts/pretendard/PretendardVariable.woff2')
-            format('woff2-variations'),
-        url('/src/assets/fonts/pretendard/woff2-subset/Pretendard-Regular.woff2')
-            format('woff2');
-    font-weight: 100 900;
-    font-display: swap;
+  font-family: 'Pretendard';
+  src:
+    url('/src/assets/fonts/pretendard/PretendardVariable.woff2')
+      format('woff2-variations'),
+    url('/src/assets/fonts/pretendard/woff2-subset/Pretendard-Regular.woff2')
+      format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
 }
 ```
 
@@ -289,10 +285,10 @@ function ThemeCustomizer() {
 
 ```css
 body {
-    font-family:
-        'Pretendard',
-        -apple-system,
-        sans-serif;
+  font-family:
+    'Pretendard',
+    -apple-system,
+    sans-serif;
 }
 ```
 
@@ -311,7 +307,7 @@ body {
 ### 2. 커스텀 색상 정의
 
 ```css
-/* ✅ 좋은 방법: variables.pcss에 정의 */
+/* ✅ 좋은 방법: typography.pcss에 정의 */
 @theme {
     --color-brand: #f04c28;
 }
@@ -325,9 +321,9 @@ body {
 ```css
 /* ✅ 모든 색상 변경에 일관된 transition */
 @layer base {
-    * {
-        @apply transition-colors duration-300;
-    }
+  * {
+    @apply transition-colors duration-300;
+  }
 }
 ```
 
@@ -340,8 +336,8 @@ body {
 console.log('Theme:', localStorage.getItem('vite-ui-theme'))
 console.log('Classes:', document.documentElement.className)
 console.log(
-    'BG Color:',
-    getComputedStyle(document.documentElement).getPropertyValue('--background'),
+  'BG Color:',
+  getComputedStyle(document.documentElement).getPropertyValue('--background'),
 )
 ```
 
