@@ -24,6 +24,7 @@
 프로젝트를 빠르게 시작하는 방법을 안내합니다.
 
 - [설치 및 실행](./quickstarts/installation.md)
+- [mise 성정하기](./quickstarts/install-mise.md)
 - [첫 번째 기능 만들기](./quickstarts/your-first-feature.md)
 
 ### 💡 [Concepts (핵심 개념)](./concepts/README.md)

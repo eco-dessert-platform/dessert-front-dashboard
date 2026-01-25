@@ -1,5 +1,5 @@
-import * as React from 'react'
 import * as Checkbox from '@radix-ui/react-checkbox'
+import * as React from 'react'
 import CheckboxOffIcon from 'src/assets/icons/icn-check-off.svg?react'
 import CheckboxMultipleIcon from 'src/assets/icons/icn-check-on-multiple.svg?react'
 import CheckboxOnOutlineIcon from 'src/assets/icons/icn-check-on-outline.svg?react'
@@ -29,7 +29,7 @@ export default function BgrCheckbox({
   const id = React.useId()
 
   return (
-    <div className={cn('flex items-center gap-2', className)}>
+    <div className={cn('inline-flex items-center gap-2', className)}>
       <Checkbox.Root
         id={id}
         checked={checked}
