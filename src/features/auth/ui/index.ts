@@ -1,3 +1,3 @@
-export * from './auth-card'
-export * from './auth-content-wrapper'
-export * from './auth-page-container'
+export { AuthCard } from './auth-card'
+export { AuthContentWrapper } from './auth-content-wrapper'
+export { AuthPageContainer } from './auth-page-container'

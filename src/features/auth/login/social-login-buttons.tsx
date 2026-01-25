@@ -1,6 +1,6 @@
 import { openCenteredPopup } from 'src/shared/utils/popup'
-import ButtonKakao from 'src/assets/icons/button/bbangle-kakao-button.svg?react'
-import ButtonGoogle from 'src/assets/icons/button/bbangle-google-button.svg?react'
+import GoogleIcon from 'src/assets/icons/social/google.svg?react'
+import KakaoIcon from 'src/assets/icons/social/kakao.svg?react'
 import { KAKAO, GOOGLE } from 'src/entity/auth/constants'
 import { useAuthStore } from 'src/entity/auth/auth-store'
 import { setKakaoPopup, setGooglePopup } from './login-hooks'
@@ -49,8 +49,22 @@ export const SocialLoginButtons = () => {
 
   return (
     <div className="flex flex-col items-center gap-3 self-stretch">
-      <ButtonKakao onClick={openKakaoLoginPopup} className="cursor-pointer" />
-      <ButtonGoogle onClick={openGoogleLoginPopup} className="cursor-pointer" />
+      <button
+        type="button"
+        onClick={openKakaoLoginPopup}
+        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-[10px] bg-[#FEE500] py-[13px] text-base font-semibold text-[#191919] transition-all duration-200 hover:bg-[#FDD835] active:scale-[0.98]"
+      >
+        <KakaoIcon width={16} height={16} />
+        <span>카카오로 로그인</span>
+      </button>
+      <button
+        type="button"
+        onClick={openGoogleLoginPopup}
+        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-[10px] border border-[#F5F5F5] bg-white py-[13px] text-base font-semibold text-black transition-all duration-200 hover:bg-gray-50 active:scale-[0.98]"
+      >
+        <GoogleIcon width={18} height={18} />
+        <span>구글로 로그인</span>
+      </button>
     </div>
   )
 }

@@ -17,7 +17,7 @@ export const AuthContentWrapper = ({
         centered && 'items-center justify-center',
       )}
     >
-      <div className="w-full max-w-[1240px]">{children}</div>
+      <div className="w-full max-w-[1050px]">{children}</div>
     </main>
   )
 }

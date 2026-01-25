@@ -2,7 +2,7 @@ import BgrHeader from 'src/shared/components/header/BgrHeader'
 import { useSocialLogin } from 'src/features/auth/login/login-hooks'
 import { LoginFooter } from 'src/features/auth/login/login-footer'
 import { SocialLoginButtons } from 'src/features/auth/login/social-login-buttons'
-import { AUTH_MESSAGES } from 'src/features/auth/login/schema/contracts'
+import { AUTH_MESSAGES } from 'src/features/auth/login/constant/message'
 import AuthLoginImage from 'src/features/auth/login/login-image'
 import {
   AuthPageContainer,
@@ -26,7 +26,7 @@ const AuthPage = () => {
               <h1 className="text-heading-18-b text-gray-900">
                 {AUTH_MESSAGES.LOGIN.TITLE}
               </h1>
-              <p className="text-title-16-m text-gray-700">
+              <p className="text-title-16-m whitespace-pre-wrap text-gray-700">
                 {AUTH_MESSAGES.LOGIN.DESCRIPTION}
               </p>
             </div>
