@@ -1,5 +1,6 @@
 import Label from '@/shared/components/ui/label/label'
 import { cn } from '@/shared/lib/utils'
+import { formFieldBase } from '@/shared/styles/form-control.styles'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -35,14 +36,13 @@ const Input = ({
       <div className="relative w-full">
         <input
           type={type}
-          className={`w-full text-title-16-r ${cn(
-            'h-input gap-input-gap rounded-input px-input-px py-input-py flex items-center border border-gray-300 bg-white text-gray-900 transition-all duration-200 placeholder:text-gray-400',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-1',
-            'disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-400',
+          className={cn(
+            formFieldBase,
+            'h-input gap-input-gap rounded-input px-input-px py-input-py flex items-center',
             error &&
               'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
             maxLength && 'pr-14',
-          )}`}
+          )}
           placeholder={placeholder}
           value={value}
           onChange={onChange}

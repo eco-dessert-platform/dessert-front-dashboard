@@ -1,5 +1,6 @@
 import Label from '@/shared/components/ui/label/label'
 import { cn } from '@/shared/lib/utils'
+import { formFieldBase } from '@/shared/styles/form-control.styles'
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -41,8 +42,10 @@ const Textarea = ({
       <div className="relative w-full">
         <textarea
           className={cn(
-            'text-title-16-r flex min-h-[100px] w-full resize-none items-start gap-1.5 rounded-[10px] border border-gray-300 px-3 py-2 text-gray-800 placeholder:text-gray-400 disabled:bg-gray-100 disabled:text-gray-400',
-            error && 'border-red-500',
+            formFieldBase,
+            'min-h-[100px] resize-none items-start gap-1.5 rounded-[10px] px-3 py-2',
+            error &&
+              'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
           )}
           placeholder={placeholder}
           value={value}
@@ -61,7 +64,7 @@ const Textarea = ({
         )}
       </div>
       {error && errorMessage && (
-        <span className="text-body-12-r text-red-500">{errorMessage}</span>
+        <span className="text-body-12-r text-error-500">{errorMessage}</span>
       )}
       {!error && helperText && (
         <span className="text-body-12-r text-gray-500">{helperText}</span>
