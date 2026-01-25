@@ -5,5 +5,9 @@ interface ContainerProps {
 }
 
 export const AuthPageContainer = ({ children }: ContainerProps) => {
-  return <div className="flex min-h-screen flex-col bg-gray-50">{children}</div>
+  return (
+    <div className="flex h-screen flex-col overflow-hidden bg-gray-50">
+      {children}
+    </div>
+  )
 }

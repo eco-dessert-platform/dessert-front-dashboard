@@ -18,15 +18,15 @@ const AuthPage = () => {
       <BgrHeader />
 
       <AuthContentWrapper centered fullHeight>
-        <AuthCard>
+        <AuthCard className="max-w-[1240px]">
           <ImagePlaceholder className="hidden max-h-[746px] max-w-[595px] lg:block" />
 
-          <div className="flex flex-1 flex-col items-center gap-14 px-5 py-10 lg:py-0">
+          <div className="flex flex-1 flex-col items-center justify-center gap-[56px] px-5 py-10 lg:py-0">
             <div className="flex flex-col items-start gap-1">
-              <p className="text-[24px] font-bold text-gray-900">
+              <h1 className="text-heading-18-b text-gray-900">
                 {AUTH_MESSAGES.LOGIN.TITLE}
-              </p>
-              <p className="text-[16px] text-gray-600">
+              </h1>
+              <p className="text-title-16-m text-gray-700">
                 {AUTH_MESSAGES.LOGIN.DESCRIPTION}
               </p>
             </div>
