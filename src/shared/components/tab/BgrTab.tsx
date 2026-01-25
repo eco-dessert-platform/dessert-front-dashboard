@@ -17,7 +17,7 @@ const TAB_VARIANT_STYLES = {
     list: 'border-b-2 border-gray-100',
     trigger: (size: 'sm' | 'lg') =>
       cn(
-        "relative gap-1.5 py-2 pb-3 text-sm font-medium text-gray-500 transition-all after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:w-full after:bg-transparent after:content-[''] data-[state=active]:font-semibold data-[state=active]:text-gray-900 data-[state=active]:after:bg-gray-900",
+        "relative gap-1.5 py-2 pb-3 text-sm font-medium text-gray-500 transition-all after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:w-full after:bg-transparent after:content-[''] data-[state=active]:text-gray-900 data-[state=active]:[text-shadow:0_0_0.75px_currentColor] data-[state=active]:after:bg-gray-900",
         size === 'sm' ? 'px-4' : 'px-10',
       ),
     number:
