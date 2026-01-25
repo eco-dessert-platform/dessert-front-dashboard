@@ -23,16 +23,16 @@
  * ```
  */
 export const formatNumber = (
-    value: number | string,
-    locale: string = 'ko-KR',
+  value: number | string,
+  locale: string = 'ko-KR',
 ): string => {
-    const numValue = typeof value === 'string' ? Number(value) : value
+  const numValue = typeof value === 'string' ? Number(value) : value
 
-    if (isNaN(numValue)) {
-        return String(value)
-    }
+  if (isNaN(numValue)) {
+    return String(value)
+  }
 
-    return new Intl.NumberFormat(locale).format(numValue)
+  return new Intl.NumberFormat(locale).format(numValue)
 }
 
 /**
@@ -53,29 +53,29 @@ export const formatNumber = (
  * ```
  */
 export const formatNumberWithDecimal = (
-    value: number | string,
-    options: {
-        locale?: string
-        minimumFractionDigits?: number
-        maximumFractionDigits?: number
-    } = {},
+  value: number | string,
+  options: {
+    locale?: string
+    minimumFractionDigits?: number
+    maximumFractionDigits?: number
+  } = {},
 ): string => {
-    const {
-        locale = 'ko-KR',
-        minimumFractionDigits = 0,
-        maximumFractionDigits = 0,
-    } = options
+  const {
+    locale = 'ko-KR',
+    minimumFractionDigits = 0,
+    maximumFractionDigits = 0,
+  } = options
 
-    const numValue = typeof value === 'string' ? Number(value) : value
+  const numValue = typeof value === 'string' ? Number(value) : value
 
-    if (isNaN(numValue)) {
-        return String(value)
-    }
+  if (isNaN(numValue)) {
+    return String(value)
+  }
 
-    return new Intl.NumberFormat(locale, {
-        minimumFractionDigits,
-        maximumFractionDigits,
-    }).format(numValue)
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits,
+    maximumFractionDigits,
+  }).format(numValue)
 }
 
 /**
@@ -92,10 +92,10 @@ export const formatNumberWithDecimal = (
  * ```
  */
 export const formatCurrency = (
-    value: number | string,
-    locale: string = 'ko-KR',
+  value: number | string,
+  locale: string = 'ko-KR',
 ): string => {
-    return `${formatNumber(value, locale)}원`
+  return `${formatNumber(value, locale)}원`
 }
 
 /**
@@ -112,10 +112,9 @@ export const formatCurrency = (
  * ```
  */
 export const formatCurrencyRange = (
-    minValue: number | string,
-    maxValue: number | string,
-    locale: string = 'ko-KR',
+  minValue: number | string,
+  maxValue: number | string,
+  locale: string = 'ko-KR',
 ): string => {
-    return `${formatCurrency(minValue, locale)} ~ ${formatCurrency(maxValue, locale)}`
+  return `${formatCurrency(minValue, locale)} ~ ${formatCurrency(maxValue, locale)}`
 }
-

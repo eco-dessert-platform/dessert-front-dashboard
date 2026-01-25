@@ -9,9 +9,8 @@
 - **프레임워크**: React 19, TypeScript 5.7
 - **상태 관리**: Redux Toolkit 2.6, Redux Saga 1.3
 - **라우팅**: React Router 7
-- **스타일링**: TailwindCSS 4, shadcn/ui
+- **스타일링**: TailwindCSS 4, radix-ui
 - **애니메이션**: Framer Motion
-- **다국어**: i18next
 - **테스팅**: Vitest, Cypress, Playwright, Storybook
 
 ## 아키텍처 규칙 (FSD)
@@ -79,11 +78,6 @@ app → pages → features → shared
 - `src/global/api/client.tsx`의 API 클라이언트 사용
 - Redux Saga에서 비동기 요청 처리
 - 에러 핸들링 필수
-
-### 다국어 처리
-- `i18next` 사용
-- 번역 파일: `src/assets/locales/ko/`, `src/assets/locales/en/`
-- `useTranslation` 훅 사용
 
 ### 라우팅
 - React Router 7 사용

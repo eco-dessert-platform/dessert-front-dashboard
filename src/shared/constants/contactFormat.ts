@@ -29,66 +29,66 @@ export type PhoneNumberType = 'mobile' | 'landline' | 'international'
  * ```
  */
 export const formatPhoneNumber = (
-    phoneNumber: string,
-    type: PhoneNumberType = 'mobile',
+  phoneNumber: string,
+  type: PhoneNumberType = 'mobile',
 ): string => {
-    // 숫자만 추출
-    const digits = phoneNumber.replace(/\D/g, '')
+  // 숫자만 추출
+  const digits = phoneNumber.replace(/\D/g, '')
 
-    if (!digits) {
-        return phoneNumber
-    }
-
-    switch (type) {
-        case 'mobile': {
-            // 휴대전화: 010-1234-5678
-            if (digits.length === 11 && digits.startsWith('010')) {
-                return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`
-            }
-            // 010이 아닌 경우도 동일한 형식 적용
-            if (digits.length === 11) {
-                return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`
-            }
-            // 10자리 휴대전화 (구형)
-            if (digits.length === 10) {
-                return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`
-            }
-            break
-        }
-        case 'landline': {
-            // 서울 지역번호 (02): 02-1234-5678
-            if (digits.startsWith('02') && digits.length === 9) {
-                return `${digits.slice(0, 2)}-${digits.slice(2, 6)}-${digits.slice(6)}`
-            }
-            if (digits.startsWith('02') && digits.length === 10) {
-                return `${digits.slice(0, 2)}-${digits.slice(2, 6)}-${digits.slice(6)}`
-            }
-            // 기타 지역번호 (031, 032 등): 031-123-4567
-            if (digits.length === 10) {
-                return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`
-            }
-            // 1588, 1544 등: 1588-1234
-            if (digits.length === 8) {
-                return `${digits.slice(0, 4)}-${digits.slice(4)}`
-            }
-            break
-        }
-        case 'international': {
-            // 국제번호는 그대로 반환 (복잡한 규칙이므로)
-            return phoneNumber
-        }
-    }
-
-    // 기본 포맷팅: 3-4-4 형식
-    if (digits.length === 11) {
-        return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`
-    }
-    if (digits.length === 10) {
-        return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`
-    }
-
-    // 포맷팅할 수 없는 경우 원본 반환
+  if (!digits) {
     return phoneNumber
+  }
+
+  switch (type) {
+    case 'mobile': {
+      // 휴대전화: 010-1234-5678
+      if (digits.length === 11 && digits.startsWith('010')) {
+        return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`
+      }
+      // 010이 아닌 경우도 동일한 형식 적용
+      if (digits.length === 11) {
+        return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`
+      }
+      // 10자리 휴대전화 (구형)
+      if (digits.length === 10) {
+        return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`
+      }
+      break
+    }
+    case 'landline': {
+      // 서울 지역번호 (02): 02-1234-5678
+      if (digits.startsWith('02') && digits.length === 9) {
+        return `${digits.slice(0, 2)}-${digits.slice(2, 6)}-${digits.slice(6)}`
+      }
+      if (digits.startsWith('02') && digits.length === 10) {
+        return `${digits.slice(0, 2)}-${digits.slice(2, 6)}-${digits.slice(6)}`
+      }
+      // 기타 지역번호 (031, 032 등): 031-123-4567
+      if (digits.length === 10) {
+        return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`
+      }
+      // 1588, 1544 등: 1588-1234
+      if (digits.length === 8) {
+        return `${digits.slice(0, 4)}-${digits.slice(4)}`
+      }
+      break
+    }
+    case 'international': {
+      // 국제번호는 그대로 반환 (복잡한 규칙이므로)
+      return phoneNumber
+    }
+  }
+
+  // 기본 포맷팅: 3-4-4 형식
+  if (digits.length === 11) {
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`
+  }
+  if (digits.length === 10) {
+    return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`
+  }
+
+  // 포맷팅할 수 없는 경우 원본 반환
+  return phoneNumber
 }
 
 /**
@@ -104,8 +104,8 @@ export const formatPhoneNumber = (
  * ```
  */
 export const isValidEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
 }
 
 /**
@@ -120,6 +120,5 @@ export const isValidEmail = (email: string): boolean => {
  * ```
  */
 export const formatEmail = (email: string): string => {
-    return email.trim().toLowerCase()
+  return email.trim().toLowerCase()
 }
-
