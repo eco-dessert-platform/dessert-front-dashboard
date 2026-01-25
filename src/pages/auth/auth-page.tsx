@@ -1,21 +1,21 @@
-import BgrHeader from 'src/shared/components/header/BgrHeader'
-import { useSocialLogin } from 'src/features/auth/login/login-hooks'
-import { LoginFooter } from 'src/features/auth/login/login-footer'
-import { SocialLoginButtons } from 'src/features/auth/login/social-login-buttons'
-import { AUTH_MESSAGES } from 'src/features/auth/login/constant/message'
-import AuthLoginImage from 'src/features/auth/login/login-image'
+import { AUTH_MESSAGES } from '@/features/auth/login/constant/message'
+import { LoginFooter } from '@/features/auth/login/login-footer'
+import { useSocialLogin } from '@/features/auth/login/login-hooks'
+import AuthLoginImage from '@/features/auth/login/login-image'
+import { SocialLoginButtons } from '@/features/auth/login/social-login-buttons'
 import {
-  AuthPageContainer,
-  AuthContentWrapper,
   AuthCard,
-} from 'src/features/auth/ui'
+  AuthContentWrapper,
+  AuthPageContainer,
+} from '@/features/auth/ui'
+import LogoHeader from '@/shared/components/ui/header/logo-header'
 
 const AuthPage = () => {
   useSocialLogin()
 
   return (
     <AuthPageContainer>
-      <BgrHeader />
+      <LogoHeader />
 
       <AuthContentWrapper centered>
         <AuthCard className="max-w-[1240px]">

@@ -3,20 +3,20 @@ import CheckboxMultipleIcon from '@/assets/icons/icn-check-on-multiple.svg?react
 import CheckboxOnOutlineIcon from '@/assets/icons/icn-check-on-outline.svg?react'
 import CheckboxOnFilledIcon from '@/assets/icons/icn-check-on.svg?react'
 import { cn } from '@/shared/lib/utils'
-import * as Checkbox from '@radix-ui/react-checkbox'
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import * as React from 'react'
 
-interface BgrCheckboxProps {
+interface CheckboxProps {
   className?: string
-  checked?: Checkbox.CheckedState
-  onCheckedChange?: (checked: Checkbox.CheckedState) => void
+  checked?: CheckboxPrimitive.CheckedState
+  onCheckedChange?: (checked: CheckboxPrimitive.CheckedState) => void
   disabled?: boolean
   size?: 'md' | 'lg'
   label?: string
   type?: 'single' | 'multiple'
 }
 
-export default function BgrCheckbox({
+export default function Checkbox({
   className,
   checked,
   onCheckedChange,
@@ -25,12 +25,12 @@ export default function BgrCheckbox({
   label,
   type = 'single',
   ...rest
-}: BgrCheckboxProps) {
+}: CheckboxProps) {
   const id = React.useId()
 
   return (
     <div className={cn('inline-flex items-center gap-2', className)}>
-      <Checkbox.Root
+      <CheckboxPrimitive.Root
         id={id}
         checked={checked}
         onCheckedChange={onCheckedChange}
@@ -41,7 +41,7 @@ export default function BgrCheckbox({
         {...rest}
       >
         <CheckboxOffIcon className="h-full w-full group-data-[state=checked]:hidden group-data-[state=indeterminate]:hidden" />
-        <Checkbox.Indicator className="h-full w-full" asChild>
+        <CheckboxPrimitive.Indicator className="h-full w-full" asChild>
           {type === 'multiple' ? (
             checked === 'indeterminate' ? (
               <CheckboxMultipleIcon className="h-full w-full" />
@@ -51,8 +51,8 @@ export default function BgrCheckbox({
           ) : (
             <CheckboxOnFilledIcon className="h-full w-full" />
           )}
-        </Checkbox.Indicator>
-      </Checkbox.Root>
+        </CheckboxPrimitive.Indicator>
+      </CheckboxPrimitive.Root>
       {label && (
         <label
           htmlFor={id}

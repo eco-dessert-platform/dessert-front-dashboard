@@ -1,5 +1,5 @@
+import Button from '@/shared/components/ui/button/button'
 import { useNavigate } from 'react-router-dom'
-import BgrButton from 'src/shared/components/button/BgrButton'
 
 const NotFoundPage = () => {
   const navigate = useNavigate()
@@ -17,13 +17,13 @@ const NotFoundPage = () => {
       </div>
 
       <div className="flex gap-4">
-        <BgrButton
+        <Button
           title="이전으로"
           variant="secondary-outlined"
           onClick={() => navigate(-1)}
           className="min-w-[140px]"
         />
-        <BgrButton
+        <Button
           title="홈으로 이동"
           onClick={() => navigate('/')}
           className="min-w-[140px]"

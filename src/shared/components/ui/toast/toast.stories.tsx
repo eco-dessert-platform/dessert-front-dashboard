@@ -1,13 +1,13 @@
-import { bgrToast } from '@/shared/components/ui/toast/toast-helper.tsx'
-import BgrToast from '@/shared/components/ui/toast/toast.tsx'
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Toast from './toast'
+import { toast } from './toast-helper'
 
 const meta = {
-  title: 'Components/BgrToast',
-  component: BgrToast,
+  title: 'Components/Toast',
+  component: Toast,
   parameters: {
     layout: 'centered',
   },
@@ -40,10 +40,10 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof BgrToast>
+} satisfies Meta<typeof Toast>
 
 export default meta
-type Story = StoryObj<typeof BgrToast>
+type Story = StoryObj<typeof Toast>
 
 export const Success: Story = {
   args: {
@@ -110,9 +110,9 @@ export const AllVariants: Story = {
   },
   render: () => (
     <div className="flex flex-col gap-4">
-      <BgrToast message="Success" variant="success" onClose={fn()} />
-      <BgrToast message="Error" variant="error" onClose={fn()} />
-      <BgrToast message="info" variant="info" onClose={fn()} />
+      <Toast message="Success" variant="success" onClose={fn()} />
+      <Toast message="Error" variant="error" onClose={fn()} />
+      <Toast message="info" variant="info" onClose={fn()} />
     </div>
   ),
 }
@@ -125,38 +125,38 @@ export const WithHelperFunctions: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <button
-        onClick={() => bgrToast.success('성공 메시지')}
+        onClick={() => toast.success('성공 메시지')}
         className="rounded bg-green-500 px-4 py-2 text-white"
       >
         Show Success Toast
       </button>
       <button
-        onClick={() => bgrToast.success('성공 메시지', '성공 메시지 입니다.')}
+        onClick={() => toast.success('성공 메시지', '성공 메시지 입니다.')}
         className="rounded bg-green-500 px-4 py-2 text-white"
       >
         Show Success Toast2
       </button>
       <button
-        onClick={() => bgrToast.error('오류 메시지')}
+        onClick={() => toast.error('오류 메시지')}
         className="rounded bg-red-500 px-4 py-2 text-white"
       >
         Show Error Toast
       </button>
       <button
-        onClick={() => bgrToast.error('오류 메시지', '오류 메시지 입니다.')}
+        onClick={() => toast.error('오류 메시지', '오류 메시지 입니다.')}
         className="rounded bg-red-500 px-4 py-2 text-white"
       >
         Show Error Toast2
       </button>
       <button
-        onClick={() => bgrToast.info('다운로드 메시지')}
+        onClick={() => toast.info('다운로드 메시지')}
         className="rounded bg-gray-800 px-4 py-2 text-white"
       >
         Show info Toast
       </button>
       <button
         onClick={() =>
-          bgrToast.info('info 메시지', '무언가 다운로드 되었습니다.')
+          toast.info('info 메시지', '무언가 다운로드 되었습니다.')
         }
         className="rounded bg-gray-800 px-4 py-2 text-white"
       >

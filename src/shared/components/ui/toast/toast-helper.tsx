@@ -1,5 +1,5 @@
-import BgrToast from '@/shared/components/ui/toast/toast'
-import { Id, toast, ToastOptions } from 'react-toastify'
+import Toast from '@/shared/components/ui/toast/toast'
+import { Id, toast as t, ToastOptions } from 'react-toastify'
 
 // react-toastify와 통합된 헬퍼 함수들
 const createToastHelper = (
@@ -12,20 +12,20 @@ const createToastHelper = (
 
   const ToastComponent = () => {
     return (
-      <BgrToast
+      <Toast
         message={message}
         subMessage={subMessage}
         variant={variant}
         onClose={() => {
           if (toastIdRef.current !== null) {
-            toast.dismiss(toastIdRef.current)
+            t.dismiss(toastIdRef.current)
           }
         }}
       />
     )
   }
 
-  const id = toast(<ToastComponent />, {
+  const id = t(<ToastComponent />, {
     ...options,
     className: '!p-0 !bg-transparent !shadow-none',
   })
@@ -33,7 +33,7 @@ const createToastHelper = (
   return id
 }
 
-export const bgrToast = {
+export const toast = {
   success: (
     message: string,
     subMessage?: string,
