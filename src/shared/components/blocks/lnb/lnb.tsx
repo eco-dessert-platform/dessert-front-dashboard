@@ -13,8 +13,8 @@ const MENU_LIST = [
   {
     group: '상품 관리',
     items: [
-      { title: '상품등록', href: ROUTES.PRODUCTS.CREATE },
       { title: '상품 조회/수정', href: ROUTES.PRODUCTS.ALL },
+      { title: '상품등록', href: ROUTES.PRODUCTS.CREATE },
     ],
   },
   {

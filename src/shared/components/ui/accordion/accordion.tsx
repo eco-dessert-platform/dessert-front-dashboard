@@ -42,15 +42,15 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "cursor-pointer focus-visible:ring-ring/50 focus-visible:border-ring focus-visible:after:border-ring **:data-[slot=accordion-trigger-icon]:text-muted-foreground py-3 px-2 text-left text-heading-18-m focus-visible:ring-[3px] **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 group/accordion-trigger relative flex flex-1 items-center justify-between transition-all outline-none disabled:pointer-events-none disabled:opacity-50 text-gray-800" ,
+          "cursor-pointer focus-visible:ring-ring/50 focus-visible:border-ring focus-visible:after:border-ring **:data-[slot=accordion-trigger-icon]:text-gray-800 py-3 px-2 text-left text-heading-18-m focus-visible:ring-[3px] **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 group relative flex flex-1 items-center justify-between transition-all outline-none disabled:pointer-events-none disabled:opacity-50 text-gray-800" ,
           className
         )}
         {...props}
       >
         {children}
         <BottomArrowIcon
-					data-slot="accordion-trigger-icon"
-          className="pointer-events-none shrink-0 group-data-[state=open]/accordion-trigger:rotate-180"
+          data-slot="accordion-trigger-icon"
+          className="pointer-events-none shrink-0 text-gray-800 transition-transform group-data-[state=open]:rotate-180"
         />
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
