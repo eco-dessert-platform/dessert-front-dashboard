@@ -82,11 +82,11 @@ const BgrToast = ({
           </div>
         )}
         <div className="flex-1">
-          <p className="text-title-14-b">{message}</p>
+          <p className="typo-title-14-b">{message}</p>
           {subMessage && (
             <p
               className={cn(
-                'text-body-12-r',
+                'typo-body-12-r',
                 variantClasses[variant].subMessageColor,
               )}
             >
