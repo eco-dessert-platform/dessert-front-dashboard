@@ -47,7 +47,7 @@ const BgrThumbnail = ({
                 />
             ) : (
                 <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                    <span className="text-body-12-r text-gray-400">
+                    <span className="typo-body-12-r text-gray-400">
                         이미지 없음
                     </span>
                 </div>
@@ -55,7 +55,7 @@ const BgrThumbnail = ({
 
             {showPagination && paginationText && (
                 <div className="absolute bottom-[15px] right-[15px] bg-black/60 px-2.5 py-0.5 rounded-[50px]">
-                    <span className="text-title-14-m text-white">
+                    <span className="typo-title-14-m text-white">
                         {paginationText}
                     </span>
                 </div>
@@ -63,7 +63,7 @@ const BgrThumbnail = ({
 
             {showSoldOut && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                    <span className="text-title-14-m text-gray-200">
+                    <span className="typo-title-14-m text-gray-200">
                         {soldOutText}
                     </span>
                 </div>

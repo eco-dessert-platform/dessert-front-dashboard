@@ -51,7 +51,7 @@ const BgrSelect = ({
             >
                 <SelectPrimitive.Trigger
                     className={cn(
-                        'flex h-[42px] w-full items-center justify-between gap-2 rounded-[10px] border border-gray-300 bg-white px-3 py-2 text-title-16-r text-gray-800 outline-none',
+                        'flex h-[42px] w-full items-center justify-between gap-2 rounded-[10px] border border-gray-300 bg-white px-3 py-2 typo-title-16-r text-gray-800 outline-none',
                         'hover:border-gray-400',
                         'focus-visible:border-primary-500 focus-visible:ring-2 focus-visible:ring-primary-200',
                         'disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed',
@@ -80,7 +80,7 @@ const BgrSelect = ({
                                     value={option.value}
                                     disabled={option.disabled}
                                     className={cn(
-                                        'relative flex cursor-pointer select-none items-center rounded-[8px] px-3 py-2 text-title-16-r text-gray-800 outline-none',
+                                        'relative flex cursor-pointer select-none items-center rounded-[8px] px-3 py-2 typo-title-16-r text-gray-800 outline-none',
                                         'hover:bg-gray-50',
                                         'focus:bg-gray-50',
                                         'disabled:pointer-events-none disabled:opacity-50',
@@ -96,12 +96,12 @@ const BgrSelect = ({
                 </SelectPrimitive.Portal>
             </SelectPrimitive.Root>
             {error && errorMessage && (
-                <span className="text-body-12-r text-red-500">
+                <span className="typo-body-12-r text-red-500">
                     {errorMessage}
                 </span>
             )}
             {!error && helperText && (
-                <span className="text-body-12-r text-gray-500">
+                <span className="typo-body-12-r text-gray-500">
                     {helperText}
                 </span>
             )}

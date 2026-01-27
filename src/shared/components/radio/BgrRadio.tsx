@@ -59,7 +59,7 @@ const BgrRadio = ({
           )}
           <span
             className={`text-gray-800 ${
-              size === 'lg' ? 'text-title-16-r' : 'text-body-12-r'
+              size === 'lg' ? 'typo-title-16-r' : 'typo-body-12-r'
             }`}
           >
             {option.label}

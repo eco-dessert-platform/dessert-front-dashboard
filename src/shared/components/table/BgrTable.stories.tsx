@@ -110,7 +110,7 @@ const exampleColumns = ({
       getRowSpan: (cell) => getRowSpanForSeller(cell.row.index),
     },
     cell: ({ row }) => (
-      <div className="text-title-14-r text-center text-gray-900">
+      <div className="typo-title-14-r text-center text-gray-900">
         {row.original.sellerName}
       </div>
     ),
@@ -126,7 +126,7 @@ const exampleColumns = ({
           alt={row.original.productName}
           className="h-20 w-20 shrink-0 rounded-[8px]"
         />
-        <div className="text-title-14-r line-clamp-2 text-left text-gray-900">
+        <div className="typo-title-14-r line-clamp-2 text-left text-gray-900">
           {row.original.productName}
         </div>
       </div>
@@ -137,7 +137,7 @@ const exampleColumns = ({
     header: '재고상태',
     accessorKey: 'stockStatus',
     cell: ({ row }) => (
-      <div className="text-title-14-r text-center text-gray-900">
+      <div className="typo-title-14-r text-center text-gray-900">
         {row.original.stockStatus}
       </div>
     ),
@@ -148,10 +148,10 @@ const exampleColumns = ({
     accessorKey: 'salePrice',
     cell: ({ row }) => (
       <div className="flex flex-col items-end">
-        <div className="text-body-12-r text-center text-gray-500 line-through">
+        <div className="typo-body-12-r text-center text-gray-500 line-through">
           {`${row.original.originPrice.toLocaleString()}원`}
         </div>
-        <div className="text-title-14-sb text-center text-gray-900">
+        <div className="typo-title-14-sb text-center text-gray-900">
           {`${row.original.salePrice.toLocaleString()}원`}
         </div>
       </div>
@@ -164,15 +164,15 @@ const exampleColumns = ({
     cell: ({ row }) => (
       <div className="flex flex-col items-end">
         <div className="flex flex-col items-end">
-          <div className="text-title-14-sb text-center text-gray-900">
+          <div className="typo-title-14-sb text-center text-gray-900">
             {`${row.original.shipping.price.toLocaleString()}원`}
           </div>
-          <div className="text-body-12-r text-primary-500 text-center">
+          <div className="typo-body-12-r text-primary-500 text-center">
             {row.original.shipping.type}
           </div>
         </div>
         {row.original.shipping.minimumPrice && (
-          <div className="text-body-12-r text-center text-gray-500">
+          <div className="typo-body-12-r text-center text-gray-500">
             {`${row.original.shipping.minimumPrice.toLocaleString()}원`}
           </div>
         )}
@@ -331,7 +331,7 @@ function ToggleSale({
   return (
     <div className="flex items-center gap-1">
       <BgrCheckbox checked={checked} onCheckedChange={(checked) => onCheckedChange(checked === true)} />
-      <span className="text-body-12-r text-gray-700">판매중지</span>
+      <span className="typo-body-12-r text-gray-700">판매중지</span>
     </div>
   )
 }

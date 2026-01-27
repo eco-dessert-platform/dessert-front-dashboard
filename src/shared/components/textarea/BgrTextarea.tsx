@@ -44,7 +44,7 @@ const BgrTextarea = ({
             <div className="relative w-full">
                 <textarea
                     className={cn(
-                        'text-title-16-r flex min-h-[100px] w-full items-start gap-1.5 rounded-[10px] border border-gray-300 px-3 py-2 text-gray-800 placeholder:text-gray-400 disabled:bg-gray-100 disabled:text-gray-400 resize-none',
+                        'typo-title-16-r flex min-h-[100px] w-full items-start gap-1.5 rounded-[10px] border border-gray-300 px-3 py-2 text-gray-800 placeholder:text-gray-400 disabled:bg-gray-100 disabled:text-gray-400 resize-none',
                         error && 'border-red-500',
                     )}
                     placeholder={placeholder}
@@ -55,7 +55,7 @@ const BgrTextarea = ({
                     {...restProps}
                 />
                 {showCount && maxLength && (
-                    <div className="absolute bottom-2 right-3 text-body-10-r text-gray-400">
+                    <div className="absolute bottom-2 right-3 typo-body-10-r text-gray-400">
                         <span className={currentLength > maxLength ? 'text-red-500' : ''}>
                             {currentLength}
                         </span>
@@ -64,12 +64,12 @@ const BgrTextarea = ({
                 )}
             </div>
             {error && errorMessage && (
-                <span className="text-body-12-r text-red-500">
+                <span className="typo-body-12-r text-red-500">
                     {errorMessage}
                 </span>
             )}
             {!error && helperText && (
-                <span className="text-body-12-r text-gray-500">
+                <span className="typo-body-12-r text-gray-500">
                     {helperText}
                 </span>
             )}

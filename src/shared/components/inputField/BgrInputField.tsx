@@ -70,12 +70,12 @@ export default function BgrInputField({
                 </div>
 
                 {error && errorMessage ? (
-                    <span className="text-body-12-r text-error-500">
+                    <span className="typo-body-12-r text-error-500">
                         {errorMessage}
                     </span>
                 ) : (
                     helperText && (
-                        <span className="text-body-12-r text-gray-500">
+                        <span className="typo-body-12-r text-gray-500">
                             {helperText}
                         </span>
                     )

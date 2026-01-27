@@ -29,7 +29,7 @@ const FileUploadInput = ({
     return (
         <div className="flex flex-col items-start gap-1 self-stretch">
             {label && (
-                <label className="text-body-12-r text-gray-800">
+                <label className="typo-body-12-r text-gray-800">
                     {label}
                     {required && (
                         <span className="text-primary-500" aria-label="필수">
@@ -40,7 +40,7 @@ const FileUploadInput = ({
             )}
             <div className="flex items-start gap-4 self-stretch">
                 <Input
-                    className="text-title-16-r flex flex-1 items-center gap-1.5 rounded-[10px] border border-gray-300 px-3 py-2 text-gray-800 placeholder:text-gray-400"
+                    className="typo-title-16-r flex flex-1 items-center gap-1.5 rounded-[10px] border border-gray-300 px-3 py-2 text-gray-800 placeholder:text-gray-400"
                     placeholder={placeholder}
                     value={value}
                     readOnly
@@ -57,13 +57,13 @@ const FileUploadInput = ({
                         input.click()
                     }}
                 >
-                    <span className="text-title-16-m text-white">
+                    <span className="typo-title-16-m text-white">
                         {buttonText}
                     </span>
                 </button>
             </div>
             {helperText && (
-                <span className="text-body-12-r text-gray-500">
+                <span className="typo-body-12-r text-gray-500">
                     {helperText}
                 </span>
             )}

@@ -58,7 +58,7 @@ export default function BgrCheckbox({
           htmlFor={id}
           className={`text-gray-900 ${
             disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-          } ${size === 'lg' ? 'text-title-16-r' : 'text-body-12-r'}`}
+          } ${size === 'lg' ? 'typo-title-16-r' : 'typo-body-12-r'}`}
         >
           {label}
         </label>
