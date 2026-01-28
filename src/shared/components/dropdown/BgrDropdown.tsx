@@ -64,7 +64,7 @@ const BgrDropdown = ({
                 type="button"
                 disabled={disabled}
                 onClick={() => setIsOpen(!isOpen)}
-                className={`text-title-16-r ${cn(
+                className={`typo-title-16-r ${cn(
                     'flex h-input w-full items-center justify-between rounded-input border px-input-px py-input-py transition-all duration-200',
                     'text-gray-900',
                     'border-gray-300 bg-white',
@@ -107,7 +107,7 @@ const BgrDropdown = ({
                                         type="button"
                                         disabled={option.disabled}
                                         onClick={() => handleSelect(option)}
-                                        className={`text-title-14-r ${cn(
+                                        className={`typo-title-14-r ${cn(
                                             'flex h-[38px] w-full items-center gap-2 rounded-sm px-[10px] py-[6px] transition-colors duration-200',
                                             'text-left text-gray-800',
                                             'hover:bg-gray-50',

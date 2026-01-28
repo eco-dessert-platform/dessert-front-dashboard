@@ -41,7 +41,7 @@ const BgrDaySelector = ({
                         onClick={() => handleDayClick(day.value)}
                         className={clsx(
                             'flex items-center justify-center w-[42px] h-[42px] p-1.5 rounded-full',
-                            'text-title-16-m transition-colors',
+                            'typo-title-16-m transition-colors',
                             isSelected
                                 ? 'bg-primary-50 text-primary-500'
                                 : 'bg-white text-gray-800 hover:bg-gray-50',

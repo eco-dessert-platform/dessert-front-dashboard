@@ -113,7 +113,7 @@ function DialogTitle({
     return (
         <DialogPrimitive.Title
             data-slot="dialog-title"
-            className={cn('text-heading-24-sb text-gray-800', className)}
+            className={cn('typo-heading-24-sb text-gray-800', className)}
             {...props}
         />
     )
@@ -126,7 +126,7 @@ function DialogDescription({
     return (
         <DialogPrimitive.Description
             data-slot="dialog-description"
-            className={cn('text-title-16-r text-gray-600', className)}
+            className={cn('typo-title-16-r text-gray-600', className)}
             {...props}
         />
     )

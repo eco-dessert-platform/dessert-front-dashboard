@@ -97,7 +97,7 @@ function MenuItem({
 }) {
     return (
         <AccordionItem value={title} key={title}>
-            <AccordionTrigger className="cursor-pointer text-heading-18-b h-[53px] w-[208px] px-[8px] no-underline hover:no-underline">
+            <AccordionTrigger className="cursor-pointer typo-heading-18-b h-[53px] w-[208px] px-[8px] no-underline hover:no-underline">
                 <span className="text-gray-800">{title}</span>
             </AccordionTrigger>
 
@@ -106,7 +106,7 @@ function MenuItem({
                     <div className="px-2 py-1">
                         <button
                             type="button"
-                            className="cursor-pointer text-heading-18-m rounded-[10px] h-full w-full justify-start p-3 text-left border border-transparent focus:border-gray-200 focus:bg-gray-100"
+                            className="cursor-pointer typo-heading-18-m rounded-[10px] h-full w-full justify-start p-3 text-left border border-transparent focus:border-gray-200 focus:bg-gray-100"
                             onClick={() => {}}
                         >
                             <span className="text-gray-800">{item.title}</span>
@@ -127,7 +127,7 @@ function LogoutButton() {
             className="flex h-[49px] w-full items-center justify-start border-t border-gray-300 px-4 py-button-sm-px text-left"
         >
             <img src={logoutIcon} alt="logout" className="mr-2 size-5" />
-            <span className="text-heading-18-m text-gray-800">로그아웃</span>
+            <span className="typo-heading-18-m text-gray-800">로그아웃</span>
         </button>
     )
 }

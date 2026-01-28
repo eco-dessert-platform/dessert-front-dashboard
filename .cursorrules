@@ -60,7 +60,7 @@ app → pages → features → shared
 ### 스타일링
 - TailwindCSS 유틸리티 클래스 우선 사용
 - Prettier + prettier-plugin-tailwindcss로 클래스 자동 정렬
-- PCSS 파일 사용 (base.pcss, variables.pcss, tokens.pcss 등)
+- PCSS 파일 사용 (base.pcss, typography.pcss, tokens.pcss 등)
 
 ## 코드 작성 가이드
 

@@ -78,8 +78,8 @@ src/
 ├── styles/                 # 전역 스타일
 │   ├── index.css           # 메인 CSS (TailwindCSS import)
 │   ├── base.pcss           # 기본 스타일
-│   ├── variables.pcss      # CSS 변수
-│   ├── typography.pcss     # 폰트 정의
+│   ├── typography.pcss     # CSS 변수
+│   ├── fonts.pcss          # 폰트 정의
 │   └── reset.css           # CSS 리셋
 │
 ├── App.tsx                 # 루트 컴포넌트
@@ -250,10 +250,10 @@ import { reduxMaker } from 'src/global/store/redux/reduxUtils'
 const prefix = 'myFeature'
 const asyncRequests = [] as const
 const localState = {
-    /* ... */
+  /* ... */
 }
 const localReducers = {
-    /* ... */
+  /* ... */
 }
 
 const module = reduxMaker(prefix, asyncRequests, localState, localReducers)
@@ -268,15 +268,15 @@ export const { slice, actions, saga } = module
 import { slice, saga } from 'src/features/myFeature/myFeatureReducer'
 
 const reducers = {
-    // ...
-    myFeatureReducer: slice.reducer,
+  // ...
+  myFeatureReducer: slice.reducer,
 }
 
 export function* rootSaga() {
-    yield all([
-        // ...
-        saga(),
-    ])
+  yield all([
+    // ...
+    saga(),
+  ])
 }
 ```
 

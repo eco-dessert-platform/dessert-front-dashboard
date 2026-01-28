@@ -34,9 +34,9 @@ const BgrButton = ({
     }
 
     const typoClasses = {
-        sm: 'text-body-12-m',
-        md: 'text-title-16-m',
-        lg: 'text-heading-18-m',
+        sm: 'typo-body-12-m',
+        md: 'typo-title-16-m',
+        lg: 'typo-heading-18-m',
     }
 
     const variantClasses = {

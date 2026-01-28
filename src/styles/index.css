@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@import 'src/styles/typography.pcss';
+@import 'src/styles/fonts.pcss';
 @import 'src/shared/lib/shadcn/styles/shadcn.pcss';
 @import './tokens.pcss';
-@import './variables.pcss';
+@import './typography.pcss';
 @import './base.pcss';

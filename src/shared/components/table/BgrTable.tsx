@@ -44,7 +44,7 @@ function BgrTable<T>({ data, columns, topArea }: BgrTableProps<T>) {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="text-body-12-m text-center align-middle text-gray-800"
+                  className="typo-body-12-m text-center align-middle text-gray-800"
                   style={{ width: header.getSize() }}
                 >
                   {header.isPlaceholder

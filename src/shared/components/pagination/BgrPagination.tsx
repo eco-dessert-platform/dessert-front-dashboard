@@ -108,8 +108,8 @@ const BgrPagination = ({
                         className={clsx(
                             baseButtonStyle,
                             isActive
-                                ? 'bg-primary-50 text-primary-500 text-title-14-m cursor-default'
-                                : 'text-title-14-r cursor-pointer text-gray-800 hover:bg-gray-50',
+                                ? 'bg-primary-50 text-primary-500 typo-title-14-m cursor-default'
+                                : 'typo-title-14-r cursor-pointer text-gray-800 hover:bg-gray-50',
                         )}
                         aria-label={`Go to page ${pageNumber}`}
                         aria-current={isActive ? 'page' : undefined}

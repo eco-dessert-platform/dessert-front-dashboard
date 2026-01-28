@@ -27,22 +27,22 @@
 ```css
 /* 라이트 모드 */
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
 
-    /* 여기에 생성된 Primary 색상 붙여넣기 */
-    --primary: oklch(0.54 0.22 13.45); /* 예: 오렌지색 */
-    --primary-foreground: oklch(0.985 0 0);
+  /* 여기에 생성된 Primary 색상 붙여넣기 */
+  --primary: oklch(0.54 0.22 13.45); /* 예: 오렌지색 */
+  --primary-foreground: oklch(0.985 0 0);
 }
 
 /* 다크 모드 */
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
 
-    /* 다크 모드용 Primary 색상 */
-    --primary: oklch(0.7 0.19 13.45); /* 밝기 조정 */
-    --primary-foreground: oklch(0.11 0 0);
+  /* 다크 모드용 Primary 색상 */
+  --primary: oklch(0.7 0.19 13.45); /* 밝기 조정 */
+  --primary-foreground: oklch(0.11 0 0);
 }
 ```
 
@@ -50,23 +50,23 @@
 
 ### 색상 변수 정의
 
-`src/styles/variables.pcss` 파일에 추가합니다:
+`src/styles/typography.pcss` 파일에 추가합니다:
 
 ```css
 @theme {
-    /* 브랜드 메인 컬러 */
-    --color-brand-primary: #f04c28;
-    --color-brand-secondary: #ff6b6b;
+  /* 브랜드 메인 컬러 */
+  --color-brand-primary: #f04c28;
+  --color-brand-secondary: #ff6b6b;
 
-    /* 그레이스케일 */
-    --color-gray-50: #fafafa;
-    --color-gray-100: #f5f5f5;
-    --color-gray-900: #1a1a1a;
+  /* 그레이스케일 */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-900: #1a1a1a;
 
-    /* 기능별 컬러 */
-    --color-success: #10b981;
-    --color-warning: #f59e0b;
-    --color-danger: #ef4444;
+  /* 기능별 컬러 */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
 }
 ```
 
@@ -94,14 +94,14 @@
 
 ```css
 .dark {
-    /* 배경은 완전한 검정이 아닌 약간 밝은 검정 */
-    --background: oklch(0.15 0 0); /* 0.145 → 0.15 */
+  /* 배경은 완전한 검정이 아닌 약간 밝은 검정 */
+  --background: oklch(0.15 0 0); /* 0.145 → 0.15 */
 
-    /* 텍스트도 완전한 흰색이 아닌 약간 어두운 흰색 */
-    --foreground: oklch(0.92 0 0); /* 0.985 → 0.92 */
+  /* 텍스트도 완전한 흰색이 아닌 약간 어두운 흰색 */
+  --foreground: oklch(0.92 0 0); /* 0.985 → 0.92 */
 
-    /* Primary는 더 밝게 */
-    --primary: oklch(0.75 0.19 13.45); /* 0.7 → 0.75 */
+  /* Primary는 더 밝게 */
+  --primary: oklch(0.75 0.19 13.45); /* 0.7 → 0.75 */
 }
 ```
 
@@ -176,14 +176,14 @@ function ColorPicker() {
 
 1. 폰트 파일을 `src/assets/fonts/` 폴더에 추가
 
-2. `typography.pcss`에 정의:
+2. `fonts.pcss`에 정의:
 
 ```css
 @font-face {
-    font-family: 'MyCustomFont';
-    src: url('/src/assets/fonts/MyCustomFont.woff2') format('woff2');
-    font-weight: 100 900;
-    font-display: swap;
+  font-family: 'MyCustomFont';
+  src: url('/src/assets/fonts/MyCustomFont.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
 }
 ```
 
@@ -191,19 +191,19 @@ function ColorPicker() {
 
 ```css
 @theme {
-    --font-heading: 'MyCustomFont', sans-serif;
-    --font-body: 'Pretendard', sans-serif;
+  --font-heading: 'MyCustomFont', sans-serif;
+  --font-body: 'Pretendard', sans-serif;
 }
 
 /* 적용 */
 h1,
 h2,
 h3 {
-    font-family: var(--font-heading);
+  font-family: var(--font-heading);
 }
 
 body {
-    font-family: var(--font-body);
+  font-family: var(--font-body);
 }
 ```
 
@@ -211,34 +211,34 @@ body {
 
 ### 커스텀 애니메이션 추가
 
-`variables.pcss`에 정의:
+`typography.pcss`에 정의:
 
 ```css
 @theme {
-    /* 애니메이션 타이밍 */
-    --animate-bounce-slow: bounce 2s infinite;
-    --animate-pulse-fast: pulse 1s infinite;
+  /* 애니메이션 타이밍 */
+  --animate-bounce-slow: bounce 2s infinite;
+  --animate-pulse-fast: pulse 1s infinite;
 
-    /* 트랜지션 속도 */
-    --transition-fast: 150ms;
-    --transition-normal: 300ms;
-    --transition-slow: 500ms;
+  /* 트랜지션 속도 */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
 }
 
 /* 커스텀 키프레임 */
 @keyframes slideIn {
-    from {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @theme {
-    --animate-slide-in: slideIn 0.3s ease-out;
+  --animate-slide-in: slideIn 0.3s ease-out;
 }
 ```
 
@@ -256,19 +256,19 @@ body {
 
 ```css
 @theme {
-    /* Primary */
-    --color-primary-50: #fff5f0;
-    --color-primary-100: #ffe6d9;
-    --color-primary-500: #f04c28;
-    --color-primary-900: #7a1f0f;
+  /* Primary */
+  --color-primary-50: #fff5f0;
+  --color-primary-100: #ffe6d9;
+  --color-primary-500: #f04c28;
+  --color-primary-900: #7a1f0f;
 
-    /* Secondary */
-    --color-secondary-500: #6366f1;
+  /* Secondary */
+  --color-secondary-500: #6366f1;
 
-    /* Neutral */
-    --color-gray-50: #fafafa;
-    --color-gray-500: #737373;
-    --color-gray-900: #171717;
+  /* Neutral */
+  --color-gray-50: #fafafa;
+  --color-gray-500: #737373;
+  --color-gray-900: #171717;
 }
 ```
 
@@ -276,10 +276,10 @@ body {
 
 ```css
 .dark {
-    --background: oklch(0.15 0 0);
-    --foreground: oklch(0.92 0 0);
-    --primary: oklch(0.75 0.22 13.45);
-    --border: oklch(0.25 0 0);
+  --background: oklch(0.15 0 0);
+  --foreground: oklch(0.92 0 0);
+  --primary: oklch(0.75 0.22 13.45);
+  --border: oklch(0.25 0 0);
 }
 ```
 

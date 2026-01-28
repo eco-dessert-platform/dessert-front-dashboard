@@ -16,7 +16,7 @@ const BgrUploadButton = ({
             onClick={onClick}
             disabled={disabled}
         >
-            <span className="text-title-16-m text-white">{label}</span>
+            <span className="typo-title-16-m text-white">{label}</span>
         </button>
     )
 }
