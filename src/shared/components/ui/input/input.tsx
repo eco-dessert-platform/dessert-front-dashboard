@@ -1,6 +1,6 @@
 import Label from '@/shared/components/ui/label/label'
 import { cn } from '@/shared/lib/utils'
-import { formFieldBase } from '@/shared/styles/form-control.styles'
+import { formFieldBase } from '@/styles/form-control.styles'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -38,7 +38,7 @@ const Input = ({
           type={type}
           className={cn(
             formFieldBase,
-            'h-input gap-input-gap rounded-input px-input-px py-input-py flex items-center',
+            'h-input rounded-10 px-12 py-8 flex items-center',
             error &&
               'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
             maxLength && 'pr-14',

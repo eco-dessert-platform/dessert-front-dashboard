@@ -23,12 +23,12 @@ export function StageTab({
         className,
       )}
     >
-      <div className="flex shrink-0 items-center justify-center gap-2.5">
+      <div className="flex shrink-0 items-center justify-center gap-10">
         {steps.map((step, index) => {
           const isActive = index + 1 === currentStep
 
           return (
-            <div key={step} className="flex shrink-0 items-center gap-0.5">
+            <div key={step} className="flex shrink-0 items-center gap-2">
               <span
                 className={cn(
                   'text-[16px] leading-[1.6] font-medium tracking-[-0.32px] whitespace-nowrap transition-colors',
@@ -39,7 +39,7 @@ export function StageTab({
               </span>
               <IconCheck
                 className={cn(
-                  'size-6 shrink-0 transition-colors',
+                  'size-24 shrink-0 transition-colors',
                   isActive ? 'text-primary-500' : 'text-gray-600',
                 )}
               />

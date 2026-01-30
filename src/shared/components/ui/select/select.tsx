@@ -48,7 +48,7 @@ const Select = ({
       >
         <SelectPrimitive.Trigger
           className={cn(
-            'text-title-16-r flex h-[42px] w-full items-center justify-between gap-2 rounded-[10px] border border-gray-300 bg-white px-3 py-2 text-gray-800 outline-none',
+            'text-title-16-r flex h-input w-full items-center justify-between gap-2 rounded-10 border border-gray-300 bg-white px-12 py-8 text-gray-800 outline-none',
             'hover:border-gray-400',
             'focus-visible:border-primary-500 focus-visible:ring-primary-200 focus-visible:ring-2',
             'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400',
@@ -67,7 +67,7 @@ const Select = ({
             sideOffset={4}
             align="start"
             className={cn(
-              'z-50 min-w-(--radix-select-trigger-width) overflow-hidden rounded-[10px] border border-gray-200 bg-white shadow-lg',
+              'z-50 min-w-(--radix-select-trigger-width) overflow-hidden rounded-10 border border-gray-200 bg-white shadow-lg',
             )}
           >
             <SelectPrimitive.Viewport className="p-1">
@@ -77,7 +77,7 @@ const Select = ({
                   value={option.value}
                   disabled={option.disabled}
                   className={cn(
-                    'text-title-16-r relative flex cursor-pointer items-center rounded-[8px] px-3 py-2 text-gray-800 outline-none select-none',
+                    'text-title-16-r relative flex cursor-pointer items-center rounded-4 px-12 py-8 text-gray-800 outline-none select-none',
                     'hover:bg-gray-50',
                     'focus:bg-gray-50',
                     'disabled:pointer-events-none disabled:opacity-50',

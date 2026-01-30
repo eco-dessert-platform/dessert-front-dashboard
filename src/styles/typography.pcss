@@ -1,113 +1,172 @@
-/*woff2를 우선적으로 사용하고, 지원 안 되는 브라우저에선 woff로 fallback*/
+/*
+ * Design Tokens (Legacy)
+ *
+ * 새로운 디자인 토큰은 src/styles/tokens.pcss를 참조하세요.
+ * 이 파일은 하위 호환성을 위해 유지됩니다.
+ *
+ * shadcn 관련은 src/shared/lib/shadcn/styles/shadcn.pcss에 있습니다.
+ */
 
-@font-face {
-  font-family: 'Pretendard';
-  src:
-    url('../assets/fonts/pretendard/woff2-subset/Pretendard-Thin.subset.woff2')
-      format('woff2'),
-    url('../assets/fonts/pretendard/woff-subset/Pretendard-Thin.subset.woff')
-      format('woff');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
+@import './tokens.pcss';
 
-@font-face {
-  font-family: 'Pretendard';
-  src:
-    url('../assets/fonts/pretendard/woff2-subset/Pretendard-ExtraLight.subset.woff2')
-      format('woff2'),
-    url('../assets/fonts/pretendard/woff-subset/Pretendard-ExtraLight.subset.woff')
-      format('woff');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  src:
-    url('../assets/fonts/pretendard/woff2-subset/Pretendard-Light.subset.woff2')
-      format('woff2'),
-    url('../assets/fonts/pretendard/woff-subset/Pretendard-Light.subset.woff')
-      format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  src:
-    url('../assets/fonts/pretendard/woff2-subset/Pretendard-Regular.subset.woff2')
-      format('woff2'),
-    url('../assets/fonts/pretendard/woff-subset/Pretendard-Regular.subset.woff')
-      format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  src:
-    url('../assets/fonts/pretendard/woff2-subset/Pretendard-Medium.subset.woff2')
-      format('woff2'),
-    url('../assets/fonts/pretendard/woff-subset/Pretendard-Medium.subset.woff')
-      format('woff');
+/* Heading 24 */
+@utility typo-heading-24-m {
+  font-size: 24px;
   font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+  line-height: 160%;
+  letter-spacing: -0.02em;
 }
 
-@font-face {
-  font-family: 'Pretendard';
-  src:
-    url('../assets/fonts/pretendard/woff2-subset/Pretendard-SemiBold.subset.woff2')
-      format('woff2'),
-    url('../assets/fonts/pretendard/woff-subset/Pretendard-SemiBold.subset.woff')
-      format('woff');
+@utility typo-heading-24-sb {
+  font-size: 24px;
   font-weight: 600;
-  font-style: normal;
-  font-display: swap;
+  line-height: 160%;
+  letter-spacing: -0.02em;
 }
 
-@font-face {
-  font-family: 'Pretendard';
-  src:
-    url('../assets/fonts/pretendard/woff2-subset/Pretendard-Bold.subset.woff2')
-      format('woff2'),
-    url('../assets/fonts/pretendard/woff-subset/Pretendard-Bold.subset.woff')
-      format('woff');
+/* Heading 20 */
+@utility typo-heading-20-m {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-heading-20-sb {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+/* Heading 18 */
+@utility typo-heading-18-m {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-heading-18-sb {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-heading-18-b {
+  font-size: 18px;
   font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+  line-height: 160%;
+  letter-spacing: -0.02em;
 }
 
-@font-face {
-  font-family: 'Pretendard';
-  src:
-    url('../assets/fonts/pretendard/woff2-subset/Pretendard-ExtraBold.subset.woff2')
-      format('woff2'),
-    url('../assets/fonts/pretendard/woff-subset/Pretendard-ExtraBold.subset.woff')
-      format('woff');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
+/* Title 16 */
+@utility typo-title-16-r {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: -0.02em;
 }
 
-@font-face {
-  font-family: 'Pretendard';
-  src:
-    url('../assets/fonts/pretendard/woff2-subset/Pretendard-Black.subset.woff2')
-      format('woff2'),
-    url('../assets/fonts/pretendard/woff-subset/Pretendard-Black.subset.woff')
-      format('woff');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
+@utility typo-title-16-m {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: -0.02em;
 }
 
-@theme {
-  --font-pretendard: 'Pretendard', sans-serif;
+@utility typo-title-16-sb {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-title-16-b {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+/* Title 14 */
+@utility typo-title-14-r {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-title-14-m {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-title-14-sb {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-title-14-b {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+/* Body 12 */
+@utility typo-body-12-r {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: -0.02rem;
+}
+
+@utility typo-body-12-m {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-body-12-sb {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-body-12-b {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-body-12-r-underline {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+  text-decoration: underline;
+}
+
+/* Body 10 */
+@utility typo-body-10-r {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+}
+
+@utility typo-body-10-sb {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 160%;
+  letter-spacing: -0.02em;
 }

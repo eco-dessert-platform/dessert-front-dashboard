@@ -1,6 +1,6 @@
 import Label from '@/shared/components/ui/label/label'
 import { cn } from '@/shared/lib/utils'
-import { formFieldBase } from '@/shared/styles/form-control.styles'
+import { formFieldBase } from '@/styles/form-control.styles'
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -43,7 +43,7 @@ const Textarea = ({
         <textarea
           className={cn(
             formFieldBase,
-            'min-h-[100px] resize-none items-start gap-1.5 rounded-[10px] px-3 py-2',
+            'min-h-[100px] resize-none items-start gap-6 rounded-10 px-12 py-8',
             error &&
               'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
           )}

@@ -39,12 +39,12 @@ function Table<T>({ data, columns, topArea }: TableProps<T>) {
           {getHeaderGroups().map((headerGroup) => (
             <tr
               key={headerGroup.id}
-              className="h-[40px] border-b border-gray-400 bg-gray-200"
+              className="h-40 border-b border-gray-400 bg-gray-200"
             >
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="text-body-12-m text-center align-middle text-gray-800"
+                  className="typo-body-12-m text-center align-middle text-gray-800"
                   style={{ width: header.getSize() }}
                 >
                   {header.isPlaceholder
@@ -82,7 +82,7 @@ function Table<T>({ data, columns, topArea }: TableProps<T>) {
                     className="border-r border-gray-200 text-center align-middle last:border-r-0"
                     style={{ width: cell.column.getSize() }}
                   >
-                    <div className="p-[10px]">
+                    <div className="p-10">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

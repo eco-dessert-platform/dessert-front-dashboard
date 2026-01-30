@@ -8,7 +8,7 @@ interface LabelProps {
 
 const Label = ({ label, required = false, className = '' }: LabelProps) => {
   return (
-    <label className={`text-body-12-r text-gray-800 ${className}`}>
+    <label className={`typo-body-12-r text-gray-800 ${className}`}>
       {label}
       {required && (
         <span className="text-primary-500" aria-label="필수">

@@ -17,7 +17,7 @@ export function ProcessTab({
   return (
     <div
       className={cn(
-        'relative flex h-[60px] w-full items-center justify-center border-b border-gray-200 bg-white px-[90px] py-[16px]',
+        'relative flex h-[60px] w-full items-center justify-center border-b border-gray-200 bg-white px-[90px] py-16',
         className,
       )}
     >
@@ -39,7 +39,7 @@ export function ProcessTab({
               {!isLast && (
                 <ChevronRight
                   className={cn(
-                    'size-6 shrink-0 transition-colors',
+                    'size-24 shrink-0 transition-colors',
                     isActive ? 'text-primary-500' : 'text-gray-200',
                   )}
                   strokeWidth={2}

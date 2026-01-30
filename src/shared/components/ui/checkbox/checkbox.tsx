@@ -29,13 +29,13 @@ export default function Checkbox({
   const id = React.useId()
 
   return (
-    <div className={cn('inline-flex items-center gap-2', className)}>
+    <div className={cn('inline-flex items-center gap-8', className)}>
       <CheckboxPrimitive.Root
         id={id}
         checked={checked}
         onCheckedChange={onCheckedChange}
         disabled={disabled}
-        className={`group relative flex h-4 w-4 shrink-0 items-center justify-center focus:outline-none ${
+        className={`group relative flex h-16 w-16 shrink-0 items-center justify-center focus:outline-none ${
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
         }`}
         {...rest}
@@ -58,7 +58,7 @@ export default function Checkbox({
           htmlFor={id}
           className={`text-gray-900 ${
             disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-          } ${size === 'lg' ? 'text-title-16-r' : 'text-body-12-r'}`}
+          } ${size === 'lg' ? 'typo-title-16-r' : 'typo-body-12-r'}`}
         >
           {label}
         </label>

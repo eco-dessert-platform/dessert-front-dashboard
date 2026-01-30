@@ -28,15 +28,15 @@ const Button = ({
   className = '',
 }: ButtonProps) => {
   const sizeClasses = {
-    sm: 'h-button-sm min-w-[56px] px-2.5 py-2 rounded-[8px]',
-    md: 'h-button-md min-w-[90px] px-4 py-3 rounded-[10px]',
-    lg: 'h-button-lg min-w-[180px] px-4 py-4 rounded-[12px]',
+    sm: 'h-button-sm min-w-[56px] px-10 py-8 rounded-8',
+    md: 'h-button-md min-w-[90px] px-16 py-12 rounded-10',
+    lg: 'h-button-lg min-w-[180px] px-16 py-16 rounded-12',
   }
 
   const typoClasses = {
-    sm: 'text-body-12-m',
-    md: 'text-title-16-m',
-    lg: 'text-heading-18-m',
+    sm: 'typo-body-12-m',
+    md: 'typo-title-16-m',
+    lg: 'typo-heading-18-m',
   }
 
   const variantClasses = {
@@ -55,7 +55,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'flex items-center justify-center gap-2 border disabled:opacity-50',
+        'flex items-center justify-center gap-8 border disabled:opacity-50',
         sizeClasses[size],
         variantClasses[variant],
         roundedFull && 'rounded-full',

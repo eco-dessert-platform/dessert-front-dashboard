@@ -1,7 +1,7 @@
 /*
  * Design Tokens
  * Figma Styles 기반 디자인 토큰 정의
- * 
+ *
  * 이 파일은 Color Token, Font Scale, Spacing System을 체계적으로 정의합니다.
  */
 
@@ -11,16 +11,16 @@
      * ============================================ */
 
   /* Primary Colors */
-  --color-primary-50: #fef2f0;
-  --color-primary-100: #fde4e0;
-  --color-primary-200: #fbc9c1;
-  --color-primary-300: #f8a18f;
-  --color-primary-400: #f56f54;
+  --color-primary-50: #fef4f2;
+  --color-primary-100: #fcded9;
+  --color-primary-200: #f8bdb3;
+  --color-primary-300: #f49b8e;
+  --color-primary-400: #f17967;
   --color-primary-500: #f04c28;
-  --color-primary-600: #d4371a;
-  --color-primary-700: #b12a15;
-  --color-primary-800: #8e2211;
-  --color-primary-900: #6b1a0d;
+  --color-primary-600: #de4525;
+  --color-primary-700: #b7391f;
+  --color-primary-800: #8f2d18;
+  --color-primary-900: #682012;
 
   /* Gray Scale */
   --color-gray-50: #fafafa;
@@ -38,7 +38,7 @@
   --color-white: #fff;
   --color-black: #000;
 
-  /* Status Colors - Success */
+  /* Status Colors - Success (기존) */
   --color-success-50: #f0fdf4;
   --color-success-100: #dcfce7;
   --color-success-200: #bbf7d0;
@@ -50,7 +50,19 @@
   --color-success-800: #166534;
   --color-success-900: #14532d;
 
-  /* Status Colors - Warning */
+  /* Status Colors - Design System green */
+  --color-green-50: #e8f5e9;
+  --color-green-100: #c8e6c9;
+  --color-green-200: #a5d6a7;
+  --color-green-300: #81c784;
+  --color-green-400: #66bb6a;
+  --color-green-500: #2abb7f;
+  --color-green-600: #4caf50;
+  --color-green-700: #43a047;
+  --color-green-800: #388e3c;
+  --color-green-900: #1b5e20;
+
+  /* Status Colors - Warning (기존)*/
   --color-warning-50: #fffbeb;
   --color-warning-100: #fef3c7;
   --color-warning-200: #fde68a;
@@ -62,7 +74,19 @@
   --color-warning-800: #92400e;
   --color-warning-900: #78350f;
 
-  /* Status Colors - Error */
+  /* Status Colors - Design System Yellor */
+  --color-yellow-50: #fffbea;
+  --color-yellow-100: #fff4b5;
+  --color-yellow-200: #ffeba0;
+  --color-yellow-300: #ffe18c;
+  --color-yellow-400: #ffda7c;
+  --color-yellow-500: #ffd569;
+  --color-yellow-600: #ffcd5a;
+  --color-yellow-700: #ffc54a;
+  --color-yellow-800: #ffb636;
+  --color-yellow-900: #ffa721;
+
+  /* Status Colors - Error (기존)*/
   --color-error-50: #fef2f2;
   --color-error-100: #fee2e2;
   --color-error-200: #fecaca;
@@ -73,6 +97,18 @@
   --color-error-700: #b91c1c;
   --color-error-800: #991b1b;
   --color-error-900: #7f1d1d;
+
+  /* Status Colors - Design System red */
+  --color-red-50: #ffecec;
+  --color-red-100: #ffc7c7;
+  --color-red-200: #ffa6a6;
+  --color-red-300: #ff7a7a;
+  --color-red-400: #ff5252;
+  --color-red-500: #ff2e2e;
+  --color-red-600: #ff1717;
+  --color-red-700: #ec0000;
+  --color-red-800: #c70000;
+  --color-red-900: #a00000;
 
   /* Status Colors - Info */
   --color-info-50: #eff6ff;
@@ -100,70 +136,65 @@
   --color-blueGray-50: #eceff1;
 
   /* ============================================
-     * SPACING SYSTEM
+     * UNIT SYSTEM
      * ============================================
-     * 4px 기준 그리드 시스템
-     * Figma에서 사용되는 spacing 값들을 체계적으로 정의
+     * Figma spacing & radius 값 반영
+     *
      */
 
-  /* Base Spacing Scale (4px 단위) */
-  --spacing-0: 0px;
-  --spacing-1: 4px; /* 0.25rem */
-  --spacing-2: 8px; /* 0.5rem */
-  --spacing-3: 12px; /* 0.75rem */
-  --spacing-4: 16px; /* 1rem */
-  --spacing-5: 20px; /* 1.25rem */
-  --spacing-6: 24px; /* 1.5rem */
-  --spacing-8: 32px; /* 2rem */
-  --spacing-10: 40px; /* 2.5rem */
-  --spacing-12: 48px; /* 3rem */
-  --spacing-16: 64px; /* 4rem */
-  --spacing-20: 80px; /* 5rem */
-  --spacing-24: 96px; /* 6rem */
+  /* 공용 단위 */
+  --unit-0: 0px;
+  --unit-2: 2px;
+  --unit-4: 4px;
+  --unit-6: 6px;
+  --unit-8: 8px;
+  --unit-10: 10px;
+  --unit-12: 12px;
+  --unit-16: 16px;
+  --unit-20: 20px;
+  --unit-24: 24px;
+  --unit-30: 30px;
+  --unit-32: 32px;
+  --unit-40: 40px;
+  --unit-48: 48px;
+  --unit-56: 56px;
+  --unit-64: 64px;
+  --unit-full: 999px;
 
-  /* Half Spacing (2px 단위) */
-  --spacing-0\.5: 2px; /* 0.125rem */
-  --spacing-1\.5: 6px; /* 0.375rem */
-  --spacing-2\.5: 10px; /* 0.625rem */
-  --spacing-3\.5: 14px; /* 0.875rem */
+  --spacing-0: var(--unit-0);
+  --spacing-2: var(--unit-2);
+  --spacing-4: var(--unit-4);
+  --spacing-6: var(--unit-6);
+  --spacing-8: var(--unit-8);
+  --spacing-10: var(--unit-10);
+  --spacing-12: var(--unit-12);
+  --spacing-16: var(--unit-16);
+  --spacing-20: var(--unit-20);
+  --spacing-24: var(--unit-24);
+  --spacing-30: var(--unit-30);
+  --spacing-32: var(--unit-32);
+  --spacing-40: var(--unit-40);
+  --spacing-48: var(--unit-48);
+  --spacing-56: var(--unit-56);
+  --spacing-64: var(--unit-64);
 
-  /* Component Specific Spacing */
-  --spacing-button-sm-px: 10px; /* px-2.5 */
-  --spacing-button-sm-py: 8px; /* py-2 */
-  --spacing-button-md-px: 16px; /* px-4 */
-  --spacing-button-md-py: 12px; /* py-3 */
-  --spacing-button-lg-px: 16px; /* px-4 */
-  --spacing-button-lg-py: 16px; /* py-4 */
-
-  --spacing-input-px: 12px; /* px-3 */
-  --spacing-input-py: 8px; /* py-2 */
-  --spacing-input-gap: 6px; /* gap-1.5 */
-
-  /* Layout Spacing */
-  --spacing-container-px: 196px; /* px-[196px] */
-  --spacing-container-py: 40px; /* py-10 */
-  --spacing-section-gap: 20px; /* gap-5 */
-
-  /* ============================================
-     * BORDER RADIUS
-     * ============================================ */
-
-  --radius-none: 0px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
-  --radius-full: 9999px;
-
-  /* Component Specific Radius */
-  --radius-badge: 4px;
-  --radius-button-sm: 8px;
-  --radius-button-md: 10px;
-  --radius-button-lg: 12px;
-  --radius-input: 10px;
-  --radius-card: 8px;
-  --radius-toast: 10px;
+  --radius-0: var(--unit-0);
+  --radius-2: var(--unit-2);
+  --radius-4: var(--unit-4);
+  --radius-6: var(--unit-6);
+  --radius-8: var(--unit-8);
+  --radius-10: var(--unit-10);
+  --radius-12: var(--unit-12);
+  --radius-16: var(--unit-16);
+  --radius-20: var(--unit-20);
+  --radius-24: var(--unit-24);
+  --radius-30: var(--unit-30);
+  --radius-32: var(--unit-32);
+  --radius-40: var(--unit-40);
+  --radius-48: var(--unit-48);
+  --radius-56: var(--unit-56);
+  --radius-64: var(--unit-64);
+  --radius-full: var(--unit-full);
 
   /* ============================================
      * HEIGHT SYSTEM
@@ -173,7 +204,7 @@
   --height-button-md: 42px;
   --height-button-lg: 56px;
   --height-input: 42px;
-  --height-header: 57px;
+  --height-header: 80px;
   --height-footer: 68px;
 
   /* ============================================

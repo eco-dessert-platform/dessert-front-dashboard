@@ -65,7 +65,7 @@ const Dropdown = ({
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
         className={`text-title-16-r ${cn(
-          'h-input rounded-input px-input-px py-input-py flex w-full items-center justify-between border transition-all duration-200',
+          'h-input rounded-[10px] pl-3 pr-2 py-2 flex w-full items-center justify-between border transition-all duration-200',
           'text-gray-900',
           'border-gray-300 bg-white',
           'font-pretendard hover:border-gray-400 focus:border-gray-500 focus:outline-none',
@@ -94,7 +94,7 @@ const Dropdown = ({
         <div
           className={cn(
             'z-dropdown absolute left-0 mt-1 w-full p-1',
-            'rounded-input border border-gray-200 bg-white shadow-md',
+            'rounded-10 border border-gray-200 bg-white shadow-md',
             'animate-in fade-in zoom-in-95 duration-200',
           )}
         >
@@ -108,7 +108,7 @@ const Dropdown = ({
                     disabled={option.disabled}
                     onClick={() => handleSelect(option)}
                     className={`text-title-14-r ${cn(
-                      'flex h-[38px] w-full items-center gap-2 rounded-sm px-[10px] py-[6px] transition-colors duration-200',
+                      'flex h-[34px] w-full items-center gap-2 rounded-4 px-10 py-6 transition-colors duration-200',
                       'text-left text-gray-800',
                       'hover:bg-gray-50',
                       isSelected && 'bg-gray-100',
