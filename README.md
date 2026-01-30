@@ -2,6 +2,7 @@
 
 디저트 셀러를 위한 프론트엔드 애플리케이션
 
+
 React + TypeScript + Redux Toolkit + Vite 기반의 현대적인 웹 애플리케이션입니다.
 
 
