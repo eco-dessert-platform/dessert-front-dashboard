@@ -65,7 +65,7 @@ const Dropdown = ({
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
         className={`text-title-16-r ${cn(
-          'h-input rounded-[10px] pl-3 pr-2 py-2 flex w-full items-center justify-between border transition-all duration-200',
+          'h-input rounded-10 pl-12 pr-8 py-8 flex w-full items-center justify-between border transition-all duration-200',
           'text-gray-900',
           'border-gray-300 bg-white',
           'font-pretendard hover:border-gray-400 focus:border-gray-500 focus:outline-none',
