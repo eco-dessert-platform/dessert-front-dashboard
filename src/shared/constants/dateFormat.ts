@@ -16,18 +16,18 @@ import { format } from 'date-fns'
  * date-fns 형식 문자열
  */
 export const DATE_FORMAT = {
-    /** 일 단위: 연.월.일 (YYYY.MM.DD) */
-    DAY: 'yyyy.MM.dd',
-    /** 월 단위: 연.월 (YYYY.MM) */
-    MONTH: 'yyyy.MM',
-    /** 일 단위 (공백 포함): 연. 월. 일 (YYYY. MM. DD) */
-    DAY_WITH_SPACE: 'yyyy. MM. dd',
+  /** 일 단위: 연.월.일 (YYYY.MM.DD) */
+  DAY: 'yyyy.MM.dd',
+  /** 월 단위: 연.월 (YYYY.MM) */
+  MONTH: 'yyyy.MM',
+  /** 일 단위 (공백 포함): 연. 월. 일 (YYYY. MM. DD) */
+  DAY_WITH_SPACE: 'yyyy. MM. dd',
 } as const
 
 /**
  * 날짜 형식 규칙 타입
  */
-export type DateFormatType = typeof DATE_FORMAT[keyof typeof DATE_FORMAT]
+export type DateFormatType = (typeof DATE_FORMAT)[keyof typeof DATE_FORMAT]
 
 /**
  * 날짜 단위 타입
@@ -38,8 +38,8 @@ export type DateUnit = 'day' | 'month'
  * 날짜 단위에 따른 형식 매핑
  */
 export const DATE_FORMAT_BY_UNIT: Record<DateUnit, DateFormatType> = {
-    day: DATE_FORMAT.DAY,
-    month: DATE_FORMAT.MONTH,
+  day: DATE_FORMAT.DAY,
+  month: DATE_FORMAT.MONTH,
 } as const
 
 /**
@@ -55,7 +55,7 @@ export const DATE_FORMAT_BY_UNIT: Record<DateUnit, DateFormatType> = {
  * ```
  */
 export const getDateFormatByUnit = (unit: DateUnit): DateFormatType => {
-    return DATE_FORMAT_BY_UNIT[unit]
+  return DATE_FORMAT_BY_UNIT[unit]
 }
 
 /**
@@ -68,21 +68,20 @@ export const getDateFormatByUnit = (unit: DateUnit): DateFormatType => {
  *
  * @example
  * ```ts
- * formatDateRange(new Date('2024-01-01'), new Date('2024-01-31')) 
+ * formatDateRange(new Date('2024-01-01'), new Date('2024-01-31'))
  * // '2024.01.01 ~ 2024.01.31'
- * 
- * formatDateRange(new Date('2024-01-01'), new Date('2024-12-31'), 'month') 
+ *
+ * formatDateRange(new Date('2024-01-01'), new Date('2024-12-31'), 'month')
  * // '2024.01 ~ 2024.12'
  * ```
  */
 export const formatDateRange = (
-    startDate: Date,
-    endDate: Date,
-    unit: DateUnit = 'day',
+  startDate: Date,
+  endDate: Date,
+  unit: DateUnit = 'day',
 ): string => {
-    const dateFormat = getDateFormatByUnit(unit)
-    const formattedStart = format(startDate, dateFormat)
-    const formattedEnd = format(endDate, dateFormat)
-    return `${formattedStart} ~ ${formattedEnd}`
+  const dateFormat = getDateFormatByUnit(unit)
+  const formattedStart = format(startDate, dateFormat)
+  const formattedEnd = format(endDate, dateFormat)
+  return `${formattedStart} ~ ${formattedEnd}`
 }
-

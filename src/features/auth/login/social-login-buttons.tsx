@@ -1,9 +1,9 @@
-import { openCenteredPopup } from 'src/shared/utils/popup'
+import { openCenteredPopup } from '@/shared/utils/popup'
 import GoogleIcon from 'src/assets/icons/social/google.svg?react'
 import KakaoIcon from 'src/assets/icons/social/kakao.svg?react'
-import { KAKAO, GOOGLE } from 'src/entity/auth/constants'
 import { useAuthStore } from 'src/entity/auth/auth-store'
-import { setKakaoPopup, setGooglePopup } from './login-hooks'
+import { GOOGLE, KAKAO } from 'src/entity/auth/constants'
+import { setGooglePopup, setKakaoPopup } from './login-hooks'
 
 export const SocialLoginButtons = () => {
   const { setSocialLoginType } = useAuthStore()

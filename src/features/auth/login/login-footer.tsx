@@ -1,8 +1,8 @@
-interface BgrFooterProps {
+interface FooterProps {
   variant?: 'default' | 'simple'
 }
 
-export const LoginFooter = ({ variant = 'default' }: BgrFooterProps) => {
+export const LoginFooter = ({ variant = 'default' }: FooterProps) => {
   if (variant === 'simple') {
     return (
       <footer className="flex w-full flex-col items-center gap-2.5 bg-white">
