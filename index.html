@@ -5,7 +5,7 @@
       ;(() => {
         try {
           // 새로고침시 임시 배경화면 제공
-          const theme = localStorage.getItem('vite-ui-theme') || 'system'
+          const theme = localStorage.getItem('vite-ui-theme') || 'light'
           const vars = JSON.parse(
             localStorage.getItem('vite-ui-theme-vars') || '{}',
           )

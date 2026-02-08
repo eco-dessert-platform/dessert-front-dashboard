@@ -86,7 +86,7 @@ export function DatePicker({
           </button>
         </Popover.Trigger>
 
-        <Popover.Content className="pt-4">
+        <Popover.Content className="z-50 pt-4">
           <Calendar
             selected={draftRange}
             onSelect={setDraftRange}

@@ -27,7 +27,8 @@ const TAB_VARIANT_STYLES = {
     list: 'h-input space-x-4 rounded-10',
     trigger: () =>
       'h-[calc(100%-1px)] flex-1 gap-3 border border-gray-300 px-16 py-8 rounded-4 bg-background text-title-18-m font-medium text-foreground transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1 dark:text-muted-foreground data-[state=active]:border-primary-500 data-[state=active]:bg-primary-500 data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm',
-    number: 'text-title-18-m text-primary-500 group-data-[state=active]:text-white',
+    number:
+      'text-title-18-m text-primary-500 group-data-[state=active]:text-white',
   },
 } as const
 
@@ -99,4 +100,17 @@ function TabTrigger({
   )
 }
 
-export { Tab, TabList, TabTrigger }
+function TabContent({
+  className,
+  ...props
+}: React.ComponentProps<typeof TabsPrimitive.Content>) {
+  return (
+    <TabsPrimitive.Content
+      data-slot="tabs-content"
+      className={cn('flex-1 outline-none', className)}
+      {...props}
+    />
+  )
+}
+
+export { Tab, TabList, TabTrigger, TabContent }
