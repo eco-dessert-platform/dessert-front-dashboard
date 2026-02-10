@@ -64,8 +64,8 @@ const Dropdown = ({
         type="button"
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
-        className={`text-title-16-r ${cn(
-          'h-input rounded-10 pl-12 pr-8 py-8 flex w-full items-center justify-between border transition-all duration-200',
+        className={`typo-title-16-r ${cn(
+          'h-input rounded-10 flex w-full items-center justify-between border py-8 pr-8 pl-12 transition-all duration-200',
           'text-gray-900',
           'border-gray-300 bg-white',
           'font-pretendard hover:border-gray-400 focus:border-gray-500 focus:outline-none',
@@ -93,7 +93,7 @@ const Dropdown = ({
       {isOpen && (
         <div
           className={cn(
-            'z-dropdown absolute left-0 mt-1 w-full p-1',
+            'z-dropdown absolute left-0 z-5 mt-1 w-full p-1',
             'rounded-10 border border-gray-200 bg-white shadow-md',
             'animate-in fade-in zoom-in-95 duration-200',
           )}
@@ -107,8 +107,8 @@ const Dropdown = ({
                     type="button"
                     disabled={option.disabled}
                     onClick={() => handleSelect(option)}
-                    className={`text-title-14-r ${cn(
-                      'flex h-[34px] w-full items-center gap-2 rounded-4 px-10 py-6 transition-colors duration-200',
+                    className={`typo-title-14-r ${cn(
+                      'rounded-4 flex h-[34px] w-full items-center gap-2 px-10 py-6 transition-colors duration-200',
                       'text-left text-gray-800',
                       'hover:bg-gray-50',
                       isSelected && 'bg-gray-100',
