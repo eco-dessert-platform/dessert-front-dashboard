@@ -1,4 +1,0 @@
-addAssignees: author
-addReviewers: true
-
-numberOfReviewers: 0 # 해당 라인을 추가해주지 않으면 리뷰어가 1명만 등록되는 문제가 있어 0으로 명시해야 합니다.
