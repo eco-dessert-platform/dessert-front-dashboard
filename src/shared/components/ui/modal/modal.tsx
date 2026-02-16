@@ -39,6 +39,7 @@ const Modal = ({
         aria-modal="true"
         aria-labelledby="modal-title"
         aria-describedby="modal-content"
+        aria-hidden={!open}
       >
         <p className="typo-heading-24-m mb-12" id="modal-title">
           {title}
