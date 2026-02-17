@@ -5,6 +5,5 @@
   "trailingComma": "all",
   "arrowParens": "always",
   "bracketSpacing": true,
-  "endOfLine": "auto",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "endOfLine": "auto"
 }
