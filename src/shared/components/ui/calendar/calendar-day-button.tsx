@@ -41,7 +41,7 @@ export function CalendarDayButton(props: DayButtonProps) {
       className={cn(
         `flex size-7 cursor-pointer items-center justify-center rounded-6 typo-title-14-m text-gray-800 transition-colors`,
 
-        !isSelected && !isRangeMiddle && !isRangePreview && `hover:bg-gray-50`,
+        !isSelected && !isRangeMiddle && !isRangePreview && `hover:bg-gray-100`,
 
         // 포커스 상태
         !isDisabled &&
@@ -59,7 +59,7 @@ export function CalendarDayButton(props: DayButtonProps) {
 
         // 중간 구간 (미리보기 포함)
         (isRangeMiddle || isRangePreview) &&
-          `rounded-none bg-gray-50 hover:bg-gray-50`,
+          `rounded-none bg-gray-100 hover:bg-gray-100`,
 
         // Start (연결됨) -> 왼쪽 둥글
         (isRangeStart || isManualStart) &&
