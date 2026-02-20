@@ -12,6 +12,9 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
+    closeOnOverlayClick: {
+      control: 'boolean',
+    },
     cancelable: {
       control: 'boolean',
     },
@@ -38,6 +41,7 @@ export const Default: Story = {
     title: '해당 상품 판매를 잠시 멈출까요?',
     contents: '판매중지 시, 고객에게 상품이 노출되지 않습니다. ',
     cancelable: true,
+    closeOnOverlayClick: true,
     onClose: fn(),
     onClick: fn(),
   },
@@ -53,6 +57,7 @@ export const NotUseCancled: Story = {
     open: true,
     title: '이미 등록되어 있는 스토어에요',
     contents: '다른 이름으로 스토어 등록을 진행해주세요',
+    closeOnOverlayClick: true,
     cancelable: false,
     onClick: fn(),
   },
@@ -74,6 +79,7 @@ export const LongContents: Story = {
         <br /> 삭제됩니다.
       </>
     ),
+    closeOnOverlayClick: true,
     cancelable: false,
     onClick: fn(),
   },
@@ -109,6 +115,7 @@ export const ShowModal: Story = {
     title: '해당 상품 판매를 잠시 멈출까요?',
     contents: '판매중지 시, 고객에게 상품이 노출되지 않습니다. ',
     cancelable: true,
+    closeOnOverlayClick: true,
     onClose: fn(),
     onClick: fn(),
   },

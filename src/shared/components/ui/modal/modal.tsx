@@ -6,6 +6,7 @@ export interface ModalProps {
   title: React.ReactNode
   contents: React.ReactNode
   cancelable: boolean
+  closeOnOverlayClick: boolean
   onClose?: () => void
   onClick: () => void
 }
@@ -15,6 +16,7 @@ const Modal = ({
   title,
   contents,
   cancelable,
+  closeOnOverlayClick = true,
   onClose,
   onClick,
 }: ModalProps) => {
@@ -27,7 +29,7 @@ const Modal = ({
         )}
         role="button"
         tabIndex={0}
-        onClick={onClose}
+        onClick={closeOnOverlayClick ? onClose : undefined}
         aria-hidden="true"
       />
       <div
