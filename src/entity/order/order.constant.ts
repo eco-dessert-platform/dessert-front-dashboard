@@ -1,9 +1,11 @@
+import { VariantProps } from 'class-variance-authority'
 import {
   DeliveryStatus,
   OrderStatus,
   OrderStatusTab,
   SearchType,
 } from './order.type'
+import { BadgeVariants } from '@/shared/components/ui/badge/badge'
 
 export const ORDER_STATUS_TABS: Array<{
   value: OrderStatusTab
@@ -29,7 +31,10 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   EXCHANGED: '교환',
 }
 
-export const ORDER_STATUS_BADGE_COLOR: Record<OrderStatus, string> = {
+export const ORDER_STATUS_BADGE_COLOR: Record<
+  OrderStatus,
+  VariantProps<typeof BadgeVariants>['color']
+> = {
   PAYMENT_COMPLETED: 'gray',
   ORDER_CONFIRMED: 'yellow',
   PRODUCT_SHIPPED: 'green',
