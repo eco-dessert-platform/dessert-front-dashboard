@@ -6,7 +6,7 @@ const BOTTOM_NAV_BAR_ITEMS = [
 ]
 function BottomNavBar() {
   return (
-    <footer className="absolute bottom-0 left-0 right-0 flex h-[104px] w-full items-center justify-end gap-2 p-6">
+    <footer className="absolute right-0 bottom-0 left-0 flex h-[104px] w-full items-center justify-end gap-2 p-6">
       {BOTTOM_NAV_BAR_ITEMS.map((item) => (
         <Button
           key={item.label}

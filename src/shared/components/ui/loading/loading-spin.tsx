@@ -31,7 +31,7 @@ const LogingSpin = ({
           className={`absolute inset-0 z-50 flex h-full w-full items-center justify-center rounded-[0.3rem] ${overlayColor} ${overlayOpacity}`}
         >
           <Loader
-            className="text-primary animate-spin"
+            className="animate-spin text-primary"
             size={size}
             strokeWidth={strokeWidth}
           />

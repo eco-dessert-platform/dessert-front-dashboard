@@ -105,8 +105,8 @@ const Pagination = ({
             className={clsx(
               baseButtonStyle,
               isActive
-                ? 'bg-primary-50 text-primary-500 text-title-14-m cursor-default'
-                : 'text-title-14-r cursor-pointer text-gray-800 hover:bg-gray-50',
+                ? 'cursor-default bg-primary-50 typo-title-14-m text-primary-500'
+                : 'cursor-pointer typo-title-14-r text-gray-800 hover:bg-gray-50',
             )}
             aria-label={`Go to page ${pageNumber}`}
             aria-current={isActive ? 'page' : undefined}
