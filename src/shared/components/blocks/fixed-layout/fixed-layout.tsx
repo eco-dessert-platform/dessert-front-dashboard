@@ -10,7 +10,7 @@ const FixedLayout = () => {
         <Lnb />
         <main className="h-full w-full bg-gray-50">
           <div className="h-full w-full overflow-auto">
-            <div className="mx-auto min-h-full w-full max-w-[1200px] px-[90px] py-[40px]">
+            <div className="mx-auto min-h-full w-full max-w-[1200px] px-[90px] py-40">
               <Outlet />
             </div>
           </div>

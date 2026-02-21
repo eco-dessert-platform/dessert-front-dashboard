@@ -29,7 +29,7 @@ export const SettlementOverview = () => {
 
       <div
         className={
-          'rounded-10 bg-primary-50 flex items-center gap-40 px-16 py-4'
+          'flex items-center gap-40 rounded-10 bg-primary-50 px-16 py-4'
         }
       >
         <div className="flex items-center gap-16 py-4">

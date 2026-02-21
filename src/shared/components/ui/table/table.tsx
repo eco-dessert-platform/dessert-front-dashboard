@@ -1,4 +1,3 @@
-import { cn } from '@/shared/lib/utils'
 import {
   type Cell,
   ColumnDef,
@@ -37,7 +36,7 @@ function Table<T>({
   return (
     <div className="overflow-hidden rounded-md border border-gray-300 bg-white">
       {topArea && (
-        <div className="flex items-center justify-between border-b border-gray-200 px-[24px] py-[16px]">
+        <div className="flex items-center justify-between border-b border-gray-200 px-24 py-16">
           {topArea}
         </div>
       )}
@@ -50,7 +49,7 @@ function Table<T>({
                   <th
                     key={header.id}
                     colSpan={header.colSpan}
-                    className="typo-body-12-m text-center align-middle text-gray-800"
+                    className="text-center align-middle typo-body-12-m text-gray-800"
                     style={{ width: header.getSize() }}
                   >
                     {header.isPlaceholder ? null : (

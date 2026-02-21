@@ -71,7 +71,7 @@ const columns: ColumnDef<TransactionSettlement>[] = [
     accessorKey: 'productName',
     cell: ({ row }) => (
       <div
-        className="typo-body-14-r w-[200px] truncate text-gray-800"
+        className="w-[200px] truncate typo-body-14-r text-gray-800"
         title={row.original.productName}
       >
         {row.original.productName}
