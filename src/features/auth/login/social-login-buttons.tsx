@@ -52,7 +52,7 @@ export const SocialLoginButtons = () => {
       <button
         type="button"
         onClick={openKakaoLoginPopup}
-        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-[10px] bg-[#FEE500] py-[13px] text-base font-semibold text-[#191919] transition-all duration-200 hover:bg-[#FDD835] active:scale-[0.98]"
+        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-10 bg-[#FEE500] py-[13px] text-base font-semibold text-[#191919] transition-all duration-200 hover:bg-[#FDD835] active:scale-[0.98]"
       >
         <KakaoIcon width={16} height={16} />
         <span>카카오로 로그인</span>
@@ -60,7 +60,7 @@ export const SocialLoginButtons = () => {
       <button
         type="button"
         onClick={openGoogleLoginPopup}
-        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-[10px] border border-[#F5F5F5] bg-white py-[13px] text-base font-semibold text-black transition-all duration-200 hover:bg-gray-50 active:scale-[0.98]"
+        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-10 border border-[#F5F5F5] bg-white py-[13px] text-base font-semibold text-black transition-all duration-200 hover:bg-gray-50 active:scale-[0.98]"
       >
         <GoogleIcon width={18} height={18} />
         <span>구글로 로그인</span>

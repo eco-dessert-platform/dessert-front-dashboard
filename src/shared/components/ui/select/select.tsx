@@ -48,9 +48,9 @@ const Select = ({
       >
         <SelectPrimitive.Trigger
           className={cn(
-            'text-title-16-r flex h-input w-full items-center justify-between gap-2 rounded-10 border border-gray-300 bg-white px-12 py-8 text-gray-800 outline-none',
+            'flex h-input w-full items-center justify-between gap-2 rounded-10 border border-gray-300 bg-white px-12 py-8 typo-title-16-r text-gray-800 outline-none',
             'hover:border-gray-400',
-            'focus-visible:border-primary-500 focus-visible:ring-primary-200 focus-visible:ring-2',
+            'focus-visible:border-primary-500 focus-visible:ring-2 focus-visible:ring-primary-200',
             'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400',
             error && 'border-red-500',
           )}
@@ -77,7 +77,7 @@ const Select = ({
                   value={option.value}
                   disabled={option.disabled}
                   className={cn(
-                    'text-title-16-r relative flex cursor-pointer items-center rounded-4 px-12 py-8 text-gray-800 outline-none select-none',
+                    'relative flex cursor-pointer items-center rounded-4 px-12 py-8 typo-title-16-r text-gray-800 outline-none select-none',
                     'hover:bg-gray-50',
                     'focus:bg-gray-50',
                     'disabled:pointer-events-none disabled:opacity-50',
@@ -93,10 +93,10 @@ const Select = ({
         </SelectPrimitive.Portal>
       </SelectPrimitive.Root>
       {error && errorMessage && (
-        <span className="text-body-12-r text-red-500">{errorMessage}</span>
+        <span className="typo-body-12-r text-red-500">{errorMessage}</span>
       )}
       {!error && helperText && (
-        <span className="text-body-12-r text-gray-500">{helperText}</span>
+        <span className="typo-body-12-r text-gray-500">{helperText}</span>
       )}
     </div>
   )

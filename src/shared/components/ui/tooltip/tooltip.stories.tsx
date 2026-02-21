@@ -138,7 +138,7 @@ export const AllAlignments: Story = {
                 </h3>
                 <div className="flex flex-col items-center gap-8">
                     <div className="flex items-center gap-2">
-                        <span className="min-w-[40px] text-right text-xs text-gray-500">
+                        <span className="min-w-40 text-right text-xs text-gray-500">
                             위
                         </span>
                         <Tooltip position="right" align="start">
@@ -154,7 +154,7 @@ export const AllAlignments: Story = {
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <span className="min-w-[40px] text-right text-xs text-gray-500">
+                        <span className="min-w-40 text-right text-xs text-gray-500">
                             중앙
                         </span>
                         <Tooltip position="right" align="center">
@@ -170,7 +170,7 @@ export const AllAlignments: Story = {
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <span className="min-w-[40px] text-right text-xs text-gray-500">
+                        <span className="min-w-40 text-right text-xs text-gray-500">
                             아래
                         </span>
                         <Tooltip position="right" align="end">
@@ -254,7 +254,7 @@ export const AllAlignments: Story = {
                                 <p>Start (위)</p>
                             </Tooltip.Content>
                         </Tooltip>
-                        <span className="min-w-[40px] text-xs text-gray-500">
+                        <span className="min-w-40 text-xs text-gray-500">
                             위
                         </span>
                     </div>
@@ -270,7 +270,7 @@ export const AllAlignments: Story = {
                                 <p>Center (중앙)</p>
                             </Tooltip.Content>
                         </Tooltip>
-                        <span className="min-w-[40px] text-xs text-gray-500">
+                        <span className="min-w-40 text-xs text-gray-500">
                             중앙
                         </span>
                     </div>
@@ -286,7 +286,7 @@ export const AllAlignments: Story = {
                                 <p>End (아래)</p>
                             </Tooltip.Content>
                         </Tooltip>
-                        <span className="min-w-[40px] text-xs text-gray-500">
+                        <span className="min-w-40 text-xs text-gray-500">
                             아래
                         </span>
                     </div>

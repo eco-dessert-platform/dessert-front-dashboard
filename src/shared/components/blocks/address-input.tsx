@@ -26,18 +26,18 @@ const AddressInput = ({
           <Label label="우편번호" required />
           <div className="flex items-start gap-4 self-stretch">
             <Input
-              className="text-title-16-r flex flex-1/2 items-center gap-1.5 rounded-[10px] border border-gray-300 bg-gray-100 px-3 py-2 text-gray-400 placeholder:text-gray-400"
+              className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-3 py-2 typo-title-16-r text-gray-400 placeholder:text-gray-400"
               placeholder="우편번호"
               value={postalCode}
               readOnly
               disabled={disabled}
             />
             <button
-              className="bg-primary-500 flex min-w-[90px] items-center justify-center rounded-[10px] px-4 py-2"
+              className="flex min-w-[90px] items-center justify-center rounded-10 bg-primary-500 px-4 py-2"
               onClick={onPostalCodeSearch}
               disabled={disabled}
             >
-              <p className="text-title-16-m text-white">우편번호 검색</p>
+              <p className="typo-title-16-m text-white">우편번호 검색</p>
             </button>
           </div>
         </div>
@@ -46,7 +46,7 @@ const AddressInput = ({
           <Label label="출고지 주소" required />
           <div className="flex items-start gap-4 self-stretch">
             <Input
-              className="text-title-16-r flex flex-1/2 items-center gap-1.5 rounded-[10px] border border-gray-300 bg-gray-100 px-3 py-2 text-gray-400 placeholder:text-gray-400"
+              className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-3 py-2 typo-title-16-r text-gray-400 placeholder:text-gray-400"
               placeholder="출고지 주소"
               value={address}
               readOnly
@@ -61,7 +61,7 @@ const AddressInput = ({
         <div className="flex flex-col items-start gap-1 self-stretch">
           <Label label="출고지 상세 주소" required />
           <Input
-            className="text-title-16-r flex flex-1/2 items-center gap-1.5 rounded-[10px] border border-gray-300 bg-gray-100 px-3 py-2 text-gray-400 placeholder:text-gray-400"
+            className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-3 py-2 typo-title-16-r text-gray-400 placeholder:text-gray-400"
             placeholder="상세주소를 입력해주세요(동/호수 포함)"
             value={detailAddress}
             onChange={(e) => onDetailAddressChange?.(e.target.value)}

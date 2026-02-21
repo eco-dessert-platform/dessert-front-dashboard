@@ -32,7 +32,7 @@ export function StageTab({
               <span
                 className={cn(
                   'text-[16px] leading-[1.6] font-medium tracking-[-0.32px] whitespace-nowrap transition-colors',
-                  isActive ? 'text-primary-500 font-semibold' : 'text-gray-600',
+                  isActive ? 'font-semibold text-primary-500' : 'text-gray-600',
                 )}
               >
                 {step}
