@@ -64,8 +64,8 @@ const Dropdown = ({
         type="button"
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
-        className={`text-title-16-r ${cn(
-          'h-input rounded-10 pl-12 pr-8 py-8 flex w-full items-center justify-between border transition-all duration-200',
+        className={`typo-title-16-r ${cn(
+          'flex h-input w-full items-center justify-between rounded-10 border py-8 pr-8 pl-12 transition-all duration-200',
           'text-gray-900',
           'border-gray-300 bg-white',
           'font-pretendard hover:border-gray-400 focus:border-gray-500 focus:outline-none',
@@ -84,7 +84,7 @@ const Dropdown = ({
         </span>
         <DownArrowIcon
           className={cn(
-            'h-5 w-5 shrink-0 text-gray-600 transition-transform duration-200',
+            'size-5 shrink-0 text-gray-600 transition-transform duration-200',
             isOpen && 'rotate-180',
           )}
         />
@@ -93,9 +93,9 @@ const Dropdown = ({
       {isOpen && (
         <div
           className={cn(
-            'z-dropdown absolute left-0 mt-1 w-full p-1',
+            'absolute left-0 z-dropdown mt-1 w-full p-1',
             'rounded-10 border border-gray-200 bg-white shadow-md',
-            'animate-in fade-in zoom-in-95 duration-200',
+            'animate-in duration-200 zoom-in-95 fade-in',
           )}
         >
           <ul className="max-h-[178px] overflow-y-auto">
@@ -107,7 +107,7 @@ const Dropdown = ({
                     type="button"
                     disabled={option.disabled}
                     onClick={() => handleSelect(option)}
-                    className={`text-title-14-r ${cn(
+                    className={`typo-title-14-r ${cn(
                       'flex h-[34px] w-full items-center gap-2 rounded-4 px-10 py-6 transition-colors duration-200',
                       'text-left text-gray-800',
                       'hover:bg-gray-50',
@@ -116,11 +116,11 @@ const Dropdown = ({
                     )}`}
                   >
                     {type === 'checkbox' && (
-                      <div className="flex h-4 w-4 shrink-0 items-center justify-center">
+                      <div className="flex size-4 shrink-0 items-center justify-center">
                         {isSelected ? (
-                          <CheckboxOnIcon className="h-4 w-4" />
+                          <CheckboxOnIcon className="size-4" />
                         ) : (
-                          <CheckboxOffIcon className="h-4 w-4" />
+                          <CheckboxOffIcon className="size-4" />
                         )}
                       </div>
                     )}
@@ -128,7 +128,7 @@ const Dropdown = ({
                       {option.label}
                     </span>
                     {type === 'list' && isSelected && (
-                      <CheckIcon className="text-primary-500 h-4 w-4 shrink-0" />
+                      <CheckIcon className="size-4 shrink-0 text-primary-500" />
                     )}
                   </button>
                 </li>

@@ -38,7 +38,7 @@ const Input = ({
           type={type}
           className={cn(
             formFieldBase,
-            'h-input rounded-10 px-12 py-8 flex items-center',
+            'flex h-input items-center rounded-10 px-12 py-8',
             error &&
               'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
             maxLength && 'pr-14',
@@ -51,16 +51,16 @@ const Input = ({
           {...restProps}
         />
         {maxLength && (
-          <span className="text-body-12-r absolute top-1/2 right-3 -translate-y-1/2 text-gray-400">
+          <span className="absolute top-1/2 right-3 -translate-y-1/2 typo-body-12-r text-gray-400">
             {String(value || '').length}/{maxLength}
           </span>
         )}
       </div>
       {error && errorMessage ? (
-        <span className="text-body-12-r text-error-500">{errorMessage}</span>
+        <span className="typo-body-12-r text-error-500">{errorMessage}</span>
       ) : (
         helperText && (
-          <span className="text-body-12-r text-gray-500">{helperText}</span>
+          <span className="typo-body-12-r text-gray-500">{helperText}</span>
         )
       )}
     </div>

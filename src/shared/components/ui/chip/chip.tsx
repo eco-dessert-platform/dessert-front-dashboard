@@ -31,13 +31,13 @@ const Chip = ({
   }
 
   const sizeClasses = {
-    sm: 'px-2 py-1 text-body-10-r rounded-full',
-    md: 'px-3 py-1.5 text-body-12-r rounded-full',
+    sm: 'px-2 py-1 typo-body-10-r rounded-full',
+    md: 'px-3 py-1.5 typo-body-12-r rounded-full',
   }
 
   const closeClasses = {
     sm: 'w-3 h-3',
-    md: 'w-4 h-4',
+    md: 'size-4',
   }
 
   return (

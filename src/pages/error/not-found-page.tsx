@@ -7,7 +7,7 @@ const NotFoundPage = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-6 text-center">
       <div className="mb-8">
-        <h1 className="text-primary-500 text-9xl font-black">404</h1>
+        <h1 className="text-9xl font-black text-primary-500">404</h1>
         <p className="mt-4 text-2xl font-bold text-gray-900">
           페이지를 찾을 수 없습니다
         </p>

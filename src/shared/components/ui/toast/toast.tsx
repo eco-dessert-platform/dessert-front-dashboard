@@ -61,7 +61,7 @@ const Toast = ({
   return (
     <div
       className={clsx(
-        'flex items-center gap-4 rounded-[10px] p-3',
+        'flex items-center gap-4 rounded-10 p-3',
         'shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08),0px_3px_10px_0px_rgba(0,0,0,0.1)]',
         'max-w-[400px] min-w-[240px]',
         variantClasses[variant].default,
@@ -82,11 +82,11 @@ const Toast = ({
           </div>
         )}
         <div className="flex-1">
-          <p className="text-title-14-b">{message}</p>
+          <p className="typo-title-14-b">{message}</p>
           {subMessage && (
             <p
               className={clsx(
-                'text-body-12-r',
+                'typo-body-12-r',
                 variantClasses[variant].subMessageColor,
               )}
             >
@@ -103,7 +103,7 @@ const Toast = ({
           aria-label="닫기"
         >
           <X
-            className={clsx('h-5 w-5', iconClasses[variant])}
+            className={clsx('size-5', iconClasses[variant])}
             strokeWidth={1}
           />
         </button>
