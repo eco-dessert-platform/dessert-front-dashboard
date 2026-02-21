@@ -2,32 +2,8 @@ import Table from '@/shared/components/ui/table/table'
 import { ColumnDef } from '@tanstack/react-table'
 import { SettlementTableTopArea } from './settlement-table-top-area'
 import Button from '@/shared/components/ui/button/button'
-
-interface TransactionSettlement {
-  orderNumber: string
-  productOrderNumber: string
-  settlementId: string
-  category: string
-  productName: string
-  expectedSettlementAmount: number
-  settlementBaseDate: string
-  expectedDate: string
-  completedDate: string
-  status: string
-}
-
-const MOCK_DATA: TransactionSettlement[] = Array(10).fill({
-  orderNumber: '250401A1F7',
-  productOrderNumber: '250401A1F7',
-  settlementId: '250401A1F7',
-  category: '배송비',
-  productName: '키토빵앗간 휘낭시에 (저단백 다이어트 빵)',
-  expectedSettlementAmount: 123456,
-  settlementBaseDate: '2025.09.01',
-  expectedDate: '2025.09.01',
-  completedDate: '2025.09.01',
-  status: '정산 후 취소',
-})
+import { TransactionSettlement } from '@/entity/settlement/settlement.type'
+import { TRANSACTION_SETTLEMENT_MOCK } from '@/entity/settlement/settlement.mock'
 
 const columns: ColumnDef<TransactionSettlement>[] = [
   {
@@ -137,7 +113,7 @@ export const TransactionSettlementTable = () => {
   return (
     <div className="mt-24 [&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
       <Table
-        data={MOCK_DATA}
+        data={TRANSACTION_SETTLEMENT_MOCK}
         columns={columns}
         topArea={<SettlementTableTopArea />}
         maxHeight="calc(100vh - 400px)"
