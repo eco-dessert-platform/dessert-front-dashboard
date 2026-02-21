@@ -84,7 +84,7 @@ const Dropdown = ({
         </span>
         <DownArrowIcon
           className={cn(
-            'h-5 w-5 shrink-0 text-gray-600 transition-transform duration-200',
+            'size-5 shrink-0 text-gray-600 transition-transform duration-200',
             isOpen && 'rotate-180',
           )}
         />
@@ -116,11 +116,11 @@ const Dropdown = ({
                     )}`}
                   >
                     {type === 'checkbox' && (
-                      <div className="flex h-4 w-4 shrink-0 items-center justify-center">
+                      <div className="flex size-4 shrink-0 items-center justify-center">
                         {isSelected ? (
-                          <CheckboxOnIcon className="h-4 w-4" />
+                          <CheckboxOnIcon className="size-4" />
                         ) : (
-                          <CheckboxOffIcon className="h-4 w-4" />
+                          <CheckboxOffIcon className="size-4" />
                         )}
                       </div>
                     )}
@@ -128,7 +128,7 @@ const Dropdown = ({
                       {option.label}
                     </span>
                     {type === 'list' && isSelected && (
-                      <CheckIcon className="h-4 w-4 shrink-0 text-primary-500" />
+                      <CheckIcon className="size-4 shrink-0 text-primary-500" />
                     )}
                   </button>
                 </li>

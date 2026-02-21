@@ -103,7 +103,7 @@ const Toast = ({
           aria-label="닫기"
         >
           <X
-            className={clsx('h-5 w-5', iconClasses[variant])}
+            className={clsx('size-5', iconClasses[variant])}
             strokeWidth={1}
           />
         </button>
