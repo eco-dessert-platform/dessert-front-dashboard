@@ -116,7 +116,7 @@ const TooltipContent = ({ children, className }: TooltipContentProps) => {
       align={align}
       sideOffset={sideOffset}
       alignOffset={alignOffset}
-      className={`text-body-10-r ${cn(
+      className={`typo-body-10-r ${cn(
         'relative z-50',
         'px-2 py-1.5',
         'rounded-sm',

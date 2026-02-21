@@ -55,7 +55,7 @@ const Textarea = ({
           {...restProps}
         />
         {showCount && maxLength && (
-          <div className="text-body-10-r absolute right-3 bottom-2 text-gray-400">
+          <div className="absolute right-3 bottom-2 typo-body-10-r text-gray-400">
             <span className={currentLength > maxLength ? 'text-red-500' : ''}>
               {currentLength}
             </span>
@@ -64,10 +64,10 @@ const Textarea = ({
         )}
       </div>
       {error && errorMessage && (
-        <span className="text-body-12-r text-error-500">{errorMessage}</span>
+        <span className="typo-body-12-r text-error-500">{errorMessage}</span>
       )}
       {!error && helperText && (
-        <span className="text-body-12-r text-gray-500">{helperText}</span>
+        <span className="typo-body-12-r text-gray-500">{helperText}</span>
       )}
     </div>
   )

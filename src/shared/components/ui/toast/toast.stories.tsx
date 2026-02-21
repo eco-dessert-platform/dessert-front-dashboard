@@ -126,31 +126,31 @@ export const WithHelperFunctions: Story = {
     <div className="flex flex-col gap-4">
       <button
         onClick={() => toast.success('성공 메시지')}
-        className="rounded bg-green-500 px-4 py-2 text-white"
+        className="rounded-sm bg-green-500 px-4 py-2 text-white"
       >
         Show Success Toast
       </button>
       <button
         onClick={() => toast.success('성공 메시지', '성공 메시지 입니다.')}
-        className="rounded bg-green-500 px-4 py-2 text-white"
+        className="rounded-sm bg-green-500 px-4 py-2 text-white"
       >
         Show Success Toast2
       </button>
       <button
         onClick={() => toast.error('오류 메시지')}
-        className="rounded bg-red-500 px-4 py-2 text-white"
+        className="rounded-sm bg-red-500 px-4 py-2 text-white"
       >
         Show Error Toast
       </button>
       <button
         onClick={() => toast.error('오류 메시지', '오류 메시지 입니다.')}
-        className="rounded bg-red-500 px-4 py-2 text-white"
+        className="rounded-sm bg-red-500 px-4 py-2 text-white"
       >
         Show Error Toast2
       </button>
       <button
         onClick={() => toast.info('다운로드 메시지')}
-        className="rounded bg-gray-800 px-4 py-2 text-white"
+        className="rounded-sm bg-gray-800 px-4 py-2 text-white"
       >
         Show info Toast
       </button>
@@ -158,7 +158,7 @@ export const WithHelperFunctions: Story = {
         onClick={() =>
           toast.info('info 메시지', '무언가 다운로드 되었습니다.')
         }
-        className="rounded bg-gray-800 px-4 py-2 text-white"
+        className="rounded-sm bg-gray-800 px-4 py-2 text-white"
       >
         Show Info Toast2
       </button>

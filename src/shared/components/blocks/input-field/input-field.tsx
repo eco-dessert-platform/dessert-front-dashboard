@@ -68,10 +68,10 @@ export default function InputField({
         </div>
 
         {error && errorMessage ? (
-          <span className="text-body-12-r text-error-500">{errorMessage}</span>
+          <span className="typo-body-12-r text-error-500">{errorMessage}</span>
         ) : (
           helperText && (
-            <span className="text-body-12-r text-gray-500">{helperText}</span>
+            <span className="typo-body-12-r text-gray-500">{helperText}</span>
           )
         )}
       </div>

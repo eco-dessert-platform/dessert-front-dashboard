@@ -35,21 +35,21 @@ export default function Checkbox({
         checked={checked}
         onCheckedChange={onCheckedChange}
         disabled={disabled}
-        className={`group relative flex h-16 w-16 shrink-0 items-center justify-center focus:outline-none ${
+        className={`group relative flex size-16 shrink-0 items-center justify-center focus:outline-none ${
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
         }`}
         {...rest}
       >
-        <CheckboxOffIcon className="h-full w-full group-data-[state=checked]:hidden group-data-[state=indeterminate]:hidden" />
-        <CheckboxPrimitive.Indicator className="h-full w-full" asChild>
+        <CheckboxOffIcon className="size-full group-data-[state=checked]:hidden group-data-[state=indeterminate]:hidden" />
+        <CheckboxPrimitive.Indicator className="size-full" asChild>
           {type === 'multiple' ? (
             checked === 'indeterminate' ? (
-              <CheckboxMultipleIcon className="h-full w-full" />
+              <CheckboxMultipleIcon className="size-full" />
             ) : (
-              <CheckboxOnOutlineIcon className="h-full w-full" />
+              <CheckboxOnOutlineIcon className="size-full" />
             )
           ) : (
-            <CheckboxOnFilledIcon className="h-full w-full" />
+            <CheckboxOnFilledIcon className="size-full" />
           )}
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>

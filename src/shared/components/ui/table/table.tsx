@@ -44,7 +44,7 @@ function Table<T>({ data, columns, topArea }: TableProps<T>) {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="typo-body-12-m text-center align-middle text-gray-800"
+                  className="text-center align-middle typo-body-12-m text-gray-800"
                   style={{ width: header.getSize() }}
                 >
                   {header.isPlaceholder

@@ -70,19 +70,24 @@ const MENU_LIST = [
 ]
 
 function Lnb() {
-
   return (
-    <nav className="border-border relative flex h-[calc(100vh-80px)] w-[240px] flex-col border-r">
+    <nav className="relative flex h-[calc(100vh-80px)] w-[240px] flex-col border-r border-border">
       <div className="flex-1 overflow-y-auto px-3 py-4">
-        <Accordion type="multiple" className="gap-[10px]" >
+        <Accordion type="multiple" className="gap-10">
           {MENU_LIST.map((menu) => (
             <AccordionItem value={menu.group} key={menu.group}>
               <AccordionTrigger>
-                <span className="text-title-16-m text-gray-800">{menu.group}</span>
+                <span className="typo-title-16-m text-gray-800">
+                  {menu.group}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 {menu.items.map((item) => (
-                  <MenuItemLink key={item.title} title={item.title} href={item.href} />
+                  <MenuItemLink
+                    key={item.title}
+                    title={item.title}
+                    href={item.href}
+                  />
                 ))}
               </AccordionContent>
             </AccordionItem>
@@ -96,28 +101,34 @@ function Lnb() {
 
 export default Lnb
 
-function MenuItemLink({ href, title }: { href: string, title: string }) {
+function MenuItemLink({ href, title }: { href: string; title: string }) {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const isActive =  pathname === href
+  const isActive = pathname === href
   return (
     <div className="px-2 py-1">
-      <button type="button" className={cn("cursor-pointer flex items-center p-3 w-full rounded-[10px] border border-transparent", isActive && "bg-gray-100 border-gray-200")} onClick={() => navigate(href)}>
-        <span className="text-title-16-r text-left text-gray-800">{title}</span>
+      <button
+        type="button"
+        className={cn(
+          'flex w-full cursor-pointer items-center rounded-10 border border-transparent p-3',
+          isActive && 'border-gray-200 bg-gray-100',
+        )}
+        onClick={() => navigate(href)}
+      >
+        <span className="text-left typo-title-16-r text-gray-800">{title}</span>
       </button>
     </div>
   )
 }
 
-
 function LogoutButton() {
   return (
     <button
       type="button"
-      className="cursor-pointer py-button-sm-px flex h-[49px] w-full items-center justify-start border-t border-gray-300 px-4 text-left"
+      className="flex h-[49px] w-full cursor-pointer items-center justify-start border-t border-gray-300 px-4 text-left"
     >
       <img src={logoutIcon} alt="logout" className="mr-2 size-5" />
-      <span className="text-heading-16-m text-gray-800">로그아웃</span>
+      <span className="typo-title-16-m text-gray-800">로그아웃</span>
     </button>
   )
 }
