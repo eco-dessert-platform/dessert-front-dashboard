@@ -9,6 +9,7 @@ type Args = {
   allSelected: boolean
   onToggleAll: (checked: boolean | 'indeterminate') => void
   onToggleRow: (id: string, checked: boolean | 'indeterminate') => void
+  onCopyRow: (row: TableRow) => void
 }
 
 export const getResultColumns = ({
@@ -16,6 +17,7 @@ export const getResultColumns = ({
   allSelected,
   onToggleAll,
   onToggleRow,
+  onCopyRow,
 }: Args): ColumnDef<TableRow>[] => [
   {
     id: 'select',
@@ -119,7 +121,7 @@ export const getResultColumns = ({
             variant="secondary-outlined"
             title="복사"
             size="sm"
-            onClick={onCopy}
+            onClick={() => onCopyRow(row.original)}
           />
         </div>
       )

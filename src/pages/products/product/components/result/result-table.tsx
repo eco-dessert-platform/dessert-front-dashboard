@@ -34,11 +34,21 @@ const ResultTable = () => {
     )
   }
 
+  const handleCopyRow = (row: TableRow) => {
+    setTableData((prev) => [
+      {
+        ...row,
+        id: crypto.randomUUID(),
+      },
+      ...prev,
+    ])
+  }
   const columns = getResultColumns({
     selectedIds,
     allSelected,
     onToggleAll: toggleAll,
     onToggleRow: toggleRow,
+    onCopyRow: handleCopyRow,
   })
 
   const handleDelete = () => {
