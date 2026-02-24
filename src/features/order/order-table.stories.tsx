@@ -164,6 +164,7 @@ function OrderControlPanel() {
         />
 
         <OrderTable
+          tab={appliedFilters.tab ?? 'all'}
           orders={orders}
           selectedIds={selectedIds}
           productSelectedIds={productSelectedIds}
@@ -184,6 +185,7 @@ export const WithFullControls: StoryObj = {
 
 export const EmptyOrders: StoryObj<typeof meta> = {
   args: {
+    tab: 'all',
     orders: [],
     selectedIds: [],
     productSelectedIds: [],

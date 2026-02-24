@@ -3,13 +3,18 @@ import {
   ORDER_STATUS_BADGE_COLOR,
   ORDER_STATUS_LABELS,
 } from '@/entity/order/order.constant'
-import { OrderItem, OrderProduct } from '@/entity/order/order.type'
+import {
+  OrderItem,
+  OrderProduct,
+  OrderStatusTab,
+} from '@/entity/order/order.type'
 import Badge from '@/shared/components/ui/badge/badge'
 import Checkbox from '@/shared/components/ui/checkbox/checkbox'
 import Table from '@/shared/components/ui/table/table'
 import { ColumnDef, Row } from '@tanstack/react-table'
 import { useCallback, useMemo } from 'react'
 import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
+import Button from '@/shared/components/ui/button/button'
 
 type FlatOrderRow = Omit<OrderItem, 'products'> &
   OrderProduct & {
@@ -29,6 +34,7 @@ function flattenOrders(orders: OrderItem[]): FlatOrderRow[] {
 }
 
 interface OrderTableProps {
+  tab: OrderStatusTab
   orders: OrderItem[]
   selectedIds: string[]
   productSelectedIds: string[]
@@ -40,6 +46,7 @@ interface OrderTableProps {
 }
 
 export function OrderTable({
+  tab,
   orders,
   selectedIds,
   productSelectedIds,
@@ -248,27 +255,24 @@ export function OrderTable({
         meta: {
           getRowSpan: ({ row }) => getRowSpanForOrder(row.index),
         },
-        cell: ({ row }) => (
-          <div>
-            <p className="typo-body-12-r wrap-break-word text-gray-800">
-              {row.original.trackingNumber ? row.original.trackingNumber : '-'}
-            </p>
-          </div>
-        ),
+        cell: ({ row }) => {
+          return <TrackingNumberCell row={row} tab={tab} />
+        },
         size: 90,
         enableResizing: false,
       },
     ],
     [
-      allSelected,
       getProductCellClassName,
       getRowSpanForOrder,
+      allSelected,
       indeterminate,
       onToggleAll,
-      onToggleOne,
-      onToggleProduct,
-      productSelectedIds,
       selectedIds,
+      onToggleOne,
+      productSelectedIds,
+      onToggleProduct,
+      tab,
     ],
   )
 
@@ -279,5 +283,43 @@ export function OrderTable({
       scrollHeight={498}
       getRowClassName={getRowClassName}
     />
+  )
+}
+
+interface TrackingNumberCellProps {
+  row: Row<FlatOrderRow>
+  tab: OrderStatusTab
+}
+
+function TrackingNumberCell({ row, tab }: TrackingNumberCellProps) {
+  if (tab === 'orderConfirmed') {
+    return <Button variant="secondary-outlined" size="sm" title="입력" />
+  }
+
+  if (tab === 'productShipped' || tab == 'deliveryCompleted') {
+    return (
+      <div className="flex flex-col gap-2">
+        <p className="typo-body-12-r wrap-break-word text-gray-800">
+          {row.original.trackingNumber ? row.original.trackingNumber : '-'}
+        </p>
+
+        <div className="flex flex-1 justify-center">
+          <Button
+            variant="secondary-outlined"
+            size="sm"
+            title="수정"
+            className="w-56"
+          />
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <p className="typo-body-12-r wrap-break-word text-gray-800">
+        {row.original.trackingNumber ? row.original.trackingNumber : '-'}
+      </p>
+    </div>
   )
 }
