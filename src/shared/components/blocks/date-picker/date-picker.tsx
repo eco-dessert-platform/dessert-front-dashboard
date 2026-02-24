@@ -63,7 +63,7 @@ export function DatePicker({
   }
 
   return (
-    <div className="flex w-full flex-col gap-6 bg-white">
+    <div className="flex w-full flex-col gap-24 bg-white">
       <label className="typo-title-14-m text-gray-700">{label}</label>
 
       <Popover.Root open={isOpen} onOpenChange={handleOpenChange}>
@@ -72,7 +72,7 @@ export function DatePicker({
             type="button"
             disabled={disabled}
             className={cn(
-              'flex items-center justify-between gap-6',
+              'flex items-center justify-between gap-24',
               'h-input px-12 py-8',
               'typo-title-16-r text-gray-800',
               'rounded-10 border border-gray-300',

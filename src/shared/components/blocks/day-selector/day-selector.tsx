@@ -30,7 +30,7 @@ const DaySelector = ({
   }
 
   return (
-    <div className={clsx('flex gap-2', className)} role="group">
+    <div className={clsx('flex gap-8', className)} role="group">
       {DAYS.map((day) => {
         const isSelected = selectedDays.includes(day.value)
 
@@ -40,7 +40,7 @@ const DaySelector = ({
             type="button"
             onClick={() => handleDayClick(day.value)}
             className={clsx(
-              'flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-full p-1.5',
+              'flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-full p-6',
               'typo-title-16-m transition-colors',
               isSelected
                 ? 'bg-primary-50 text-primary-500'

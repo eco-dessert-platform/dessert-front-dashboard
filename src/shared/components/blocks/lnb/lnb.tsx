@@ -106,11 +106,11 @@ function MenuItemLink({ href, title }: { href: string; title: string }) {
   const { pathname } = useLocation()
   const isActive = pathname === href
   return (
-    <div className="px-2 py-1">
+    <div className="px-8 py-4">
       <button
         type="button"
         className={cn(
-          'flex w-full cursor-pointer items-center rounded-10 border border-transparent p-3',
+          'flex w-full cursor-pointer items-center rounded-10 border border-transparent p-12',
           isActive && 'border-gray-200 bg-gray-100',
         )}
         onClick={() => navigate(href)}
@@ -127,7 +127,7 @@ function LogoutButton() {
       type="button"
       className="flex h-[49px] w-full cursor-pointer items-center justify-start border-t border-gray-300 px-4 text-left"
     >
-      <img src={logoutIcon} alt="logout" className="mr-2 size-5" />
+      <img src={logoutIcon} alt="logout" className="mr-2 size-20" />
       <span className="typo-title-16-m text-gray-800">로그아웃</span>
     </button>
   )

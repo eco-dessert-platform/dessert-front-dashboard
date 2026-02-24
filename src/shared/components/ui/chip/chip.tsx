@@ -36,8 +36,8 @@ const Chip = ({
   }
 
   const closeClasses = {
-    sm: 'w-3 h-3',
-    md: 'size-4',
+    sm: 'size-12',
+    md: 'size-16',
   }
 
   return (
