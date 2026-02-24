@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Table from '@/shared/components/ui/table/table'
 import { Pagination } from '@/shared/components/ui/pagination/pagination'
 
@@ -9,14 +9,21 @@ import BulkDeleteButton from './toa-area/bulk-delete-button'
 import { resultTableData } from './result-table.data'
 import { getResultColumns } from './result-columns'
 
+import { TableRow } from './type'
+
 const ResultTable = () => {
+  const [tableData, setTableData] = useState<TableRow[]>([])
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
+  useEffect(() => {
+    setTableData(resultTableData)
+  }, [])
+
   const allSelected =
-    resultTableData.length > 0 && selectedIds.length === resultTableData.length
+    tableData.length > 0 && selectedIds.length === tableData.length
 
   const toggleAll = (checked: boolean | 'indeterminate') => {
-    setSelectedIds(checked === true ? resultTableData.map((v) => v.id) : [])
+    setSelectedIds(checked === true ? tableData.map((v) => v.id) : [])
   }
 
   const toggleRow = (id: string, checked: boolean | 'indeterminate') => {
@@ -34,9 +41,14 @@ const ResultTable = () => {
     onToggleRow: toggleRow,
   })
 
+  const handleDelete = () => {
+    setTableData((prev) => prev.filter((row) => !selectedIds.includes(row.id)))
+    setSelectedIds([])
+  }
+
   return (
     <Table
-      data={resultTableData}
+      data={tableData}
       columns={columns}
       topArea={
         <div className="flex w-full justify-between px-[19px] py-16 pb-12">
@@ -44,9 +56,12 @@ const ResultTable = () => {
             <ResultSort />
             <ResultCounter
               selectedIds={selectedIds}
-              tableData={resultTableData.length}
+              tableData={tableData.length}
             />
-            <BulkDeleteButton />
+            <BulkDeleteButton
+              onDelete={handleDelete}
+              disabled={selectedIds.length === 0}
+            />
           </div>
           <Pagination currentPage={1} totalPages={2} />
         </div>
