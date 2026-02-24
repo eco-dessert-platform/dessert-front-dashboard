@@ -40,7 +40,7 @@ const DaySelector = ({
             type="button"
             onClick={() => handleDayClick(day.value)}
             className={clsx(
-              'flex h-[42px] w-[42px] items-center justify-center rounded-full p-1.5',
+              'flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-full p-1.5',
               'typo-title-16-m transition-colors',
               isSelected
                 ? 'bg-primary-50 text-primary-500'

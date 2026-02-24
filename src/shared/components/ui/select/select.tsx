@@ -48,7 +48,7 @@ const Select = ({
       >
         <SelectPrimitive.Trigger
           className={cn(
-            'flex h-input w-full items-center justify-between gap-2 rounded-10 border border-gray-300 bg-white px-12 py-8 typo-title-16-r text-gray-800 outline-none',
+            'flex h-input w-full cursor-pointer items-center justify-between gap-2 rounded-10 border border-gray-300 bg-white px-12 py-8 typo-title-16-r text-gray-800 outline-none',
             'hover:border-gray-400',
             'focus-visible:border-primary-500 focus-visible:ring-2 focus-visible:ring-primary-200',
             'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400',

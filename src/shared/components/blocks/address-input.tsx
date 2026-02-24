@@ -33,7 +33,7 @@ const AddressInput = ({
               disabled={disabled}
             />
             <button
-              className="flex min-w-[90px] items-center justify-center rounded-10 bg-primary-500 px-4 py-2"
+              className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 bg-primary-500 px-4 py-2 disabled:cursor-not-allowed"
               onClick={onPostalCodeSearch}
               disabled={disabled}
             >

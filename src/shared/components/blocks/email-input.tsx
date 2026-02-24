@@ -45,7 +45,7 @@ const EmailInput = ({
       />
 
       <div className="flex min-w-[150px] flex-col items-start gap-1">
-        <div className="flex w-[150px] items-center gap-2 rounded-10 border border-gray-300 py-1 pr-2 pl-3">
+        <div className="flex w-[150px] cursor-pointer items-center gap-2 rounded-10 border border-gray-300 py-1 pr-2 pl-3">
           <p className="flex-1 typo-title-16-r text-gray-400">선택하세요</p>
         </div>
       </div>

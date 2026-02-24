@@ -43,7 +43,7 @@ const Chip = ({
   return (
     <span
       className={clsx(
-        'inline-flex items-center justify-center gap-1 border border-solid transition-colors duration-150',
+        'inline-flex cursor-pointer items-center justify-center gap-1 border border-solid transition-colors duration-150',
         sizeClasses[size],
         selected
           ? variantClasses.selected.default
