@@ -1,8 +1,4 @@
-import {
-  OrderFilters as OrderFiltersType,
-  OrderStatusCount,
-  OrderStatusTab,
-} from '@/entity/order/order.type'
+import { OrderStatusCount, OrderStatusTab } from '@/entity/order/order.type'
 import { Meta, StoryObj } from '@storybook/react'
 import { OrderTable } from './order-table/order-table.ui'
 import {
@@ -47,10 +43,17 @@ const meta = {
 export default meta
 
 function OrderControlPanel() {
-  const { filters, setFilters, reset: filterReset } = useOrderFilter('all')
+  const {
+    draftFilters,
+    setDraftFilters,
+    appliedFilters,
+    setAppliedFilters,
+    apply,
+    reset: filterReset,
+  } = useOrderFilter('all')
 
   const { data } = useQuery({
-    ...orderQueries.list(filters),
+    ...orderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
 
@@ -69,13 +72,13 @@ function OrderControlPanel() {
 
   const handleTabChange = (tab: OrderStatusTab) => {
     selectionReset()
-    filterReset()
-    setFilters((prev) => ({ ...prev, tab }))
+    filterReset(tab)
+    setAppliedFilters((prev) => ({ ...prev, tab }))
   }
 
-  const handleFiltersChange = (nextFilters: OrderFiltersType) => {
+  const handleSearch = () => {
     selectionReset()
-    setFilters(nextFilters)
+    apply()
   }
 
   const handleReset = () => {
@@ -85,7 +88,7 @@ function OrderControlPanel() {
 
   const handlePageChange = (page: number) => {
     selectionReset()
-    setFilters((prev) => ({ ...prev, page: String(page - 1) }))
+    setAppliedFilters((prev) => ({ ...prev, page: String(page - 1) }))
   }
 
   const handleAction = useCallback((action: string) => {
@@ -130,27 +133,28 @@ function OrderControlPanel() {
     }
   }, [])
 
-  const currentPage = filters.page ? Number(filters.page) + 1 : 1
+  const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
   const totalPages = data?.totalPages ?? 1
   const totalCount = data?.totalElements ?? 0
 
   return (
     <div className="flex flex-col gap-6 p-4">
       <OrderStatusTabs
-        selectedTab={filters.tab ?? 'all'}
+        selectedTab={appliedFilters.tab ?? 'all'}
         statusCount={data?.statusCount ?? DEFAULT_STATUS_COUNT}
         onChange={handleTabChange}
       />
 
       <OrderFilters
-        filters={filters}
-        onFiltersChange={handleFiltersChange}
+        filters={draftFilters}
+        onFiltersChange={setDraftFilters}
+        onSearch={handleSearch}
         onReset={handleReset}
       />
 
       <section className="mt-10 rounded-10 border bg-white">
         <OrderActionBar
-          tab={filters.tab ?? 'all'}
+          tab={appliedFilters.tab ?? 'all'}
           onAction={handleAction}
           selectedCount={selectedIds.length}
           totalCount={totalCount}

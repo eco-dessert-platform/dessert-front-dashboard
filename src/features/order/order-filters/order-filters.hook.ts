@@ -11,11 +11,31 @@ const createInitialState = (initialTab: OrderStatusTab): OrderFilters => ({
 })
 
 export function useOrderFilter(initialTab: OrderStatusTab) {
-  const [filters, setFilters] = useState<OrderFilters>(
-    createInitialState(initialTab),
-  )
+  const initialState = createInitialState(initialTab)
 
-  const reset = () => setFilters(createInitialState(initialTab))
+  // UI에서 입력 중인 임시 상태 (API 호출 없음)
+  const [draftFilters, setDraftFilters] = useState<OrderFilters>(initialState)
+  // 실제 API queryKey에 사용되는 상태 (조회 버튼 클릭 시에만 업데이트)
+  const [appliedFilters, setAppliedFilters] =
+    useState<OrderFilters>(initialState)
 
-  return { filters, setFilters, reset }
+  // 조회 버튼 클릭 → draftFilters를 appliedFilters로 반영
+  const apply = () => setAppliedFilters(draftFilters)
+
+  // 초기화 → 두 상태 모두 리셋
+  const reset = (tab?: OrderStatusTab) => {
+    const resetState = createInitialState(tab ?? initialTab)
+
+    setDraftFilters(resetState)
+    setAppliedFilters(resetState)
+  }
+
+  return {
+    draftFilters,
+    setDraftFilters,
+    appliedFilters,
+    setAppliedFilters,
+    apply,
+    reset,
+  }
 }

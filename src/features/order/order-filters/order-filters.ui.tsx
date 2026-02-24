@@ -8,21 +8,23 @@ import type {
   SearchType,
 } from '@/entity/order/order.type'
 import { DatePicker } from '@/shared/components/blocks/date-picker/date-picker'
-import Input from '@/shared/components/ui/input/input'
 import Select from '@/shared/components/ui/select/select'
 import { format, parseISO } from 'date-fns'
 import ResetIcon from '@/assets/icons/reset.svg?react'
 import { cn } from '@/shared/lib/utils'
+import InputField from '@/shared/components/blocks/input-field/input-field'
 
 interface OrderFiltersProps {
-  filters: OrderFilters
-  onFiltersChange: (filters: OrderFilters) => void
-  onReset: () => void
+  filters: OrderFilters // draftFilters (UI 표시용)
+  onFiltersChange: (filters: OrderFilters) => void // draftFilters 업데이트 이벤트 핸들러
+  onSearch: () => void // 조회 버튼 클릭 → apply() 호출 이벤트 핸들러
+  onReset: () => void // draftFilters, appliedFilters 두 state 모두 reset 이벤트 핸들러
 }
 
 export function OrderFilters({
   filters,
   onFiltersChange,
+  onSearch,
   onReset,
 }: OrderFiltersProps) {
   return (
@@ -81,9 +83,10 @@ export function OrderFilters({
         </div>
         {/* min-w-0이 필요한 이유: Flexbox에서 flex-1만 쓰면 내용이 길 때 overflow가 발생할 수 있습니다. min-w-0이 이를 방지합니다. */}
         <div className="flex-1">
-          {/* Input 디자인 시스템에 검색필드(Input Field/Search) 디자인이 주문 내역 디자인 시안과 다른 문제 발생 */}
-          <Input
+          <InputField
             placeholder="1~50자로 입력해주세요."
+            onButtonClick={onSearch}
+            buttonText="조회"
             value={filters.searchKeyword}
             onChange={(e) =>
               onFiltersChange({ ...filters, searchKeyword: e.target.value })
