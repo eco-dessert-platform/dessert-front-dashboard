@@ -20,20 +20,20 @@ const AddressInput = ({
 }: AddressInputProps) => {
   return (
     <>
-      <div className="flex items-start gap-4 self-stretch px-5 py-2.5">
+      <div className="flex items-start gap-16 self-stretch px-20 py-10">
         {/* 우편번호 + 주소 */}
-        <div className="flex w-[310px] flex-col items-start gap-1">
+        <div className="flex w-[310px] flex-col items-start gap-4">
           <Label label="우편번호" required />
-          <div className="flex items-start gap-4 self-stretch">
+          <div className="flex items-start gap-16 self-stretch">
             <Input
-              className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-3 py-2 typo-title-16-r text-gray-400 placeholder:text-gray-400"
+              className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-12 py-8 typo-title-16-r text-gray-400 placeholder:text-gray-400"
               placeholder="우편번호"
               value={postalCode}
               readOnly
               disabled={disabled}
             />
             <button
-              className="flex min-w-[90px] items-center justify-center rounded-10 bg-primary-500 px-4 py-2"
+              className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 bg-primary-500 px-16 py-8 disabled:cursor-not-allowed"
               onClick={onPostalCodeSearch}
               disabled={disabled}
             >
@@ -42,11 +42,11 @@ const AddressInput = ({
           </div>
         </div>
 
-        <div className="flex flex-1/2 flex-col items-start gap-1">
+        <div className="flex flex-1/2 flex-col items-start gap-4">
           <Label label="출고지 주소" required />
-          <div className="flex items-start gap-4 self-stretch">
+          <div className="flex items-start gap-16 self-stretch">
             <Input
-              className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-3 py-2 typo-title-16-r text-gray-400 placeholder:text-gray-400"
+              className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-12 py-8 typo-title-16-r text-gray-400 placeholder:text-gray-400"
               placeholder="출고지 주소"
               value={address}
               readOnly
@@ -57,11 +57,11 @@ const AddressInput = ({
       </div>
 
       {/* 상세 주소 */}
-      <div className="flex flex-col items-start gap-4 self-stretch px-5 py-2.5">
-        <div className="flex flex-col items-start gap-1 self-stretch">
+      <div className="flex flex-col items-start gap-16 self-stretch px-20 py-10">
+        <div className="flex flex-col items-start gap-4 self-stretch">
           <Label label="출고지 상세 주소" required />
           <Input
-            className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-3 py-2 typo-title-16-r text-gray-400 placeholder:text-gray-400"
+            className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-12 py-8 typo-title-16-r text-gray-400 placeholder:text-gray-400"
             placeholder="상세주소를 입력해주세요(동/호수 포함)"
             value={detailAddress}
             onChange={(e) => onDetailAddressChange?.(e.target.value)}

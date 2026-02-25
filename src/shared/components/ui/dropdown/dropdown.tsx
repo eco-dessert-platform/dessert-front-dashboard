@@ -68,7 +68,7 @@ const Dropdown = ({
           'flex h-input w-full items-center justify-between rounded-10 border py-8 pr-8 pl-12 transition-all duration-200',
           'text-gray-900',
           'border-gray-300 bg-white',
-          'font-pretendard hover:border-gray-400 focus:border-gray-500 focus:outline-none',
+          'cursor-pointer font-pretendard hover:border-gray-400 focus:border-gray-500 focus:outline-none',
           isOpen && 'border-gray-500',
           disabled &&
             'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400',
@@ -84,7 +84,7 @@ const Dropdown = ({
         </span>
         <DownArrowIcon
           className={cn(
-            'size-5 shrink-0 text-gray-600 transition-transform duration-200',
+            'size-20 shrink-0 text-gray-600 transition-transform duration-200',
             isOpen && 'rotate-180',
           )}
         />
@@ -108,7 +108,7 @@ const Dropdown = ({
                     disabled={option.disabled}
                     onClick={() => handleSelect(option)}
                     className={`typo-title-14-r ${cn(
-                      'flex h-[34px] w-full items-center gap-2 rounded-4 px-10 py-6 transition-colors duration-200',
+                      'flex h-[34px] w-full cursor-pointer items-center gap-8 rounded-4 px-10 py-6 transition-colors duration-200',
                       'text-left text-gray-800',
                       'hover:bg-gray-50',
                       isSelected && 'bg-gray-100',
@@ -116,11 +116,11 @@ const Dropdown = ({
                     )}`}
                   >
                     {type === 'checkbox' && (
-                      <div className="flex size-4 shrink-0 items-center justify-center">
+                      <div className="flex size-16 shrink-0 items-center justify-center">
                         {isSelected ? (
-                          <CheckboxOnIcon className="size-4" />
+                          <CheckboxOnIcon className="size-16" />
                         ) : (
-                          <CheckboxOffIcon className="size-4" />
+                          <CheckboxOffIcon className="size-16" />
                         )}
                       </div>
                     )}
@@ -128,7 +128,7 @@ const Dropdown = ({
                       {option.label}
                     </span>
                     {type === 'list' && isSelected && (
-                      <CheckIcon className="size-4 shrink-0 text-primary-500" />
+                      <CheckIcon className="size-16 shrink-0 text-primary-500" />
                     )}
                   </button>
                 </li>

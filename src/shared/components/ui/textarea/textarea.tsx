@@ -43,7 +43,7 @@ const Textarea = ({
         <textarea
           className={cn(
             formFieldBase,
-            'min-h-[100px] resize-none items-start gap-6 rounded-10 px-12 py-8',
+            'min-h-[100px] resize-none items-start gap-6 rounded-10 px-12 py-8 disabled:cursor-not-allowed',
             error &&
               'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
           )}

@@ -64,7 +64,7 @@ export function DatePicker({
 
   return (
     <div className="flex w-full flex-col gap-6 bg-white">
-      <label className="typo-title-14-m text-gray-700">{label}</label>
+      <label className="typo-body-12-r text-gray-800">{label}</label>
 
       <Popover.Root open={isOpen} onOpenChange={handleOpenChange}>
         <Popover.Trigger asChild>
@@ -86,7 +86,7 @@ export function DatePicker({
           </button>
         </Popover.Trigger>
 
-        <Popover.Content className="z-50 pt-4">
+        <Popover.Content className="z-dropdown pt-4">
           <Calendar
             selected={draftRange}
             onSelect={setDraftRange}
