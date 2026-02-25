@@ -13,7 +13,11 @@ export const SettlementTableTopArea = () => {
         className="h-30 gap-4 px-10 py-6 text-gray-800"
         leftIcon={<ExcelIcon width={16} height={16} />}
         title="엑셀 다운로드"
-        onClick={() => toast.info('정산목록 엑셀 파일이 다운로드 되었어요.')}
+        onClick={() =>
+          toast.info('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
+            position: 'bottom-right',
+          })
+        }
       />
 
       <Pagination
