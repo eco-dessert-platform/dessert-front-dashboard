@@ -13,6 +13,9 @@ export const TRANSACTION_SETTLEMENT_MOCK: TransactionSettlement[] = Array(
   expectedDate: '2025.09.01',
   completedDate: '2025.09.01',
   status: '정산 후 취소',
+  paymentMethod: '카카오페이 카드',
+  commissionRate: '1.23%',
+  paymentAmount: 123456,
 })
 
 export const DAILY_SETTLEMENT_MOCK: Settlement[] = Array(10).fill({
@@ -22,7 +25,11 @@ export const DAILY_SETTLEMENT_MOCK: Settlement[] = Array(10).fill({
   totalAmount: 123456,
   paymentAmount: 123456,
   commission: 123456,
-  deduction: 123456,
+  deduction: 1234,
+  deductionDetails: {
+    shippingFeeChange: 1234,
+    chargeOffset: 1234,
+  },
   withheld: 123456,
   method: '계좌이체',
 })

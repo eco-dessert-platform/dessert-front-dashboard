@@ -9,6 +9,9 @@ export interface TransactionSettlement {
   expectedDate: string // 정산예정일
   completedDate: string // 정산완료일
   status: string // 정산상태
+  paymentMethod?: string // 주결제 수단
+  commissionRate?: string // 수수료율
+  paymentAmount?: number // 결제 금액
 }
 
 export interface Settlement {
@@ -19,6 +22,10 @@ export interface Settlement {
   paymentAmount: number // 결제금액(a)
   commission: number // 수수료(b)
   deduction: number // 공제/환급(c)
+  deductionDetails?: {
+    shippingFeeChange: number // 배송비 금액 변동
+    chargeOffset: number // 충전금 상계
+  }
   withheld: number // 지급보류(d)
   method: string // 정산방식
 }

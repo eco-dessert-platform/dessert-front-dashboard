@@ -2,6 +2,12 @@ import Table from '@/shared/components/ui/table/table'
 import { ColumnDef } from '@tanstack/react-table'
 import { SettlementTableTopArea } from './settlement-table-top-area'
 import Button from '@/shared/components/ui/button/button'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  TransactionDetailTable,
+} from './settlement-popover'
 import { TransactionSettlement } from '@/entity/settlement/settlement.type'
 import { TRANSACTION_SETTLEMENT_MOCK } from '@/entity/settlement/settlement.mock'
 
@@ -62,12 +68,26 @@ const columns: ColumnDef<TransactionSettlement>[] = [
         <span className="typo-body-14-r text-gray-800">
           {row.original.expectedSettlementAmount.toLocaleString()}
         </span>
-        <Button
-          variant="secondary-outlined"
-          size="sm"
-          className="h-24 px-8 py-0 text-gray-600"
-          title="상세"
-        />
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="secondary-outlined"
+              size="sm"
+              className="h-24 px-8 py-0 text-gray-600 outline-none"
+              title="상세"
+            />
+          </PopoverTrigger>
+          <PopoverContent title="정산예정금액 상세" width="min-w-[484px]">
+            <TransactionDetailTable
+              orderNumber={row.original.orderNumber}
+              productOrderNumber={row.original.productOrderNumber}
+              paymentMethod={row.original.paymentMethod ?? '-'}
+              commissionRate={row.original.commissionRate ?? '-'}
+              paymentAmount={row.original.paymentAmount ?? 0}
+              expectedAmount={row.original.expectedSettlementAmount}
+            />
+          </PopoverContent>
+        </Popover>
       </div>
     ),
   },

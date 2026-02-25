@@ -2,6 +2,12 @@ import Button from '@/shared/components/ui/button/button'
 import Table from '@/shared/components/ui/table/table'
 import { ColumnDef } from '@tanstack/react-table'
 import { SettlementTableTopArea } from './settlement-table-top-area'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  DeductionDetailTable,
+} from './settlement-popover'
 import { Settlement } from '@/entity/settlement/settlement.type'
 import { DAILY_SETTLEMENT_MOCK } from '@/entity/settlement/settlement.mock'
 
@@ -74,12 +80,27 @@ const columns: ColumnDef<Settlement>[] = [
             <span className="typo-body-14-r text-gray-800">
               {row.original.deduction.toLocaleString()}
             </span>
-            <Button
-              variant="secondary-outlined"
-              size="sm"
-              className="h-24 px-8 py-0 text-gray-600"
-              title="상세"
-            />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="secondary-outlined"
+                  size="sm"
+                  className="h-24 px-8 py-0 text-gray-600 outline-none"
+                  title="상세"
+                />
+              </PopoverTrigger>
+              <PopoverContent title="공제/환급 상세">
+                <DeductionDetailTable
+                  total={row.original.deduction}
+                  shippingFeeChange={
+                    row.original.deductionDetails?.shippingFeeChange ?? 0
+                  }
+                  chargeOffset={
+                    row.original.deductionDetails?.chargeOffset ?? 0
+                  }
+                />
+              </PopoverContent>
+            </Popover>
           </div>
         ),
       },
