@@ -69,7 +69,7 @@ const Pagination = ({
 
   return (
     <nav
-      className={cn('flex items-center gap-1', className)}
+      className={cn('flex items-center gap-4', className)}
       aria-label="Pagination"
     >
       {/* << 버튼: 첫 번째 그룹으로 이동 */}
@@ -80,7 +80,7 @@ const Pagination = ({
         aria-label="Go to first page group"
         title="첫 페이지 그룹"
       >
-        <DoubleForwardArrow className="h-5 w-5" />
+        <DoubleForwardArrow className="size-20" />
       </button>
 
       {/* < 버튼: 이전 페이지로 이동 (-1) */}
@@ -91,7 +91,7 @@ const Pagination = ({
         aria-label="Go to previous page"
         title="이전 페이지"
       >
-        <ForwardArrow className="h-5 w-5" />
+        <ForwardArrow className="size-20" />
       </button>
 
       {/* 페이지 번호 버튼들 */}
@@ -105,8 +105,8 @@ const Pagination = ({
             className={clsx(
               baseButtonStyle,
               isActive
-                ? 'bg-primary-50 text-primary-500 text-title-14-m cursor-default'
-                : 'text-title-14-r cursor-pointer text-gray-800 hover:bg-gray-50',
+                ? 'cursor-default bg-primary-50 typo-title-14-m text-primary-500'
+                : 'cursor-pointer typo-title-14-r text-gray-800 hover:bg-gray-50',
             )}
             aria-label={`Go to page ${pageNumber}`}
             aria-current={isActive ? 'page' : undefined}
@@ -127,7 +127,7 @@ const Pagination = ({
         aria-label="Go to next page"
         title="다음 페이지"
       >
-        <NextArrow className="h-5 w-5" />
+        <NextArrow className="size-20" />
       </button>
 
       {/* >> 버튼: 마지막 그룹으로 이동 */}
@@ -138,7 +138,7 @@ const Pagination = ({
         aria-label="Go to last page group"
         title="마지막 페이지 그룹"
       >
-        <DoubleNextArrow className="h-5 w-5" />
+        <DoubleNextArrow className="size-20" />
       </button>
     </nav>
   )

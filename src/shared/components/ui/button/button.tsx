@@ -55,7 +55,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'flex items-center justify-center gap-8 border disabled:opacity-50',
+        'flex cursor-pointer items-center justify-center gap-8 border disabled:cursor-not-allowed disabled:opacity-50',
         sizeClasses[size],
         variantClasses[variant],
         roundedFull && 'rounded-full',

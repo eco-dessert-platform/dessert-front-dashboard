@@ -36,8 +36,8 @@ export default function InputField({
   return (
     <div
       className={cn(
-        'flex w-full gap-1.5',
-        isHorizontal ? 'flex-row items-start gap-2' : 'flex-col',
+        'flex w-full gap-6',
+        isHorizontal ? 'flex-row items-start gap-8' : 'flex-col',
         className,
       )}
     >
@@ -47,8 +47,8 @@ export default function InputField({
         className={cn(isHorizontal && 'mt-[9px] w-20 shrink-0')}
       />
 
-      <div className="flex grow flex-col gap-1.5">
-        <div className="flex w-full items-center gap-2">
+      <div className="flex grow flex-col gap-6">
+        <div className="flex w-full items-center gap-8">
           <Input
             className="w-full"
             placeholder={placeholder}
@@ -68,10 +68,10 @@ export default function InputField({
         </div>
 
         {error && errorMessage ? (
-          <span className="text-body-12-r text-error-500">{errorMessage}</span>
+          <span className="typo-body-12-r text-error-500">{errorMessage}</span>
         ) : (
           helperText && (
-            <span className="text-body-12-r text-gray-500">{helperText}</span>
+            <span className="typo-body-12-r text-gray-500">{helperText}</span>
           )
         )}
       </div>

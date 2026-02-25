@@ -52,9 +52,9 @@ const Radio = ({
             className="sr-only"
           />
           {value === option.value ? (
-            <RadioOnIcon className="h-16 w-16 shrink-0" />
+            <RadioOnIcon className="size-16 shrink-0" />
           ) : (
-            <RadioOffIcon className="h-16 w-16 shrink-0" />
+            <RadioOffIcon className="size-16 shrink-0" />
           )}
           <span
             className={`text-gray-800 ${

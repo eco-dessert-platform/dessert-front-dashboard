@@ -31,19 +31,19 @@ const Chip = ({
   }
 
   const sizeClasses = {
-    sm: 'px-2 py-1 text-body-10-r rounded-full',
-    md: 'px-3 py-1.5 text-body-12-r rounded-full',
+    sm: 'px-2 py-1 typo-body-10-r rounded-full',
+    md: 'px-3 py-1.5 typo-body-12-r rounded-full',
   }
 
   const closeClasses = {
-    sm: 'w-3 h-3',
-    md: 'w-4 h-4',
+    sm: 'size-12',
+    md: 'size-16',
   }
 
   return (
     <span
       className={clsx(
-        'inline-flex items-center justify-center gap-1 border border-solid transition-colors duration-150',
+        'inline-flex cursor-pointer items-center justify-center gap-1 border border-solid transition-colors duration-150',
         sizeClasses[size],
         selected
           ? variantClasses.selected.default

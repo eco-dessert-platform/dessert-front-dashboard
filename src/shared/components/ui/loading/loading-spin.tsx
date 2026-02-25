@@ -24,14 +24,14 @@ const LogingSpin = ({
 }: SSspinProps) => {
   return (
     <div
-      className={`relative flex h-full w-full items-center justify-center overflow-hidden rounded-[0.3rem] ${className}`}
+      className={`relative flex size-full items-center justify-center overflow-hidden rounded-[0.3rem] ${className}`}
     >
       {loading && (
         <div
-          className={`absolute inset-0 z-50 flex h-full w-full items-center justify-center rounded-[0.3rem] ${overlayColor} ${overlayOpacity}`}
+          className={`absolute inset-0 z-50 flex size-full items-center justify-center rounded-[0.3rem] ${overlayColor} ${overlayOpacity}`}
         >
           <Loader
-            className="text-primary animate-spin"
+            className="animate-spin text-primary"
             size={size}
             strokeWidth={strokeWidth}
           />

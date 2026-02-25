@@ -38,7 +38,7 @@ const Select = ({
 }: SelectProps) => {
   return (
     <div
-      className={cn('flex flex-col items-start gap-1 self-stretch', className)}
+      className={cn('flex flex-col items-start gap-4 self-stretch', className)}
     >
       {label && <Label label={label} required={required} />}
       <SelectPrimitive.Root
@@ -48,9 +48,9 @@ const Select = ({
       >
         <SelectPrimitive.Trigger
           className={cn(
-            'text-title-16-r flex h-input w-full items-center justify-between gap-2 rounded-10 border border-gray-300 bg-white px-12 py-8 text-gray-800 outline-none',
+            'flex h-input w-full cursor-pointer items-center justify-between gap-8 rounded-10 border border-gray-300 bg-white px-12 py-8 typo-title-16-r text-gray-800 outline-none',
             'hover:border-gray-400',
-            'focus-visible:border-primary-500 focus-visible:ring-primary-200 focus-visible:ring-2',
+            'focus-visible:border-primary-500 focus-visible:ring-8 focus-visible:ring-primary-200',
             'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400',
             error && 'border-red-500',
           )}
@@ -64,20 +64,20 @@ const Select = ({
           <SelectPrimitive.Content
             position="popper"
             side="bottom"
-            sideOffset={4}
+            sideOffset={16}
             align="start"
             className={cn(
               'z-50 min-w-(--radix-select-trigger-width) overflow-hidden rounded-10 border border-gray-200 bg-white shadow-lg',
             )}
           >
-            <SelectPrimitive.Viewport className="p-1">
+            <SelectPrimitive.Viewport className="p-4">
               {options.map((option) => (
                 <SelectPrimitive.Item
                   key={option.value}
                   value={option.value}
                   disabled={option.disabled}
                   className={cn(
-                    'text-title-16-r relative flex cursor-pointer items-center rounded-4 px-12 py-8 text-gray-800 outline-none select-none',
+                    'relative flex cursor-pointer items-center rounded-16 px-12 py-8 typo-title-16-r text-gray-800 outline-none select-none',
                     'hover:bg-gray-50',
                     'focus:bg-gray-50',
                     'disabled:pointer-events-none disabled:opacity-50',
@@ -93,10 +93,10 @@ const Select = ({
         </SelectPrimitive.Portal>
       </SelectPrimitive.Root>
       {error && errorMessage && (
-        <span className="text-body-12-r text-red-500">{errorMessage}</span>
+        <span className="typo-body-12-r text-red-500">{errorMessage}</span>
       )}
       {!error && helperText && (
-        <span className="text-body-12-r text-gray-500">{helperText}</span>
+        <span className="typo-body-12-r text-gray-500">{helperText}</span>
       )}
     </div>
   )
