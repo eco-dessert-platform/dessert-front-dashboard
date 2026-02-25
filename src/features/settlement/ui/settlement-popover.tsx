@@ -87,7 +87,7 @@ export const DeductionDetailTable = ({
           <th className="w-[100px] border-r border-gray-200 px-10 align-middle font-semibold">
             공제/환금 합계
           </th>
-          <th className="px-0 py-0 align-middle font-semibold">
+          <th className="p-0 align-middle font-semibold">
             <div className="flex flex-col">
               <div className="flex h-[26px] items-center justify-center border-b border-gray-200 px-16">
                 공제/환급 상세
@@ -109,7 +109,7 @@ export const DeductionDetailTable = ({
           <td className="border-r border-gray-200 px-10 text-center align-middle">
             {total.toLocaleString()}
           </td>
-          <td className="px-0 py-0 align-middle">
+          <td className="p-0 align-middle">
             <div className="flex h-full items-center">
               <div className="flex h-[35px] flex-1 items-center justify-center border-r border-gray-200 px-10">
                 {shippingFeeChange.toLocaleString()}
