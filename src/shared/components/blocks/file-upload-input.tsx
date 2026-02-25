@@ -27,7 +27,7 @@ const FileUploadInput = ({
   }
 
   return (
-    <div className="flex flex-col items-start gap-1 self-stretch">
+    <div className="flex flex-col items-start gap-4 self-stretch">
       {label && (
         <label className="typo-body-12-r text-gray-800">
           {label}
@@ -38,16 +38,16 @@ const FileUploadInput = ({
           )}
         </label>
       )}
-      <div className="flex items-start gap-4 self-stretch">
+      <div className="flex items-start gap-16 self-stretch">
         <Input
-          className="flex flex-1 items-center gap-1.5 rounded-10 border border-gray-300 px-3 py-2 typo-title-16-r text-gray-800 placeholder:text-gray-400"
+          className="flex flex-1 items-center gap-1.5 rounded-10 border border-gray-300 px-12 py-8 typo-title-16-r text-gray-800 placeholder:text-gray-400"
           placeholder={placeholder}
           value={value}
           readOnly
           disabled={disabled}
         />
         <button
-          className="flex min-w-[90px] items-center justify-center rounded-10 border border-gray-300 bg-gray-300 px-4 py-2"
+          className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 border border-gray-300 bg-gray-300 px-16 py-8 disabled:cursor-not-allowed"
           disabled={disabled}
           onClick={() => {
             const input = document.createElement('input')

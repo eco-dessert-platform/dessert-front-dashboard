@@ -38,7 +38,7 @@ const Input = ({
           type={type}
           className={cn(
             formFieldBase,
-            'flex h-input items-center rounded-10 px-12 py-8',
+            'flex h-input items-center rounded-10 px-12 py-8 disabled:cursor-not-allowed',
             error &&
               'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
             maxLength && 'pr-14',
