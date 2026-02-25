@@ -11,7 +11,7 @@ import {
 
 const SettlementPage = () => {
   return (
-    <div className="flex flex-col gap-24 p-24">
+    <div className="mx-[-90px] my-[-40px] flex min-h-[calc(100vh-80px)] flex-col gap-24 px-40 py-40">
       <Tab defaultValue="daily" variant="btn">
         <TabList>
           <TabTrigger value="daily">일별 정산내역</TabTrigger>
