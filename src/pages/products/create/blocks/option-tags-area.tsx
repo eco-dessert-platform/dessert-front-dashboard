@@ -1,5 +1,5 @@
 import { Tooltip } from '@/shared/components/ui/tooltip/tooltip'
-import { Info } from 'lucide-react'
+import { LabelWithTooltip } from '../ui/label-with-tooltip'
 import { OptionTags } from '@/entity/products/create/options-tag.type'
 import Chip from '@/shared/components/ui/chip/chip'
 import { cn } from '@/shared/lib/utils'
@@ -22,11 +22,11 @@ export const OptionTagsArea = ({
   return (
     <div>
       <div className={cn('flex gap-2', className)}>
-        <p className="typo-heading-18-b">{title}</p>
-        {titleRequire && (
-          <span className="typo-title-16-m text-primary-500">*</span>
-        )}
-        {titleTooltipProps}
+        <LabelWithTooltip
+          title={title}
+          titleRequire={titleRequire}
+          titleTooltipProps={titleTooltipProps}
+        />
       </div>
       <div className="mt-10 flex gap-4">
         {tagData.map((items) => (

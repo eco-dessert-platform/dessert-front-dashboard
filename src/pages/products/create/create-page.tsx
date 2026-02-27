@@ -5,7 +5,7 @@ function CreatePage() {
     <>
       <StickyHeader />
 
-      <div className="mt-[88px] h-[1000px]">Create Page</div>
+      <div className="mt-[88px]"></div>
     </>
   )
 }
