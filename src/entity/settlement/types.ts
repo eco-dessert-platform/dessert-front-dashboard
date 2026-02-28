@@ -29,3 +29,15 @@ export interface Settlement {
   withheld: number // 지급보류(d)
   method: string // 정산방식
 }
+export type SettlementSearchType = 'orderNumber' | 'productOrderNumber'
+export type SettlementDateType = 'expectedDate' | 'baseDate' | 'completedDate'
+
+export interface SettlementFilters {
+  dateType: SettlementDateType
+  startDate: string | null
+  endDate: string | null
+  searchType: SettlementSearchType
+  keyword: string
+  page: number
+  size: number
+}

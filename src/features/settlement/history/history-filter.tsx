@@ -2,16 +2,30 @@ import { DatePicker } from '@/shared/block/date-picker/date-picker'
 import Button from '@/shared/ui/button/button'
 import Input from '@/shared/ui/input/input'
 import Select from '@/shared/ui/select/select'
-import { useState } from 'react'
 import { DateRange } from 'react-day-picker'
-
 import { DATE_TYPE_OPTIONS, SEARCH_TYPE_OPTIONS } from './schema/contracts'
+import {
+  SettlementFilters,
+  SettlementDateType,
+  SettlementSearchType,
+} from '@/entity/settlement/types'
+import { format } from 'date-fns'
 
-export const SettlementFilter = () => {
-  const [dateType, setDateType] = useState('expectedDate')
-  const [dateValue, setDateValue] = useState<DateRange | undefined>(undefined)
-  const [searchType, setSearchType] = useState('orderNumber')
-  const [searchKeyword, setSearchKeyword] = useState('')
+interface SettlementFilterProps {
+  filters: SettlementFilters
+  onChange: (filters: SettlementFilters) => void
+  onSearch: () => void
+}
+
+export const SettlementFilter = ({
+  filters,
+  onChange,
+  onSearch,
+}: SettlementFilterProps) => {
+  const dateValue: DateRange | undefined =
+    filters.startDate && filters.endDate
+      ? { from: new Date(filters.startDate), to: new Date(filters.endDate) }
+      : undefined
 
   return (
     <div className="flex items-end gap-16 rounded-12 border border-gray-100 bg-white p-24">
@@ -20,8 +34,10 @@ export const SettlementFilter = () => {
           <Select
             label="조회기간"
             options={DATE_TYPE_OPTIONS}
-            value={dateType}
-            onValueChange={setDateType}
+            value={filters.dateType}
+            onValueChange={(val) =>
+              onChange({ ...filters, dateType: val as SettlementDateType })
+            }
             placeholder="기준일 선택"
           />
         </div>
@@ -30,7 +46,13 @@ export const SettlementFilter = () => {
             label=""
             value={dateValue}
             onChange={(range) => {
-              setDateValue(range)
+              onChange({
+                ...filters,
+                startDate: range?.from
+                  ? format(range.from, 'yyyy-MM-dd')
+                  : null,
+                endDate: range?.to ? format(range.to, 'yyyy-MM-dd') : null,
+              })
             }}
           />
         </div>
@@ -41,16 +63,18 @@ export const SettlementFilter = () => {
           <Select
             label="검색구분"
             options={SEARCH_TYPE_OPTIONS}
-            value={searchType}
-            onValueChange={setSearchType}
+            value={filters.searchType}
+            onValueChange={(val) =>
+              onChange({ ...filters, searchType: val as SettlementSearchType })
+            }
             placeholder="검색조건 선택"
           />
         </div>
         <div className="flex-1">
           <Input
             placeholder="검색어를 입력해주세요"
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
+            value={filters.keyword}
+            onChange={(e) => onChange({ ...filters, keyword: e.target.value })}
           />
         </div>
         <Button
@@ -58,6 +82,7 @@ export const SettlementFilter = () => {
           variant="primary-filled"
           size="md"
           className="h-[38px] min-w-[60px]"
+          onClick={onSearch}
         />
       </div>
     </div>

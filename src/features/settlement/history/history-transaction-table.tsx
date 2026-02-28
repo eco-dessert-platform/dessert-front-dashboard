@@ -9,7 +9,8 @@ import {
   TransactionDetailTable,
 } from './history-popover'
 import { TransactionSettlement } from '@/entity/settlement/types'
-import { TRANSACTION_SETTLEMENT_MOCK } from '@/entity/settlement/mock'
+import { getTransactionSettlementMock } from '@/entity/settlement/mock'
+import { useMemo } from 'react'
 
 const columns: ColumnDef<TransactionSettlement>[] = [
   {
@@ -129,13 +130,37 @@ const columns: ColumnDef<TransactionSettlement>[] = [
   },
 ]
 
-export const TransactionSettlementTable = () => {
+import { SettlementFilters } from '@/entity/settlement/types'
+
+interface TransactionSettlementTableProps {
+  filters: SettlementFilters
+  onPageChange: (page: number) => void
+}
+
+export const TransactionSettlementTable = ({
+  filters,
+  onPageChange,
+}: TransactionSettlementTableProps) => {
+  const totalPages = 10
+
+  const data = useMemo(
+    () =>
+      getTransactionSettlementMock(filters.page, filters.size, filters.keyword),
+    [filters.page, filters.size, filters.keyword],
+  )
+
   return (
     <div className="mt-24 [&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
       <Table
-        data={TRANSACTION_SETTLEMENT_MOCK}
+        data={data}
         columns={columns}
-        topArea={<SettlementTableTopArea />}
+        topArea={
+          <SettlementTableTopArea
+            currentPage={filters.page}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
+        }
         maxHeight="calc(100vh - 400px)"
       />
     </div>

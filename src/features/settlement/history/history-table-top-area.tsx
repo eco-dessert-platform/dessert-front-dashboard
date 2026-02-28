@@ -4,7 +4,17 @@ import { toast } from '@/shared/ui/toast/toast-helper'
 
 import Button from '@/shared/ui/button/button'
 
-export const SettlementTableTopArea = () => {
+interface SettlementTableTopAreaProps {
+  currentPage: number
+  totalPages: number
+  onPageChange: (page: number) => void
+}
+
+export const SettlementTableTopArea = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: SettlementTableTopAreaProps) => {
   return (
     <div className="flex w-full items-center justify-between">
       <Button
@@ -21,10 +31,9 @@ export const SettlementTableTopArea = () => {
       />
 
       <Pagination
-        currentPage={1}
-        totalPages={10}
-        onPageChange={() => {}}
-        className=""
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
       />
     </div>
   )

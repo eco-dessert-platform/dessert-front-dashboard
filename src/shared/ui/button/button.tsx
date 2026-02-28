@@ -66,9 +66,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {...props}
       >
-        {leftIcon && leftIcon}
+        {leftIcon}
         <span className={typoClasses[size]}>{title}</span>
-        {rightIcon && rightIcon}
+        {rightIcon}
       </button>
     )
   },

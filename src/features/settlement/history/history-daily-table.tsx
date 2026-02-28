@@ -9,7 +9,8 @@ import {
   DeductionDetailTable,
 } from './history-popover'
 import { Settlement } from '@/entity/settlement/types'
-import { DAILY_SETTLEMENT_MOCK } from '@/entity/settlement/mock'
+import { getDailySettlementMock } from '@/entity/settlement/mock'
+import { useState, useMemo } from 'react'
 
 const columns: ColumnDef<Settlement>[] = [
   {
@@ -127,12 +128,23 @@ const columns: ColumnDef<Settlement>[] = [
 ]
 
 export const DailySettlementTable = () => {
+  const [page, setPage] = useState(1)
+  const totalPages = 10
+
+  const data = useMemo(() => getDailySettlementMock(page), [page])
+
   return (
     <div className="mt-24 [&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
       <Table
-        data={DAILY_SETTLEMENT_MOCK}
+        data={data}
         columns={columns}
-        topArea={<SettlementTableTopArea />}
+        topArea={
+          <SettlementTableTopArea
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
+        }
         maxHeight="calc(100vh - 400px)"
       />
     </div>
