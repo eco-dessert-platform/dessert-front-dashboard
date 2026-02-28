@@ -1,13 +1,8 @@
-import { SettlementOverview } from '@/features/settlement/ui/settlement-overview'
-import { DailySettlementTable } from '@/features/settlement/ui/daily-settlement-table'
-import { SettlementFilter } from '@/features/settlement/ui/settlement-filter'
-import { TransactionSettlementTable } from '@/features/settlement/ui/transaction-settlement-table'
-import {
-  Tab,
-  TabContent,
-  TabList,
-  TabTrigger,
-} from '@/shared/components/ui/tab/tab'
+import { SettlementOverview } from '@/features/settlement/history/history-overview'
+import { DailySettlementTable } from '@/features/settlement/history/history-daily-table'
+import { SettlementFilter } from '@/features/settlement/history/history-filter'
+import { TransactionSettlementTable } from '@/features/settlement/history/history-transaction-table'
+import { Tab, TabContent, TabList, TabTrigger } from '@/shared/ui/tab/tab'
 
 const SettlementPage = () => {
   return (

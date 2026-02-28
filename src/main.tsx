@@ -5,11 +5,11 @@ import CompletedOrdersPage from '@/pages/orders/completed-orders/completed-order
 import CreatePage from '@/pages/products/create/create-page'
 import ProductsPage from '@/pages/products/product/product-page'
 import SettlementPage from '@/pages/settlement/settlement-page'
-import { ROUTES } from '@/shared/constants/routes'
+import { ROUTES } from '@/shared/constant/routes'
 import ReactDOM from 'react-dom/client'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 import App from './App'
-import FixedLayout from './shared/components/blocks/fixed-layout/fixed-layout'
+import FixedLayout from './shared/block/fixed-layout/fixed-layout'
 
 const router = createBrowserRouter([
   {
