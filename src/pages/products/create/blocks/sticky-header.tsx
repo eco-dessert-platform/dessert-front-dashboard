@@ -9,6 +9,7 @@ import { Tooltip } from '@/shared/components/ui/tooltip/tooltip'
 import { EssentialOptions } from '@/entity/products/create/essential-options.constants'
 import { CategoryOptions } from '@/entity/products/create/category-options.constants'
 import { OptionTagsArea } from './option-tags-area'
+import { InfoTooltip } from '../ui/info-tooltip'
 import { Info, ChevronDown } from 'lucide-react'
 
 const stagestep = [
@@ -42,17 +43,10 @@ export const StickyHeader = () => {
                 title="필수성분"
                 titleRequire={true}
                 titleTooltipProps={
-                  <Tooltip position="bottom">
-                    <Tooltip.Trigger>
-                      <Info size={24} />
-                    </Tooltip.Trigger>
-                    <Tooltip.Content className="px-8 py-6">
-                      <p>
-                        상품 등록을 위해선 아래 5가지 기준 중<br></br> 하나 이상
-                        충족해야 합니다.
-                      </p>
-                    </Tooltip.Content>
-                  </Tooltip>
+                  <InfoTooltip iconSize={24}>
+                    상품 등록을 위해선 아래 5가지 기준 중<br></br> 하나 이상
+                    충족해야 합니다.
+                  </InfoTooltip>
                 }
                 tagData={EssentialOptions}
               />
@@ -62,7 +56,7 @@ export const StickyHeader = () => {
               />
             </div>
           </AccordionContent>
-          <AccordionTrigger className="absolute right-[90px] -bottom-[66px] justify-center border px-0 py-0">
+          <AccordionTrigger className="absolute right-[90px] -bottom-[66px] justify-center border p-0">
             <div className="rounded-b-16 bg-white px-[26px] py-6">
               <ChevronDown size={36} />
             </div>

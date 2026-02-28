@@ -7,7 +7,7 @@ const FixedLayout = () => {
   return (
     <>
       <LogoHeader />
-      <div className="flex h-[calc(100vh-80px)] w-full flex-row">
+      <div className="flex w-full flex-row">
         <Lnb />
         <main className="size-full max-w-[1200px] bg-gray-50">
           <ScrollArea className="size-full px-[90px] py-40">
