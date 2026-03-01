@@ -1,4 +1,4 @@
-export type ProductSaleStatusType = {
+export type ProductType = {
   id: string
   sellerName?: string
   productName: string

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import Badge from '@/shared/components/ui/badge/badge'
-import { ProductSaleStatusType } from '@/entity/products/product/product-sale-status.type'
+import { ProductType } from '@/entity/products/product/product.type'
 import ProductListCellToggleSale from './product-list-cell-toggle-sale'
 
 type Props = {
-  status: ProductSaleStatusType['status']
+  status: ProductType['status']
 }
 const badgeMap = {
   onSale: { color: 'green', label: '판매중' },
@@ -20,7 +20,6 @@ const ProductListCellStatus = ({ status }: Props) => {
 
   const badge = badgeMap[realState]
 
-
   const handleTest = () => {
     if (realState === 'stopSale') {
       setRealState('onSale')
@@ -32,7 +31,10 @@ const ProductListCellStatus = ({ status }: Props) => {
   return (
     <div className="flex flex-col items-center gap-1">
       <Badge color={badge.color} variant="outline" content={badge.label} />
-      <ProductListCellToggleSale checked={realState === 'stopSale'} onChange={handleTest} />
+      <ProductListCellToggleSale
+        checked={realState === 'stopSale'}
+        onChange={handleTest}
+      />
     </div>
   )
 }

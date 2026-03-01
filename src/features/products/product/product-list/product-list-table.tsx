@@ -1,48 +1,24 @@
-import { useState, useEffect } from 'react'
 import Table from '@/shared/components/ui/table/table'
 import { Pagination } from '@/shared/components/ui/pagination/pagination'
 
 import ProductTopAreaSort from './product-top-area/product-top-area-sort'
 import ProductTopAreaCounter from './product-top-area/product-top-area-counter'
 import ProductTopAreaBulkDelete from './product-top-area/product-top-area-bulk-delete'
-
 import { ProductResultData } from '@/entity/products/product/product-data.mock'
-import { getResultColumns } from './result-columns'
-
-import { ProductSaleStatusType } from '@/entity/products/product/product-sale-status.type'
+import { getResultColumns } from './product-list-columns'
+import { useProductList } from './product-list.hook'
 
 const ResultTable = () => {
-  const [tableData, setTableData] = useState<ProductSaleStatusType[]>([])
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const {
+    tableData,
+    selectedIds,
+    toggleAll,
+    toggleRow,
+    allSelected,
+    handleCopyRow,
+    handleDelete,
+  } = useProductList({ data: ProductResultData })
 
-  useEffect(() => {
-    setTableData(ProductResultData)
-  }, [])
-
-  const allSelected =
-    tableData.length > 0 && selectedIds.length === tableData.length
-
-  const toggleAll = (checked: boolean | 'indeterminate') => {
-    setSelectedIds(checked === true ? tableData.map((v) => v.id) : [])
-  }
-
-  const toggleRow = (id: string, checked: boolean | 'indeterminate') => {
-    setSelectedIds((prev) =>
-      checked === true
-        ? [...new Set([...prev, id])]
-        : prev.filter((v) => v !== id),
-    )
-  }
-
-  const handleCopyRow = (row: ProductSaleStatusType) => {
-    setTableData((prev) => [
-      {
-        ...row,
-        id: crypto.randomUUID(),
-      },
-      ...prev,
-    ])
-  }
   const columns = getResultColumns({
     selectedIds,
     allSelected,
@@ -50,11 +26,6 @@ const ResultTable = () => {
     onToggleRow: toggleRow,
     onCopyRow: handleCopyRow,
   })
-
-  const handleDelete = () => {
-    setTableData((prev) => prev.filter((row) => !selectedIds.includes(row.id)))
-    setSelectedIds([])
-  }
 
   return (
     <Table

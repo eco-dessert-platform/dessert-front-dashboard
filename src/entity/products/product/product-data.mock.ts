@@ -1,6 +1,6 @@
-import { ProductSaleStatusType } from '@/entity/products/product/product-sale-status.type'
+import { ProductType } from '@/entity/products/product/product.type'
 
-export const ProductResultData: ProductSaleStatusType[] = [
+export const ProductResultData: ProductType[] = [
   {
     id: '1',
     productName:
