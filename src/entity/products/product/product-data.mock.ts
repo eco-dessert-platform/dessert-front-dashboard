@@ -1,6 +1,6 @@
-import { TableRow } from './type'
+import { ProductSaleStatusType } from '@/entity/products/product/product-sale-status.type'
 
-export const resultTableData: TableRow[] = [
+export const ProductResultData: ProductSaleStatusType[] = [
   {
     id: '1',
     productName:

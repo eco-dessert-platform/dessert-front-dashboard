@@ -6,7 +6,7 @@ import ResultSort from './toa-area/result-sort'
 import ResultCounter from './toa-area/result-counter'
 import BulkDeleteButton from './toa-area/bulk-delete-button'
 
-import { resultTableData } from './result-table.data'
+import { ProductResultData } from '@/entity/products/product/product-data.mock'
 import { getResultColumns } from './result-columns'
 
 import { ProductSaleStatusType } from '@/entity/products/product/product-sale-status.type'
@@ -16,7 +16,7 @@ const ResultTable = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
   useEffect(() => {
-    setTableData(resultTableData)
+    setTableData(ProductResultData)
   }, [])
 
   const allSelected =

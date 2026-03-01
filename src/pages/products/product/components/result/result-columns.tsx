@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import Checkbox from '@/shared/components/ui/checkbox/checkbox'
 import Button from '@/shared/components/ui/button/button'
-import { TableRow } from './type'
+import { ProductSaleStatusType } from '@/entity/products/product/product-sale-status.type'
 import StatusCell from './cell/status-cell'
 
 type Args = {
@@ -9,7 +9,7 @@ type Args = {
   allSelected: boolean
   onToggleAll: (checked: boolean | 'indeterminate') => void
   onToggleRow: (id: string, checked: boolean | 'indeterminate') => void
-  onCopyRow: (row: TableRow) => void
+  onCopyRow: (row: ProductSaleStatusType) => void
 }
 
 export const getResultColumns = ({
@@ -18,7 +18,7 @@ export const getResultColumns = ({
   onToggleAll,
   onToggleRow,
   onCopyRow,
-}: Args): ColumnDef<TableRow>[] => [
+}: Args): ColumnDef<ProductSaleStatusType>[] => [
   {
     id: 'select',
     header: () => (
