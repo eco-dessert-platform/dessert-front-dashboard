@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { ProductType } from '@/entity/products/product/product.type'
 
 export const useProductList = ({ data }: { data: ProductType[] }) => {
@@ -12,6 +12,8 @@ export const useProductList = ({ data }: { data: ProductType[] }) => {
       return prev.filter((id) => newIds.has(id))
     })
   }, [data])
+
+  const selectedIdSet = useMemo(() => new Set(selectedIds), [selectedIds])
 
   const allSelected: boolean | 'indeterminate' =
     tableData.length === 0
@@ -55,6 +57,7 @@ export const useProductList = ({ data }: { data: ProductType[] }) => {
     setTableData,
     selectedIds,
     setSelectedIds,
+    selectedIdSet,
     allSelected,
     toggleAll,
     toggleRow,

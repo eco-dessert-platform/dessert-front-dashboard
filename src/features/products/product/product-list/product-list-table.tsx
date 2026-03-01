@@ -15,6 +15,7 @@ export const ResultTable = () => {
     toggleAll,
     toggleRow,
     allSelected,
+    selectedIdSet,
     handleCopyRow,
     handleDelete,
   } = useProductList({ data: ProductResultData })
@@ -22,6 +23,7 @@ export const ResultTable = () => {
   const columns = getResultColumns({
     selectedIds,
     allSelected,
+    selectedIdSet,
     onToggleAll: toggleAll,
     onToggleRow: toggleRow,
     onCopyRow: handleCopyRow,

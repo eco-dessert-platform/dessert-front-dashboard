@@ -7,6 +7,7 @@ import ProductListCellStatus from './product-list-cell/product-list-cell-status'
 type Args = {
   selectedIds: string[]
   allSelected: boolean | 'indeterminate'
+  selectedIdSet: Set<string>
   onToggleAll: (checked: boolean | 'indeterminate') => void
   onToggleRow: (id: string, checked: boolean | 'indeterminate') => void
   onCopyRow: (row: ProductType) => void
@@ -15,6 +16,7 @@ type Args = {
 export const getResultColumns = ({
   selectedIds,
   allSelected,
+  selectedIdSet,
   onToggleAll,
   onToggleRow,
   onCopyRow,
@@ -24,12 +26,14 @@ export const getResultColumns = ({
     header: () => (
       <Checkbox checked={allSelected} onCheckedChange={onToggleAll} />
     ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={selectedIds.includes(row.original.id)}
-        onCheckedChange={(checked) => onToggleRow(row.original.id, checked)}
-      />
-    ),
+    cell: ({ row }) => {
+      return (
+        <Checkbox
+          checked={selectedIdSet.has(row.original.id)}
+          onCheckedChange={(checked) => onToggleRow(row.original.id, checked)}
+        />
+      )
+    },
     size: 40,
   },
   {
