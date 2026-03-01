@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table'
-import Checkbox from '@/shared/components/ui/checkbox/checkbox'
-import Button from '@/shared/components/ui/button/button'
+import Checkbox from '@/shared/ui/checkbox/checkbox'
+import Button from '@/shared/ui/button/button'
 import { ProductType } from '@/entity/products/product/product.type'
 import ProductListCellStatus from './product-list-cell/product-list-cell-status'
 
