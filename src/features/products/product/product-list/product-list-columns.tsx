@@ -14,7 +14,6 @@ type Args = {
 }
 
 export const getResultColumns = ({
-  selectedIds,
   allSelected,
   selectedIdSet,
   onToggleAll,
