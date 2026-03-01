@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { ProductType } from '@/entity/products/product/product.type'
+
 export const useProductList = ({ data }: { data: ProductType[] }) => {
   const [tableData, setTableData] = useState<ProductType[]>([])
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
   useEffect(() => {
     setTableData(data)
-  }, [])
+  }, [data])
 
   const allSelected =
     tableData.length > 0 && selectedIds.length === tableData.length
