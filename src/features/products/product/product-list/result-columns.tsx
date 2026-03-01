@@ -40,9 +40,9 @@ export const getResultColumns = ({
         <img
           src="https://picsum.photos/200/300"
           alt={row.original.productName}
-          className="rounded-8 h-[80px] w-[80px] shrink-0"
+          className="h-header w-[80px] shrink-0 rounded-8"
         />
-        <div className="typo-title-14-r line-clamp-2 text-left text-gray-900">
+        <div className="line-clamp-2 text-left typo-title-14-r text-gray-900">
           {row.original.productName}
         </div>
       </div>
@@ -53,7 +53,7 @@ export const getResultColumns = ({
     header: '재고상태',
     accessorKey: 'stockStatus',
     cell: ({ row }) => (
-      <div className="typo-title-14-r text-center text-gray-900">
+      <div className="text-center typo-title-14-r text-gray-900">
         {row.original.stockStatus}
       </div>
     ),
@@ -64,10 +64,10 @@ export const getResultColumns = ({
     accessorKey: 'salePrice',
     cell: ({ row }) => (
       <div className="flex flex-col items-end">
-        <div className="typo-body-12-r text-center text-gray-500 line-through">
+        <div className="text-center typo-body-12-r text-gray-500 line-through">
           {`${row.original.originPrice.toLocaleString()}원`}
         </div>
-        <div className="typo-title-14-sb text-center text-gray-900">
+        <div className="text-center typo-title-14-sb text-gray-900">
           {`${row.original.salePrice.toLocaleString()}원`}
         </div>
       </div>
@@ -80,15 +80,15 @@ export const getResultColumns = ({
     cell: ({ row }) => (
       <div className="flex flex-col items-end">
         <div className="flex flex-col items-end">
-          <div className="typo-title-14-sb text-center text-gray-900">
+          <div className="text-center typo-title-14-sb text-gray-900">
             {`${row.original.shipping.price.toLocaleString()}원`}
           </div>
-          <div className="typo-body-12-r text-primary-500 text-center">
+          <div className="text-center typo-body-12-r text-primary-500">
             {row.original.shipping.type}
           </div>
         </div>
         {row.original.shipping.minimumPrice && (
-          <div className="typo-body-12-r text-center text-gray-500">
+          <div className="text-center typo-body-12-r text-gray-500">
             {`${row.original.shipping.minimumPrice.toLocaleString()}원`}
           </div>
         )}
@@ -107,7 +107,6 @@ export const getResultColumns = ({
     id: 'actions',
     cell: ({ row }) => {
       const onEdit = () => console.log('edit', row.original)
-      const onCopy = () => console.log('copy', row.original)
 
       return (
         <div className="flex flex-col items-center justify-center gap-4">
