@@ -9,10 +9,10 @@ import BulkDeleteButton from './toa-area/bulk-delete-button'
 import { resultTableData } from './result-table.data'
 import { getResultColumns } from './result-columns'
 
-import { TableRow } from './type'
+import { ProductSaleStatusType } from '@/entity/products/product/product-sale-status.type'
 
 const ResultTable = () => {
-  const [tableData, setTableData] = useState<TableRow[]>([])
+  const [tableData, setTableData] = useState<ProductSaleStatusType[]>([])
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const ResultTable = () => {
     )
   }
 
-  const handleCopyRow = (row: TableRow) => {
+  const handleCopyRow = (row: ProductSaleStatusType) => {
     setTableData((prev) => [
       {
         ...row,

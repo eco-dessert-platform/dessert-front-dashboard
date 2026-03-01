@@ -1,4 +1,4 @@
-export type TableRow = {
+export type ProductSaleStatusType = {
   id: string
   sellerName?: string
   productName: string
