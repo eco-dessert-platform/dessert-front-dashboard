@@ -141,13 +141,13 @@ export const TransactionSettlementTable = ({
   filters,
   onPageChange,
 }: TransactionSettlementTableProps) => {
-  const totalPages = 10
-
-  const data = useMemo(
+  const { data, total } = useMemo(
     () =>
       getTransactionSettlementMock(filters.page, filters.size, filters.keyword),
     [filters.page, filters.size, filters.keyword],
   )
+
+  const totalPages = Math.max(1, Math.ceil(total / filters.size))
 
   return (
     <div className="mt-24 [&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">

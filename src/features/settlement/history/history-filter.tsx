@@ -9,7 +9,7 @@ import {
   SettlementDateType,
   SettlementSearchType,
 } from '@/entity/settlement/types'
-import { format } from 'date-fns'
+import { format, parse } from 'date-fns'
 
 interface SettlementFilterProps {
   filters: SettlementFilters
@@ -24,7 +24,10 @@ export const SettlementFilter = ({
 }: SettlementFilterProps) => {
   const dateValue: DateRange | undefined =
     filters.startDate && filters.endDate
-      ? { from: new Date(filters.startDate), to: new Date(filters.endDate) }
+      ? {
+          from: parse(filters.startDate, 'yyyy-MM-dd', new Date()),
+          to: parse(filters.endDate, 'yyyy-MM-dd', new Date()),
+        }
       : undefined
 
   return (

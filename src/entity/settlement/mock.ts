@@ -4,24 +4,24 @@ export const getTransactionSettlementMock = (
   page: number,
   size: number = 10,
   keyword: string = '',
-): TransactionSettlement[] => {
-  const allData = Array(50)
-    .fill(null)
-    .map((_, i) => ({
-      orderNumber: `ORD-${page}-${i + 1}`,
-      productOrderNumber: `PORD-${page}-${i + 1}`,
-      settlementId: `ST-${page}-${i + 1}`,
-      category: i % 2 === 0 ? '판매금액' : '배송비',
-      productName: `[Page ${page}] 키토빵앗간 휘낭시에 ${i + 1}`,
-      expectedSettlementAmount: 123456 + i * 100,
-      settlementBaseDate: '2025.09.01',
-      expectedDate: '2025.09.01',
-      completedDate: '2025.09.01',
-      status: '정산완료',
-      paymentMethod: '카카오페이 카드',
-      commissionRate: '1.23%',
-      paymentAmount: 123456 + i * 100,
-    }))
+): { data: TransactionSettlement[]; total: number } => {
+  const total = 50
+  const safePage = Math.max(1, page)
+  const allData = Array.from({ length: total }, (_, i) => ({
+    orderNumber: `ORD-${i + 1}`,
+    productOrderNumber: `PORD-${i + 1}`,
+    settlementId: `ST-${i + 1}`,
+    category: i % 2 === 0 ? '판매금액' : '배송비',
+    productName: `키토빵앗간 휘낭시에 ${i + 1}`,
+    expectedSettlementAmount: 123456 + i * 100,
+    settlementBaseDate: '2025.09.01',
+    expectedDate: '2025.09.01',
+    completedDate: '2025.09.01',
+    status: '정산완료',
+    paymentMethod: '카카오페이 카드',
+    commissionRate: '1.23%',
+    paymentAmount: 123456 + i * 100,
+  }))
 
   const filtered = keyword
     ? allData.filter(
@@ -31,7 +31,10 @@ export const getTransactionSettlementMock = (
       )
     : allData
 
-  return filtered.slice((page - 1) * size, page * size)
+  return {
+    data: filtered.slice((safePage - 1) * size, safePage * size),
+    total: filtered.length,
+  }
 }
 
 export const getDailySettlementMock = (
