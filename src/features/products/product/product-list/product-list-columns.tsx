@@ -87,7 +87,7 @@ export const getResultColumns = ({
             {row.original.shipping.type}
           </div>
         </div>
-        {row.original.shipping.minimumPrice && (
+        {row.original.shipping.minimumPrice != null && (
           <div className="text-center typo-body-12-r text-gray-500">
             {`${row.original.shipping.minimumPrice.toLocaleString()}원`}
           </div>
