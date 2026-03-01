@@ -2,7 +2,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import Checkbox from '@/shared/components/ui/checkbox/checkbox'
 import Button from '@/shared/components/ui/button/button'
 import { ProductSaleStatusType } from '@/entity/products/product/product-sale-status.type'
-import StatusCell from './cell/status-cell'
+import ProductListCellStatus from './product-list-cell/product-list-cell-status'
 
 type Args = {
   selectedIds: string[]
@@ -99,7 +99,7 @@ export const getResultColumns = ({
   {
     header: '판매상태',
     accessorKey: 'status',
-    cell: ({ row }) => <StatusCell status={row.original.status} />,
+    cell: ({ row }) => <ProductListCellStatus status={row.original.status} />,
     size: 100,
   },
   {

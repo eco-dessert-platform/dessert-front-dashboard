@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import Table from '@/shared/components/ui/table/table'
 import { Pagination } from '@/shared/components/ui/pagination/pagination'
 
-import ResultSort from './toa-area/result-sort'
-import ResultCounter from './toa-area/result-counter'
-import BulkDeleteButton from './toa-area/bulk-delete-button'
+import ProductTopAreaSort from './product-top-area/product-top-area-sort'
+import ProductTopAreaCounter from './product-top-area/product-top-area-counter'
+import ProductTopAreaBulkDelete from './product-top-area/product-top-area-bulk-delete'
 
 import { ProductResultData } from '@/entity/products/product/product-data.mock'
 import { getResultColumns } from './result-columns'
@@ -63,12 +63,12 @@ const ResultTable = () => {
       topArea={
         <div className="flex w-full justify-between px-[19px] py-16 pb-12">
           <div className="flex items-center gap-10">
-            <ResultSort />
-            <ResultCounter
+            <ProductTopAreaSort />
+            <ProductTopAreaCounter
               selectedIds={selectedIds}
               tableData={tableData.length}
             />
-            <BulkDeleteButton
+            <ProductTopAreaBulkDelete
               onDelete={handleDelete}
               disabled={selectedIds.length === 0}
             />

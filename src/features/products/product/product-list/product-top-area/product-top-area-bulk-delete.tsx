@@ -1,11 +1,9 @@
-import React from 'react'
-
 interface BulkDeleteButtonProps {
   onDelete: () => void
   disabled?: boolean
 }
 
-const BulkDeleteButton = ({ onDelete, disabled }: BulkDeleteButtonProps) => {
+const ProductTopAreaBulkDelete = ({ onDelete, disabled }: BulkDeleteButtonProps) => {
   return (
     <button
       type="button"
@@ -18,4 +16,4 @@ const BulkDeleteButton = ({ onDelete, disabled }: BulkDeleteButtonProps) => {
   )
 }
 
-export default BulkDeleteButton
+export default ProductTopAreaBulkDelete

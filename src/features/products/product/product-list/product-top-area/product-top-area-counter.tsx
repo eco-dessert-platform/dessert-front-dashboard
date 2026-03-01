@@ -1,4 +1,4 @@
-const ResultCounter = ({
+const ProductTopAreaCounter = ({
   selectedIds,
   tableData,
 }: {
@@ -13,4 +13,4 @@ const ResultCounter = ({
   )
 }
 
-export default ResultCounter
+export default ProductTopAreaCounter

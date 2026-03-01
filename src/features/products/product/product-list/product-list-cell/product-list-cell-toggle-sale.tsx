@@ -5,7 +5,7 @@ type Props = {
   onChange: () => void
 }
 
-const ToggleSale = ({ checked, onChange }: Props) => {
+const ProductListCellToggleSale = ({ checked, onChange }: Props) => {
   return (
     <div className="flex items-center gap-1">
       <Checkbox checked={checked} onCheckedChange={onChange} />
@@ -14,4 +14,4 @@ const ToggleSale = ({ checked, onChange }: Props) => {
   )
 }
 
-export default ToggleSale
+export default ProductListCellToggleSale

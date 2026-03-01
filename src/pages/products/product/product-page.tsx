@@ -1,6 +1,6 @@
-import FilterTabs from './components/filter-tabs'
-import FilterCategory from './components/filter-category'
-import ResultTable from './components/result/result-table'
+import FilterTabs from '../../../features/products/product/filter/filter-tabs'
+import FilterCategory from '../../../features/products/product/filter/filter-category'
+import ResultTable from '../../../features/products/product/product-list/result-table'
 
 import { cn } from '@/shared/lib/utils'
 

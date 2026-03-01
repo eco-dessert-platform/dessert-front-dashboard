@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import Badge from '@/shared/components/ui/badge/badge'
-import { TableRow } from '../type'
-import ToggleSale from './toggle-sale'
+import { ProductSaleStatusType } from '@/entity/products/product/product-sale-status.type'
+import ProductListCellToggleSale from './product-list-cell-toggle-sale'
 
 type Props = {
-  status: TableRow['status']
+  status: ProductSaleStatusType['status']
 }
 const badgeMap = {
   onSale: { color: 'green', label: '판매중' },
@@ -14,10 +14,12 @@ const badgeMap = {
   banned: { color: 'gray', label: '판매금지' },
 } as const
 
-const StatusCell = ({ status }: Props) => {
+const ProductListCellStatus = ({ status }: Props) => {
+  console.log(status)
   const [realState, setRealState] = useState(status)
 
-  let badge = badgeMap[realState]
+  const badge = badgeMap[realState]
+
 
   const handleTest = () => {
     if (realState === 'stopSale') {
@@ -30,9 +32,9 @@ const StatusCell = ({ status }: Props) => {
   return (
     <div className="flex flex-col items-center gap-1">
       <Badge color={badge.color} variant="outline" content={badge.label} />
-      <ToggleSale checked={realState === 'stopSale'} onChange={handleTest} />
+      <ProductListCellToggleSale checked={realState === 'stopSale'} onChange={handleTest} />
     </div>
   )
 }
 
-export default StatusCell
+export default ProductListCellStatus

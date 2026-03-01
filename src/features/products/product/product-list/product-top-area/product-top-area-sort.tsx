@@ -7,7 +7,7 @@ const sortOptions = [
   { label: '상품명순', value: 'name_asc' },
 ]
 
-const ResultSort = () => {
+const ProductTopAreaSort = () => {
   const [sort, setSort] = useState('created_desc')
   return (
     <Dropdown
@@ -20,4 +20,4 @@ const ResultSort = () => {
   )
 }
 
-export default ResultSort
+export default ProductTopAreaSort
