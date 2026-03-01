@@ -59,7 +59,7 @@ const productSchema = z
 
 export function useProductForm() {
   const form = useForm<ProductFormInput>({
-    resolver: zodResolver(productSchema) as Resolver<ProductFormInput>, // zod를 검증기로 연결
+    resolver: zodResolver(productSchema) as Resolver<ProductFormInput>,
     defaultValues: {
       productName: '',
       isFresh: true,
@@ -68,10 +68,9 @@ export function useProductForm() {
       discountAmount: null,
       discountType: 'won',
     },
-    mode: 'onBlur', // 필드에서 포커스가 빠질 때 검증 (submit 전에도 에러 표시)
+    mode: 'onChange',
   })
-
-  // 4. 실시간으로 가격/할인 watch → 최종 금액 계산
+  // 실시간으로 가격/할인 최종 금액 계산
   const price = form.watch('price')
   const discountAmount = form.watch('discountAmount')
   const discountType = form.watch('discountType')
@@ -89,7 +88,7 @@ export function useProductForm() {
   })
 
   return {
-    form, // register, control, formState 등 모두 포함
+    form,
     finalPrice,
     onSubmit,
   }

@@ -1,5 +1,5 @@
 import { Tooltip } from '@/shared/components/ui/tooltip/tooltip'
-import { LabelWithTooltip } from '../ui/label-with-tooltip'
+import { LabelWithTooltip } from '../../ui/label-with-tooltip'
 import { OptionTags } from '@/entity/products/create/options-tag.type'
 import Chip from '@/shared/components/ui/chip/chip'
 

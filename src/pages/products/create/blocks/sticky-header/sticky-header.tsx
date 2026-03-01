@@ -9,7 +9,7 @@ import { Tooltip } from '@/shared/components/ui/tooltip/tooltip'
 import { EssentialOptions } from '@/entity/products/create/essential-options.constants'
 import { CategoryOptions } from '@/entity/products/create/category-options.constants'
 import { OptionTagsArea } from './option-tags-area'
-import { InfoTooltip } from '../ui/info-tooltip'
+import { InfoTooltip } from '../../ui/info-tooltip'
 import { Info, ChevronDown } from 'lucide-react'
 
 const stagestep = [
