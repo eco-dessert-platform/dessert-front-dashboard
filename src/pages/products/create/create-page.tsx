@@ -1,11 +1,11 @@
-import { StickyHeader } from './blocks/sticky-header/sticky-header'
+import { ProductHeader } from '@/features/products/create/create-header/create-header'
 import { LabelWithTooltip } from './ui/label-with-tooltip'
 import Button from '@/shared/components/ui/button/button'
-import { ProductInfoArea } from './blocks/product-info/product-info-area'
+import { ProductInfoArea } from '../../../features/products/create/create-form/craete-form-info/create-form-info-area'
 import {
   FormStepsProvider,
   useFormSteps,
-} from '@/features/products/create/form-steps.context'
+} from '@/features/products/create/create-form/create-form-steps.context'
 function CreatePage() {
   return (
     <>
@@ -20,7 +20,7 @@ function CreatePageInner() {
   const { productInfo } = useFormSteps()
   return (
     <>
-      <StickyHeader />
+      <ProductHeader />
       <div className="mt-[88px] bg-white">
         {productInfo ? 'true' : 'false'}
         <div className="px-24 pt-16 pb-24">

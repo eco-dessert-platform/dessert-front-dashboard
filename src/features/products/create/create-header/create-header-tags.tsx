@@ -1,21 +1,21 @@
 import { Tooltip } from '@/shared/components/ui/tooltip/tooltip'
-import { LabelWithTooltip } from '../../ui/label-with-tooltip'
+import { LabelWithTooltip } from '@/pages/products/create/ui/label-with-tooltip'
 import { OptionTags } from '@/entity/products/create/options-tag.type'
 import Chip from '@/shared/components/ui/chip/chip'
 
-interface OptionTagsAreaProps {
+interface TagsProps {
   title: string
   titleRequire?: boolean
   titleTooltipProps?: React.ReactNode
   tagData: OptionTags[]
 }
 
-export const OptionTagsArea = ({
+export const ProductHeaderTags = ({
   title,
   titleRequire,
   titleTooltipProps,
   tagData,
-}: OptionTagsAreaProps) => {
+}: TagsProps) => {
   return (
     <div>
       <LabelWithTooltip

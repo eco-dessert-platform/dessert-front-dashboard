@@ -5,12 +5,11 @@ import {
   AccordionContent,
 } from '@/shared/components/ui/accordion/accordion'
 import { StageTab } from '@/shared/components/ui/tab/stage-tab'
-import { Tooltip } from '@/shared/components/ui/tooltip/tooltip'
 import { EssentialOptions } from '@/entity/products/create/essential-options.constants'
 import { CategoryOptions } from '@/entity/products/create/category-options.constants'
-import { OptionTagsArea } from './option-tags-area'
-import { InfoTooltip } from '../../ui/info-tooltip'
-import { Info, ChevronDown } from 'lucide-react'
+import { ProductHeaderTags } from './create-header-tags'
+import { InfoTooltip } from '@/pages/products/create/ui/info-tooltip'
+import { ChevronDown } from 'lucide-react'
 
 const stagestep = [
   '상품 정보',
@@ -20,7 +19,7 @@ const stagestep = [
   '상세페이지 등록',
   '상품 정보 제공 고시',
 ]
-export const StickyHeader = () => {
+export const ProductHeader = () => {
   return (
     <div className="sticky top-0 left-0 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16">
       <div className="flex w-full items-center justify-between">
@@ -39,7 +38,7 @@ export const StickyHeader = () => {
         <AccordionItem value="step" className="relative">
           <AccordionContent className="h-auto border-t border-gray-200 pb-[18px]">
             <div className="mt-8 grid grid-cols-2 gap-30 pt-12">
-              <OptionTagsArea
+              <ProductHeaderTags
                 title="필수성분"
                 titleRequire={true}
                 titleTooltipProps={
@@ -50,7 +49,7 @@ export const StickyHeader = () => {
                 }
                 tagData={EssentialOptions}
               />
-              <OptionTagsArea
+              <ProductHeaderTags
                 title="적용된 카테고리"
                 tagData={CategoryOptions}
               />

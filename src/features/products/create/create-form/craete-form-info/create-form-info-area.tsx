@@ -1,14 +1,14 @@
-import { LabelWithTooltip } from '../../ui/label-with-tooltip'
+import { LabelWithTooltip } from '../../../../../pages/products/create/ui/label-with-tooltip'
 import Input from '@/shared/components/ui/input/input'
-import { InfoTooltip } from '../../ui/info-tooltip'
+import { InfoTooltip } from '../../../../../pages/products/create/ui/info-tooltip'
 import { Switch } from '@/shared/components/ui/switch/switch'
 import Dropdown from '@/shared/components/ui/dropdown/dropdown'
-import { useProductForm } from '@/pages/products/use-product-form.hook'
-import { useNumberInput } from '@/pages/products/use-number-input.hook'
+import { useProductForm } from '@/features/products/create/create-form/craete-form-info/create-form-info.hook'
+import { useNumberInput } from '@/features/products/create/create-form/create-form-number-input.hook'
 import { Controller } from 'react-hook-form'
 import { productionTime } from '@/entity/products/create/product-info/production-time.constants'
 import { productDiscountType } from '@/entity/products/create/product-info/product-discount-type.constants'
-import { useFormSteps } from '@/features/products/create/form-steps.context'
+import { useFormSteps } from '@/features/products/create/create-form/create-form-steps.context'
 import { useEffect } from 'react'
 
 export const ProductInfoArea = () => {
@@ -21,6 +21,7 @@ export const ProductInfoArea = () => {
     register,
     formState: { errors, isValid },
   } = form
+
   const { productInfo, setProductInfo } = useFormSteps()
 
   useEffect(() => {
