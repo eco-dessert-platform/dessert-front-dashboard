@@ -2,9 +2,14 @@ import { useState } from 'react'
 import Dropdown from '@/shared/components/ui/dropdown/dropdown'
 import Input from '@/shared/components/ui/input/input'
 import Button from '@/shared/components/ui/button/button'
-import { ProductFilterMainOption, BreadOptions, SnackOptions, SearchOptions } from '@/entity/products/product/product-filter-options.mock'
+import {
+  ProductFilterMainOption,
+  BreadOptions,
+  SnackOptions,
+  SearchOptions,
+} from '@/entity/products/product/product-filter-options.mock'
 
-const FilterCategory = () => {
+export const FilterCategory = () => {
   const [main, setMain] = useState<string>('')
   const [sub, setSub] = useState<string>('')
   const [searchOpt, setSearchOpt] = useState<string>('all')
@@ -46,10 +51,16 @@ const FilterCategory = () => {
         onChange={(e) => setKeyword(e.target.value)}
         disabled={!main || !sub}
         className="flex-1"
+        maxLength={50}
       />
-      <Button title="조회" size="md" className="min-w-[72px]" />
+      <Button
+        title="조회"
+        size="md"
+        className="min-w-[72px]"
+        onClick={() => {
+          console.log('조회 click')
+        }}
+      />
     </>
   )
 }
-
-export default FilterCategory

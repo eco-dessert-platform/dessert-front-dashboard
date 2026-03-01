@@ -8,7 +8,7 @@ import { ProductResultData } from '@/entity/products/product/product-data.mock'
 import { getResultColumns } from './product-list-columns'
 import { useProductList } from './product-list.hook'
 
-const ResultTable = () => {
+export const ResultTable = () => {
   const {
     tableData,
     selectedIds,
@@ -50,5 +50,3 @@ const ResultTable = () => {
     />
   )
 }
-
-export default ResultTable

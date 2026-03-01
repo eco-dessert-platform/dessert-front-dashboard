@@ -1,8 +1,6 @@
-import { TabList } from '@/shared/components/ui/tab/tab'
-import { Tab } from '@/shared/components/ui/tab/tab'
-import { TabTrigger } from '@/shared/components/ui/tab/tab'
+import { Tab, TabList, TabTrigger } from '@/shared/components/ui/tab/tab'
 
-const FilterTabs = () => {
+export const FilterTabs = () => {
   return (
     <Tab variant={'btn'} className="mb-5" defaultValue="all">
       <TabList>
@@ -28,5 +26,3 @@ const FilterTabs = () => {
     </Tab>
   )
 }
-
-export default FilterTabs
