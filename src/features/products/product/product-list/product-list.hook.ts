@@ -7,10 +7,19 @@ export const useProductList = ({ data }: { data: ProductType[] }) => {
 
   useEffect(() => {
     setTableData(data)
+
+    setSelectedIds((prev) => {
+      const validIds = new Set(data.map((v) => v.id))
+      return prev.filter((id) => validIds.has(id))
+    })
   }, [data])
 
-  const allSelected =
-    tableData.length > 0 && selectedIds.length === tableData.length
+  const allSelected: boolean | 'indeterminate' =
+    selectedIds.length === 0
+      ? false
+      : selectedIds.length === tableData.length
+        ? true
+        : 'indeterminate'
 
   const toggleAll = (checked: boolean | 'indeterminate') => {
     setSelectedIds(checked === true ? tableData.map((v) => v.id) : [])
