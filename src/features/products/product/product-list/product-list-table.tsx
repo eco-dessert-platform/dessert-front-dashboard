@@ -1,5 +1,5 @@
-import Table from '@/shared/components/ui/table/table'
-import { Pagination } from '@/shared/components/ui/pagination/pagination'
+import Table from '@/shared/ui/table/table'
+import { Pagination } from '@/shared/ui/pagination/pagination'
 
 import ProductTopAreaSort from './product-top-area/product-top-area-sort'
 import ProductTopAreaCounter from './product-top-area/product-top-area-counter'

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import Dropdown from '@/shared/components/ui/dropdown/dropdown'
-import Input from '@/shared/components/ui/input/input'
-import Button from '@/shared/components/ui/button/button'
+import Dropdown from '@/shared/ui/dropdown/dropdown'
+import Input from '@/shared/ui/input/input'
+import Button from '@/shared/ui/button/button'
+
 import {
   ProductFilterMainOption,
   BreadOptions,

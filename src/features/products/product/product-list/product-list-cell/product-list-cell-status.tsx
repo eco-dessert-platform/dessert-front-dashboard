@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Badge from '@/shared/components/ui/badge/badge'
+import Badge from '@/shared/ui/badge/badge'
 import { ProductType } from '@/entity/products/product/product.type'
 import ProductListCellToggleSale from './product-list-cell-toggle-sale'
 
