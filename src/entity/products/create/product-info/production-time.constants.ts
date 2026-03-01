@@ -1,4 +1,4 @@
-export const productionTime = [
+export const productionTimes = [
   {
     label: '03:00~04:00',
     value: '03:00~04:00',

@@ -2,7 +2,6 @@ export function useNumberInput(
   value: number | null,
   onChange: (value: number | null) => void,
 ) {
-  // 숫자를 "12,000" 형태 문자열로 변환
   const displayValue =
     value !== null && value !== undefined ? value.toLocaleString('ko-KR') : ''
 

@@ -6,39 +6,34 @@ import Dropdown from '@/shared/components/ui/dropdown/dropdown'
 import { useProductForm } from '@/features/products/create/create-form/craete-form-info/create-form-info.hook'
 import { useNumberInput } from '@/features/products/create/create-form/create-form-number-input.hook'
 import { Controller } from 'react-hook-form'
-import { productionTime } from '@/entity/products/create/product-info/production-time.constants'
+import { productionTimes } from '@/entity/products/create/product-info/production-time.constants'
 import { productDiscountType } from '@/entity/products/create/product-info/product-discount-type.constants'
 import { useFormSteps } from '@/features/products/create/create-form/create-form-steps.context'
 import { useEffect } from 'react'
 
 export const ProductInfoArea = () => {
-  const { form, finalPrice, onSubmit } = useProductForm()
+  const {
+    form,
+    finalPrice,
+    isFormField,
+    price,
+    discountAmount,
+    discountType,
+    priceInput,
+    discountInput,
+  } = useProductForm()
   const {
     control,
-    watch,
-    trigger,
     setValue,
     register,
-    formState: { errors, isValid },
+    formState: { errors },
   } = form
 
-  const { productInfo, setProductInfo } = useFormSteps()
+  const { setProductInfo } = useFormSteps()
 
   useEffect(() => {
-    setProductInfo(isValid)
-  }, [isValid])
-
-  const discountType = watch('discountType')
-  const price = form.watch('price')
-
-  const priceInput = useNumberInput(watch('price'), (val) => {
-    setValue('price', val, { shouldValidate: true })
-    trigger('discountAmount')
-  })
-  const discountInput = useNumberInput(watch('discountAmount'), (val) => {
-    setValue('discountAmount', val, { shouldValidate: true })
-    trigger('price')
-  })
+    setProductInfo(isFormField)
+  }, [isFormField])
 
   return (
     <>
@@ -95,7 +90,7 @@ export const ProductInfoArea = () => {
         name="productionTime"
         render={({ field }) => (
           <Dropdown
-            options={productionTime}
+            options={productionTimes}
             value={field.value}
             className="mt-8"
             onSelect={field.onChange}
@@ -114,8 +109,8 @@ export const ProductInfoArea = () => {
               className="flex-1"
               value={priceInput.displayValue}
               onChange={priceInput.handleChange}
-              error={!!errors.price}
-              errorMessage={errors.price?.message}
+              error={!!errors.price && price !== null}
+              errorMessage={errors.price?.message || undefined}
             />
             <span className="relative top-[44px]">원</span>
           </div>
@@ -130,7 +125,7 @@ export const ProductInfoArea = () => {
               labelClassName="typo-heading-18-r"
               value={discountInput.displayValue}
               onChange={discountInput.handleChange}
-              error={!!errors.discountAmount}
+              error={!!errors.discountAmount && discountAmount !== null}
               errorMessage={errors.discountAmount?.message}
             />
             <Controller

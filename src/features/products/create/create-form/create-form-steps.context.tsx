@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 type FormStepsContextType = {
   productInfo: boolean
@@ -13,7 +13,7 @@ export const FormStepsProvider = ({
   children: React.ReactNode
 }) => {
   const [productInfo, setProductInfo] = useState(false)
-
+  useEffect(() => {}, [])
   return (
     <FormStepsContext.Provider value={{ productInfo, setProductInfo }}>
       {children}
