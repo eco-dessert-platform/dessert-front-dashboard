@@ -6,7 +6,7 @@ import ProductListCellStatus from './product-list-cell/product-list-cell-status'
 
 type Args = {
   selectedIds: string[]
-  allSelected: boolean
+  allSelected: boolean | 'indeterminate'
   onToggleAll: (checked: boolean | 'indeterminate') => void
   onToggleRow: (id: string, checked: boolean | 'indeterminate') => void
   onCopyRow: (row: ProductType) => void

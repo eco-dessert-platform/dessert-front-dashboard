@@ -14,12 +14,8 @@ export const useProductList = ({ data }: { data: ProductType[] }) => {
     })
   }, [data])
 
-  const allSelected: boolean | 'indeterminate' =
-    selectedIds.length === 0
-      ? false
-      : selectedIds.length === tableData.length
-        ? true
-        : 'indeterminate'
+  const allSelected =
+    tableData.length > 0 && selectedIds.length === tableData.length
 
   const toggleAll = (checked: boolean | 'indeterminate') => {
     setSelectedIds(checked === true ? tableData.map((v) => v.id) : [])
