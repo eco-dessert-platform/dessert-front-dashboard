@@ -1,7 +1,7 @@
+import Label from '@/shared/components/ui/label/label'
 import { Tooltip } from '@/shared/components/ui/tooltip/tooltip'
-import { LabelWithTooltip } from '@/pages/products/create/ui/label-with-tooltip'
-import { OptionTags } from '@/entity/products/create/options-tag.type'
 import Chip from '@/shared/components/ui/chip/chip'
+import { OptionTags } from '@/entity/products/create/options-tag.type'
 
 interface TagsProps {
   title: string
@@ -18,11 +18,14 @@ export const ProductHeaderTags = ({
 }: TagsProps) => {
   return (
     <div>
-      <LabelWithTooltip
-        title={title}
-        titleRequire={titleRequire}
-        titleTooltipProps={titleTooltipProps}
-      />
+      <div className="flex items-center gap-2">
+        <Label
+          label={title}
+          required={titleRequire}
+          className="typo-heading-18-sb"
+        />
+        {titleTooltipProps}
+      </div>
       <div className="mt-10 flex gap-4">
         {tagData.map((items) => (
           <Tooltip position="bottom" key={items.title}>
