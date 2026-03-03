@@ -34,7 +34,6 @@ export const ProductDeliveryArea = () => {
 
   return (
     <>
-      {isFormField ? 'true' : 'false'}
       <div className="mb-24 flex items-center gap-2">
         <Label label="배송 정보" className="typo-heading-20-sb text-gray-900" />
         <InfoTooltip>
