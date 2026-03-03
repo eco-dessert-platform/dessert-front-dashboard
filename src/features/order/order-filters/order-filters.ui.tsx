@@ -7,12 +7,12 @@ import type {
   OrderFilters,
   SearchType,
 } from '@/entity/order/order.type'
-import { DatePicker } from '@/shared/components/blocks/date-picker/date-picker'
-import Select from '@/shared/components/ui/select/select'
 import { format, parseISO } from 'date-fns'
 import ResetIcon from '@/assets/icons/reset.svg?react'
-import { cn } from '@/shared/lib/utils'
-import InputField from '@/shared/components/blocks/input-field/input-field'
+import { cn } from '@/shared/libs/utils'
+import { DatePicker } from '@/shared/block/date-picker/date-picker'
+import Select from '@/shared/ui/select/select'
+import InputField from '@/shared/block/input-field/input-field'
 
 interface OrderFiltersProps {
   filters: OrderFilters // draftFilters (UI 표시용)

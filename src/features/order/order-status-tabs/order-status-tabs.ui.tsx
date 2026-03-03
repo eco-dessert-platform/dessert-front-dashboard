@@ -3,7 +3,7 @@ import type {
   OrderStatusCount,
   OrderStatusTab,
 } from '@/entity/order/order.type'
-import { Tab, TabList, TabTrigger } from '@/shared/components/ui/tab/tab'
+import { Tab, TabList, TabTrigger } from '@/shared/ui/tab/tab'
 
 interface OrderStatusTabsProps {
   selectedTab: OrderStatusTab

@@ -8,13 +8,13 @@ import {
   OrderProduct,
   OrderStatusTab,
 } from '@/entity/order/order.type'
-import Badge from '@/shared/components/ui/badge/badge'
-import Checkbox from '@/shared/components/ui/checkbox/checkbox'
 import Table from '@/shared/components/ui/table/table'
 import { ColumnDef, Row } from '@tanstack/react-table'
 import { useCallback, useMemo } from 'react'
 import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
-import Button from '@/shared/components/ui/button/button'
+import Checkbox from '@/shared/ui/checkbox/checkbox'
+import Button from '@/shared/ui/button/button'
+import Badge from '@/shared/ui/badge/badge'
 
 type FlatOrderRow = Omit<OrderItem, 'products'> &
   OrderProduct & {
