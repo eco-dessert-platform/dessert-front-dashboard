@@ -103,3 +103,22 @@ export interface OrderFilters {
   size?: string
   sort?: SortOrder
 }
+
+// 독립 버튼 (Button 컴포넌트)
+type SingleButton = {
+  type: 'single'
+  label: string
+  variant: 'primary-outlined' | 'secondary-outlined'
+  action: string // 이벤트 핸들러 key
+}
+
+// 버튼 그룹 (취소/반품/교환 탭에서 사용)
+type GroupButton = {
+  type: 'group'
+  items: Array<{
+    label: string
+    action: string
+  }>
+}
+
+export type ActionButton = SingleButton | GroupButton

@@ -1,5 +1,6 @@
 import { VariantProps } from 'class-variance-authority'
 import {
+  ActionButton,
   DeliveryStatus,
   OrderStatus,
   OrderStatusTab,
@@ -71,4 +72,162 @@ export const DELIVERY_STATUS_LABELS: Record<DeliveryStatus, string> = {
   COLLECT_COMPLETED: '수거완료',
   DELIVERING: '배송중',
   DELIVERY_COMPLETED: '배송완료',
+}
+
+export const ORDER_ACTION_BAR_CONFIG: Record<OrderStatusTab, ActionButton[]> = {
+  all: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+  ],
+  paymentCompleted: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+    {
+      type: 'single',
+      label: '발주확인',
+      variant: 'secondary-outlined',
+      action: 'confirmOrder',
+    },
+    {
+      type: 'single',
+      label: '주문취소',
+      variant: 'secondary-outlined',
+      action: 'cancelOrder',
+    },
+  ],
+  orderConfirmed: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+    {
+      type: 'single',
+      label: '주문취소',
+      variant: 'secondary-outlined',
+      action: 'cancelOrder',
+    },
+    {
+      type: 'single',
+      label: '반품',
+      variant: 'secondary-outlined',
+      action: 'requestReturn',
+    },
+    {
+      type: 'single',
+      label: '교환',
+      variant: 'secondary-outlined',
+      action: 'requestExchange',
+    },
+  ],
+  productShipped: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+    {
+      type: 'single',
+      label: '반품',
+      variant: 'secondary-outlined',
+      action: 'requestReturn',
+    },
+    {
+      type: 'single',
+      label: '교환',
+      variant: 'secondary-outlined',
+      action: 'requestExchange',
+    },
+  ],
+  deliveryCompleted: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+    {
+      type: 'single',
+      label: '반품',
+      variant: 'secondary-outlined',
+      action: 'requestReturn',
+    },
+    {
+      type: 'single',
+      label: '교환',
+      variant: 'secondary-outlined',
+      action: 'requestExchange',
+    },
+  ],
+  canceled: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+    {
+      type: 'group',
+      items: [
+        { label: '취소승인', action: 'approveCancellation' },
+        { label: '취소거절', action: 'rejectCancellation' },
+      ],
+    },
+  ],
+  returned: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+    {
+      type: 'group',
+      items: [
+        { label: '반품승인', action: 'approveReturn' },
+        { label: '반품거절', action: 'rejectReturn' },
+      ],
+    },
+    {
+      type: 'group',
+      items: [
+        { label: '반품완료', action: 'completeReturn' },
+        { label: '반품반려', action: 'turnDownReturn' },
+        { label: '반품보류', action: 'holdReturn' },
+      ],
+    },
+  ],
+  exchanged: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+    {
+      type: 'group',
+      items: [
+        { label: '반품승인', action: 'approveReturn' },
+        { label: '반품거절', action: 'rejectReturn' },
+      ],
+    },
+    {
+      type: 'group',
+      items: [
+        { label: '반품완료', action: 'completeReturn' },
+        { label: '반품반려', action: 'turnDownReturn' },
+        { label: '반품보류', action: 'holdReturn' },
+      ],
+    },
+  ],
 }
