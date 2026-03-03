@@ -9,6 +9,17 @@ import { OrderTable } from '@/features/order/order-table/order-table.ui'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
+const VALID_TABS: OrderStatusTab[] = [
+  'all',
+  'paymentCompleted',
+  'orderConfirmed',
+  'productShipped',
+  'deliveryCompleted',
+  'canceled',
+  'returned',
+  'exchanged',
+]
+
 const DEFAULT_STATUS_COUNT: OrderStatusCount = {
   total: 0,
   paymentCompleted: 0,
@@ -22,7 +33,12 @@ const DEFAULT_STATUS_COUNT: OrderStatusCount = {
 
 function AllOrdersPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const selectedTab = (searchParams.get('status') || 'all') as OrderStatusTab
+  const statusParam = searchParams.get('status')
+  const selectedTab: OrderStatusTab = VALID_TABS.includes(
+    statusParam as OrderStatusTab,
+  )
+    ? (statusParam as OrderStatusTab)
+    : 'all'
 
   const {
     draftFilters,
@@ -34,7 +50,7 @@ function AllOrdersPage() {
   } = useOrderFilter(selectedTab)
 
   // todos: Table 공통 컴포넌트에 loading 관련 props를 추가하고 OrderTable 컴포넌트로 props drilling 예정
-  const { data, isPending } = useQuery({
+  const { data } = useQuery({
     ...orderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
@@ -52,9 +68,8 @@ function AllOrdersPage() {
   } = useOrderSelection(orders)
 
   const handleTabChange = (tab: OrderStatusTab) => {
-    filtersReset()
+    filtersReset(tab)
     selectionReset()
-    setAppliedFilters((prev) => ({ ...prev, tab }))
     setSearchParams({ status: tab })
   }
 
@@ -79,13 +94,14 @@ function AllOrdersPage() {
   }
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
+  const currentTab = appliedFilters.tab ?? 'all'
   const totalPages = data?.totalPages ?? 1
   const totalCount = data?.totalElements ?? 0
 
   return (
     <div className="flex flex-col gap-6 p-4">
       <OrderStatusTabs
-        selectedTab={appliedFilters.tab ?? 'all'}
+        selectedTab={currentTab}
         statusCount={data?.statusCount ?? DEFAULT_STATUS_COUNT}
         onChange={handleTabChange}
       />
@@ -99,7 +115,7 @@ function AllOrdersPage() {
 
       <section className="mt-10 rounded-10 border bg-white">
         <OrderActionBar
-          tab={appliedFilters.tab ?? 'all'}
+          tab={currentTab}
           onAction={handleAction}
           selectedCount={selectedIds.length}
           totalCount={totalCount}
@@ -109,7 +125,7 @@ function AllOrdersPage() {
         />
 
         <OrderTable
-          tab={appliedFilters.tab ?? 'all'}
+          tab={currentTab}
           orders={orders}
           selectedIds={selectedIds}
           productSelectedIds={productSelectedIds}
