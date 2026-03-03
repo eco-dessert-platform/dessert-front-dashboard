@@ -1,7 +1,7 @@
 import { ORDER_ACTION_BAR_CONFIG } from '@/entity/order/order.constant'
 import { ActionButton, OrderStatusTab } from '@/entity/order/order.type'
-import Button from '@/shared/components/ui/button/button'
-import { Pagination } from '@/shared/components/ui/pagination/pagination'
+import Button from '@/shared/ui/button/button'
+import { Pagination } from '@/shared/ui/pagination/pagination'
 
 interface OrderActionBarProps {
   tab: OrderStatusTab

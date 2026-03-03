@@ -8,7 +8,7 @@ import {
   AuthContentWrapper,
   AuthPageContainer,
 } from '@/features/auth/ui'
-import LogoHeader from '@/shared/components/ui/header/logo-header'
+import LogoHeader from '@/shared/ui/header/logo-header'
 
 const AuthPage = () => {
   useSocialLogin()

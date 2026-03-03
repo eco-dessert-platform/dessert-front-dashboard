@@ -6,7 +6,7 @@ import {
   OrderStatusTab,
   SearchType,
 } from './order.type'
-import { BadgeVariants } from '@/shared/components/ui/badge/badge'
+import { badgeVariants } from '@/shared/ui/badge/badge'
 
 export const ORDER_STATUS_TABS: Array<{
   value: OrderStatusTab
@@ -34,7 +34,7 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
 
 export const ORDER_STATUS_BADGE_COLOR: Record<
   OrderStatus,
-  VariantProps<typeof BadgeVariants>['color']
+  VariantProps<typeof badgeVariants>['color']
 > = {
   PAYMENT_COMPLETED: 'gray',
   ORDER_CONFIRMED: 'yellow',

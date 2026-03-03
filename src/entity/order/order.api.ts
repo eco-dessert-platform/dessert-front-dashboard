@@ -8,4 +8,14 @@ export async function getOrders(
   const size = filters.size ? Number(filters.size) : 10
 
   return getMockOrderListResponse(filters.tab, page, size)
+
+  /* 실제 API 연동 시 아래 주석 해제하여 사용
+  const { data } = await client.get<OrderListResponse>(
+    '/api/v1/seller/orders',
+    {
+      params: filters,
+    },
+  )
+  return data
+  */
 }
