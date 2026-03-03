@@ -2,7 +2,7 @@ import { cn } from '@/shared/libs/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import React, { HTMLAttributes } from 'react'
 
-export const BadgeVariants = cva(
+export const badgeVariants = cva(
   [
     'inline-flex',
     'items-center',
@@ -95,7 +95,7 @@ export const BadgeVariants = cva(
 
 interface BadgeProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
-    VariantProps<typeof BadgeVariants> {
+    VariantProps<typeof badgeVariants> {
   content: string
   ref?: React.Ref<HTMLDivElement>
 }
@@ -111,7 +111,7 @@ const Badge = ({
   return (
     <div
       ref={ref}
-      className={cn(BadgeVariants({ variant, color }), className)}
+      className={cn(badgeVariants({ variant, color }), className)}
       {...props}
     >
       {content}
