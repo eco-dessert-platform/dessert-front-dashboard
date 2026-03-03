@@ -125,7 +125,7 @@ export const ProductInfoArea = () => {
               error={!!errors.price && price !== null}
               errorMessage={errors.price?.message || undefined}
             />
-            <span className="relative top-[44px]">원</span>
+            <span className="relative top-11">원</span>
           </div>
         </div>
         <div>
@@ -153,7 +153,7 @@ export const ProductInfoArea = () => {
                     field.onChange(val)
                     setValue('discountAmount', null, { shouldValidate: true })
                   }}
-                  className="relative top-[34px] max-w-[65px]"
+                  className="relative top-8.5 max-w-16.25"
                 />
               )}
             />

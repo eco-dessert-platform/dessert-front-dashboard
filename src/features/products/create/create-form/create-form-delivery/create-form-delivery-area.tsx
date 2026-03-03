@@ -1,23 +1,37 @@
+import { useEffect } from 'react'
 import Label from '@/shared/components/ui/label/label'
 import { InfoTooltip } from '../ui/info-tooltip'
 import Dropdown from '@/shared/components/ui/dropdown/dropdown'
 import Input from '@/shared/components/ui/input/input'
-
-const DeliveryFee = [
-  { label: '유료', value: 'charged' },
-  { label: '무료', value: 'free' },
-  { label: '조건부 무료', value: 'conditionalFree' },
-]
-
-const DeliveryCompany = [
-  { label: 'CJ 대한통운', value: 'cj' },
-  { label: '롯데택배', value: 'lotte' },
-  { label: '우체국 택배', value: 'post' },
-  { label: '한진택배', value: 'hanjin' },
-  { label: '로젠택배', value: 'logen' },
-]
+import { DeliveryCompany } from '@/entity/products/create/product-delivery/product-delivery-company'
+import { DeliveryTerms } from '@/entity/products/create/product-delivery/product-delivery-terms'
+import { useProductDeliveryForm } from './use-product-delivery-form.hook'
+import { useFormSteps } from '../create-form-provider/use-form-steps.hook'
+import { Controller } from 'react-hook-form'
+import { cn } from '@/shared/lib/utils'
 
 export const ProductDeliveryArea = () => {
+  const {
+    form,
+    deliveryTerms,
+    deliveryFee,
+    deliveryMinFee,
+    deliveryFeeInput,
+    deliveryMinFeeInput,
+    isFormField,
+  } = useProductDeliveryForm()
+  const {
+    control,
+    setValue,
+    formState: { errors },
+  } = form
+
+  const { setProductDelivery } = useFormSteps()
+
+  useEffect(() => {
+    setProductDelivery(isFormField)
+  }, [isFormField, setProductDelivery])
+
   return (
     <>
       <div className="mb-24 flex items-center gap-2">
@@ -33,7 +47,27 @@ export const ProductDeliveryArea = () => {
             required
             className="typo-heading-18-r text-gray-900"
           />
-          <Dropdown options={DeliveryFee} placeholder="유료" className="mt-8" />
+          <Controller
+            control={control}
+            name="deliveryTerms"
+            render={({ field }) => (
+              <Dropdown
+                options={DeliveryTerms}
+                value={field.value}
+                placeholder="유료"
+                onSelect={(val) => {
+                  field.onChange(val)
+                  if (val === 'free') {
+                    setValue('deliveryFee', null, { shouldValidate: true })
+                    setValue('deliveryMinFee', null, { shouldValidate: true })
+                  } else if (val === 'charged') {
+                    setValue('deliveryMinFee', null, { shouldValidate: true })
+                  }
+                }}
+                className="mt-8"
+              />
+            )}
+          />
         </div>
         <div>
           <Label
@@ -41,47 +75,64 @@ export const ProductDeliveryArea = () => {
             required
             className="typo-heading-18-r text-gray-900"
           />
-          <Dropdown
-            options={DeliveryCompany}
-            placeholder="택배사 선택"
-            className="mt-8"
+          <Controller
+            control={control}
+            name="deliveryCompany"
+            render={({ field }) => (
+              <Dropdown
+                options={DeliveryCompany}
+                value={field.value}
+                placeholder="택배사 선택"
+                className="mt-8"
+                onSelect={field.onChange}
+              />
+            )}
           />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-32 pt-32">
-        <div>
-          <div className="mt-8 flex w-full gap-8">
-            <Input
-              required
-              label="배송비"
-              labelClassName="typo-heading-18-r"
-              placeholder="0~100,000"
-              className="flex-1"
-              //value={priceInput.displayValue}
-              //onChange={priceInput.handleChange}
-              //error={!!errors.price && price !== null}
-              //errorMessage={errors.price?.message || undefined}
-            />
-            <span className="relative top-[44px]">원</span>
+      {deliveryTerms !== 'free' && (
+        <div
+          className={cn(
+            'grid grid-cols-2 gap-32 pt-32',
+            deliveryTerms == 'charged' && 'grid-cols-1',
+          )}
+        >
+          <div>
+            <div className="mt-8 flex w-full gap-8">
+              <Input
+                required
+                label="배송비"
+                labelClassName="typo-heading-18-r"
+                placeholder="0~100,000"
+                className="flex-1"
+                value={deliveryFeeInput.displayValue}
+                onChange={deliveryFeeInput.handleChange}
+                error={!!errors.deliveryFee && deliveryFee !== null}
+                errorMessage={errors.deliveryFee?.message || undefined}
+              />
+              <span className="relative top-11">원</span>
+            </div>
           </div>
+          {deliveryTerms !== 'charged' && (
+            <div>
+              <div className="mt-8 flex w-full gap-8">
+                <Input
+                  required
+                  label="무료 배송 최소 금액"
+                  labelClassName="typo-heading-18-r"
+                  placeholder="0~100,000"
+                  className="flex-1"
+                  value={deliveryMinFeeInput.displayValue}
+                  onChange={deliveryMinFeeInput.handleChange}
+                  error={!!errors.deliveryMinFee && deliveryMinFee !== null}
+                  errorMessage={errors.deliveryMinFee?.message || undefined}
+                />
+                <span className="relative top-11">원</span>
+              </div>
+            </div>
+          )}
         </div>
-        <div>
-          <div className="mt-8 flex w-full gap-8">
-            <Input
-              required
-              label="무료 배송 최소 금액"
-              labelClassName="typo-heading-18-r"
-              placeholder="0~100,000"
-              className="flex-1"
-              //value={priceInput.displayValue}
-              //onChange={priceInput.handleChange}
-              //error={!!errors.price && price !== null}
-              //errorMessage={errors.price?.message || undefined}
-            />
-            <span className="relative top-[44px]">원</span>
-          </div>
-        </div>
-      </div>
+      )}
     </>
   )
 }

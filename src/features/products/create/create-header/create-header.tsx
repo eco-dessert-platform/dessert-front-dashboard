@@ -21,7 +21,7 @@ const stagestep = [
 ]
 export const ProductHeader = () => {
   return (
-    <div className="sticky top-0 left-0 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16">
+    <div className="sticky top-0 left-0 z-20 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16">
       <div className="flex w-full items-center justify-between">
         <StageTab
           currentStep={1}
