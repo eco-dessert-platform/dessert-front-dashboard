@@ -53,13 +53,13 @@ export function useProductDeliveryForm() {
   const deliveryMinFee = form.watch('deliveryMinFee')
 
   const isFormField =
-    deliveryTerms !== '' &&
-    deliveryCompany !== '' &&
-    deliveryTerms === 'conditionalFree'
-      ? deliveryFee !== null && deliveryMinFee !== null
-      : deliveryTerms === 'charged'
-        ? deliveryFee !== null
-        : true
+    deliveryTerms !== '' && deliveryCompany !== '' && deliveryTerms === 'free'
+      ? true
+      : deliveryTerms === 'conditionalFree'
+        ? deliveryFee !== null && deliveryMinFee !== null
+        : deliveryTerms === 'charged'
+          ? deliveryFee !== null
+          : false
 
   const deliveryFeeInput = useNumberInput(form.watch('deliveryFee'), (val) => {
     form.setValue('deliveryFee', val, { shouldValidate: true })

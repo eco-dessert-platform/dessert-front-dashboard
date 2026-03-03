@@ -2,21 +2,23 @@
 import React, { useState } from 'react'
 import { FormStepsContext } from './create-form-steps.context'
 
+type FormStepStatus = Record<string, boolean>
+
 export const FormStepsProvider = ({
   children,
 }: {
   children: React.ReactNode
 }) => {
-  const [productInfo, setProductInfo] = useState(false)
-  const [productDelivery, setProductDelivery] = useState(false)
+  const [productFields, setProductFields] = useState<FormStepStatus>({
+    productInfo: false,
+    productDelivery: false,
+  })
 
   return (
     <FormStepsContext.Provider
       value={{
-        productInfo,
-        setProductInfo,
-        productDelivery,
-        setProductDelivery,
+        productFields,
+        setProductFields,
       }}
     >
       {children}

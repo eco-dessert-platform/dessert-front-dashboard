@@ -16,18 +16,18 @@ function CreatePage() {
 }
 
 function CreatePageInner() {
-  const { productInfo, productDelivery } = useFormSteps()
+  const { productFields } = useFormSteps()
   return (
     <>
       <ProductHeader />
       <div className="mt-22 bg-white">
-        {productInfo ? 'true' : 'false'}
+        {productFields.productInfo ? 'true' : 'false'}
         <div className="px-24 pt-16 pb-24">
           <ProductInfoArea />
         </div>
       </div>
       <div className="mt-20 bg-white">
-        {productDelivery ? 'true' : 'false'}
+        {productFields.productDelivery ? 'true' : 'false'}
         <div className="px-24 pt-16 pb-24">
           <ProductDeliveryArea />
         </div>

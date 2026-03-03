@@ -10,6 +10,7 @@ import { CategoryOptions } from '@/entity/products/create/category-options.const
 import { ProductHeaderTags } from './create-header-tags'
 import { InfoTooltip } from '@/features/products/create/create-form/ui/info-tooltip'
 import { ChevronDown } from 'lucide-react'
+import { useFormSteps } from '../create-form/create-form-provider/use-form-steps.hook'
 
 const stagestep = [
   '상품 정보',
@@ -19,7 +20,13 @@ const stagestep = [
   '상세페이지 등록',
   '상품 정보 제공 고시',
 ]
+
 export const ProductHeader = () => {
+  const { productFields } = useFormSteps()
+  const test = Object.values(productFields).filter((e) => e === true).length
+
+  console.log(productFields)
+
   return (
     <div className="sticky top-0 left-0 z-20 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16">
       <div className="flex w-full items-center justify-between">
@@ -29,8 +36,8 @@ export const ProductHeader = () => {
           className="w-fit justify-start border-none"
         />
         <p className="typo-title-16-sb">
-          필수 입력 사항이 <span className="text-primary-500">5개</span>{' '}
-          남았어요
+          필수 입력 사항이{' '}
+          <span className="text-primary-500">{5 - test}개</span> 남았어요
         </p>
       </div>
 

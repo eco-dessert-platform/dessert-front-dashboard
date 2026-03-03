@@ -26,14 +26,15 @@ export const ProductDeliveryArea = () => {
     formState: { errors },
   } = form
 
-  const { setProductDelivery } = useFormSteps()
+  const { setProductFields } = useFormSteps()
 
   useEffect(() => {
-    setProductDelivery(isFormField)
-  }, [isFormField, setProductDelivery])
+    setProductFields((prev) => ({ ...prev, productDelivery: isFormField }))
+  }, [isFormField, setProductFields])
 
   return (
     <>
+      {isFormField ? 'true' : 'false'}
       <div className="mb-24 flex items-center gap-2">
         <Label label="배송 정보" className="typo-heading-20-sb text-gray-900" />
         <InfoTooltip>

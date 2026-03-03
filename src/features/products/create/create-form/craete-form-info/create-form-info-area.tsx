@@ -29,11 +29,11 @@ export const ProductInfoArea = () => {
     formState: { errors },
   } = form
 
-  const { setProductInfo } = useFormSteps()
+  const { setProductFields } = useFormSteps()
 
   useEffect(() => {
-    setProductInfo(isFormField)
-  }, [isFormField, setProductInfo])
+    setProductFields((prev) => ({ ...prev, productInfo: isFormField }))
+  }, [isFormField, setProductFields])
 
   return (
     <>
