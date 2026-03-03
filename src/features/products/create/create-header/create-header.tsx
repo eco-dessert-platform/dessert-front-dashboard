@@ -8,7 +8,7 @@ import { StageTab } from '@/shared/components/ui/tab/stage-tab'
 import { EssentialOptions } from '@/entity/products/create/essential-options.constants'
 import { CategoryOptions } from '@/entity/products/create/category-options.constants'
 import { ProductHeaderTags } from './create-header-tags'
-import { InfoTooltip } from '@/pages/products/create/ui/info-tooltip'
+import { InfoTooltip } from '@/features/products/create/create-form/ui/info-tooltip'
 import { ChevronDown } from 'lucide-react'
 
 const stagestep = [

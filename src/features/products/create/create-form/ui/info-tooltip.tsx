@@ -3,7 +3,7 @@ import { cn } from '@/shared/lib/utils'
 import { Info } from 'lucide-react'
 
 interface InfoTooltipProps {
-  iconSize: number
+  iconSize?: number
   children: React.ReactNode
   className?: string
 }

@@ -1,14 +1,14 @@
-import { LabelWithTooltip } from '../../../../../pages/products/create/ui/label-with-tooltip'
+import { useEffect } from 'react'
+import { Controller } from 'react-hook-form'
 import Input from '@/shared/components/ui/input/input'
-import { InfoTooltip } from '../../../../../pages/products/create/ui/info-tooltip'
 import { Switch } from '@/shared/components/ui/switch/switch'
 import Dropdown from '@/shared/components/ui/dropdown/dropdown'
+import Label from '@/shared/components/ui/label/label'
 import { useProductInfoForm } from '@/features/products/create/create-form/craete-form-info/use-product-info-form.hook'
-import { Controller } from 'react-hook-form'
 import { productionTimes } from '@/entity/products/create/product-info/production-time.constants'
 import { productDiscountType } from '@/entity/products/create/product-info/product-discount-type.constants'
+import { InfoTooltip } from '../ui/info-tooltip'
 import { useFormSteps } from '../create-form-provider/use-form-steps.hook'
-import { useEffect } from 'react'
 
 export const ProductInfoArea = () => {
   const {
@@ -49,22 +49,22 @@ export const ProductInfoArea = () => {
       />
 
       <div className="flex items-center gap-12 pt-32">
-        <LabelWithTooltip
-          title="신선식품"
-          titleRequire
-          titleTooltipProps={
-            <InfoTooltip iconSize={20}>
-              신선식품 안내 <br></br>
-              <ul className="list-disc pl-16">
-                <li>주문 즉시 제작되거나 빠르게 소비해야 하는 상품이에요.</li>
-                <li>
-                  상품 특성상 제작이 시작된 후에는 주문 취소가 불가능합니다.
-                </li>
-              </ul>
-            </InfoTooltip>
-          }
-          className="typo-heading-18-r"
-        />
+        <div className="flex items-center gap-2">
+          <Label
+            label="신선식품"
+            required
+            className="typo-heading-18-r text-gray-900"
+          />
+          <InfoTooltip iconSize={20}>
+            신선식품 안내 <br></br>
+            <ul className="list-disc pl-16">
+              <li>주문 즉시 제작되거나 빠르게 소비해야 하는 상품이에요.</li>
+              <li>
+                상품 특성상 제작이 시작된 후에는 주문 취소가 불가능합니다.
+              </li>
+            </ul>
+          </InfoTooltip>
+        </div>
         <Controller
           control={control}
           name="isFresh"
@@ -77,10 +77,10 @@ export const ProductInfoArea = () => {
         주문 제작 상품의 경우 신선식품으로 설정해주세요.
       </p>
 
-      <LabelWithTooltip
-        title="상품 제작 시간"
-        titleRequire
-        className="pt-32 typo-heading-18-r"
+      <Label
+        label="상품 제작 시간"
+        required
+        className="block pt-32 typo-heading-18-r"
       />
       <p className="mt-2 typo-title-16-r text-gray-600">
         고객 주문 취소 시점에 활용되니 정확히 입력해주세요.
