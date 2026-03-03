@@ -8,9 +8,17 @@ export const FormStepsProvider = ({
   children: React.ReactNode
 }) => {
   const [productInfo, setProductInfo] = useState(false)
+  const [productDelivery, setProductDelivery] = useState(false)
 
   return (
-    <FormStepsContext.Provider value={{ productInfo, setProductInfo }}>
+    <FormStepsContext.Provider
+      value={{
+        productInfo,
+        setProductInfo,
+        productDelivery,
+        setProductDelivery,
+      }}
+    >
       {children}
     </FormStepsContext.Provider>
   )

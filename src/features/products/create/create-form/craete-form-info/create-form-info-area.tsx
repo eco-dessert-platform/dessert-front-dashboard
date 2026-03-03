@@ -37,17 +37,32 @@ export const ProductInfoArea = () => {
 
   return (
     <>
+      <div className="mb-24 flex items-center gap-2">
+        <Label label="상품 정보" className="typo-heading-20-sb text-gray-900" />
+        <InfoTooltip>
+          상품 제작 및 취소 안내
+          <ul className="list-disc pl-16">
+            <li>
+              상품 제작이 시작된 이후에는 주문 취소가 불가능하며, 반품 절차로만
+              진행이 가능합니다.
+            </li>
+            <li>
+              단, 제작 시간 중에 접수된 주문은 다음 제작 시작 전까지 취소가
+              가능합니다.
+            </li>
+          </ul>
+        </InfoTooltip>
+      </div>
       <Input
         label="상품명"
         required
         placeholder="상품명을 3~50자 미만으로 입력해주세요"
-        className="gap-8 pt-24"
+        className="gap-8"
         labelClassName="typo-heading-18-r"
         error={!!errors.productName}
         errorMessage={errors.productName?.message}
         {...register('productName')}
       />
-
       <div className="flex items-center gap-12 pt-32">
         <div className="flex items-center gap-2">
           <Label
@@ -76,7 +91,6 @@ export const ProductInfoArea = () => {
       <p className="mt-4 typo-title-16-r text-gray-600">
         주문 제작 상품의 경우 신선식품으로 설정해주세요.
       </p>
-
       <Label
         label="상품 제작 시간"
         required
@@ -97,7 +111,6 @@ export const ProductInfoArea = () => {
           />
         )}
       />
-
       <div className="grid grid-cols-2 gap-32 pt-32">
         <div>
           <div className="mt-8 flex w-full gap-8">
@@ -147,7 +160,6 @@ export const ProductInfoArea = () => {
           </div>
         </div>
       </div>
-
       {finalPrice !== null && (
         <div className="mt-32 flex w-full items-center justify-between rounded-10 bg-primary-50 px-24 py-10">
           <p className="typo-heading-18-b">최종 상품 금액</p>

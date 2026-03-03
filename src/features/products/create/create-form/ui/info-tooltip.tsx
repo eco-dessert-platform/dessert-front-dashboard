@@ -9,7 +9,7 @@ interface InfoTooltipProps {
 }
 
 export const InfoTooltip = ({
-  iconSize = 24,
+  iconSize = 20,
   children,
   className,
 }: InfoTooltipProps) => {

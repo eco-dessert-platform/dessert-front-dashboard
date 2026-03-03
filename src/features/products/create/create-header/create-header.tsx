@@ -42,7 +42,7 @@ export const ProductHeader = () => {
                 title="필수성분"
                 titleRequire={true}
                 titleTooltipProps={
-                  <InfoTooltip iconSize={24}>
+                  <InfoTooltip>
                     상품 등록을 위해선 아래 5가지 기준 중<br></br> 하나 이상
                     충족해야 합니다.
                   </InfoTooltip>
