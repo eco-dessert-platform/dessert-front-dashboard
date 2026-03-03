@@ -76,7 +76,7 @@ const productSchema = z
     },
   )
 
-export function useProductForm() {
+export function useProductInfoForm() {
   const form = useForm<ProductFormInput>({
     resolver: zodResolver(productSchema) as Resolver<ProductFormInput>,
     defaultValues: {

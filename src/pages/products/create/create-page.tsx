@@ -2,10 +2,8 @@ import { ProductHeader } from '@/features/products/create/create-header/create-h
 import { LabelWithTooltip } from './ui/label-with-tooltip'
 import Button from '@/shared/components/ui/button/button'
 import { ProductInfoArea } from '../../../features/products/create/create-form/craete-form-info/create-form-info-area'
-import {
-  FormStepsProvider,
-  useFormSteps,
-} from '@/features/products/create/create-form/create-form-steps.context'
+import { FormStepsProvider } from '@/features/products/create/create-form/create-form-provider/create-form-provider'
+import { useFormSteps } from '@/features/products/create/create-form/create-form-provider/use-form-steps.hook'
 function CreatePage() {
   return (
     <>
@@ -21,7 +19,7 @@ function CreatePageInner() {
   return (
     <>
       <ProductHeader />
-      <div className="mt-[88px] bg-white">
+      <div className="mt-22 bg-white">
         {productInfo ? 'true' : 'false'}
         <div className="px-24 pt-16 pb-24">
           <LabelWithTooltip title="상품 정보" className="typo-heading-20-sb" />

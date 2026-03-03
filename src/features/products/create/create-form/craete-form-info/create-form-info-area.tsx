@@ -3,12 +3,11 @@ import Input from '@/shared/components/ui/input/input'
 import { InfoTooltip } from '../../../../../pages/products/create/ui/info-tooltip'
 import { Switch } from '@/shared/components/ui/switch/switch'
 import Dropdown from '@/shared/components/ui/dropdown/dropdown'
-import { useProductForm } from '@/features/products/create/create-form/craete-form-info/create-form-info.hook'
-import { useNumberInput } from '@/features/products/create/create-form/create-form-number-input.hook'
+import { useProductInfoForm } from '@/features/products/create/create-form/craete-form-info/use-product-info-form.hook'
 import { Controller } from 'react-hook-form'
 import { productionTimes } from '@/entity/products/create/product-info/production-time.constants'
 import { productDiscountType } from '@/entity/products/create/product-info/product-discount-type.constants'
-import { useFormSteps } from '@/features/products/create/create-form/create-form-steps.context'
+import { useFormSteps } from '../create-form-provider/use-form-steps.hook'
 import { useEffect } from 'react'
 
 export const ProductInfoArea = () => {
@@ -21,7 +20,8 @@ export const ProductInfoArea = () => {
     discountType,
     priceInput,
     discountInput,
-  } = useProductForm()
+  } = useProductInfoForm()
+
   const {
     control,
     setValue,
@@ -33,7 +33,7 @@ export const ProductInfoArea = () => {
 
   useEffect(() => {
     setProductInfo(isFormField)
-  }, [isFormField])
+  }, [isFormField, setProductInfo])
 
   return (
     <>
