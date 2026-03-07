@@ -109,17 +109,17 @@ export default tseslint.config(
   // ── seller 전용: tsconfig 경로 + CSS 진입점 ──
   {
     files: ['apps/admin/**/*.{ts,tsx}'],
-    // settings: {
-    //   'import/resolver': {
-    //     typescript: {
-    //       alwaysTryTypes: true,
-    //       project: './apps/admin/tsconfig.json',
-    //     },
-    //   },
-    //   'better-tailwindcss': {
-    //     entryPoint: './apps/admin/src/styles/index.css',
-    //   },
-    // },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './apps/admin/tsconfig.json',
+        },
+      },
+      'better-tailwindcss': {
+        entryPoint: `${import.meta.dirname}/apps/admin/src/styles/index.css`,
+      },
+    },
   },
 
   // ── packages/ui 전용: tsconfig 경로 + CSS 진입점 ──
