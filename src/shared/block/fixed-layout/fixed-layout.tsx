@@ -1,7 +1,8 @@
-import Lnb from '@/shared/block/lnb/lnb'
-import LogoHeader from '@/shared/ui/header/logo-header'
 import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { Outlet } from 'react-router-dom'
+
+import Lnb from '@/shared/block/lnb/lnb'
+import LogoHeader from '@/shared/ui/header/logo-header'
 
 const FixedLayout = () => {
   return (

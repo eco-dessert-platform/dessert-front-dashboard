@@ -1,5 +1,6 @@
-import { MonthCaptionProps, useDayPicker } from 'react-day-picker'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { MonthCaptionProps, useDayPicker } from 'react-day-picker'
+
 import { cn } from '@/shared/libs/utils'
 
 export function CalendarCaption({ calendarMonth }: MonthCaptionProps) {

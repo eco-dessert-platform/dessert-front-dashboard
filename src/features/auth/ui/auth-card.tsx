@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
-import clsx from 'clsx'
+
+import { clsx } from 'clsx'
 
 interface CardProps {
   children: ReactNode

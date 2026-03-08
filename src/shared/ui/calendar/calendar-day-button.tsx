@@ -1,5 +1,6 @@
-import { cn } from '@/shared/libs/utils'
 import { DayButtonProps, Modifiers } from 'react-day-picker'
+
+import { cn } from '@/shared/libs/utils'
 
 interface CustomModifiers extends Modifiers {
   selected: boolean

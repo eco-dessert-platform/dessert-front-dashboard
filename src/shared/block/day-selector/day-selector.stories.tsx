@@ -1,7 +1,12 @@
-import DaySelector, { DaySelectorProps } from '@/shared/block/day-selector/day-selector'
-import type { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
 import { useState } from 'react'
+
+import { fn } from '@storybook/test'
+
+import DaySelector, {
+  DaySelectorProps,
+} from '@/shared/block/day-selector/day-selector'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/DaySelector',

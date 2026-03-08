@@ -1,8 +1,9 @@
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react-swc'
 import fs, { copyFileSync } from 'fs'
 import path, { resolve } from 'path'
-import { defineConfig, Plugin } from 'vite'
+
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react-swc'
+import { Plugin, defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/

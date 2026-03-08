@@ -1,6 +1,8 @@
-import Checkbox from '@/shared/ui/checkbox/checkbox'
-import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
+
+import Checkbox from '@/shared/ui/checkbox/checkbox'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Checkbox> = {
   title: 'Components/Checkbox',

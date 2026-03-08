@@ -1,7 +1,8 @@
-import { cn } from '@/shared/libs/utils'
-import { ChevronRight } from 'lucide-react'
 import * as React from 'react'
 
+import { ChevronRight } from 'lucide-react'
+
+import { cn } from '@/shared/libs/utils'
 
 interface ProcessTabProps {
   currentStep: number
@@ -9,11 +10,7 @@ interface ProcessTabProps {
   className?: string
 }
 
-export function ProcessTab({
-  currentStep,
-  steps,
-  className,
-}: ProcessTabProps) {
+export function ProcessTab({ currentStep, steps, className }: ProcessTabProps) {
   return (
     <div
       className={cn(

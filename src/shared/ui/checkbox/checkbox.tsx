@@ -1,10 +1,12 @@
+import * as React from 'react'
+
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+
 import CheckboxOffIcon from '@/assets/icons/icn-check-off.svg?react'
 import CheckboxMultipleIcon from '@/assets/icons/icn-check-on-multiple.svg?react'
 import CheckboxOnOutlineIcon from '@/assets/icons/icn-check-on-outline.svg?react'
 import CheckboxOnFilledIcon from '@/assets/icons/icn-check-on.svg?react'
 import { cn } from '@/shared/libs/utils'
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import * as React from 'react'
 
 interface CheckboxProps {
   className?: string

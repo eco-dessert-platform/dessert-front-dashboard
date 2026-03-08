@@ -1,11 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
 import { ComponentProps, useEffect, useState } from 'react'
+
+import { fn } from '@storybook/test'
+
 import InputField from './input-field'
 
-const InputFieldInteractive = (
-  args: ComponentProps<typeof InputField>,
-) => {
+import type { Meta, StoryObj } from '@storybook/react'
+
+const InputFieldInteractive = (args: ComponentProps<typeof InputField>) => {
   const [value, setValue] = useState(args.value || '')
 
   useEffect(() => {

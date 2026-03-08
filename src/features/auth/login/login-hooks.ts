@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
-import { useAuthStore } from 'src/entity/auth/auth-store'
+
 import {
-  useKakaoLoginMutation,
   useGoogleLoginMutation,
+  useKakaoLoginMutation,
 } from 'src/entity/auth/auth-query'
+import { useAuthStore } from 'src/entity/auth/auth-store'
 
 interface SocialLoginMessage {
   type: 'SOCIAL_LOGIN_SUCCESS' | 'SOCIAL_LOGIN_ERROR'

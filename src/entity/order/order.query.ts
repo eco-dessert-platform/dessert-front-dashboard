@@ -1,6 +1,7 @@
 import { queryOptions } from '@tanstack/react-query'
-import { OrderFilters } from './order.type'
+
 import { getOrders } from './order.api'
+import { OrderFilters } from './order.type'
 
 export const orderQueries = {
   all: () => ['order'],

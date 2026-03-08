@@ -1,11 +1,13 @@
 import { AxiosResponse } from 'axios'
-import { GoogleAuthResponse, KakaoAuthResponse, LoginResponse } from './types'
-import { GOOGLE, KAKAO } from './constants'
+
 import {
   client,
   googleOAuthClient,
   kakaoOAuthClient,
 } from 'src/shared/utils/axios'
+
+import { GOOGLE, KAKAO } from './constants'
+import { GoogleAuthResponse, KakaoAuthResponse, LoginResponse } from './types'
 
 export const kakaoLogin = async (
   code: string,

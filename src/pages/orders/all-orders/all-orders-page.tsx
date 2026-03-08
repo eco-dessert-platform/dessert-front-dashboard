@@ -1,3 +1,6 @@
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'react-router-dom'
+
 import { orderQueries } from '@/entity/order/order.query'
 import { OrderStatusCount, OrderStatusTab } from '@/entity/order/order.type'
 import { OrderActionBar } from '@/features/order/order-action-bar/order-action-bar.ui'
@@ -6,8 +9,6 @@ import { OrderFilters } from '@/features/order/order-filters/order-filters.ui'
 import { OrderStatusTabs } from '@/features/order/order-status-tabs/order-status-tabs.ui'
 import { useOrderSelection } from '@/features/order/order-table/order-selection.hook'
 import { OrderTable } from '@/features/order/order-table/order-table.ui'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { useSearchParams } from 'react-router-dom'
 
 const VALID_TABS: OrderStatusTab[] = [
   'all',

@@ -1,8 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react'
-import { DatePicker } from './date-picker'
+import { fn } from '@storybook/test'
 import { DateRange } from 'react-day-picker'
 import { useArgs } from 'storybook/internal/preview-api'
-import { fn } from '@storybook/test'
+
+import { DatePicker } from './date-picker'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/DatePicker',

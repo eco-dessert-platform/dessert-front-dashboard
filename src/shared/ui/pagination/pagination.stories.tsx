@@ -1,7 +1,9 @@
+import { useState } from 'react'
+
 import type { PaginationProps } from '@/shared/ui/pagination/pagination'
 import { Pagination } from '@/shared/ui/pagination/pagination'
+
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
 
 const meta = {
   title: 'Components/Pagination',

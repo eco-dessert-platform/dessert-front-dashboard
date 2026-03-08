@@ -1,5 +1,6 @@
-import Badge from '@/shared/ui/badge/badge'
 import { Meta, StoryObj } from '@storybook/react'
+
+import Badge from '@/shared/ui/badge/badge'
 
 const meta = {
   title: 'Components/Badge',

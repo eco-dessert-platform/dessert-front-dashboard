@@ -1,15 +1,17 @@
+import { format, parse } from 'date-fns'
+import { DateRange } from 'react-day-picker'
+
+import {
+  SettlementDateType,
+  SettlementFilters,
+  SettlementSearchType,
+} from '@/entity/settlement/types'
 import { DatePicker } from '@/shared/block/date-picker/date-picker'
 import Button from '@/shared/ui/button/button'
 import Input from '@/shared/ui/input/input'
 import Select from '@/shared/ui/select/select'
-import { DateRange } from 'react-day-picker'
+
 import { DATE_TYPE_OPTIONS, SEARCH_TYPE_OPTIONS } from './schema/contracts'
-import {
-  SettlementFilters,
-  SettlementDateType,
-  SettlementSearchType,
-} from '@/entity/settlement/types'
-import { format, parse } from 'date-fns'
 
 interface SettlementFilterProps {
   filters: SettlementFilters

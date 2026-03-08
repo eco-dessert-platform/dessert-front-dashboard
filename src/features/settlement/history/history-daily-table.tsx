@@ -1,16 +1,19 @@
+import { useMemo, useState } from 'react'
+
+import { ColumnDef } from '@tanstack/react-table'
+
+import { getDailySettlementMock } from '@/entity/settlement/mock'
+import { Settlement } from '@/entity/settlement/types'
 import Button from '@/shared/ui/button/button'
 import Table from '@/shared/ui/table/table'
-import { ColumnDef } from '@tanstack/react-table'
-import { SettlementTableTopArea } from './history-table-top-area'
+
 import {
+  DeductionDetailTable,
   Popover,
   PopoverContent,
   PopoverTrigger,
-  DeductionDetailTable,
 } from './history-popover'
-import { Settlement } from '@/entity/settlement/types'
-import { getDailySettlementMock } from '@/entity/settlement/mock'
-import { useState, useMemo } from 'react'
+import { SettlementTableTopArea } from './history-table-top-area'
 
 const columns: ColumnDef<Settlement>[] = [
   {

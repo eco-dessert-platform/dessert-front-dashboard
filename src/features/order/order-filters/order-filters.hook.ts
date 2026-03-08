@@ -1,5 +1,6 @@
-import { OrderFilters, OrderStatusTab } from '@/entity/order/order.type'
 import { useState } from 'react'
+
+import { OrderFilters, OrderStatusTab } from '@/entity/order/order.type'
 
 const createInitialState = (initialTab: OrderStatusTab): OrderFilters => ({
   tab: initialTab,

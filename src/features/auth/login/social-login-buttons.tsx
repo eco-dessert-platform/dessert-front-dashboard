@@ -3,6 +3,7 @@ import GoogleIcon from 'src/assets/icons/social/google.svg?react'
 import KakaoIcon from 'src/assets/icons/social/kakao.svg?react'
 import { useAuthStore } from 'src/entity/auth/auth-store'
 import { GOOGLE, KAKAO } from 'src/entity/auth/constants'
+
 import { setGooglePopup, setKakaoPopup } from './login-hooks'
 
 export const SocialLoginButtons = () => {

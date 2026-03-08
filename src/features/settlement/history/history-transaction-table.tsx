@@ -1,16 +1,22 @@
-import Table from '@/shared/ui/table/table'
+import { useMemo } from 'react'
+
 import { ColumnDef } from '@tanstack/react-table'
-import { SettlementTableTopArea } from './history-table-top-area'
+
+import { getTransactionSettlementMock } from '@/entity/settlement/mock'
+import {
+  SettlementFilters,
+  TransactionSettlement,
+} from '@/entity/settlement/types'
 import Button from '@/shared/ui/button/button'
+import Table from '@/shared/ui/table/table'
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
   TransactionDetailTable,
 } from './history-popover'
-import { TransactionSettlement } from '@/entity/settlement/types'
-import { getTransactionSettlementMock } from '@/entity/settlement/mock'
-import { useMemo } from 'react'
+import { SettlementTableTopArea } from './history-table-top-area'
 
 const columns: ColumnDef<TransactionSettlement>[] = [
   {
@@ -129,8 +135,6 @@ const columns: ColumnDef<TransactionSettlement>[] = [
     ),
   },
 ]
-
-import { SettlementFilters } from '@/entity/settlement/types'
 
 interface TransactionSettlementTableProps {
   filters: SettlementFilters

@@ -1,12 +1,13 @@
+import { useEffect, useRef } from 'react'
+
 import {
-  type Cell,
-  type Row,
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { useEffect, useRef } from 'react'
+
+import type { Cell, Row } from '@tanstack/react-table'
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData, TValue> {

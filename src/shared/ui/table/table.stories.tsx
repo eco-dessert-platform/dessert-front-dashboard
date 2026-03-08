@@ -1,12 +1,13 @@
-import Button from '@/shared/ui/button/button'
-import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
-import type { Meta, StoryObj } from '@storybook/react'
-import type { ColumnDef } from '@tanstack/react-table'
 import { useCallback, useState } from 'react'
 
 import Badge from '@/shared/ui/badge/badge'
+import Button from '@/shared/ui/button/button'
 import Checkbox from '@/shared/ui/checkbox/checkbox'
 import Table from '@/shared/ui/table/table'
+import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
+
+import type { Meta, StoryObj } from '@storybook/react'
+import type { ColumnDef } from '@tanstack/react-table'
 
 // TODO: type은 api responese 타입으로 수정
 type TableRow = {

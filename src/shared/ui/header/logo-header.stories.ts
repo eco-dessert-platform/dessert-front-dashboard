@@ -1,4 +1,5 @@
 import LogoHeader from '@/shared/ui/header/logo-header'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

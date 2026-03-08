@@ -1,13 +1,14 @@
+import { useLocation, useNavigate } from 'react-router-dom'
+
 import logoutIcon from '@/assets/icons/logout.svg'
+import { ROUTES } from '@/shared/constant/routes'
+import { cn } from '@/shared/libs/utils'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/shared/ui/accordion/accordion'
-import { ROUTES } from '@/shared/constant/routes'
-import { cn } from '@/shared/libs/utils'
-import { useLocation, useNavigate } from 'react-router-dom'
 
 const MENU_LIST = [
   {

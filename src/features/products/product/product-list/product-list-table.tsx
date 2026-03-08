@@ -1,12 +1,12 @@
-import Table from '@/shared/ui/table/table'
-import { Pagination } from '@/shared/ui/pagination/pagination'
-
-import ProductTopAreaSort from './product-top-area/product-top-area-sort'
-import ProductTopAreaCounter from './product-top-area/product-top-area-counter'
-import ProductTopAreaBulkDelete from './product-top-area/product-top-area-bulk-delete'
 import { ProductResultData } from '@/entity/products/product/product-data.mock'
+import { Pagination } from '@/shared/ui/pagination/pagination'
+import Table from '@/shared/ui/table/table'
+
 import { getResultColumns } from './product-list-columns'
 import { useProductList } from './product-list.hook'
+import ProductTopAreaBulkDelete from './product-top-area/product-top-area-bulk-delete'
+import ProductTopAreaCounter from './product-top-area/product-top-area-counter'
+import ProductTopAreaSort from './product-top-area/product-top-area-sort'
 
 export const ResultTable = () => {
   const {
