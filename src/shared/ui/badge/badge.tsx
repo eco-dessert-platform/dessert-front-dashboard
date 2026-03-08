@@ -4,6 +4,7 @@ import { VariantProps, cva } from 'class-variance-authority'
 
 import { cn } from '@/shared/libs/utils'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const badgeVariants = cva(
   [
     'inline-flex',
