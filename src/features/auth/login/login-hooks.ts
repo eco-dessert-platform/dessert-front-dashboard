@@ -44,8 +44,6 @@ export const useSocialLogin = () => {
       const { type, provider, code, error } = event.data
 
       if (type === 'SOCIAL_LOGIN_SUCCESS' && provider && code) {
-        console.log('소셜 로그인 성공:', { provider, code })
-
         const upperProvider = provider.toUpperCase() as 'KAKAO' | 'GOOGLE'
 
         if (upperProvider === 'GOOGLE') {

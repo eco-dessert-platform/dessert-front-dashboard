@@ -17,7 +17,6 @@ const badgeMap = {
 } as const
 
 const ProductListCellStatus = ({ status }: Props) => {
-  console.log(status)
   const [realState, setRealState] = useState(status)
 
   const badge = badgeMap[realState]

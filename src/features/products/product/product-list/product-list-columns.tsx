@@ -111,7 +111,7 @@ export const getResultColumns = ({
     header: '',
     id: 'actions',
     cell: ({ row }) => {
-      const onEdit = () => console.log('edit', row.original)
+      const onEdit = () => {}
 
       return (
         <div className="flex flex-col items-center justify-center gap-4">

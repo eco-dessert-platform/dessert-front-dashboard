@@ -190,9 +190,9 @@ const exampleColumns = ({
   {
     header: '',
     id: 'actions',
-    cell: ({ row }) => {
-      const onEdit = () => console.log('edit', row.original)
-      const onCopy = () => console.log('copy', row.original)
+    cell: () => {
+      const onEdit = () => {}
+      const onCopy = () => {}
       return (
         <div className="flex flex-col items-center justify-center gap-4">
           <Button

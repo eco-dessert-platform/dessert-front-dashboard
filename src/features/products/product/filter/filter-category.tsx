@@ -58,9 +58,7 @@ export const FilterCategory = () => {
         title="조회"
         size="md"
         className="min-w-[72px]"
-        onClick={() => {
-          console.log('조회 click')
-        }}
+        onClick={() => {}}
       />
     </>
   )

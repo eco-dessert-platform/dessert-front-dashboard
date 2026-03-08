@@ -91,7 +91,6 @@ function AllOrdersPage() {
 
   const handleAction = () => {
     // todos: Modal feature 컴포넌트 구현 과정에서 연결
-    console.log('Order Action Bar Button Action')
   }
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1

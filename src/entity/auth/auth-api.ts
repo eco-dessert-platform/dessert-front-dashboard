@@ -12,8 +12,6 @@ import { GoogleAuthResponse, KakaoAuthResponse, LoginResponse } from './types'
 export const kakaoLogin = async (
   code: string,
 ): Promise<AxiosResponse<LoginResponse>> => {
-  console.log('카카오 토큰 발급 시작:', code)
-
   const params = new URLSearchParams({
     grant_type: 'authorization_code',
     client_id: KAKAO.client_id as string,
@@ -26,13 +24,9 @@ export const kakaoLogin = async (
     params.toString(),
   )
 
-  console.log('카카오 토큰 발급 성공')
-
   const response = await client.get<LoginResponse>(
     `/api/v1/oauth/seller/login/kakao?token=${tokenData.access_token}`,
   )
-
-  console.log('카카오 로그인 성공')
 
   return response
 }
@@ -40,8 +34,6 @@ export const kakaoLogin = async (
 export const googleLogin = async (
   code: string,
 ): Promise<AxiosResponse<LoginResponse>> => {
-  console.log('구글 토큰 발급 시작:', code)
-
   const params = new URLSearchParams({
     code,
     client_id: GOOGLE.client_id as string,
@@ -55,13 +47,9 @@ export const googleLogin = async (
     params.toString(),
   )
 
-  console.log('구글 토큰 발급 성공')
-
   const response = await client.get<LoginResponse>(
     `/api/v1/oauth/seller/login/google?token=${tokenData.access_token}`,
   )
-
-  console.log('구글 로그인 성공')
 
   return response
 }

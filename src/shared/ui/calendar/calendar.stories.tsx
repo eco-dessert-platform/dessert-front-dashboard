@@ -26,12 +26,10 @@ const CalendarWithDraft = () => {
 
   const handleConfirm = () => {
     setCommittedRange(draftRange)
-    console.log('Confirmed:', draftRange)
   }
 
   const handleReset = () => {
     setDraftRange(undefined)
-    console.log('Reset draft')
   }
 
   return (
