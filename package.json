@@ -13,9 +13,9 @@
     "test:run": "vitest run",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "postinstall": "husky",
     "prepack": "pinst --disable",
-    "postpack": "pinst --enable"
+    "postpack": "pinst --enable",
+    "prepare": "husky"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
