@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
-import { useAuthStore } from 'src/entity/auth/auth-store'
+
 import {
-  useKakaoLoginMutation,
   useGoogleLoginMutation,
+  useKakaoLoginMutation,
 } from 'src/entity/auth/auth-query'
+import { useAuthStore } from 'src/entity/auth/auth-store'
 
 interface SocialLoginMessage {
   type: 'SOCIAL_LOGIN_SUCCESS' | 'SOCIAL_LOGIN_ERROR'
@@ -43,8 +44,6 @@ export const useSocialLogin = () => {
       const { type, provider, code, error } = event.data
 
       if (type === 'SOCIAL_LOGIN_SUCCESS' && provider && code) {
-        console.log('소셜 로그인 성공:', { provider, code })
-
         const upperProvider = provider.toUpperCase() as 'KAKAO' | 'GOOGLE'
 
         if (upperProvider === 'GOOGLE') {

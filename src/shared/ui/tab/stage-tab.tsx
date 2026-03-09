@@ -1,5 +1,4 @@
 import IconCheck from '@/assets/icons/icon-check.svg?react'
-
 import { cn } from '@/shared/libs/utils'
 
 interface StageTabProps {
@@ -11,11 +10,7 @@ interface StageTabProps {
   className?: string
 }
 
-export function StageTab({
-  currentStep,
-  steps,
-  className,
-}: StageTabProps) {
+export function StageTab({ currentStep, steps, className }: StageTabProps) {
   return (
     <div
       className={cn(

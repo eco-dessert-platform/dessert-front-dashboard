@@ -1,6 +1,8 @@
-import { cn } from '@/shared/libs/utils'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import * as React from 'react'
+
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+
+import { cn } from '@/shared/libs/utils'
 
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right'
 type TooltipAlign = 'start' | 'center' | 'end'
@@ -14,9 +16,9 @@ interface TooltipContextValue {
   onOpenChange?: (open: boolean) => void
 }
 
-const TooltipContext = React.createContext<
-  TooltipContextValue | undefined
->(undefined)
+const TooltipContext = React.createContext<TooltipContextValue | undefined>(
+  undefined,
+)
 
 // Custom Hook으로 Context 접근
 function useTooltipContext() {

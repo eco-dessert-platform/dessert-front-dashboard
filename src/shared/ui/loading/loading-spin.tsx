@@ -1,5 +1,6 @@
-import { Loader } from 'lucide-react'
 import { ReactNode } from 'react'
+
+import { Loader } from 'lucide-react'
 
 type SSspinProps = {
   children?: ReactNode

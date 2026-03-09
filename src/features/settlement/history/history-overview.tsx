@@ -1,8 +1,10 @@
+import { useState } from 'react'
+
+import { format } from 'date-fns'
+import { DateRange } from 'react-day-picker'
+
 import { DatePicker } from '@/shared/block/date-picker/date-picker'
 import Button from '@/shared/ui/button/button'
-import { useState } from 'react'
-import { DateRange } from 'react-day-picker'
-import { format } from 'date-fns'
 
 export const SettlementOverview = () => {
   const [dateValue, setDateValue] = useState<DateRange | undefined>(undefined)

@@ -1,9 +1,9 @@
-import { SettlementOverview } from '@/features/settlement/history/history-overview'
 import { DailySettlementTable } from '@/features/settlement/history/history-daily-table'
 import { SettlementFilter } from '@/features/settlement/history/history-filter'
+import { SettlementOverview } from '@/features/settlement/history/history-overview'
 import { TransactionSettlementTable } from '@/features/settlement/history/history-transaction-table'
-import { Tab, TabContent, TabList, TabTrigger } from '@/shared/ui/tab/tab'
 import { useSettlementFilter } from '@/features/settlement/history/model/use-settlement-filter'
+import { Tab, TabContent, TabList, TabTrigger } from '@/shared/ui/tab/tab'
 
 const SettlementPage = () => {
   const { draftFilters, setDraftFilters, appliedFilters, apply, setPage } =

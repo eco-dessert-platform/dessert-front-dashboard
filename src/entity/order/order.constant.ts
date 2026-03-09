@@ -1,4 +1,7 @@
 import { VariantProps } from 'class-variance-authority'
+
+import { badgeVariants } from '@/shared/ui/badge/badge'
+
 import {
   ActionButton,
   DeliveryStatus,
@@ -6,7 +9,6 @@ import {
   OrderStatusTab,
   SearchType,
 } from './order.type'
-import { badgeVariants } from '@/shared/ui/badge/badge'
 
 export const ORDER_STATUS_TABS: Array<{
   value: OrderStatusTab

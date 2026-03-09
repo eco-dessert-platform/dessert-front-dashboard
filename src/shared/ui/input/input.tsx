@@ -1,5 +1,5 @@
-import Label from '@/shared/ui/label/label'
 import { cn } from '@/shared/libs/utils'
+import Label from '@/shared/ui/label/label'
 import { formFieldBase } from '@/styles/form-control.styles'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {

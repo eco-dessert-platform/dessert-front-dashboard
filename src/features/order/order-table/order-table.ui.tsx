@@ -1,3 +1,7 @@
+import { useCallback, useMemo } from 'react'
+
+import { ColumnDef, Row } from '@tanstack/react-table'
+
 import {
   DELIVERY_STATUS_LABELS,
   ORDER_STATUS_BADGE_COLOR,
@@ -9,12 +13,10 @@ import {
   OrderStatusTab,
 } from '@/entity/order/order.type'
 import Table from '@/shared/components/ui/table/table'
-import { ColumnDef, Row } from '@tanstack/react-table'
-import { useCallback, useMemo } from 'react'
-import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
-import Checkbox from '@/shared/ui/checkbox/checkbox'
-import Button from '@/shared/ui/button/button'
 import Badge from '@/shared/ui/badge/badge'
+import Button from '@/shared/ui/button/button'
+import Checkbox from '@/shared/ui/checkbox/checkbox'
+import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
 
 type FlatOrderRow = Omit<OrderItem, 'products'> &
   OrderProduct & {

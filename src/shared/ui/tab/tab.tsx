@@ -1,6 +1,7 @@
-import * as TabsPrimitive from '@radix-ui/react-tabs'
 import * as React from 'react'
 import { ReactNode, createContext, useContext } from 'react'
+
+import * as TabsPrimitive from '@radix-ui/react-tabs'
 
 import { cn } from '@/shared/libs/utils'
 

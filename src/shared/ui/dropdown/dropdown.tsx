@@ -1,9 +1,10 @@
+import { useEffect, useRef, useState } from 'react'
+
 import DownArrowIcon from '@/assets/icons/arrow/down-arrow.svg?react'
 import CheckboxOffIcon from '@/assets/icons/icn-check-off.svg?react'
 import CheckboxOnIcon from '@/assets/icons/icn-check-on.svg?react'
 import CheckIcon from '@/assets/icons/icon-check.svg?react'
 import { cn } from '@/shared/libs/utils'
-import { useEffect, useRef, useState } from 'react'
 
 interface dropdownOption {
   label: string

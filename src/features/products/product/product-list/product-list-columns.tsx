@@ -1,7 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table'
-import Checkbox from '@/shared/ui/checkbox/checkbox'
-import Button from '@/shared/ui/button/button'
+
 import { ProductType } from '@/entity/products/product/product.type'
+import Button from '@/shared/ui/button/button'
+import Checkbox from '@/shared/ui/checkbox/checkbox'
+
 import ProductListCellStatus from './product-list-cell/product-list-cell-status'
 
 type Args = {
@@ -109,7 +111,7 @@ export const getResultColumns = ({
     header: '',
     id: 'actions',
     cell: ({ row }) => {
-      const onEdit = () => console.log('edit', row.original)
+      const onEdit = () => {}
 
       return (
         <div className="flex flex-col items-center justify-center gap-4">

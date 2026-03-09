@@ -1,6 +1,7 @@
-import { cn } from '@/shared/libs/utils'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { X } from 'lucide-react'
+
+import { cn } from '@/shared/libs/utils'
 
 interface ChipProps {
   children: React.ReactNode

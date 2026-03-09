@@ -1,6 +1,8 @@
-import { cn } from '@/shared/libs/utils'
-import * as SwitchPrimitive from '@radix-ui/react-switch'
 import * as React from 'react'
+
+import * as SwitchPrimitive from '@radix-ui/react-switch'
+
+import { cn } from '@/shared/libs/utils'
 
 interface SwitchProps
   extends React.ComponentProps<typeof SwitchPrimitive.Root> {

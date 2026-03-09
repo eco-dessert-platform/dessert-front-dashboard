@@ -1,9 +1,10 @@
+import { clsx } from 'clsx'
+
 import DoubleForwardArrow from '@/assets/icons/arrow/double-forward-arrow.svg?react'
 import DoubleNextArrow from '@/assets/icons/arrow/double-next-arrow.svg?react'
 import ForwardArrow from '@/assets/icons/arrow/forward-arrow.svg?react'
 import NextArrow from '@/assets/icons/arrow/next-arrow.svg?react'
 import { cn } from '@/shared/libs/utils'
-import clsx from 'clsx'
 
 export interface PaginationProps {
   currentPage: number

@@ -1,4 +1,5 @@
 import BottomNavBar from '@/shared/block/bottom-nav-bar/bottom-nav-bar'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof BottomNavBar> = {

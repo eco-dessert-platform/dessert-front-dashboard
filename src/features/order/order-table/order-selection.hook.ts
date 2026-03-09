@@ -1,5 +1,6 @@
-import { OrderItem } from '@/entity/order/order.type'
 import { useCallback, useState } from 'react'
+
+import { OrderItem } from '@/entity/order/order.type'
 
 export function useOrderSelection(orders: OrderItem[]) {
   const [selectedIds, setSelectedIds] = useState<string[]>([])

@@ -1,9 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
 import { ToastContainer } from 'react-toastify'
+
 import 'react-toastify/dist/ReactToastify.css'
 import Toast from './toast'
 import { toast } from './toast-helper'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/Toast',
@@ -155,9 +157,7 @@ export const WithHelperFunctions: Story = {
         Show info Toast
       </button>
       <button
-        onClick={() =>
-          toast.info('info 메시지', '무언가 다운로드 되었습니다.')
-        }
+        onClick={() => toast.info('info 메시지', '무언가 다운로드 되었습니다.')}
         className="rounded-sm bg-gray-800 px-4 py-2 text-white"
       >
         Show Info Toast2

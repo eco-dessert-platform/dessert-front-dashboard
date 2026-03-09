@@ -1,8 +1,7 @@
 import ExcelIcon from '@/assets/icons/icon-excel.svg?react'
+import Button from '@/shared/ui/button/button'
 import { Pagination } from '@/shared/ui/pagination/pagination'
 import { toast } from '@/shared/ui/toast/toast-helper'
-
-import Button from '@/shared/ui/button/button'
 
 interface SettlementTableTopAreaProps {
   currentPage: number

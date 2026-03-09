@@ -1,12 +1,13 @@
-import Button from '@/shared/ui/button/button'
-import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
-import type { Meta, StoryObj } from '@storybook/react'
-import type { ColumnDef } from '@tanstack/react-table'
 import { useCallback, useState } from 'react'
 
 import Badge from '@/shared/ui/badge/badge'
+import Button from '@/shared/ui/button/button'
 import Checkbox from '@/shared/ui/checkbox/checkbox'
 import Table from '@/shared/ui/table/table'
+import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
+
+import type { Meta, StoryObj } from '@storybook/react'
+import type { ColumnDef } from '@tanstack/react-table'
 
 // TODO: type은 api responese 타입으로 수정
 type TableRow = {
@@ -189,9 +190,9 @@ const exampleColumns = ({
   {
     header: '',
     id: 'actions',
-    cell: ({ row }) => {
-      const onEdit = () => console.log('edit', row.original)
-      const onCopy = () => console.log('copy', row.original)
+    cell: () => {
+      const onEdit = () => {}
+      const onCopy = () => {}
       return (
         <div className="flex flex-col items-center justify-center gap-4">
           <Button

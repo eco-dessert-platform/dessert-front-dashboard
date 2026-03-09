@@ -1,8 +1,8 @@
 import {
   OrderItem,
   OrderListResponse,
-  OrderStatusTab,
   OrderStatus,
+  OrderStatusTab,
 } from './order.type'
 
 // ─── 20개 Mock 주문 데이터 ───────────────────────────────────────

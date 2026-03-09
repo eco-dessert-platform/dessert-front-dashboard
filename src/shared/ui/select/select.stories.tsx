@@ -1,8 +1,11 @@
+import { useState } from 'react'
+
+import { fn } from '@storybook/test'
+
 import type { SelectProps } from '@/shared/ui/select/select'
 import Select from '@/shared/ui/select/select'
+
 import type { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
-import { useState } from 'react'
 
 const meta = {
   title: 'Components/Select',

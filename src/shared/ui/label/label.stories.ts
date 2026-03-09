@@ -1,4 +1,5 @@
 import Label from '@/shared/ui/label/label'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Label> = {
@@ -13,14 +14,14 @@ export default meta
 type Story = StoryObj<typeof Label>
 
 export const Primary: Story = {
-	args: {
-		label: 'Label',
-	},
+  args: {
+    label: 'Label',
+  },
 }
 
 export const Required: Story = {
-	args: {
-		label: 'Label',
+  args: {
+    label: 'Label',
     required: true,
   },
 }

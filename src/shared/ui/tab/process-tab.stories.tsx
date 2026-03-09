@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-
 import { ProcessTab } from './process-tab'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/Tabs/ProcessTab',

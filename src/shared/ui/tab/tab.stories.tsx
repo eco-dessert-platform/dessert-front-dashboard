@@ -1,5 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react'
 import { Tab, TabList, TabTrigger } from './tab'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 type TabStoryProps = React.ComponentProps<typeof Tab> & {
   size?: 'sm' | 'lg'

@@ -1,10 +1,11 @@
-"use client"
+'use client'
 
-import * as AccordionPrimitive from "@radix-ui/react-accordion"
-import * as React from "react"
+import * as React from 'react'
 
-import BottomArrowIcon from "@/assets/icons/arrow/bottom-arrow.svg?react"
-import { cn } from "@/shared/libs/utils"
+import * as AccordionPrimitive from '@radix-ui/react-accordion'
+
+import BottomArrowIcon from '@/assets/icons/arrow/bottom-arrow.svg?react'
+import { cn } from '@/shared/libs/utils'
 
 function Accordion({
   className,
@@ -13,7 +14,7 @@ function Accordion({
   return (
     <AccordionPrimitive.Root
       data-slot="accordion"
-      className={cn("flex w-full flex-col", className)}
+      className={cn('flex w-full flex-col', className)}
       {...props}
     />
   )
@@ -42,8 +43,8 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "group relative flex flex-1 cursor-pointer items-center justify-between px-2 py-3 text-left typo-heading-18-m text-gray-800 transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:after:border-ring disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-gray-800" ,
-          className
+          'group relative flex flex-1 cursor-pointer items-center justify-between px-2 py-3 text-left typo-heading-18-m text-gray-800 transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:after:border-ring disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-gray-800',
+          className,
         )}
         {...props}
       >
@@ -70,8 +71,8 @@ function AccordionContent({
     >
       <div
         className={cn(
-          "h-(--radix-accordion-content-height) pt-0 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground",
-          className
+          'h-(--radix-accordion-content-height) pt-0 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground',
+          className,
         )}
       >
         {children}
@@ -81,4 +82,3 @@ function AccordionContent({
 }
 
 export { Accordion, AccordionContent, AccordionItem, AccordionTrigger }
-
