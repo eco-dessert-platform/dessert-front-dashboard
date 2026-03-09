@@ -1,0 +1,2 @@
+echo "🔧 Building project..."
+yarn run build 
