@@ -20,6 +20,7 @@ export interface SelectProps {
   errorMessage?: string
   helperText?: string
   className?: string
+  labelClassName?: string
   onValueChange?: (value: string) => void
 }
 
@@ -34,13 +35,16 @@ const Select = ({
   errorMessage,
   helperText,
   className = '',
+  labelClassName,
   onValueChange,
 }: SelectProps) => {
   return (
     <div
       className={cn('flex flex-col items-start gap-4 self-stretch', className)}
     >
-      {label && <Label label={label} required={required} />}
+      {label && (
+        <Label label={label} required={required} className={labelClassName} />
+      )}
       <SelectPrimitive.Root
         value={value}
         onValueChange={onValueChange}

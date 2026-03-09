@@ -4,6 +4,7 @@ import { FormStepsProvider } from '@/features/products/create/create-form/create
 import { useFormSteps } from '@/features/products/create/create-form/create-form-provider/use-form-steps.hook'
 import { ProductInfoArea } from '../../../features/products/create/create-form/craete-form-info/create-form-info-area'
 import { ProductDeliveryArea } from '@/features/products/create/create-form/create-form-delivery/create-form-delivery-area'
+import { ProductOptionsArea } from '@/features/products/create/create-form/create-form-options-info/create-form-options-area'
 
 function CreatePage() {
   return (
@@ -30,6 +31,12 @@ function CreatePageInner() {
         {productFields.productDelivery ? 'true' : 'false'}
         <div className="px-24 pt-16 pb-24">
           <ProductDeliveryArea />
+        </div>
+      </div>
+      <div className="mt-20 bg-white">
+        {productFields.productOptions ? 'true' : 'false'}
+        <div className="px-24 pt-16 pb-24">
+          <ProductOptionsArea />
         </div>
       </div>
 

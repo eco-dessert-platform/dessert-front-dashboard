@@ -12,6 +12,7 @@ export const FormStepsProvider = ({
   const [productFields, setProductFields] = useState<FormStepStatus>({
     productInfo: false,
     productDelivery: false,
+    productOptions: false,
   })
 
   return (
