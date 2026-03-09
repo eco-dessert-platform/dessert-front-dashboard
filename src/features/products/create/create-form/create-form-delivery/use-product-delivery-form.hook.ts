@@ -1,39 +1,8 @@
 import { useForm, Resolver } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { deliverySchema } from './create-delivery.schema'
 import { useNumberInput } from '../create-form-number-input.hook'
-
-type DeliveryFormInput = {
-  deliveryTerms: string
-  deliveryCompany: string
-  deliveryFee: number | null
-  deliveryMinFee: number | null
-}
-
-const deliverySchema = z
-  .object({
-    deliveryTerms: z.string(),
-    deliveryCompany: z.string(),
-    deliveryFee: z.union([
-      z
-        .number({ error: '올바른 가격을 입력해주세요1' })
-        .min(0, '올바른 가격을 입력해주세요'),
-      z.null(),
-    ]),
-    deliveryMinFee: z.union([
-      z
-        .number({ error: '올바른 가격을 입력해주세요1' })
-        .min(0, '올바른 가격을 입력해주세요'),
-      z.null(),
-    ]),
-  })
-  .refine(
-    (data) => {
-      if (data.deliveryTerms === 'free') return true
-      return data.deliveryFee && data.deliveryFee <= 100000 ? true : false
-    },
-    { message: '올바른 금액을 입력해주세요', path: ['deliveryFee'] },
-  )
+import { DeliveryFormInput } from '@/entity/products/create/product-form.type'
 
 export function useProductDeliveryForm() {
   const form = useForm<DeliveryFormInput>({

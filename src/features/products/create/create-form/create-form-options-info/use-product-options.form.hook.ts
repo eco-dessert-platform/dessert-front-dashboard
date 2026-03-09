@@ -1,64 +1,10 @@
 import { useForm, Resolver } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { productOptionSchema } from './create-options.schema'
 import { useNumberInput } from '../create-form-number-input.hook'
 import { useFloatInput } from '../create-form-float-input.hook'
 import { SUB_CATEGORY_MAP } from '@/entity/products/create/product-options/product-options.constant'
-
-type ProductOptionFormInput = {
-  mainCategory: string
-  subCategory: string
-  optionName: string
-  ingredientCategories: ('glutenFree' | 'vegan')[]
-  additionalPrice: number | null
-  stockQuantity: number | null
-  shippingDays: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[]
-  hasNutrition: boolean
-  totalWeight: number | null
-  calories: number | null
-  carbohydrate: number | null
-  sugar: number | null
-  protein: number | null
-  fat: number | null
-  sodium: number | null
-}
-
-const productOptionSchema = z
-  .object({
-    mainCategory: z.string(),
-    subCategory: z.string(),
-    optionName: z.string(),
-    ingredientCategories: z.array(z.enum(['glutenFree', 'vegan'])),
-    additionalPrice: z.union([
-      z
-        .number({ error: '올바른 가격을 입력해주세요' })
-        .min(-100000, '올바른 가격을 입력해주세요')
-        .max(100000, '올바른 가격을 입력해주세요'),
-      z.null(),
-    ]),
-    stockQuantity: z.union([z.number().int().min(0), z.null()]),
-    shippingDays: z.array(
-      z.enum(['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']),
-    ),
-    hasNutrition: z.boolean(),
-    totalWeight: z.union([z.number().min(0), z.null()]),
-    calories: z.union([z.number().min(0), z.null()]),
-    carbohydrate: z.union([z.number().min(0), z.null()]),
-    sugar: z.union([z.number().min(0), z.null()]),
-    protein: z.union([z.number().min(0), z.null()]),
-    fat: z.union([z.number().min(0), z.null()]),
-    sodium: z.union([z.number().min(0), z.null()]),
-  })
-  .refine(
-    (data) =>
-      data.optionName === '' ||
-      (data.optionName.length >= 3 && data.optionName.length <= 49),
-    { message: '3자 이상 50자 미만으로 입력해 주세요', path: ['optionName'] },
-  )
-  .refine((data) => data.additionalPrice !== null, {
-    message: '',
-    path: ['additionalPrice'],
-  })
+import { ProductOptionFormInput } from '@/entity/products/create/product-form.type'
 
 export function useProductOptionForm(basePrice: number | null = null) {
   const form = useForm<ProductOptionFormInput>({
