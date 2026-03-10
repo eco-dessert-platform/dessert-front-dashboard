@@ -15,6 +15,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@dessert/ui": "*",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.11",

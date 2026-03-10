@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@/styles/fonts.pcss';
+@import '@/styles/shadcn.pcss';
+@import '@/styles/tokens.pcss';
+@import '@/styles/typography.pcss';
+@import '@/styles/base.pcss';
