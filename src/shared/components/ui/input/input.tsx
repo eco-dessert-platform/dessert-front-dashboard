@@ -8,6 +8,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   helperText?: string
   error?: boolean
   errorMessage?: string
+  readOnly?: boolean
 }
 
 const Input = ({
@@ -23,6 +24,7 @@ const Input = ({
   helperText,
   className = '',
   maxLength,
+  readOnly,
   ...restProps
 }: InputProps) => {
   return (
@@ -38,16 +40,18 @@ const Input = ({
           type={type}
           className={cn(
             formFieldBase,
-            'h-input rounded-10 px-12 py-8 flex items-center',
+            'h-input rounded-10 flex items-center px-12 py-8',
             error &&
               'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
             maxLength && 'pr-14',
+            readOnly && 'border border-gray-300 bg-gray-100',
           )}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
           disabled={disabled}
           maxLength={maxLength}
+          readOnly={readOnly}
           {...restProps}
         />
         {maxLength && (

@@ -1,5 +1,8 @@
 export const ROUTES = {
   HOME: '/',
+	AUTH: {
+		SIGN_UP: '/auth/sign-up',
+	},
 	ORDERS: {
 		ALL: '/orders',
 		COMPLETED: '/orders/completed',

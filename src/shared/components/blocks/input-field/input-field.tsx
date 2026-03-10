@@ -8,11 +8,12 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   required?: boolean
   helperText?: string
-  buttonText: string
+  buttonText?: string
   onButtonClick: () => void
   error?: boolean
   errorMessage?: string
   layout?: 'vertical' | 'horizontal'
+  readOnly?: boolean
 }
 
 export default function InputField({
@@ -28,6 +29,7 @@ export default function InputField({
   onChange,
   layout = 'vertical',
   disabled,
+  readOnly,
   className,
   ...restProps
 }: InputFieldProps) {
@@ -48,7 +50,7 @@ export default function InputField({
       />
 
       <div className="flex grow flex-col gap-1.5">
-        <div className="flex w-full items-center gap-2">
+        <div className="flex w-full items-center gap-8">
           <Input
             className="w-full"
             placeholder={placeholder}
@@ -56,22 +58,25 @@ export default function InputField({
             value={value}
             onChange={onChange}
             disabled={disabled}
+            readOnly={readOnly}
             {...restProps}
           />
-          <Button
-            title={buttonText}
-            size="md"
-            onClick={onButtonClick}
-            disabled={disabled || !value?.toString().trim()}
-            className="whitespace-nowrap"
-          />
+          {buttonText && (
+            <Button
+              title={buttonText}
+              size="md"
+              onClick={onButtonClick}
+              disabled={disabled}
+              className="whitespace-nowrap"
+            />
+          )}
         </div>
 
         {error && errorMessage ? (
           <span className="text-body-12-r text-error-500">{errorMessage}</span>
         ) : (
           helperText && (
-            <span className="text-body-12-r text-gray-500">{helperText}</span>
+            <span className="typo-body-12-r text-gray-500">{helperText}</span>
           )
         )}
       </div>

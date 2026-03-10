@@ -2,18 +2,13 @@ import { cn } from '@/shared/lib/utils'
 import { ChevronRight } from 'lucide-react'
 import * as React from 'react'
 
-
 interface ProcessTabProps {
   currentStep: number
   steps: string[]
   className?: string
 }
 
-export function ProcessTab({
-  currentStep,
-  steps,
-  className,
-}: ProcessTabProps) {
+export function ProcessTab({ currentStep, steps, className }: ProcessTabProps) {
   return (
     <div
       className={cn(
@@ -42,7 +37,7 @@ export function ProcessTab({
                     'size-24 shrink-0 transition-colors',
                     isActive ? 'text-primary-500' : 'text-gray-200',
                   )}
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                 />
               )}
             </React.Fragment>

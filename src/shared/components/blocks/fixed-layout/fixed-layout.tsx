@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 const FixedLayout = () => {
   return (
     <>
-      <LogoHeader />
+      <LogoHeader className="border-b-gray-30 border-b" />
       <div className="flex h-[calc(100vh-80px)] w-full flex-row">
         <Lnb />
         <main className="h-full w-full max-w-[1200px] bg-gray-50">

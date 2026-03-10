@@ -12,7 +12,7 @@ interface CheckboxProps {
   onCheckedChange?: (checked: CheckboxPrimitive.CheckedState) => void
   disabled?: boolean
   size?: 'md' | 'lg'
-  label?: string
+  label?: React.ReactNode
   type?: 'single' | 'multiple'
 }
 
