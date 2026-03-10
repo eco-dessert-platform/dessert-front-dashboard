@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 
-import loginImg from 'src/assets/images/login.png'
+import loginImg from '@/assets/images/login.png'
 
 interface AuthLoginImageProps {
   className?: string
