@@ -1,7 +1,6 @@
 import Button from '@/shared/components/ui/button/button'
 import { ProductHeader } from '@/features/products/create/create-header/create-header'
-import { FormStepsProvider } from '@/features/products/create/create-form/create-form-provider/create-form-provider'
-import { useFormSteps } from '@/features/products/create/create-form/create-form-provider/use-form-steps.hook'
+import { useCreateFormSteps } from '@/features/products/create/create-form/create-form-provider/use-form-steps'
 import { ProductInfoArea } from '../../../features/products/create/create-form/craete-form-info/create-form-info-area'
 import { ProductDeliveryArea } from '@/features/products/create/create-form/create-form-delivery/create-form-delivery-area'
 import { ProductOptionsArea } from '@/features/products/create/create-form/create-form-options-info/create-form-options-area'
@@ -13,31 +12,33 @@ function CreatePage() {
   return (
     <>
       <FormProvider {...form}>
-        <FormStepsProvider>
-          <CreatePageInner />
-        </FormStepsProvider>
+        <CreatePageInner />
       </FormProvider>
     </>
   )
 }
 
 function CreatePageInner() {
-  //const { productFields } = useFormSteps()
+  const { productFields } = useCreateFormSteps()
+
   return (
     <>
       <ProductHeader />
       <div className="mt-22 bg-white">
         <div className="px-24 pt-16 pb-24">
+          {productFields.productInfo ? 'true' : 'false'}
           <ProductInfoArea />
         </div>
       </div>
       <div className="mt-20 bg-white">
         <div className="px-24 pt-16 pb-24">
+          {productFields.productDelivery ? 'true' : 'false'}
           <ProductDeliveryArea />
         </div>
       </div>
       <div className="mt-20 bg-white">
         <div className="px-24 pt-16 pb-24">
+          {productFields.productOptions ? 'true' : 'false'}
           <ProductOptionsArea />
         </div>
       </div>

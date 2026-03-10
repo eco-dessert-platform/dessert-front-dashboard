@@ -11,7 +11,7 @@ import Button from '@/shared/components/ui/button/button'
 import { Controller } from 'react-hook-form'
 
 import { useProductOptionForm } from './use-product-options.form.hook'
-import { useFormSteps } from '../create-form-provider/use-form-steps.hook'
+import { useCreateFormSteps } from '../create-form-provider/use-form-steps'
 import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/product-options/product-options.constant'
 import { NUTRITION_FIELDS } from '@/entity/products/create/product-options/product-nutritions.contant'
 
@@ -40,7 +40,7 @@ export const ProductOptionsArea = () => {
     formState: { errors },
   } = form
 
-  const { setProductFields } = useFormSteps()
+  const { setProductFields } = useCreateFormSteps()
 
   useEffect(() => {
     setProductFields((prev) => ({ ...prev, productOptions: isFormField }))

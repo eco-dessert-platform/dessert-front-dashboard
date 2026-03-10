@@ -6,7 +6,7 @@ import Input from '@/shared/components/ui/input/input'
 import { DeliveryCompany } from '@/entity/products/create/product-delivery/product-delivery-company'
 import { DeliveryTerms } from '@/entity/products/create/product-delivery/product-delivery-terms'
 import { useProductDeliveryForm } from './use-product-delivery-form.hook'
-import { useFormSteps } from '../create-form-provider/use-form-steps.hook'
+import { useCreateFormSteps } from '../create-form-provider/use-form-steps'
 import { Controller } from 'react-hook-form'
 import { cn } from '@/shared/lib/utils'
 
@@ -20,13 +20,16 @@ export const ProductDeliveryArea = () => {
     deliveryMinFeeInput,
     isFormField,
   } = useProductDeliveryForm()
+
   const {
     control,
     setValue,
     formState: { errors },
   } = form
 
-  const { setProductFields } = useFormSteps()
+  const { setProductFields } = useCreateFormSteps()
+
+  console.log(isFormField + ':ddd')
 
   useEffect(() => {
     setProductFields((prev) => ({ ...prev, productDelivery: isFormField }))

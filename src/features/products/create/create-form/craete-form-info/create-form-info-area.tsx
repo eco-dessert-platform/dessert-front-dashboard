@@ -8,7 +8,7 @@ import { useProductInfoForm } from '@/features/products/create/create-form/craet
 import { productionTimes } from '@/entity/products/create/product-info/production-time.constants'
 import { productDiscountType } from '@/entity/products/create/product-info/product-discount-type.constants'
 import { InfoTooltip } from '../ui/info-tooltip'
-import { useFormSteps } from '../create-form-provider/use-form-steps.hook'
+import { useCreateFormSteps } from '../create-form-provider/use-form-steps'
 
 export const ProductInfoArea = () => {
   const {
@@ -29,11 +29,11 @@ export const ProductInfoArea = () => {
     formState: { errors },
   } = form
 
-  // const { setProductFields } = useFormSteps()
+  const { setProductFields } = useCreateFormSteps()
 
-  // useEffect(() => {
-  //   setProductFields((prev) => ({ ...prev, productInfo: isFormField }))
-  // }, [isFormField, setProductFields])
+  useEffect(() => {
+    setProductFields((prev) => ({ ...prev, productInfo: isFormField }))
+  }, [isFormField, setProductFields])
 
   return (
     <>

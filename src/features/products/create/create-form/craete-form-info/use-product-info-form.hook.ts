@@ -17,8 +17,7 @@ export function useProductInfoForm() {
     discountAmount !== null &&
     productName.length >= 3 &&
     productName.length <= 49 &&
-    productionTime !== '' &&
-    form.formState.isValid
+    productionTime !== ''
 
   const finalPrice =
     price !== null && discountAmount !== null
