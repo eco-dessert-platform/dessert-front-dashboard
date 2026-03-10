@@ -1,22 +1,10 @@
-import { useForm, Resolver } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useFormContext } from 'react-hook-form'
 import { useNumberInput } from '../create-form-number-input.hook'
-import { productSchema } from './create-info.schema'
-import { ProductFormInput } from '@/entity/products/create/product-form.type'
+import { CreateProductForm } from '@/pages/products/create/create-form'
 
 export function useProductInfoForm() {
-  const form = useForm<ProductFormInput>({
-    resolver: zodResolver(productSchema) as Resolver<ProductFormInput>,
-    defaultValues: {
-      productName: '',
-      isFresh: true,
-      productionTime: '',
-      price: null,
-      discountAmount: null,
-      discountType: 'won',
-    },
-    mode: 'onChange',
-  })
+  const form = useFormContext<CreateProductForm>()
+
   // 실시간으로 가격/할인 최종 금액 계산
   const productName = form.watch('productName')
   const price = form.watch('price')
@@ -30,7 +18,7 @@ export function useProductInfoForm() {
     productName.length >= 3 &&
     productName.length <= 49 &&
     productionTime !== '' &&
-    Object.keys(form.formState.errors).length === 0
+    form.formState.isValid
 
   const finalPrice =
     price !== null && discountAmount !== null

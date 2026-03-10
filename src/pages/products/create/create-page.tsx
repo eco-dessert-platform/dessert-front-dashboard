@@ -5,36 +5,38 @@ import { useFormSteps } from '@/features/products/create/create-form/create-form
 import { ProductInfoArea } from '../../../features/products/create/create-form/craete-form-info/create-form-info-area'
 import { ProductDeliveryArea } from '@/features/products/create/create-form/create-form-delivery/create-form-delivery-area'
 import { ProductOptionsArea } from '@/features/products/create/create-form/create-form-options-info/create-form-options-area'
+import { FormProvider } from 'react-hook-form'
+import { useCreateProductForm } from './create-form'
 
 function CreatePage() {
+  const form = useCreateProductForm()
   return (
     <>
-      <FormStepsProvider>
-        <CreatePageInner />
-      </FormStepsProvider>
+      <FormProvider {...form}>
+        <FormStepsProvider>
+          <CreatePageInner />
+        </FormStepsProvider>
+      </FormProvider>
     </>
   )
 }
 
 function CreatePageInner() {
-  const { productFields } = useFormSteps()
+  //const { productFields } = useFormSteps()
   return (
     <>
       <ProductHeader />
       <div className="mt-22 bg-white">
-        {productFields.productInfo ? 'true' : 'false'}
         <div className="px-24 pt-16 pb-24">
           <ProductInfoArea />
         </div>
       </div>
       <div className="mt-20 bg-white">
-        {productFields.productDelivery ? 'true' : 'false'}
         <div className="px-24 pt-16 pb-24">
           <ProductDeliveryArea />
         </div>
       </div>
       <div className="mt-20 bg-white">
-        {productFields.productOptions ? 'true' : 'false'}
         <div className="px-24 pt-16 pb-24">
           <ProductOptionsArea />
         </div>

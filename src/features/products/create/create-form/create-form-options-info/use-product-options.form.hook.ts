@@ -1,35 +1,12 @@
-import { useForm, Resolver } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { productOptionSchema } from './create-options.schema'
+import { useFormContext } from 'react-hook-form'
 import { useNumberInput } from '../create-form-number-input.hook'
 import { useFloatInput } from '../create-form-float-input.hook'
 import { SUB_CATEGORY_MAP } from '@/entity/products/create/product-options/product-options.constant'
 import { ProductOptionFormInput } from '@/entity/products/create/product-form.type'
+import { CreateProductForm } from '@/pages/products/create/create-form'
 
 export function useProductOptionForm(basePrice: number | null = null) {
-  const form = useForm<ProductOptionFormInput>({
-    resolver: zodResolver(
-      productOptionSchema,
-    ) as Resolver<ProductOptionFormInput>,
-    defaultValues: {
-      mainCategory: '',
-      subCategory: '',
-      optionName: '',
-      ingredientCategories: ['glutenFree'],
-      additionalPrice: null,
-      stockQuantity: null,
-      shippingDays: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
-      hasNutrition: true,
-      totalWeight: null,
-      calories: null,
-      carbohydrate: null,
-      sugar: null,
-      protein: null,
-      fat: null,
-      sodium: null,
-    },
-    mode: 'onChange',
-  })
+  const form = useFormContext<CreateProductForm>()
 
   const mainCategory = form.watch('mainCategory')
   const subCategory = form.watch('subCategory')

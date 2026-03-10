@@ -1,20 +1,9 @@
-import { useForm, Resolver } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { deliverySchema } from './create-delivery.schema'
+import { useFormContext } from 'react-hook-form'
 import { useNumberInput } from '../create-form-number-input.hook'
-import { DeliveryFormInput } from '@/entity/products/create/product-form.type'
+import { CreateProductForm } from '@/pages/products/create/create-form'
 
 export function useProductDeliveryForm() {
-  const form = useForm<DeliveryFormInput>({
-    resolver: zodResolver(deliverySchema) as Resolver<DeliveryFormInput>,
-    defaultValues: {
-      deliveryTerms: '',
-      deliveryCompany: '',
-      deliveryFee: null,
-      deliveryMinFee: null,
-    },
-    mode: 'onChange',
-  })
+  const form = useFormContext<CreateProductForm>()
 
   const deliveryTerms = form.watch('deliveryTerms')
   const deliveryCompany = form.watch('deliveryCompany')
