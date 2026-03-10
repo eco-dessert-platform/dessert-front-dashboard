@@ -1,7 +1,9 @@
-import InputField from '@/shared/components/blocks/input-field/input-field'
-import Checkbox from '@/shared/components/ui/checkbox/checkbox'
-import Divider from '@/shared/components/ui/divider/divider'
 import { useState } from 'react'
+
+import InputField from '@/shared/block/input-field/input-field'
+import Divider from '@/shared/components/ui/divider/divider'
+import Checkbox from '@/shared/ui/checkbox/checkbox'
+
 import { AGREEMENT_DATA, PRIVACY_POLICY_DATA } from './const'
 
 function StoreInformationStep() {
@@ -23,11 +25,11 @@ function StoreInformationSection() {
     setStoreName('빵그리의 오븐 본점')
   }
   return (
-    <div className="rounded-10 flex flex-col items-start gap-4 bg-white p-10">
-      <div className="px-24 pt-[16px] pb-[12px]">
+    <div className="flex flex-col items-start gap-4 rounded-10 bg-white p-10">
+      <div className="px-24 pt-16 pb-12">
         <h2 className="typo-heading-20-sb text-gray-900">스토어 정보 등록</h2>
       </div>
-      <div className="flex w-full flex-col gap-[16px] px-24 pt-[10px] pb-[16px]">
+      <div className="flex w-full flex-col gap-16 px-24 pt-10 pb-16">
         <InputField
           label="스토어명"
           placeholder="스토어를 검색해주세요"
@@ -69,7 +71,7 @@ function AgreementSection() {
     setIsAllChecked(isAgreementChecked && next)
   }
   return (
-    <div className="rounded-10 flex flex-col items-start gap-4 bg-white p-10 px-24">
+    <div className="flex flex-col items-start gap-4 rounded-10 bg-white p-10 px-24">
       <div className="pt-16 pb-12">
         <h2 className="typo-heading-20-sb text-gray-900">이용 약관 동의</h2>
       </div>
@@ -85,15 +87,15 @@ function AgreementSection() {
           <Checkbox
             label={
               <div className="flex">
-                <h2 className="typo-body-16-m text-gray-900">이용약관</h2>
-                <h2 className="typo-body-16-m text-primary-500">(필수)</h2>
+                <h2 className="typo-title-16-m text-gray-900">이용약관</h2>
+                <h2 className="typo-title-16-m text-primary-500">(필수)</h2>
               </div>
             }
             type="single"
             checked={isAgreementChecked}
             onCheckedChange={handleAgreementCheckedChange}
           />
-          <div className="rounded-10 h-[200px] border border-gray-200 p-16">
+          <div className="h-[200px] rounded-10 border border-gray-200 p-16">
             {AGREEMENT_DATA.map((item) => (
               <div key={item.id} className="flex flex-col gap-2">
                 <h2 className="typo-title-14-sb text-gray-700">{item.title}</h2>
@@ -104,17 +106,17 @@ function AgreementSection() {
           <Checkbox
             label={
               <div className="flex">
-                <h2 className="typo-body-16-m text-gray-900">
+                <h2 className="typo-title-16-m text-gray-900">
                   개인정보 처리방침
                 </h2>
-                <h2 className="typo-body-16-m text-primary-500">(필수)</h2>
+                <h2 className="typo-title-16-m text-primary-500">(필수)</h2>
               </div>
             }
             type="single"
             checked={isPrivacyPolicyChecked}
             onCheckedChange={handlePrivacyPolicyCheckedChange}
           />
-          <div className="rounded-10 h-[200px] border border-gray-200 p-16">
+          <div className="h-[200px] rounded-10 border border-gray-200 p-16">
             {PRIVACY_POLICY_DATA.map((item) => (
               <div key={item.id} className="flex flex-col gap-2">
                 <h2 className="typo-title-14-sb text-gray-700">{item.title}</h2>

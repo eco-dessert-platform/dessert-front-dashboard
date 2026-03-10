@@ -7,9 +7,13 @@
     @apply bg-background text-foreground font-pretendard min-h-[100dvh] transition-colors duration-300 ease-in-out;
     will-change: background-color;
   }
+
   :root {
     @apply transition-colors duration-300 ease-in-out;
     will-change: background-color;
   }
+}
 
+@utility z-dropdown {
+  z-index: var(--z-dropdown);
 }

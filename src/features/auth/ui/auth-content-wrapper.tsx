@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
-import clsx from 'clsx'
+
+import { clsx } from 'clsx'
 
 interface WrapperProps {
   children: ReactNode
@@ -13,7 +14,7 @@ export const AuthContentWrapper = ({
   return (
     <main
       className={clsx(
-        'flex flex-1 flex-col overflow-hidden px-6 py-6',
+        'flex flex-1 flex-col overflow-hidden p-6',
         centered && 'items-center justify-center',
       )}
     >

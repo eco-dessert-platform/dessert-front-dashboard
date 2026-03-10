@@ -1,11 +1,12 @@
+import { useState } from 'react'
+
 import { AuthPageContainer } from '@/features/auth/ui'
 import CompleteStep from '@/features/auth/ui/complete-step'
 import { SellerVerificationStep } from '@/features/auth/ui/seller-verification-step'
 import StoreInformationStep from '@/features/auth/ui/store-information-step'
-import BottomNavBar from '@/shared/components/blocks/bottom-nav-bar/bottom-nav-bar'
-import LogoHeader from '@/shared/components/ui/header/logo-header'
-import { ProcessTab } from '@/shared/components/ui/tab/process-tab'
-import { useState } from 'react'
+import BottomNavBar from '@/shared/block/bottom-nav-bar/bottom-nav-bar'
+import LogoHeader from '@/shared/ui/header/logo-header'
+import { ProcessTab } from '@/shared/ui/tab/process-tab'
 
 function SignUpPage() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -16,7 +17,7 @@ function SignUpPage() {
         currentStep={currentStep}
         steps={['판매자 인증', '스토어 정보 등록', '회원가입 완료']}
       />
-      <div className="mx-auto mb-[104px] h-full w-full max-w-[1048px] gap-4 space-y-20 py-40">
+      <div className="mx-auto mb-[104px] size-full max-w-[1048px] gap-4 space-y-20 py-40">
         {currentStep === 1 && <SellerVerificationStep />}
         {currentStep === 2 && <StoreInformationStep />}
         {currentStep === 3 && <CompleteStep />}

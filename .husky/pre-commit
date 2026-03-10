@@ -1,0 +1,2 @@
+echo "🔧 Lint test..."
+yarn run lint --max-warnings=0

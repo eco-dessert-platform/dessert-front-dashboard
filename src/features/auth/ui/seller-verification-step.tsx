@@ -1,6 +1,7 @@
-import InputField from '@/shared/components/blocks/input-field/input-field'
-import Button from '@/shared/components/ui/button/button'
 import { ChangeEventHandler, useRef, useState } from 'react'
+
+import InputField from '@/shared/block/input-field/input-field'
+import Button from '@/shared/ui/button/button'
 
 export function SellerVerificationStep() {
   return (
@@ -61,14 +62,14 @@ function RequiredSection() {
   }
 
   return (
-    <div className="rounded-10 flex w-full flex-col items-start gap-4 bg-white p-10">
+    <div className="flex w-full flex-col items-start gap-4 rounded-10 bg-white p-10">
       <div className="px-24 pt-16 pb-12">
         <h2 className="typo-heading-20-sb text-gray-900">필수 서류 등록</h2>
-        <h2 className="typo-body-16-r text-gray-700">
+        <h2 className="typo-title-16-r text-gray-700">
           파일은 10MB 이하의 jpg, jpeg, png, pdf만 등록이 가능해요
         </h2>
       </div>
-      <div className="flex w-full flex-col gap-[16px] px-24 pt-[10px] pb-[16px]">
+      <div className="flex w-full flex-col gap-16 px-24 pt-10 pb-16">
         <InputField
           label="사업자 등록증"
           buttonText="업로드"
@@ -157,29 +158,23 @@ function BusinessAccountVerificationSection() {
   const handleVerifyAccountClick = () => {
     if (!passbookFileName || !bankName || !accountNumber) {
       // TODO: 추후 토스트/에러 처리로 교체
-      console.log('계좌 인증을 위해 모든 정보를 입력해 주세요.')
       return
     }
 
     // TODO: 실제 계좌 인증 API 연동
-    console.log('계좌 인증 요청', {
-      passbookFileName,
-      bankName,
-      accountNumber,
-    })
   }
 
   return (
-    <div className="rounded-10 flex flex-col items-start gap-4 bg-white p-10">
-      <div className="px-24 pt-[16px] pb-[12px]">
+    <div className="flex flex-col items-start gap-4 rounded-10 bg-white p-10">
+      <div className="px-24 pt-16 pb-12">
         <h2 className="typo-heading-20-sb text-gray-900">
           사업자 명의 계좌 인증
         </h2>
-        <h2 className="typo-body-16-r text-gray-700">
+        <h2 className="typo-title-16-r text-gray-700">
           사업자 명의의 통장 사본과 일치하는 계좌번호로 인증해주세요
         </h2>
       </div>
-      <div className="flex w-full flex-col gap-[16px] px-24 pt-[10px] pb-[16px]">
+      <div className="flex w-full flex-col gap-16 px-24 pt-10 pb-16">
         <InputField
           label="사업자 명의 통장사본"
           buttonText="업로드"

@@ -1,5 +1,6 @@
-import clsx from 'clsx'
-import loginImg from '../../../assets/images/login.png'
+import { clsx } from 'clsx'
+
+import loginImg from 'src/assets/images/login.png'
 
 interface AuthLoginImageProps {
   className?: string
@@ -13,7 +14,7 @@ const AuthLoginImage = ({ className = '' }: AuthLoginImageProps) => {
       <img
         src={loginImg}
         alt="Login Illustration"
-        className="h-full w-full rounded-[20px] object-cover"
+        className="size-full rounded-20 object-cover"
       />
     </div>
   )

@@ -1,9 +1,9 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
-
-
 
 function App({ router }: { router: ReturnType<typeof createBrowserRouter> }) {
   const [queryClient] = useState(() => new QueryClient())
@@ -24,6 +24,7 @@ function App({ router }: { router: ReturnType<typeof createBrowserRouter> }) {
         transition={Bounce}
         toastClassName="!p-0 !bg-transparent !shadow-none !min-w-0"
       />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }
