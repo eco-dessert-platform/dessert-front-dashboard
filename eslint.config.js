@@ -70,7 +70,16 @@ export default tseslint.config(
       ],
       'import/no-duplicates': 'warn',
       'import/no-cycle': 'warn',
-      'import/no-extraneous-dependencies': 'warn',
+      'import/no-extraneous-dependencies': [
+        'warn',
+        {
+          devDependencies: [
+            '**/.storybook/**', // Storybook 설정 파일
+            '**/*.test.{ts,tsx}', // 테스트 파일 (향후 대비)
+            '**/*.spec.{ts,tsx}',
+          ],
+        },
+      ],
       'sort-imports': [
         'warn',
         {
@@ -111,5 +120,21 @@ export default tseslint.config(
     //     entryPoint: './apps/admin/src/styles/index.css',
     //   },
     // },
+  },
+
+  // ── packages/ui 전용: tsconfig 경로 + CSS 진입점 ──
+  {
+    files: ['packages/ui/**/*.{ts,tsx}'],
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './packages/ui/tsconfig.json',
+        },
+      },
+      'better-tailwindcss': {
+        entryPoint: './packages/ui/src/styles/index.css',
+      },
+    },
   },
 )
