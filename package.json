@@ -16,8 +16,8 @@
     "build:admin": "turbo run build --filter=@dessert/admin",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "storybook:ui": "turbo run storybook --filter=@dessert/ui",
-    "build-storybook:ui": "turbo run build-storybook --filter=@dessert/ui",
+    "storybook": "turbo run storybook --filter=@dessert/ui",
+    "build-storybook": "turbo run build-storybook --filter=@dessert/ui",
     "format": "prettier --write .",
     "prepare": "husky"
   },
