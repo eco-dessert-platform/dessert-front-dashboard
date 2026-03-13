@@ -267,7 +267,6 @@ __metadata:
   resolution: "@dessert/seller@workspace:apps/seller"
   dependencies:
     "@dessert/ui": "npm:*"
-    "@eslint/js": "npm:^9.21.0"
     "@hookform/error-message": "npm:^2.0.1"
     "@hookform/resolvers": "npm:^5.2.2"
     "@radix-ui/react-accordion": "npm:^1.2.11"
@@ -307,21 +306,11 @@ __metadata:
     culori: "npm:^4.0.1"
     cypress: "npm:^14.3.0"
     date-fns: "npm:^4.1.0"
-    eslint: "npm:^9.21.0"
-    eslint-import-resolver-typescript: "npm:^4.4.4"
-    eslint-plugin-better-tailwindcss: "npm:^4.2.0"
-    eslint-plugin-import: "npm:^2.32.0"
-    eslint-plugin-react-hooks: "npm:^5.1.0"
-    eslint-plugin-react-refresh: "npm:^0.4.19"
-    eslint-plugin-storybook: "npm:^0.12.0"
     framer-motion: "npm:^12.18.1"
-    globals: "npm:^15.15.0"
-    husky: "npm:^9.1.7"
     i18next: "npm:^24.2.3"
     i18next-browser-languagedetector: "npm:^8.0.4"
     lucide-react: "npm:^0.562.0"
     playwright: "npm:1.55.1"
-    prettier: "npm:3.5.3"
     react: "npm:^19.1.0"
     react-day-picker: "npm:^9.11.2"
     react-dom: "npm:^19.1.0"
@@ -335,7 +324,6 @@ __metadata:
     tailwindcss: "npm:^4.0.17"
     tw-animate-css: "npm:^1.3.4"
     typescript: "npm:~5.7.2"
-    typescript-eslint: "npm:^8.24.1"
     vaul: "npm:^1.1.2"
     vite: "npm:6.2.2"
     vite-plugin-svgr: "npm:^4.5.0"
@@ -378,7 +366,7 @@ __metadata:
     react-toastify: "npm:^11.0.5"
     storybook: "npm:^8.6.12"
     tailwind-merge: "npm:^3.3.1"
-    tailwindcss: "npm:^4.2.1"
+    tailwindcss: "npm:^4.0.17"
     tw-animate-css: "npm:^1.3.4"
   peerDependencies:
     react: ^19.0.0
@@ -5039,9 +5027,19 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dessert-front-dashboard@workspace:."
   dependencies:
+    "@eslint/js": "npm:^9.21.0"
+    eslint: "npm:^9.21.0"
+    eslint-import-resolver-typescript: "npm:^4.4.4"
+    eslint-plugin-better-tailwindcss: "npm:^4.2.0"
+    eslint-plugin-import: "npm:^2.32.0"
+    eslint-plugin-react-hooks: "npm:^5.1.0"
+    eslint-plugin-react-refresh: "npm:^0.4.19"
+    eslint-plugin-storybook: "npm:^0.12.0"
+    globals: "npm:^15.15.0"
     husky: "npm:^9.1.7"
     prettier: "npm:3.5.3"
     turbo: "npm:^2.8.15"
+    typescript-eslint: "npm:^8.24.1"
   languageName: unknown
   linkType: soft
 
@@ -9282,7 +9280,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:4.2.1, tailwindcss@npm:^4.0.17, tailwindcss@npm:^4.2.1":
+"tailwindcss@npm:4.2.1, tailwindcss@npm:^4.0.17":
   version: 4.2.1
   resolution: "tailwindcss@npm:4.2.1"
   checksum: 10c0/482d734b582e9da509042ff59c1d7564d99e39e238c50ae907c20fa56177a8a00c3902f6971329971bd6a1c5357026ac76a849b8f2c69c94f0f59be99530ba54
