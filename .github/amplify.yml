@@ -8,7 +8,7 @@ frontend:
       commands:
         - 'yarn run build'
   artifacts:
-    baseDirectory: dist
+    baseDirectory: apps/seller/dist
     files:
       - '**/*'
   cache:

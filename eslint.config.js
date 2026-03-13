@@ -7,7 +7,9 @@ import betterTailwind from 'eslint-plugin-better-tailwindcss'
 import importPlugin from 'eslint-plugin-import'
 
 export default tseslint.config(
-  { ignores: ['dist', '.yarn/releases'] },
+  { ignores: ['**/dist', '.yarn/releases'] },
+
+  // ── 공통 규칙: seller + admin + packages 모두 적용 ──
   {
     extends: [
       js.configs.recommended,
@@ -15,21 +17,10 @@ export default tseslint.config(
       importPlugin.flatConfigs.recommended,
       importPlugin.flatConfigs.typescript,
     ],
-    files: ['**/*.{ts,tsx}'],
+    files: ['apps/**/*.{ts,tsx}', 'packages/**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
-    },
-    settings: {
-      'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-          project: './tsconfig.json',
-        },
-      },
-      'better-tailwindcss': {
-        entryPoint: './src/styles/index.css',
-      },
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -79,7 +70,16 @@ export default tseslint.config(
       ],
       'import/no-duplicates': 'warn',
       'import/no-cycle': 'warn',
-      'import/no-extraneous-dependencies': 'warn',
+      'import/no-extraneous-dependencies': [
+        'off',
+        {
+          devDependencies: [
+            '**/.storybook/**', // Storybook 설정 파일
+            '**/*.test.{ts,tsx}', // 테스트 파일 (향후 대비)
+            '**/*.spec.{ts,tsx}',
+          ],
+        },
+      ],
       'sort-imports': [
         'warn',
         {
@@ -87,6 +87,54 @@ export default tseslint.config(
           ignoreMemberSort: false,
         },
       ],
+    },
+  },
+
+  // ── seller 전용: tsconfig 경로 + CSS 진입점 ──
+  {
+    files: ['apps/seller/**/*.{ts,tsx}'],
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './apps/seller/tsconfig.json',
+        },
+      },
+      'better-tailwindcss': {
+        entryPoint: `${import.meta.dirname}/apps/seller/src/styles/index.css`,
+      },
+    },
+  },
+
+  // ── seller 전용: tsconfig 경로 + CSS 진입점 ──
+  {
+    files: ['apps/admin/**/*.{ts,tsx}'],
+    // settings: {
+    //   'import/resolver': {
+    //     typescript: {
+    //       alwaysTryTypes: true,
+    //       project: './apps/admin/tsconfig.json',
+    //     },
+    //   },
+    //   'better-tailwindcss': {
+    //     entryPoint: './apps/admin/src/styles/index.css',
+    //   },
+    // },
+  },
+
+  // ── packages/ui 전용: tsconfig 경로 + CSS 진입점 ──
+  {
+    files: ['packages/ui/**/*.{ts,tsx}'],
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './packages/ui/tsconfig.json',
+        },
+      },
+      'better-tailwindcss': {
+        entryPoint: `${import.meta.dirname}/packages/ui/src/styles/index.css`,
+      },
     },
   },
 )

@@ -1,0 +1,12 @@
+{
+  "name": "@dessert/icons",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles": "./src/styles/index.css"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}
