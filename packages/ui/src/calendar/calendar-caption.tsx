@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeftIcon, ChevronRightIcon } from '@dessert/icons'
 import { MonthCaptionProps, useDayPicker } from 'react-day-picker'
 
 import { cn } from '../lib/utils'
@@ -22,7 +22,7 @@ export function CalendarCaption({ calendarMonth }: MonthCaptionProps) {
         className={commonBtnClass}
         onClick={() => previousMonth && goToMonth(previousMonth)}
       >
-        <ChevronLeft size={20} />
+        <ChevronLeftIcon />
       </button>
       <span
         className={cn(`typo-heading-18-b text-gray-800 select-none`)}
@@ -33,7 +33,7 @@ export function CalendarCaption({ calendarMonth }: MonthCaptionProps) {
         className={commonBtnClass}
         onClick={() => nextMonth && goToMonth(nextMonth)}
       >
-        <ChevronRight size={20} />
+        <ChevronRightIcon />
       </button>
     </nav>
   )

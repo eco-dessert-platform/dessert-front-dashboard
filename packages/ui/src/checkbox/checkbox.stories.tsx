@@ -1,6 +1,6 @@
 import { fn } from '@storybook/test'
 
-import Checkbox from '@/shared/ui/checkbox/checkbox'
+import { Checkbox } from './checkbox'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

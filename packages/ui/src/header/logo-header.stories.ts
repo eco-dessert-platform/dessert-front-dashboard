@@ -1,4 +1,4 @@
-import LogoHeader from '@/shared/ui/header/logo-header'
+import { LogoHeader } from './logo-header'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

@@ -1,11 +1,13 @@
 import * as React from 'react'
 
+import {
+  CheckboxCheckedGrayIcon,
+  CheckboxCheckedIcon,
+  CheckboxCheckedLightIcon,
+  CheckboxIndeterminateIcon,
+} from '@dessert/icons'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 
-import CheckboxOffIcon from '@/assets/icons/icn-check-off.svg?react'
-import CheckboxMultipleIcon from '@/assets/icons/icn-check-on-multiple.svg?react'
-import CheckboxOnOutlineIcon from '@/assets/icons/icn-check-on-outline.svg?react'
-import CheckboxOnFilledIcon from '@/assets/icons/icn-check-on.svg?react'
 import { cn } from '../lib/utils'
 
 interface CheckboxProps {
@@ -18,7 +20,7 @@ interface CheckboxProps {
   type?: 'single' | 'multiple'
 }
 
-export default function Checkbox({
+export function Checkbox({
   className,
   checked,
   onCheckedChange,
@@ -42,16 +44,16 @@ export default function Checkbox({
         }`}
         {...rest}
       >
-        <CheckboxOffIcon className="size-full group-data-[state=checked]:hidden group-data-[state=indeterminate]:hidden" />
+        <CheckboxCheckedGrayIcon className="size-full group-data-[state=checked]:hidden group-data-[state=indeterminate]:hidden" />
         <CheckboxPrimitive.Indicator className="size-full" asChild>
           {type === 'multiple' ? (
             checked === 'indeterminate' ? (
-              <CheckboxMultipleIcon className="size-full" />
+              <CheckboxIndeterminateIcon className="size-full" />
             ) : (
-              <CheckboxOnOutlineIcon className="size-full" />
+              <CheckboxCheckedLightIcon className="size-full" />
             )
           ) : (
-            <CheckboxOnFilledIcon className="size-full" />
+            <CheckboxCheckedIcon className="size-full" />
           )}
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>

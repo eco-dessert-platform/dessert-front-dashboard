@@ -19,4 +19,4 @@ const Label = ({ label, required = false, className = '' }: LabelProps) => {
   )
 }
 
-export default Label
+export { Label }

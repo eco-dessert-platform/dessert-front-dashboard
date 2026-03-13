@@ -1,6 +1,5 @@
+import { badgeVariants } from '@dessert/ui'
 import { VariantProps } from 'class-variance-authority'
-
-import { badgeVariants } from '@/shared/ui/badge/badge'
 
 import {
   ActionButton,

@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 import { fn } from '@storybook/test'
 
-import Radio from '@/shared/ui/radio/radio'
-import type { RadioProps } from '@/shared/ui/radio/radio'
+import { Radio } from './radio'
 
+import type { RadioProps } from './radio'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

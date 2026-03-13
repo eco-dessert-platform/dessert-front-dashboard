@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
-import DownArrowIcon from '@/assets/icons/arrow/down-arrow.svg?react'
-import CheckboxOffIcon from '@/assets/icons/icn-check-off.svg?react'
-import CheckboxOnIcon from '@/assets/icons/icn-check-on.svg?react'
-import CheckIcon from '@/assets/icons/icon-check.svg?react'
+import {
+  CheckIcon,
+  CheckboxCheckedGrayIcon,
+  CheckboxCheckedIcon,
+  ChevronDownIcon,
+} from '@dessert/icons'
+
 import { cn } from '../lib/utils'
 
 interface dropdownOption {
@@ -69,7 +72,7 @@ const Dropdown = ({
           'flex h-input w-full items-center justify-between rounded-10 border py-8 pr-8 pl-12 transition-all duration-200',
           'text-gray-900',
           'border-gray-300 bg-white',
-          'cursor-pointer font-pretendard hover:border-gray-400 focus:border-gray-500 focus:outline-none',
+          'font-pretendard cursor-pointer hover:border-gray-400 focus:border-gray-500 focus:outline-none',
           isOpen && 'border-gray-500',
           disabled &&
             'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400',
@@ -83,7 +86,7 @@ const Dropdown = ({
         >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <DownArrowIcon
+        <ChevronDownIcon
           className={cn(
             'size-20 shrink-0 text-gray-600 transition-transform duration-200',
             isOpen && 'rotate-180',
@@ -96,7 +99,7 @@ const Dropdown = ({
           className={cn(
             'absolute left-0 z-dropdown mt-1 w-full p-1',
             'rounded-10 border border-gray-200 bg-white shadow-md',
-            'animate-in duration-200 zoom-in-95 fade-in',
+            'animate-in zoom-in-95 fade-in duration-200',
           )}
         >
           <ul className="max-h-[178px] overflow-y-auto">
@@ -119,9 +122,9 @@ const Dropdown = ({
                     {type === 'checkbox' && (
                       <div className="flex size-16 shrink-0 items-center justify-center">
                         {isSelected ? (
-                          <CheckboxOnIcon className="size-16" />
+                          <CheckboxCheckedIcon className="size-16" />
                         ) : (
-                          <CheckboxOffIcon className="size-16" />
+                          <CheckboxCheckedGrayIcon className="size-16" />
                         )}
                       </div>
                     )}
@@ -142,4 +145,4 @@ const Dropdown = ({
   )
 }
 
-export default Dropdown
+export { Dropdown }

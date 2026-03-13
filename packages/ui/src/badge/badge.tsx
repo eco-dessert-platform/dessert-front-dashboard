@@ -4,7 +4,6 @@ import { VariantProps, cva } from 'class-variance-authority'
 
 import { cn } from '../lib/utils'
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const badgeVariants = cva(
   [
     'inline-flex',
@@ -103,7 +102,7 @@ interface BadgeProps
   ref?: React.Ref<HTMLDivElement>
 }
 
-const Badge = ({
+export const Badge = ({
   variant = 'outline',
   color,
   content,
@@ -123,5 +122,3 @@ const Badge = ({
 }
 
 Badge.displayName = 'Badge'
-
-export default Badge

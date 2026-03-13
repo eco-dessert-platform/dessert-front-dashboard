@@ -18,7 +18,7 @@ const TAB_VARIANT_STYLES = {
     list: 'border-b-2 border-gray-100',
     trigger: (size: 'sm' | 'lg') =>
       cn(
-        "typo-title-14-m relative gap-1.5 py-2 pb-3 text-gray-500 transition-all after:absolute after:-bottom-2 after:left-0 after:h-2 after:w-full after:bg-transparent after:content-[''] data-[state=active]:text-gray-900 data-[state=active]:[text-shadow:0_0_0.75px_currentColor] data-[state=active]:after:bg-gray-900",
+        "relative gap-1.5 py-2 pb-3 typo-title-14-m text-gray-500 transition-all after:absolute after:-bottom-2 after:left-0 after:h-2 after:w-full after:bg-transparent after:content-[''] data-[state=active]:text-gray-900 data-[state=active]:[text-shadow:0_0_0.75px_currentColor] data-[state=active]:after:bg-gray-900",
         size === 'sm' ? 'px-16' : 'px-40',
       ),
     number:
@@ -56,7 +56,7 @@ function TabList({
     <TabsPrimitive.List
       data-slot="tabs-list"
       className={cn(
-        'text-muted-foreground inline-flex w-fit items-center justify-center',
+        'inline-flex w-fit items-center justify-center text-muted-foreground',
         TAB_VARIANT_STYLES[variant].list,
         className,
       )}

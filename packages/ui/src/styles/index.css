@@ -1,3 +1,4 @@
+@import 'tailwindcss';
 @import './shadcn.pcss';
 @import './tokens.pcss';
 @import './typography.pcss';

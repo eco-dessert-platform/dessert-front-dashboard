@@ -1,8 +1,8 @@
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { ChevronDown } from 'lucide-react'
 
+import { Label } from '../label/label'
 import { cn } from '../lib/utils'
-import Label from '@/shared/ui/label/label'
 
 interface SelectOption {
   label: string
@@ -103,4 +103,4 @@ const Select = ({
   )
 }
 
-export default Select
+export { Select }

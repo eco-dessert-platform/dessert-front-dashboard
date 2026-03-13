@@ -1,6 +1,6 @@
 import { fn } from '@storybook/test'
 
-import Chip from '@/shared/ui/chip/chip'
+import { Chip } from './chip'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

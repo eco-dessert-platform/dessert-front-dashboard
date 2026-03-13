@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react'
 
-import Badge from '@/shared/ui/badge/badge'
-import Button from '@/shared/ui/button/button'
-import Checkbox from '@/shared/ui/checkbox/checkbox'
-import Table from '@/shared/ui/table/table'
-import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
+import { Table } from './table'
+import { Badge } from '../badge/badge'
+import { Button } from '../button/button'
+import { Checkbox } from '../checkbox/checkbox'
+import { getRowSpanForGroup } from '../utils/table-span'
 
 import type { Meta, StoryObj } from '@storybook/react'
 import type { ColumnDef } from '@tanstack/react-table'

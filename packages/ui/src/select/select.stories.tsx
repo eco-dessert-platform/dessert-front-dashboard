@@ -2,8 +2,7 @@ import { useState } from 'react'
 
 import { fn } from '@storybook/test'
 
-import type { SelectProps } from '@/shared/ui/select/select'
-import Select from '@/shared/ui/select/select'
+import { Select, type SelectProps } from './select'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

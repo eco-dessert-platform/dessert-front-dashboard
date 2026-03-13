@@ -2,9 +2,9 @@
 
 import * as React from 'react'
 
+import { ChevronDownIcon } from '@dessert/icons'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 
-import BottomArrowIcon from '@/assets/icons/arrow/bottom-arrow.svg?react'
 import { cn } from '../lib/utils'
 
 function Accordion({
@@ -49,7 +49,7 @@ function AccordionTrigger({
         {...props}
       >
         {children}
-        <BottomArrowIcon
+        <ChevronDownIcon
           data-slot="accordion-trigger-icon"
           className="pointer-events-none shrink-0 text-gray-800 transition-transform group-data-[state=open]:rotate-180"
         />
@@ -66,7 +66,7 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
-      className="overflow-hidden data-closed:animate-accordion-up data-open:animate-accordion-down"
+      className="data-closed:animate-accordion-up data-open:animate-accordion-down overflow-hidden"
       {...props}
     >
       <div

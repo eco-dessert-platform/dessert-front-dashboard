@@ -2,8 +2,7 @@ import { useState } from 'react'
 
 import { fn } from '@storybook/test'
 
-import type { TextareaProps } from '@/shared/ui/textarea/textarea'
-import Textarea from '@/shared/ui/textarea/textarea'
+import { Textarea, type TextareaProps } from './textarea'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

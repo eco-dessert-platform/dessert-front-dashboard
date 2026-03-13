@@ -1,9 +1,11 @@
+import {
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@dessert/icons'
 import { clsx } from 'clsx'
 
-import DoubleForwardArrow from '@/assets/icons/arrow/double-forward-arrow.svg?react'
-import DoubleNextArrow from '@/assets/icons/arrow/double-next-arrow.svg?react'
-import ForwardArrow from '@/assets/icons/arrow/forward-arrow.svg?react'
-import NextArrow from '@/assets/icons/arrow/next-arrow.svg?react'
 import { cn } from '../lib/utils'
 
 export interface PaginationProps {
@@ -81,7 +83,7 @@ const Pagination = ({
         aria-label="Go to first page group"
         title="첫 페이지 그룹"
       >
-        <DoubleForwardArrow className="size-20" />
+        <ChevronDoubleLeftIcon className="size-20" />
       </button>
 
       {/* < 버튼: 이전 페이지로 이동 (-1) */}
@@ -92,7 +94,7 @@ const Pagination = ({
         aria-label="Go to previous page"
         title="이전 페이지"
       >
-        <ForwardArrow className="size-20" />
+        <ChevronLeftIcon className="size-20" />
       </button>
 
       {/* 페이지 번호 버튼들 */}
@@ -128,7 +130,7 @@ const Pagination = ({
         aria-label="Go to next page"
         title="다음 페이지"
       >
-        <NextArrow className="size-20" />
+        <ChevronRightIcon className="size-20" />
       </button>
 
       {/* >> 버튼: 마지막 그룹으로 이동 */}
@@ -139,7 +141,7 @@ const Pagination = ({
         aria-label="Go to last page group"
         title="마지막 페이지 그룹"
       >
-        <DoubleNextArrow className="size-20" />
+        <ChevronDoubleRightIcon className="size-20" />
       </button>
     </nav>
   )

@@ -2,7 +2,7 @@ import { fn } from '@storybook/test'
 import { ToastContainer } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
-import Toast from './toast'
+import { Toast } from './toast'
 import { toast } from './toast-helper'
 
 import type { Meta, StoryObj } from '@storybook/react'

@@ -1,6 +1,6 @@
 import { Id, ToastOptions, toast as t } from 'react-toastify'
 
-import Toast from '@/shared/ui/toast/toast'
+import { Toast } from './toast'
 
 // react-toastify와 통합된 헬퍼 함수들
 const createToastHelper = (

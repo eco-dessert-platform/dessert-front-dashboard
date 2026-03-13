@@ -13,7 +13,7 @@ type SSspinProps = {
   text?: string
 }
 
-const LogingSpin = ({
+const LoadingSpin = ({
   children,
   className = '',
   loading,
@@ -44,4 +44,4 @@ const LogingSpin = ({
   )
 }
 
-export default LogingSpin
+export { LoadingSpin }

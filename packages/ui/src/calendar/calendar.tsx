@@ -4,11 +4,10 @@ import { isBefore, isSameDay, isWithinInterval } from 'date-fns'
 import { ko } from 'date-fns/locale'
 import { DateRange, DayPicker } from 'react-day-picker'
 
-import { cn } from '../lib/utils'
-
 import { CalendarCaption } from './calendar-caption'
 import { CalendarDayButton } from './calendar-day-button'
-import Button from '../button/button'
+import { Button } from '../button/button'
+import { cn } from '../lib/utils'
 
 interface CalendarProps {
   /** 현재 선택된 날짜 범위 (부모가 관리) */

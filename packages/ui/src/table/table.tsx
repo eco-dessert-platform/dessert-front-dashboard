@@ -107,4 +107,4 @@ function Table<T>({
   )
 }
 
-export default Table
+export { Table }

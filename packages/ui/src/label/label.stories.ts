@@ -1,4 +1,4 @@
-import Label from '@/shared/ui/label/label'
+import { Label } from './label'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

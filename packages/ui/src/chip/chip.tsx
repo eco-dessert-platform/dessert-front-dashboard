@@ -1,5 +1,5 @@
+import { XIcon } from '@dessert/icons'
 import { clsx } from 'clsx'
-import { X } from 'lucide-react'
 
 import { cn } from '../lib/utils'
 
@@ -60,11 +60,12 @@ const Chip = ({
           className="flex items-center justify-center transition-opacity hover:opacity-70"
           aria-label="닫기"
         >
-          <X className={cn(closeClasses[size])} />
+          {/* <XIcon className={cn(closeClasses[size])} /> */}
+          <XIcon />
         </button>
       )}
     </span>
   )
 }
 
-export default Chip
+export { Chip }

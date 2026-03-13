@@ -1,5 +1,5 @@
-import RadioOffIcon from '@/assets/icons/icon-radio-off.svg?react'
-import RadioOnIcon from '@/assets/icons/icon-radio-on.svg?react'
+import { RadioCheckedIcon, RadioDefaultIcon } from '@dessert/icons'
+
 import { cn } from '../lib/utils'
 
 interface RadioOption {
@@ -52,9 +52,9 @@ const Radio = ({
             className="sr-only"
           />
           {value === option.value ? (
-            <RadioOnIcon className="size-16 shrink-0" />
+            <RadioCheckedIcon className="size-16 shrink-0" />
           ) : (
-            <RadioOffIcon className="size-16 shrink-0" />
+            <RadioDefaultIcon className="size-16 shrink-0" />
           )}
           <span
             className={`text-gray-800 ${
@@ -69,4 +69,4 @@ const Radio = ({
   )
 }
 
-export default Radio
+export { Radio }

@@ -1,6 +1,6 @@
 import { fn } from '@storybook/test'
 
-import Dropdown from '@/shared/ui/dropdown/dropdown'
+import { Dropdown } from './dropdown'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

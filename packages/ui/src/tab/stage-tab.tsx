@@ -1,4 +1,7 @@
-import IconCheck from '@/assets/icons/icon-check.svg?react'
+import * as React from 'react'
+
+import { CheckIcon } from '@dessert/icons'
+
 import { cn } from '../lib/utils'
 
 interface StageTabProps {
@@ -32,7 +35,7 @@ export function StageTab({ currentStep, steps, className }: StageTabProps) {
               >
                 {step}
               </span>
-              <IconCheck
+              <CheckIcon
                 className={cn(
                   'size-24 shrink-0 transition-colors',
                   isActive ? 'text-primary-500' : 'text-gray-600',

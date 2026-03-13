@@ -1,6 +1,6 @@
 import { ComponentProps, useEffect, useState } from 'react'
 
-import Input from '@/shared/ui/input/input'
+import { Input } from './input'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

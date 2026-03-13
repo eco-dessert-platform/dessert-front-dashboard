@@ -8,8 +8,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './dialog'
-import Button from '../button/button'
-import Input from '../input/input'
+import { Button } from '../button/button'
+import { Input } from '../input/input'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
