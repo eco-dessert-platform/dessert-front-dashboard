@@ -34,7 +34,6 @@ const TAB_VARIANT_STYLES = {
 } as const
 
 function Tab({ className, variant = 'line', ...props }: TabProps) {
-  console.log('xxx')
   return (
     <TabContext.Provider value={{ variant }}>
       <TabsPrimitive.Root
