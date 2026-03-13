@@ -47,6 +47,6 @@
     "@storybook/test": "^8.6.12",
     "@tailwindcss/vite": "^4.0.17",
     "storybook": "^8.6.12",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.0.17"
   }
 }
