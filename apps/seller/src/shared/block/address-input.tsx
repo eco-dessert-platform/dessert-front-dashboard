@@ -1,5 +1,4 @@
-import Input from '@/shared/ui/input/input'
-import Label from '@/shared/ui/label/label'
+import { Input, Label } from '@dessert/ui'
 
 interface AddressInputProps {
   postalCode?: string
