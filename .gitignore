@@ -35,6 +35,8 @@ dist-ssr
 # env
 .env
 
+# monorepo
+.turbo
 
 
 *storybook.log
