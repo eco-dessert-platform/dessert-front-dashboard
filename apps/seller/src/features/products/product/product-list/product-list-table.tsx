@@ -1,6 +1,6 @@
+import { Pagination, Table } from '@dessert/ui'
+
 import { ProductResultData } from '@/entity/products/product/product-data.mock'
-import { Pagination } from '@/shared/ui/pagination/pagination'
-import Table from '@/shared/ui/table/table'
 
 import { getResultColumns } from './product-list-columns'
 import { useProductList } from './product-list.hook'

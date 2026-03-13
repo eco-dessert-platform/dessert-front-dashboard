@@ -1,4 +1,4 @@
-import Button from '@/shared/ui/button/button'
+import { Button } from '@dessert/ui'
 
 const BOTTOM_NAV_BAR_ITEMS = [
   { label: '취소', variant: 'primary-filled' },

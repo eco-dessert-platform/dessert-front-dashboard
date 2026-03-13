@@ -1,9 +1,10 @@
+import { Tab, TabList, TabTrigger } from '@dessert/ui'
+
 import { ORDER_STATUS_TABS } from '@/entity/order/order.constant'
 import type {
   OrderStatusCount,
   OrderStatusTab,
 } from '@/entity/order/order.type'
-import { Tab, TabList, TabTrigger } from '@dessert/ui'
 
 interface OrderStatusTabsProps {
   selectedTab: OrderStatusTab

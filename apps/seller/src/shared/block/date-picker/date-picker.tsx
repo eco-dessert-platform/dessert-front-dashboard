@@ -1,13 +1,12 @@
 import { useState } from 'react'
 
+import { Calendar } from '@dessert/ui'
 import * as Popover from '@radix-ui/react-popover'
 import { format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
 import DateIcon from '@/assets/icons/date.svg?react'
 import { cn } from '@/shared/libs/utils'
-
-import { Calendar } from '../../ui/calendar/calendar'
 
 function formatDateRange(range?: DateRange): string {
   if (!range?.from) {

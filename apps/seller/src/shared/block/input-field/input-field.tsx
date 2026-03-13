@@ -1,9 +1,8 @@
 import { InputHTMLAttributes } from 'react'
 
+import { Button, Input, Label } from '@dessert/ui'
+
 import { cn } from '@/shared/libs/utils'
-import Button from '@/shared/ui/button/button'
-import Input from '@/shared/ui/input/input'
-import Label from '@/shared/ui/label/label'
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string

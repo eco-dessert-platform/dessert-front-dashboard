@@ -1,4 +1,4 @@
-import Input from '@/shared/ui/input/input'
+import { Input } from '@dessert/ui'
 
 interface FileUploadInputProps {
   label?: string

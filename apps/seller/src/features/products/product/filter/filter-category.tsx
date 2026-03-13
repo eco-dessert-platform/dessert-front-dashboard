@@ -1,14 +1,13 @@
 import { useState } from 'react'
 
+import { Button, Dropdown, Input } from '@dessert/ui'
+
 import {
   BreadOptions,
   ProductFilterMainOption,
   SearchOptions,
   SnackOptions,
 } from '@/entity/products/product/product-filter-options.mock'
-import Button from '@/shared/ui/button/button'
-import Dropdown from '@/shared/ui/dropdown/dropdown'
-import Input from '@/shared/ui/input/input'
 
 export const FilterCategory = () => {
   const [main, setMain] = useState<string>('')

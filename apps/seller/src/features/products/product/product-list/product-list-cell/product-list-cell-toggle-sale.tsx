@@ -1,4 +1,4 @@
-import Checkbox from '@/shared/ui/checkbox/checkbox'
+import { Checkbox } from '@dessert/ui'
 
 type Props = {
   checked: boolean

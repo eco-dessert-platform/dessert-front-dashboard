@@ -1,4 +1,4 @@
-import { Tab, TabList, TabTrigger } from '@/shared/ui/tab/tab'
+import { Tab, TabList, TabTrigger } from '@dessert/ui'
 
 export const FilterTabs = () => {
   return (

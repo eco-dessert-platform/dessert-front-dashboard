@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import { Button, Table } from '@dessert/ui'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { getTransactionSettlementMock } from '@/entity/settlement/mock'
@@ -7,8 +8,6 @@ import {
   SettlementFilters,
   TransactionSettlement,
 } from '@/entity/settlement/types'
-import Button from '@/shared/ui/button/button'
-import Table from '@/shared/ui/table/table'
 
 import {
   Popover,

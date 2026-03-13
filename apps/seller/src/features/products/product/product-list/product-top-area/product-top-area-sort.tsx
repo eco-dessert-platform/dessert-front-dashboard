@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Dropdown from '@/shared/ui/dropdown/dropdown'
+import { Dropdown } from '@dessert/ui'
 
 const sortOptions = [
   { label: '최신순', value: 'created_desc' },

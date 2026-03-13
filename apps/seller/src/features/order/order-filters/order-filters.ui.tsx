@@ -1,3 +1,4 @@
+import { Select } from '@dessert/ui'
 import { format, parseISO } from 'date-fns'
 
 import ResetIcon from '@/assets/icons/reset.svg?react'
@@ -13,7 +14,6 @@ import type {
 import { DatePicker } from '@/shared/block/date-picker/date-picker'
 import InputField from '@/shared/block/input-field/input-field'
 import { cn } from '@/shared/libs/utils'
-import Select from '@/shared/ui/select/select'
 
 interface OrderFiltersProps {
   filters: OrderFilters // draftFilters (UI 표시용)
