@@ -71,7 +71,7 @@ export default tseslint.config(
       'import/no-duplicates': 'warn',
       'import/no-cycle': 'warn',
       'import/no-extraneous-dependencies': [
-        'warn',
+        'off',
         {
           devDependencies: [
             '**/.storybook/**', // Storybook 설정 파일
@@ -101,7 +101,7 @@ export default tseslint.config(
         },
       },
       'better-tailwindcss': {
-        entryPoint: './apps/seller/src/styles/index.css',
+        entryPoint: `${import.meta.dirname}/apps/seller/src/styles/index.css`,
       },
     },
   },
@@ -133,7 +133,7 @@ export default tseslint.config(
         },
       },
       'better-tailwindcss': {
-        entryPoint: './packages/ui/src/styles/index.css',
+        entryPoint: `${import.meta.dirname}/packages/ui/src/styles/index.css`,
       },
     },
   },
