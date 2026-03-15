@@ -13,8 +13,7 @@ const MinusIcon = ({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
+      viewBox="0 0 24 24"
       fill="none"
       role="img"
       aria-hidden={hasLabel ? undefined : true}
@@ -25,7 +24,7 @@ const MinusIcon = ({
       {title && <title id={titleId}>{title}</title>}
 
       <path
-        fill="#212121"
+        fill="currentColor"
         d="M18.4 11c.332 0 .6.337.6.751s-.269.749-.6.749H5.6c-.331 0-.6-.335-.6-.749s.268-.75.6-.751h12.8Z"
       />
     </svg>
