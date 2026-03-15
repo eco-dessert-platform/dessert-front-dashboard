@@ -16,10 +16,12 @@
     "build:admin": "turbo run build --filter=@dessert/admin",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "storybook": "turbo run storybook --filter=@dessert/ui",
-    "build-storybook": "turbo run build-storybook --filter=@dessert/ui",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "storybook:ui": "turbo run storybook --filter=@dessert/ui",
+    "storybook:icons": "turbo run storybook --filter=@dessert/icons",
+    "build-storybook:ui": "turbo run build-storybook --filter=@dessert/ui",
+    "build-storybook:icons": "turbo run build-storybook --filter=@dessert/icons"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
