@@ -1,24 +1,40 @@
 import * as React from 'react'
-import { SVGProps } from 'react'
+import { SVGProps, useId } from 'react'
 
-const RadioDefaultIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={16}
-    height={16}
-    fill="none"
-    {...props}
-  >
-    <rect
-      width={15}
-      height={15}
-      x={0.5}
-      y={0.5}
-      fill="#EEE"
-      stroke="#EEE"
-      rx={7.5}
-    />
-    <rect width={8} height={8} x={4} y={4} fill="#fff" rx={4} />
-  </svg>
-)
+const RadioDefaultIcon = ({
+  title,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  ...props
+}: SVGProps<SVGSVGElement> & { title?: string }) => {
+  const titleId = useId()
+  const hasLabel = Boolean(title || ariaLabel || ariaLabelledBy)
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={16}
+      height={16}
+      fill="none"
+      role="img"
+      aria-hidden={hasLabel ? undefined : true}
+      aria-label={ariaLabel}
+      aria-labelledby={title ? titleId : ariaLabelledBy}
+      {...props}
+    >
+      {title && <title id={titleId}>{title}</title>}
+
+      <rect
+        width={15}
+        height={15}
+        x={0.5}
+        y={0.5}
+        fill="#EEE"
+        stroke="#EEE"
+        rx={7.5}
+      />
+      <rect width={8} height={8} x={4} y={4} fill="#fff" rx={4} />
+    </svg>
+  )
+}
 export default RadioDefaultIcon
