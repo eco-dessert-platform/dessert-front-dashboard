@@ -137,4 +137,17 @@ export default tseslint.config(
       },
     },
   },
+
+  // ── packages/icons 전용: tsconfig 경로 ──
+  {
+    files: ['packages/icons/**/*.{ts,tsx}'],
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './packages/icons/tsconfig.json',
+        },
+      },
+    },
+  },
 )
