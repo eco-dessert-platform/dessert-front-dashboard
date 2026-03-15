@@ -257,6 +257,12 @@ __metadata:
 "@dessert/icons@npm:*, @dessert/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@dessert/icons@workspace:packages/icons"
+  dependencies:
+    "@storybook/addon-essentials": "npm:^8.6.12"
+    "@storybook/react": "npm:^8.6.12"
+    "@storybook/react-vite": "npm:^8.6.12"
+    "@storybook/test": "npm:^8.6.12"
+    storybook: "npm:^8.6.12"
   peerDependencies:
     react: ^19.0.0
   languageName: unknown
