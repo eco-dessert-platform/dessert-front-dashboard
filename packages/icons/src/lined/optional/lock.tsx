@@ -1,24 +1,39 @@
 import * as React from 'react'
-import { SVGProps } from 'react'
+import { SVGProps, useId } from 'react'
 
-const LockIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
-    fill="none"
-    {...props}
-  >
-    <path
-      fill="#212121"
-      fillRule="evenodd"
-      d="M7.232 10.431v-2.56c0-1.291.503-2.53 1.397-3.444A4.717 4.717 0 0 1 12 3c1.264 0 2.477.513 3.371 1.427a4.926 4.926 0 0 1 1.397 3.445v2.56h.889c1.294 0 2.343 1.071 2.343 2.394v5.78C20 19.927 18.95 21 17.657 21H6.343C5.05 21 4 19.928 4 18.605v-5.78c0-1.322 1.05-2.394 2.343-2.394h.89Zm2.425-4.953A3.278 3.278 0 0 1 12 4.486c.879 0 1.721.357 2.343.992.621.635.97 1.496.97 2.394v2.56H8.687v-2.56c0-.898.349-1.76.97-2.394Zm-3.314 6.44a.899.899 0 0 0-.888.908v5.78c0 .501.398.908.888.908h11.314c.49 0 .889-.407.889-.909v-5.78a.899.899 0 0 0-.89-.908H6.344Z"
-      clipRule="evenodd"
-    />
-    <path
-      fill="#212121"
-      d="M12.571 17.288c0 .31-.255.562-.571.562a.567.567 0 0 1-.571-.563v-3.374c0-.311.255-.563.571-.563.316 0 .571.252.571.563v3.375Z"
-    />
-  </svg>
-)
+const LockIcon = ({
+  title,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  ...props
+}: SVGProps<SVGSVGElement> & { title?: string }) => {
+  const titleId = useId()
+  const hasLabel = Boolean(title || ariaLabel || ariaLabelledBy)
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      role="img"
+      aria-hidden={hasLabel ? undefined : true}
+      aria-label={ariaLabel}
+      aria-labelledby={title ? titleId : ariaLabelledBy}
+      {...props}
+    >
+      {title && <title id={titleId}>{title}</title>}
+
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M7.232 10.431v-2.56c0-1.291.503-2.53 1.397-3.444A4.717 4.717 0 0 1 12 3c1.264 0 2.477.513 3.371 1.427a4.926 4.926 0 0 1 1.397 3.445v2.56h.889c1.294 0 2.343 1.071 2.343 2.394v5.78C20 19.927 18.95 21 17.657 21H6.343C5.05 21 4 19.928 4 18.605v-5.78c0-1.322 1.05-2.394 2.343-2.394h.89Zm2.425-4.953A3.278 3.278 0 0 1 12 4.486c.879 0 1.721.357 2.343.992.621.635.97 1.496.97 2.394v2.56H8.687v-2.56c0-.898.349-1.76.97-2.394Zm-3.314 6.44a.899.899 0 0 0-.888.908v5.78c0 .501.398.908.888.908h11.314c.49 0 .889-.407.889-.909v-5.78a.899.899 0 0 0-.89-.908H6.344Z"
+        clipRule="evenodd"
+      />
+      <path
+        fill="currentColor"
+        d="M12.571 17.288c0 .31-.255.562-.571.562a.567.567 0 0 1-.571-.563v-3.374c0-.311.255-.563.571-.563.316 0 .571.252.571.563v3.375Z"
+      />
+    </svg>
+  )
+}
 export default LockIcon
