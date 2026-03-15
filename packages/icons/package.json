@@ -6,6 +6,9 @@
     ".": "./src/index.ts",
     "./styles": "./src/styles/index.css"
   },
+  "scripts": {
+    "lint": "eslint ."
+  },
   "peerDependencies": {
     "react": "^19.0.0"
   }
