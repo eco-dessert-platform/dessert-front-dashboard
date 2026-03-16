@@ -92,8 +92,13 @@ jobs:
           # 해시가 포함된 JS/CSS 에셋은 장기 캐싱 (1년)
           aws s3 sync apps/seller/dist s3://dessert-front-seller-prod \
             --exclude "index.html" \
+            --exclude "robots.txt" \
             --delete \
             --cache-control "public, max-age=31536000, immutable"
+
+          # robots.txt는 내용이 바뀔 수 있으므로 짧은 캐시 (24시간)
+          aws s3 cp apps/seller/dist/robots.txt s3://dessert-front-seller-prod/robots.txt \
+            --cache-control "public, max-age=86400"
 
           # index.html은 항상 최신 버전을 받도록 캐시 금지
           aws s3 cp apps/seller/dist/index.html s3://dessert-front-seller-prod/index.html \
@@ -103,7 +108,7 @@ jobs:
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.SELLER_CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"
+            --paths "/index.html" "/robots.txt"
 
   # ─────────────────────────────────────
   # 3단계: Admin 앱 배포 (향후 구현)
@@ -113,4 +118,57 @@ jobs:
     if: needs.detect-changes.outputs.admin == 'true' || github.event.inputs.deploy_admin == 'true'
     runs-on: ubuntu-22.04
     steps:
-      - run: echo "Admin 배포 미구현"
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Dependencies Cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: ${{runner.os}}-yarn-${{hashFiles('yarn.lock')}}
+          restore-keys: |
+            ${{runner.os}}-yarn-
+
+      - name: Dependencies Install
+        run: yarn install --immutable
+
+      - name: Admin App Build
+        run: yarn run build:admin
+        env:
+          VITE_API_BASE_URL: ${{secrets.ADMIN_API_BASE_URL}}
+
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ap-northeast-2
+
+      - name: S3 Upload
+        run: |
+          # 해시가 포함된 JS/CSS 에셋은 장기 캐싱 (1년)
+          aws s3 sync apps/admin/dist s3://dessert-front-admin-prod \
+            --exclude "index.html" \
+            --exclude "robots.txt" \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable"
+
+          # robots.txt는 내용이 바뀔 수 있으므로 짧은 캐시 (24시간)
+          aws s3 cp apps/admin/dist/robots.txt s3://dessert-front-admin-prod/robots.txt \
+            --cache-control "public, max-age=86400"
+
+          # index.html은 항상 최신 버전을 받도록 캐시 금지
+          aws s3 cp apps/admin/dist/index.html s3://dessert-front-admin-prod/index.html \
+            --cache-control "no-cache, no-store, must-revalidate"
+
+      - name: CloudFront cache Invalidate
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.ADMIN_CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/index.html" "/robots.txt"
