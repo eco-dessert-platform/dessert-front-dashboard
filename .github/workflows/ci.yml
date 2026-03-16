@@ -35,16 +35,22 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: yarn install
+      - name: Enable Corepack
+        run: corepack enable
 
-      - name: Amplify Build
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build dependencies
         run: yarn build
 
-      - name: Run Chromatic
+      - name: Build UI Storybook
+        run: yarn build-storybook:ui
+
+      - name: Run Chromatic (UI)
         uses: chromaui/action@latest
         with:
-          # ⚠️ 토큰은 보안을 위해 GitHub Secrets에 등록하는 것이 좋습니다.
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          exitOnceUploaded: true # 업로드 후 UI 테스트 승인 대기 없이 바로 완료
-          autoAcceptChanges: true # 모든 UI 변경사항을 자동으로 승인 처리
+          storybookBuildDir: packages/ui/storybook-static
+          exitOnceUploaded: true
+          autoAcceptChanges: true

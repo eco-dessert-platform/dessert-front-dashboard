@@ -1,0 +1,96 @@
+name: CD
+
+on:
+  push:
+    branches: [develop]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ─────────────────────────────────────
+  # 1단계: 변경된 앱 감지
+  # ─────────────────────────────────────
+  detect-changes:
+    runs-on: ubuntu-22.04
+    outputs:
+      seller: ${{steps.filter.outputs.seller}}
+      admin: ${{steps.filter.outputs.admin}}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            seller:
+              - 'apps/seller/**'
+              - 'packages/**'
+              - 'package.json'
+              - 'yarn.lock'
+              - 'turbo.json'
+            admin:
+              - 'apps/admin/**'
+              - 'packages/**'
+              - 'package.json'
+              - 'yarn.lock'
+              - 'turbo.json'
+
+  # ─────────────────────────────────────
+  # 2단계: Seller 앱 배포
+  # ─────────────────────────────────────
+  deploy-seller:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.seller == 'true'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Dependencies Cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: ${{runner.os}}-yarn-${{hashFiles('yarn.lock')}}
+          restore-keys: |
+            ${{runner.os}}-yarn-
+
+      - name: Dependencies Install
+        run: yarn install --immutable
+
+      - name: Seller App Build
+        run: yarn run build:seller
+        env:
+          VITE_API_BASE_URL: ${{secrets.SELLER_API_BASE_URL}}
+
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ap-northeast-2
+
+      - name: S3 Upload
+        run: |
+          # 해시가 포함된 JS/CSS 에셋은 장기 캐싱 (1년)
+          aws s3 sync apps/seller/dist s3://dessert-front-seller-prod \
+            --exclude "index.html" \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable"
+
+          # index.html은 항상 최신 버전을 받도록 캐시 금지
+          aws s3 cp apps/seller/dist/index.html s3://dessert-front-seller-prod/index.html \
+            --cache-control "no-cache, no-store, must-revalidate"
+
+      - name: CloudFront cache Invalidate
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.SELLER_CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/index.html"
