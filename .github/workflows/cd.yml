@@ -92,8 +92,13 @@ jobs:
           # 해시가 포함된 JS/CSS 에셋은 장기 캐싱 (1년)
           aws s3 sync apps/seller/dist s3://dessert-front-seller-prod \
             --exclude "index.html" \
+            --exclude "robots.txt" \
             --delete \
             --cache-control "public, max-age=31536000, immutable"
+
+          # robots.txt는 내용이 바뀔 수 있으므로 짧은 캐시 (24시간)
+          aws s3 cp apps/seller/dist/robots.txt s3://dessert-front-seller-prod/robots.txt \
+            --cache-control "public, max-age=86400"
 
           # index.html은 항상 최신 버전을 받도록 캐시 금지
           aws s3 cp apps/seller/dist/index.html s3://dessert-front-seller-prod/index.html \
@@ -103,7 +108,7 @@ jobs:
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.SELLER_CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/index.html"
+            --paths "/index.html" "/robots.txt"
 
   # ─────────────────────────────────────
   # 3단계: Admin 앱 배포 (향후 구현)
@@ -150,15 +155,20 @@ jobs:
           # 해시가 포함된 JS/CSS 에셋은 장기 캐싱 (1년)
           aws s3 sync apps/admin/dist s3://dessert-front-admin-prod \
             --exclude "index.html" \
+            --exclude "robots.txt" \
             --delete \
             --cache-control "public, max-age=31536000, immutable"
 
+          # robots.txt는 내용이 바뀔 수 있으므로 짧은 캐시 (24시간)
+          aws s3 cp apps/admin/dist/robots.txt s3://dessert-front-admin-prod/robots.txt \
+            --cache-control "public, max-age=86400"
+
           # index.html은 항상 최신 버전을 받도록 캐시 금지
-          aws s3 cp apps/seller/dist/index.html s3://dessert-front-admin-prod/index.html \
+          aws s3 cp apps/admin/dist/index.html s3://dessert-front-admin-prod/index.html \
             --cache-control "no-cache, no-store, must-revalidate"
 
       - name: CloudFront cache Invalidate
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.ADMIN_CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/index.html"
+            --paths "/index.html" "/robots.txt"
