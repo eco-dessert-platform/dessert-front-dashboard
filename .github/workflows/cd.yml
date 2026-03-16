@@ -3,6 +3,16 @@ name: CD
 on:
   push:
     branches: [develop]
+  workflow_dispatch:
+    inputs:
+      deploy_seller:
+        description: "Seller Service Manual Deploy"
+        type: boolean
+        default: false
+      deploy_admin:
+        description: "Admin Service Manual Deploy"
+        type: boolean
+        default: false
 
 concurrency:
   group: deploy-${{ github.ref }}
@@ -42,7 +52,7 @@ jobs:
   # ─────────────────────────────────────
   deploy-seller:
     needs: detect-changes
-    if: needs.detect-changes.outputs.seller == 'true'
+    if: needs.detect-changes.outputs.seller == 'true' || github.event.inputs.deploy_seller == 'true'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -94,3 +104,13 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.SELLER_CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
+
+  # ─────────────────────────────────────
+  # 3단계: Admin 앱 배포 (향후 구현)
+  # ─────────────────────────────────────
+  deploy-admin:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.admin == 'true' || github.event.inputs.deploy_admin == 'true'
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo "Admin 배포 미구현"
