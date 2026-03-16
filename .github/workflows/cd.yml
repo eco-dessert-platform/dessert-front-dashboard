@@ -28,11 +28,13 @@ jobs:
               - 'apps/seller/**'
               - 'packages/**'
               - 'package.json'
+              - 'yarn.lock'
               - 'turbo.json'
             admin:
               - 'apps/admin/**'
               - 'packages/**'
               - 'package.json'
+              - 'yarn.lock'
               - 'turbo.json'
 
   # ─────────────────────────────────────
@@ -79,6 +81,7 @@ jobs:
         run: |
           # 해시가 포함된 JS/CSS 에셋은 장기 캐싱 (1년)
           aws s3 sync apps/seller/dist s3://dessert-front-seller-prod \
+            --exclude "index.html" \
             --delete \
             --cache-control "public, max-age=31536000, immutable"
 
