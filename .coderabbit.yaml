@@ -54,14 +54,18 @@ reviews:
   # - 아래는 “포함(include)” 경로들
   # - ! 로 시작하면 “제외(exclude)” 경로들
   path_filters:
-    - 'src/**' # 실제 애플리케이션 코드
+    # 포함 경로
+    - 'apps/**/src/**' # 모든 앱(seller, admin)의 소스 코드
+    - 'packages/**/src/**' # 모든 패키지(ui, icons)의 소스 코드
     - '.github/**' # 워크플로우/템플릿 리뷰
 
-    - '!node_modules/**' # 의존성 폴더 제외
-    - '!dist/**' # 번들/배포 산출물 제외
-    - '!build/**' # 빌드 산출물 제외
-    - '!coverage/**' # 커버리지 산출물 제외
-    - '!public/**' # 정적 리소스 제외
+    # 제외 경로
+    - '!**/node_modules/**' # 각 워크스페이스의 의존성 폴더 제외
+    - '!**/dist/**' # 각 워크스페이스의 빌드 산출물 제외
+    - '!**/build/**' # 빌드 산출물 제외
+    - '!**/coverage/**' # 커버리지 산출물 제외
+    - '!**/public/**' # 정적 리소스 제외
+    - '!**/storybook-static/**' # Storybook 빌드 산출물 제외
     - '!**/*.snap' # 스냅샷 제외(노이즈 방지)
     - '!**/*.min.*' # minified 파일 제외
     - '!yarn.lock' # 락파일 제외(변경량이 커서 리뷰 피로 증가)
