@@ -10,7 +10,7 @@ import {
   FlatAdminProduct,
   getProductTableColumns,
 } from './product-table-columns'
-import { ProductActionGroup } from '../product-action-group/product-action-group.ui'
+import { ProductActionGroup } from './product-action-group.ui'
 
 const flattenData = (data: Product[]): FlatAdminProduct[] => {
   return data.flatMap((product) =>

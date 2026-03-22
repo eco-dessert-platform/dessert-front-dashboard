@@ -1,4 +1,4 @@
-import { ProductTable } from '@/features/product/product-table/product-table.ui'
+import { ProductTable } from '@/features/product'
 
 function ProductPage() {
   return (
