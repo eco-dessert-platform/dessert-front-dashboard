@@ -1,3 +1,4 @@
+import React from 'react'
 import '@/styles/index.css'
 
 import ReactDOM from 'react-dom/client'
@@ -29,4 +30,8 @@ if (!rootElement) {
   throw new Error('Root element not found')
 }
 
-ReactDOM.createRoot(rootElement).render(<App router={router} />)
+ReactDOM.createRoot(rootElement).render(
+  <React.StrictMode>
+    <App router={router} />
+  </React.StrictMode>,
+)

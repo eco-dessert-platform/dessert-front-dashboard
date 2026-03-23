@@ -24,7 +24,7 @@ function App({ router }: { router: ReturnType<typeof createBrowserRouter> }) {
         transition={Bounce}
         toastClassName="!p-0 !bg-transparent !shadow-none !min-w-0"
       />
-      <ReactQueryDevtools initialIsOpen={false} />
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   )
 }

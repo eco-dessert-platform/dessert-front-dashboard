@@ -64,12 +64,11 @@ const generateMockData = (count: number): Product[] => {
 // 52개의 충분한 임시 데이터를 생성
 const ALL_MOCK_DATA = generateMockData(52)
 
-// 이전 구현을 위해 임시로 유지
-export const PRODUCT_MOCK_DATA = ALL_MOCK_DATA.slice(0, 5)
-
 export const getProductMockData = (page: number, size: number) => {
-  const start = (page - 1) * size
-  const end = start + size
+  const safePage = Math.max(1, page)
+  const safeSize = Math.max(1, size)
+  const start = (safePage - 1) * safeSize
+  const end = start + safeSize
   return {
     data: ALL_MOCK_DATA.slice(start, end),
     totalCount: ALL_MOCK_DATA.length,

@@ -41,7 +41,7 @@ export const getProductTableColumns = (
     accessorKey: 'storeName',
     header: '스토어명',
     cell: ({ row }) => (
-      <span className="typo-body-14-r text-[#f04c28] underline underline-offset-2">
+      <span className="typo-body-14-r text-primary-500 underline underline-offset-2">
         {row.original.storeName}
       </span>
     ),
@@ -60,7 +60,7 @@ export const getProductTableColumns = (
     header: '상품아이디/상품명',
     cell: ({ row }) => (
       <div className="text-center">
-        <p className="typo-body-14-r text-[#f04c28]">
+        <p className="typo-body-14-r text-primary-500">
           [{row.original.productId}]
         </p>
         <p className="typo-body-14-r text-gray-900 underline underline-offset-2">
@@ -154,7 +154,10 @@ export const getProductTableColumns = (
     id: 'link',
     header: '링크',
     cell: () => (
-      <button className="h-30 min-w-56 rounded-8 bg-[#d9d9d9] px-10 py-6 typo-body-12-m text-gray-800">
+      <button
+        type="button"
+        className="h-30 min-w-56 rounded-8 bg-gray-300 px-10 py-6 typo-body-12-m text-gray-800"
+      >
         이동
       </button>
     ),
