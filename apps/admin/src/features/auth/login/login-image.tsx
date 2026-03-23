@@ -14,7 +14,7 @@ export const AuthLoginImage = ({ className = '' }: AuthLoginImageProps) => {
       <img
         src={loginImg}
         alt="Login Illustration"
-        className="size-full object-cover"
+        className="size-full rounded-20 object-cover"
       />
     </div>
   )

@@ -19,6 +19,13 @@ export default defineConfig({
   // 포트지정
   server: {
     port: 6078,
+    proxy: {
+      '/api': {
+        target: 'https://dev.bbanggree.com',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
 
   base: '/',

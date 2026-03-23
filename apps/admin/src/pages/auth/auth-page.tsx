@@ -1,9 +1,15 @@
-import { LogoHeader } from '@dessert/ui'
+import { Button, Input, LogoHeader } from '@dessert/ui'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 
+import { useAdminLoginMutation } from '@/entity/auth/auth-query'
 import { AUTH_MESSAGES } from '@/features/auth/login/constant/message'
 import { LoginFooter } from '@/features/auth/login/login-footer'
-import { useSocialLogin } from '@/features/auth/login/login-hooks'
 import { AuthLoginImage } from '@/features/auth/login/login-image'
+import {
+  LoginFormValues,
+  loginSchema,
+} from '@/features/auth/login/schema/login.schema'
 import {
   AuthCard,
   AuthContentWrapper,
@@ -11,8 +17,23 @@ import {
 } from '@/features/auth/ui'
 
 const AuthPage = () => {
-  useSocialLogin()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    mode: 'onChange',
+  })
 
+  const { mutate, isPending } = useAdminLoginMutation()
+  const onSubmit = (data: LoginFormValues) => {
+    mutate(data, {
+      onError: () => {
+        console.error('로그인 실패')
+      },
+    })
+  }
   return (
     <AuthPageContainer>
       <LogoHeader />
@@ -20,17 +41,45 @@ const AuthPage = () => {
       <AuthContentWrapper centered>
         <AuthCard className="max-w-[1240px]">
           <AuthLoginImage className="hidden max-h-[746px] max-w-[595px] lg:block" />
-
-          <div className="flex flex-1 flex-col items-center justify-center gap-56 px-5 py-10 lg:py-0">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-1 flex-col justify-center gap-3.75 px-5 py-10 lg:py-0"
+          >
             <div className="flex flex-col items-start gap-1">
-              <h1 className="text-gray-900">{AUTH_MESSAGES.LOGIN.TITLE}</h1>
-              <p className="whitespace-pre-wrap text-gray-700">
+              <h1 className="typo-heading-18-b text-gray-900">
+                {AUTH_MESSAGES.LOGIN.TITLE}
+              </h1>
+              <p className="typo-title-16-m whitespace-pre-wrap text-gray-900">
                 {AUTH_MESSAGES.LOGIN.DESCRIPTION}
               </p>
             </div>
 
-            {/* <SocialLoginButtons /> */}
-          </div>
+            <div>
+              <Input
+                label="아이디"
+                required
+                placeholder="아이디를 입력해주세요"
+                {...register('accountId')}
+                // error={!!errors.id}
+              />
+              <Input
+                label="비밀번호"
+                type="password"
+                className="mt-5"
+                required
+                placeholder="비밀번호를 입력해주세요"
+                {...register('password')}
+                // error={!!errors.password}
+              />
+            </div>
+
+            <Button
+              title="로그인"
+              className="mt-10 ml-auto max-w-56"
+              size="lg"
+              disabled={!isValid || isPending}
+            />
+          </form>
         </AuthCard>
       </AuthContentWrapper>
 
