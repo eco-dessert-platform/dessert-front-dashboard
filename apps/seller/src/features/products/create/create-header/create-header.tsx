@@ -26,6 +26,7 @@ const stagestep = [
 export const ProductHeader = () => {
   const { productFields } = useCreateFormSteps()
   const steps = Object.values(productFields).filter((e) => e === true).length
+  const totalSteps = Object.keys(productFields).length
 
   return (
     <div className="sticky top-0 left-0 z-20 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16">
@@ -38,7 +39,8 @@ export const ProductHeader = () => {
         />
         <p className="typo-title-16-sb">
           필수 입력 사항이{' '}
-          <span className="text-primary-500">{5 - steps}개</span> 남았어요
+          <span className="text-primary-500">{totalSteps - steps}개</span>{' '}
+          남았어요
         </p>
       </div>
 
