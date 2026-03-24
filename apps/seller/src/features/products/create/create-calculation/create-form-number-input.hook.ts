@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export function useNumberInput(
   value: number | null,
@@ -10,6 +10,10 @@ export function useNumberInput(
   const [displayValue, setDisplayValue] = useState(
     value !== null ? value.toLocaleString('ko-KR') : '',
   )
+
+  useEffect(() => {
+    setDisplayValue(value !== null ? value.toLocaleString('ko-KR') : '')
+  }, [value])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value

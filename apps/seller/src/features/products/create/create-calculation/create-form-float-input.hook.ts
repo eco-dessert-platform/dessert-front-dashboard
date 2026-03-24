@@ -16,10 +16,6 @@ export function useFloatInput(
     } else if (value === null && inputValue !== '') {
       setInputValue(stringVal)
     }
-
-    // if (Number(stringVal) !== Number(inputValue)) {
-    //   setInputValue(stringVal)
-    // }
   }, [value, inputValue])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
