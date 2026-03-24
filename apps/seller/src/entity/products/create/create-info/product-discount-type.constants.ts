@@ -1,4 +1,4 @@
-export const productDiscountType = [
+export const ProductDiscountType = [
   {
     label: '원',
     value: 'won',

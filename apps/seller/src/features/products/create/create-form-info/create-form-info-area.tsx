@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { Dropdown, Input, Label, Switch } from '@dessert/ui'
 import { Controller } from 'react-hook-form'
 
-import { productDiscountType } from '@/entity/products/create/create-info/product-discount-type.constants'
+import { ProductDiscountType } from '@/entity/products/create/create-info/product-discount-type.constants'
 import { productionTimes } from '@/entity/products/create/create-info/production-time.constants'
 
 import { useProductInfoForm } from './use-product-info-form.hook'
@@ -94,7 +94,7 @@ export const ProductInfoArea = () => {
       <Label
         label="상품 제작 시간"
         required
-        className="block pt-32 typo-heading-18-r"
+        className="typo-heading-18-r block pt-32"
       />
       <p className="mt-2 typo-title-16-r text-gray-600">
         고객 주문 취소 시점에 활용되니 정확히 입력해주세요.
@@ -146,7 +146,7 @@ export const ProductInfoArea = () => {
               name="discountType"
               render={({ field }) => (
                 <Dropdown
-                  options={productDiscountType}
+                  options={ProductDiscountType}
                   value={field.value}
                   placeholder="원"
                   onSelect={(val) => {
@@ -168,7 +168,7 @@ export const ProductInfoArea = () => {
             <p className="typo-heading-18-r text-gray-600 line-through">
               {price?.toLocaleString('ko-KR')}
             </p>
-            <p className="flex items-center gap-4 typo-heading-18-r text-primary-500">
+            <p className="typo-heading-18-r flex items-center gap-4 text-primary-500">
               <span className="typo-heading-24-sb">
                 {finalPrice.toLocaleString('ko-KR')}
               </span>
