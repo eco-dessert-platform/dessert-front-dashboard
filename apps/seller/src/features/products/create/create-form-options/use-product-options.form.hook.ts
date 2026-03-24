@@ -29,6 +29,9 @@ export function useProductOptionForm(basePrice: number | null = null) {
     'sodium',
   ])
 
+  const [totalWeight, calories, carbohydrate, sugar, protein, fat, sodium] =
+    nutritionValues
+
   const subCategoryOptions =
     mainCategory !== ''
       ? (SUB_CATEGORY_MAP[mainCategory as keyof typeof SUB_CATEGORY_MAP] ?? [])
@@ -72,25 +75,25 @@ export function useProductOptionForm(basePrice: number | null = null) {
     form.setValue('stockQuantity', val, { shouldValidate: true })
   })
 
-  const totalWeightInput = useFloatInput(form.watch('totalWeight'), (val) => {
+  const totalWeightInput = useFloatInput(totalWeight, (val) => {
     form.setValue('totalWeight', val, { shouldValidate: true })
   })
-  const caloriesInput = useFloatInput(form.watch('calories'), (val) => {
+  const caloriesInput = useFloatInput(calories, (val) => {
     form.setValue('calories', val, { shouldValidate: true })
   })
-  const carbohydrateInput = useFloatInput(form.watch('carbohydrate'), (val) => {
+  const carbohydrateInput = useFloatInput(carbohydrate, (val) => {
     form.setValue('carbohydrate', val, { shouldValidate: true })
   })
-  const sugarInput = useFloatInput(form.watch('sugar'), (val) => {
+  const sugarInput = useFloatInput(sugar, (val) => {
     form.setValue('sugar', val, { shouldValidate: true })
   })
-  const proteinInput = useFloatInput(form.watch('protein'), (val) => {
+  const proteinInput = useFloatInput(protein, (val) => {
     form.setValue('protein', val, { shouldValidate: true })
   })
-  const fatInput = useFloatInput(form.watch('fat'), (val) => {
+  const fatInput = useFloatInput(fat, (val) => {
     form.setValue('fat', val, { shouldValidate: true })
   })
-  const sodiumInput = useFloatInput(form.watch('sodium'), (val) => {
+  const sodiumInput = useFloatInput(sodium, (val) => {
     form.setValue('sodium', val, { shouldValidate: true })
   })
 
