@@ -118,6 +118,28 @@ export function useProductOptionForm(basePrice: number | null = null) {
   const isNutritionValid =
     !hasNutrition || nutritionValues.every((val) => val !== null)
 
+  const optionErrorFields = [
+    'mainCategory',
+    'subCategory',
+    'optionName',
+    'ingredientCategories',
+    'additionalPrice',
+    'stockQuantity',
+    'shippingDays',
+    'hasNutrition',
+    'totalWeight',
+    'calories',
+    'carbohydrate',
+    'sugar',
+    'protein',
+    'fat',
+    'sodium',
+  ] as const
+
+  const hasOptionErrors = optionErrorFields.some(
+    (field) => form.formState.errors[field],
+  )
+
   const isFormField =
     mainCategory !== '' &&
     subCategory !== '' &&
@@ -128,7 +150,7 @@ export function useProductOptionForm(basePrice: number | null = null) {
     stockQuantity !== null &&
     isNutritionValid &&
     shippingDays.length >= 1 &&
-    Object.keys(form.formState.errors).length === 0
+    !hasOptionErrors
 
   return {
     form,
