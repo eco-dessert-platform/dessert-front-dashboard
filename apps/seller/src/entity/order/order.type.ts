@@ -122,3 +122,43 @@ type GroupButton = {
 }
 
 export type ActionButton = SingleButton | GroupButton
+
+// 완료 주문 내역
+export type CompletedOrderTab =
+  | 'completed' // 완료
+  | 'canceled' // 취소
+  | 'returned' // 반품
+  | 'exchanged' // 교환
+
+export type CompletedOrderStatus =
+  | 'ALL' // 전체
+  | 'PURCHASE_CONFIRMED' // 구매확정
+  | 'DELIVERY_COMPLETED' // 배송완료
+
+export interface CompletedOrderStatusCount {
+  completed: number
+  canceled: number
+  returned: number
+  exchanged: number
+}
+
+export interface CompletedOrderFilters {
+  tab?: CompletedOrderTab
+  startDate?: string
+  endDate?: string
+  orderStatus?: CompletedOrderStatus
+  searchType?: SearchType
+  searchKeyword?: string
+  page?: string
+  size?: string
+  sort?: SortOrder
+}
+
+export interface CompletedOrderListResponse {
+  statusCount: CompletedOrderStatusCount
+  content: OrderItem[]
+  page: number
+  size: number
+  totalPages: number
+  totalElements: number
+}

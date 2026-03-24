@@ -5,9 +5,9 @@ import {
   OrderStatusTab,
 } from './order.type'
 
-// ─── 20개 Mock 주문 데이터 ───────────────────────────────────────
+// 20개 Mock 주문 데이터
 export const MOCK_ORDERS: OrderItem[] = [
-  // ── PAYMENT_COMPLETED (6개) ──────────────────────────────────
+  // PAYMENT_COMPLETED (6개)
   {
     recipientName: '홍길동',
     orderNumber: '2503020013',
@@ -147,7 +147,7 @@ export const MOCK_ORDERS: OrderItem[] = [
     trackingNumber: null,
   },
 
-  // ── ORDER_CONFIRMED (3개) ─────────────────────────────────────
+  // ORDER_CONFIRMED (3개)
   {
     recipientName: '강서연',
     orderNumber: '2502240071',
@@ -218,7 +218,7 @@ export const MOCK_ORDERS: OrderItem[] = [
     trackingNumber: null,
   },
 
-  // ── PRODUCT_SHIPPED (3개) ─────────────────────────────────────
+  // PRODUCT_SHIPPED (3개)
   {
     recipientName: '신지호',
     orderNumber: '2502210104',
@@ -283,7 +283,7 @@ export const MOCK_ORDERS: OrderItem[] = [
     trackingNumber: '345678901234',
   },
 
-  // ── DELIVERY_COMPLETED (3개) ──────────────────────────────────
+  // DELIVERY_COMPLETED (3개)
   {
     recipientName: '권지민',
     orderNumber: '2502150137',
@@ -348,7 +348,7 @@ export const MOCK_ORDERS: OrderItem[] = [
     trackingNumber: '678901234567',
   },
 
-  // ── CANCELED (2개) ────────────────────────────────────────────
+  // CANCELED (2개)
   {
     recipientName: '류성훈',
     orderNumber: '2502100162',
@@ -394,7 +394,7 @@ export const MOCK_ORDERS: OrderItem[] = [
     trackingNumber: null,
   },
 
-  // ── RETURNED (2개) ────────────────────────────────────────────
+  // RETURNED (2개)
   {
     recipientName: '고은서',
     orderNumber: '2502050184',
@@ -434,7 +434,7 @@ export const MOCK_ORDERS: OrderItem[] = [
     trackingNumber: '890123456789',
   },
 
-  // ── EXCHANGED (1개) ───────────────────────────────────────────
+  // EXCHANGED (1개)
   {
     recipientName: '서예나',
     orderNumber: '2502010206',
@@ -462,7 +462,7 @@ export const MOCK_ORDERS: OrderItem[] = [
   },
 ]
 
-// ─── 탭 → API 상태 매핑 ──────────────────────────────────────────
+// 탭 → API 상태 매핑
 const TAB_TO_STATUS: Partial<Record<OrderStatusTab, OrderStatus>> = {
   paymentCompleted: 'PAYMENT_COMPLETED',
   orderConfirmed: 'ORDER_CONFIRMED',
@@ -473,7 +473,7 @@ const TAB_TO_STATUS: Partial<Record<OrderStatusTab, OrderStatus>> = {
   exchanged: 'EXCHANGED',
 }
 
-// ─── Mock API 필터 함수 ──────────────────────────────────────────
+// Mock API 필터 함수
 export function filterOrdersByTab(
   orders: OrderItem[],
   tab?: OrderStatusTab,
@@ -486,7 +486,7 @@ export function filterOrdersByTab(
   return status ? orders.filter((o) => o.orderStatus === status) : orders
 }
 
-// ─── statusCount를 실시간으로 계산 ──────────────────────────────
+// statusCount를 실시간으로 계산
 export function calcStatusCount(orders: OrderItem[]) {
   return {
     total: orders.length,
@@ -506,7 +506,7 @@ export function calcStatusCount(orders: OrderItem[]) {
   }
 }
 
-// ─── Mock API 응답 생성 ──────────────────────────────────────────
+// Mock API 응답 생성
 export function getMockOrderListResponse(
   tab?: OrderStatusTab,
   page = 0,
