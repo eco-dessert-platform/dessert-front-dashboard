@@ -2,8 +2,8 @@ import { z } from 'zod'
 
 export const deliverySchema = z
   .object({
-    deliveryTerms: z.string(),
-    deliveryCompany: z.string(),
+    deliveryTerms: z.string().min(1),
+    deliveryCompany: z.string().min(1),
     deliveryFee: z.union([
       z
         .number({ error: '올바른 가격을 입력해주세요' })

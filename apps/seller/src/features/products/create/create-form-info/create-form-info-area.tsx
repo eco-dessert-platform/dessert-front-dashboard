@@ -71,7 +71,7 @@ export const ProductInfoArea = () => {
             className="typo-heading-18-r text-gray-900"
           />
           <InfoTooltip iconSize={20}>
-            신선식품 안내 <br></br>
+            신선식품 안내 <br />
             <ul className="list-disc pl-16">
               <li>주문 즉시 제작되거나 빠르게 소비해야 하는 상품이에요.</li>
               <li>
@@ -139,7 +139,7 @@ export const ProductInfoArea = () => {
               value={discountInput.displayValue}
               onChange={discountInput.handleChange}
               error={!!errors.discountAmount && discountAmount !== null}
-              errorMessage={errors.discountAmount?.message}
+              errorMessage={errors.discountAmount?.message || undefined}
             />
             <Controller
               control={control}
@@ -165,9 +165,11 @@ export const ProductInfoArea = () => {
           <p className="typo-heading-18-b">최종 상품 금액</p>
 
           <div className="flex items-center gap-8">
-            <p className="typo-heading-18-r text-gray-600 line-through">
-              {price?.toLocaleString('ko-KR')}
-            </p>
+            {price !== null && (
+              <p className="typo-heading-18-r text-gray-600 line-through">
+                {price.toLocaleString('ko-KR')}
+              </p>
+            )}
             <p className="typo-heading-18-r flex items-center gap-4 text-primary-500">
               <span className="typo-heading-24-sb">
                 {finalPrice.toLocaleString('ko-KR')}

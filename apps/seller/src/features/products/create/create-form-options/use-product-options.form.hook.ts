@@ -4,6 +4,7 @@ import { ProductOptionFormInput } from '@/entity/products/create/create-form/pro
 import { SUB_CATEGORY_MAP } from '@/entity/products/create/create-options/product-options.constant'
 import { CreateProductForm } from '@/pages/products/create/create-form'
 
+import { productOptionSchema } from './create-options.schema'
 import { useFloatInput } from '../create-calculation/create-form-float-input.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
 
@@ -46,7 +47,11 @@ export function useProductOptionForm(basePrice: number | null = null) {
   type Day = ProductOptionFormInput['shippingDays'][number]
 
   const toggleShippingDay = (days: string[]) => {
-    form.setValue('shippingDays', days as Day[], { shouldValidate: true })
+    const validDays = days.filter(
+      (day): day is Day =>
+        productOptionSchema.shape.shippingDays.element.safeParse(day).success,
+    )
+    form.setValue('shippingDays', validDays, { shouldValidate: true })
   }
 
   const toggleIngredient = (ingredient: 'glutenFree' | 'vegan') => {

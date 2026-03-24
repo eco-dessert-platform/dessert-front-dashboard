@@ -23,7 +23,7 @@ export const productSchema = z
 
   .refine(
     (data) =>
-      data.productName === '' ||
+      data.productName === '' || // 에러메시지 표시 여부이므로 빈 문자열일 경우 통과시킵니다.
       (data.productName.length >= 3 && data.productName.length <= 49),
     { message: '상품명을 3~50자 미만으로 입력해주세요', path: ['productName'] },
   )

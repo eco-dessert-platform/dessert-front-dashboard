@@ -25,7 +25,7 @@ export function useProductDeliveryForm() {
   })
   const deliveryMinFeeInput = useNumberInput(deliveryMinFee, (val) => {
     form.setValue('deliveryMinFee', val, { shouldValidate: true })
-    if (deliveryMinFee !== null) form.trigger('deliveryFee')
+    if (val !== null) form.trigger('deliveryFee')
   })
 
   return {

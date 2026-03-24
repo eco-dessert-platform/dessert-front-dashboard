@@ -109,7 +109,7 @@ export const ProductDeliveryArea = () => {
                 className="flex-1"
                 value={deliveryFeeInput.displayValue}
                 onChange={deliveryFeeInput.handleChange}
-                error={!!errors.deliveryFee && deliveryFee !== null}
+                error={!!errors.deliveryFee}
                 errorMessage={errors.deliveryFee?.message || undefined}
               />
               <span className="relative top-11">원</span>
@@ -126,7 +126,7 @@ export const ProductDeliveryArea = () => {
                   className="flex-1"
                   value={deliveryMinFeeInput.displayValue}
                   onChange={deliveryMinFeeInput.handleChange}
-                  error={!!errors.deliveryMinFee && deliveryMinFee !== null}
+                  error={!!errors.deliveryMinFee}
                   errorMessage={errors.deliveryMinFee?.message || undefined}
                 />
                 <span className="relative top-11">원</span>
