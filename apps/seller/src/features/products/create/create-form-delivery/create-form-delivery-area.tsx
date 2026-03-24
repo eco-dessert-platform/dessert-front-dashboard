@@ -96,7 +96,7 @@ export const ProductDeliveryArea = () => {
         <div
           className={cn(
             'grid grid-cols-2 gap-32 pt-32',
-            deliveryTerms == 'charged' && 'grid-cols-1',
+            deliveryTerms === 'charged' && 'grid-cols-1',
           )}
         >
           <div>

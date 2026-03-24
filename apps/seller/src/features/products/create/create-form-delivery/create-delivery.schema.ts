@@ -6,13 +6,13 @@ export const deliverySchema = z
     deliveryCompany: z.string(),
     deliveryFee: z.union([
       z
-        .number({ error: '올바른 가격을 입력해주세요1' })
+        .number({ error: '올바른 가격을 입력해주세요' })
         .min(0, '올바른 가격을 입력해주세요'),
       z.null(),
     ]),
     deliveryMinFee: z.union([
       z
-        .number({ error: '올바른 가격을 입력해주세요1' })
+        .number({ error: '올바른 가격을 입력해주세요' })
         .min(0, '올바른 가격을 입력해주세요'),
       z.null(),
     ]),
