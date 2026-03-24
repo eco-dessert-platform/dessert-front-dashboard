@@ -1,6 +1,6 @@
 import { LogoHeader } from '@dessert/ui'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 
 import { Lnb } from '@/widgets/lnb'
 

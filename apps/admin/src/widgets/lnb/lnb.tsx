@@ -33,7 +33,10 @@ const MENU_LIST = [
 
 export function Lnb() {
   return (
-    <nav className="relative flex h-[calc(100vh-80px)] w-[240px] flex-col border-r border-border">
+    <nav
+      aria-label="관리자 메뉴"
+      className="relative flex h-[calc(100vh-80px)] w-[240px] flex-col border-r border-border"
+    >
       <div className="flex-1 overflow-y-auto px-3 py-4">
         <Accordion type="multiple" className="gap-10">
           {MENU_LIST.map((menu) => (
@@ -68,7 +71,6 @@ function MenuItemLink({ href, title }: { href: string; title: string }) {
     <div className="px-8 py-4">
       <Link
         to={href}
-        type="button"
         className={cn(
           'flex w-full items-center rounded-10 border border-transparent p-12',
           '[&]:no-underline',
