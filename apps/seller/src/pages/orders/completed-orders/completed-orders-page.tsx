@@ -1,11 +1,11 @@
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
+import { completedOrderQueries } from '@/entity/order/completed-order.query'
 import {
-  MOCK_COMPLETED_ORDERS,
-  calcCompletedStatusCount,
-  filterCompletedOrdersByTab,
-} from '@/entity/order/completed-order.mock'
-import { CompletedOrderTab } from '@/entity/order/order.type'
+  CompletedOrderStatusCount,
+  CompletedOrderTab,
+} from '@/entity/order/order.type'
 import { CompletedOrderActionBar } from '@/features/order/completed-order-action-bar/completed-order-action-bar.ui'
 import { useCompletedOrderFilter } from '@/features/order/completed-order-filters/completed-order-filters.hook'
 import { CompletedOrderFilters } from '@/features/order/completed-order-filters/completed-order-filters.ui'
@@ -19,6 +19,13 @@ const VALID_TABS: CompletedOrderTab[] = [
   'returned',
   'exchanged',
 ]
+
+const DEFAULT_STATUS_COUNT: CompletedOrderStatusCount = {
+  completed: 0,
+  canceled: 0,
+  returned: 0,
+  exchanged: 0,
+}
 
 function CompletedOrdersPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -38,9 +45,11 @@ function CompletedOrdersPage() {
     reset: filtersReset,
   } = useCompletedOrderFilter(selectedTab)
 
-  // TODO: API 연동 시 useQuery로 교체
-  const orders = filterCompletedOrdersByTab(MOCK_COMPLETED_ORDERS, appliedFilters.tab)
-  const statusCount = calcCompletedStatusCount(MOCK_COMPLETED_ORDERS)
+  const { data } = useQuery({
+    ...completedOrderQueries.list(appliedFilters),
+    placeholderData: keepPreviousData,
+  })
+  const orders = data?.content ?? []
 
   const {
     selectedIds,
@@ -81,15 +90,14 @@ function CompletedOrdersPage() {
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
   const currentTab = appliedFilters.tab ?? 'completed'
-  const size = appliedFilters.size ? Number(appliedFilters.size) : 10
-  const totalPages = Math.ceil(orders.length / size)
-  const totalCount = orders.length
+  const totalPages = data?.totalPages ?? 1
+  const totalCount = data?.totalElements ?? 0
 
   return (
     <div className="flex flex-col gap-6 p-4">
       <CompletedOrderTabs
         selectedTab={currentTab}
-        statusCount={statusCount}
+        statusCount={data?.statusCount ?? DEFAULT_STATUS_COUNT}
         onChange={handleTabChange}
       />
 
