@@ -1,19 +1,38 @@
+import { useState } from 'react'
+
 export function useNumberInput(
   value: number | null,
   onChange: (value: number | null) => void,
+  options?: { allowNegative?: boolean },
 ) {
-  const displayValue = value !== null ? value.toLocaleString('ko-KR') : ''
+  const { allowNegative = false } = options ?? {}
+
+  const [displayValue, setDisplayValue] = useState(
+    value !== null ? value.toLocaleString('ko-KR') : '',
+  )
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 숫자와 쉼표 외 모든 문자 제거 (문자, 특수문자 차단)
-    const onlyNumber = e.target.value.replace(/[^0-9]/g, '')
+    const raw = e.target.value
 
-    if (onlyNumber === '') {
+    const cleaned = allowNegative
+      ? raw.replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')
+      : raw.replace(/[^0-9]/g, '')
+
+    // '-' 만 입력된 중간 상태는 표시만 유지, onChange는 호출 안 함
+    if (cleaned === '-') {
+      setDisplayValue('-')
+      return
+    }
+
+    if (cleaned === '') {
+      setDisplayValue('')
       onChange(null)
       return
     }
 
-    onChange(Number(onlyNumber))
+    const num = Number(cleaned)
+    setDisplayValue(num.toLocaleString('ko-KR'))
+    onChange(num)
   }
 
   return { displayValue, handleChange }

@@ -56,9 +56,13 @@ export function useProductOptionForm(basePrice: number | null = null) {
     form.setValue('ingredientCategories', next, { shouldValidate: true })
   }
 
-  const additionalPriceInput = useNumberInput(additionalPrice, (val) => {
-    form.setValue('additionalPrice', val, { shouldValidate: true })
-  })
+  const additionalPriceInput = useNumberInput(
+    additionalPrice,
+    (val) => {
+      form.setValue('additionalPrice', val, { shouldValidate: true })
+    },
+    { allowNegative: true },
+  )
   const stockInput = useNumberInput(stockQuantity, (val) => {
     form.setValue('stockQuantity', val, { shouldValidate: true })
   })
