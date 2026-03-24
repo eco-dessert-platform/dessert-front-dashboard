@@ -15,8 +15,6 @@ export const ProductDeliveryArea = () => {
   const {
     form,
     deliveryTerms,
-    deliveryFee,
-    deliveryMinFee,
     deliveryFeeInput,
     deliveryMinFeeInput,
     isFormField,
