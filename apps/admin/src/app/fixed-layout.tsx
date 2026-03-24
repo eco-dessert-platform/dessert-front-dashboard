@@ -1,5 +1,5 @@
 import { LogoHeader } from '@dessert/ui'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
+import * as ScrollArea from '@radix-ui/react-scroll-area'
 import { Outlet } from 'react-router-dom'
 
 import { Lnb } from '@/widgets/lnb'
@@ -10,10 +10,15 @@ const FixedLayout = () => {
       <LogoHeader />
       <div className="flex h-[calc(100vh-80px)] w-full flex-row overflow-y-auto">
         <Lnb />
-        <main className="size-full max-w-[1240px] bg-gray-50">
-          <ScrollArea className="size-full px-[90px] py-40">
-            <Outlet />
-          </ScrollArea>
+        <main className="size-full max-w-[1240px] bg-gray-50 py-40">
+          <ScrollArea.Root className="size-full">
+            <ScrollArea.Viewport className="px-[90px]">
+              <Outlet />
+            </ScrollArea.Viewport>
+            <ScrollArea.Scrollbar orientation="vertical">
+              <ScrollArea.Thumb />
+            </ScrollArea.Scrollbar>
+          </ScrollArea.Root>
         </main>
       </div>
     </>

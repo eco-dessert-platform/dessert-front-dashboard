@@ -6,7 +6,7 @@ export const ROUTES = {
   },
   PRODUCTS: {
     UPLOAD_APPROVAL: '/products/upload-approval',
-    ALL: '/products',
+    ALL: '/products/all',
   },
   HOMEPAGE: {
     NOTICE: '/homepage/notice',

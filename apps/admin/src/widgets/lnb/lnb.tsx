@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@dessert/ui'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router'
 
 import { ROUTES } from '@/shared/constant/routes'
 import { cn } from '@/shared/libs/utils'
@@ -62,21 +62,21 @@ export function Lnb() {
 }
 
 function MenuItemLink({ href, title }: { href: string; title: string }) {
-  const navigate = useNavigate()
   const { pathname } = useLocation()
-  const isActive = pathname === href
+  const isActive = pathname === href || pathname.startsWith(`${href}/`)
   return (
     <div className="px-8 py-4">
-      <button
+      <Link
+        to={href}
         type="button"
         className={cn(
-          'flex w-full cursor-pointer items-center rounded-10 border border-transparent p-12',
+          'flex w-full items-center rounded-10 border border-transparent p-12',
+          '[&]:no-underline',
           isActive && 'border-gray-200 bg-gray-100',
         )}
-        onClick={() => navigate(href)}
       >
         <span className="text-left typo-title-16-r text-gray-800">{title}</span>
-      </button>
+      </Link>
     </div>
   )
 }

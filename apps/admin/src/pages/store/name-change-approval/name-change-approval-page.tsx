@@ -1,3 +1,3 @@
 export function NameChangeApprovalPage() {
-  return <div>NameChangeApproval</div>
+  return <div>NameChangeApprovalPage</div>
 }
