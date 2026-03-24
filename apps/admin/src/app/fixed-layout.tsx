@@ -12,7 +12,7 @@ const FixedLayout = () => {
         <Lnb />
         <main className="size-full max-w-[1240px] bg-gray-50 py-40">
           <ScrollArea.Root className="size-full">
-            <ScrollArea.Viewport className="px-[90px]">
+            <ScrollArea.Viewport className="size-full px-[90px]">
               <Outlet />
             </ScrollArea.Viewport>
             <ScrollArea.Scrollbar orientation="vertical">

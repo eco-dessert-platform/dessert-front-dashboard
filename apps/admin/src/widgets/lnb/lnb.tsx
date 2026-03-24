@@ -49,7 +49,7 @@ export function Lnb() {
               <AccordionContent>
                 {menu.items.map((item) => (
                   <MenuItemLink
-                    key={item.title}
+                    key={item.href}
                     title={item.title}
                     href={item.href}
                   />
