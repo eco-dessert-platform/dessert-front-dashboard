@@ -7,7 +7,7 @@ import betterTailwind from 'eslint-plugin-better-tailwindcss'
 import importPlugin from 'eslint-plugin-import'
 
 export default tseslint.config(
-  { ignores: ['**/dist', '.yarn/releases'] },
+  { ignores: ['**/dist', '**/storybook-static', '.yarn/releases'] },
 
   // ── 공통 규칙: seller + admin + packages 모두 적용 ──
   {
