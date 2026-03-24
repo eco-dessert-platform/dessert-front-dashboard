@@ -43,6 +43,14 @@ export const ProductOptionsArea = () => {
     setProductFields((prev) => ({ ...prev, productOptions: isFormField }))
   }, [isFormField, setProductFields])
 
+  const handleDelete = () => {
+    //삭제 기능
+  }
+
+  const handleCopy = () => {
+    //복사 기능
+  }
+
   return (
     <>
       <div className="mb-24 flex items-center gap-2">
@@ -226,7 +234,7 @@ export const ProductOptionsArea = () => {
               checked={field.value}
               onCheckedChange={(checked: boolean) => {
                 field.onChange(checked)
-                NUTRITION_FIELDS.map(({ key }) => {
+                NUTRITION_FIELDS.forEach(({ key }) => {
                   const inputProps =
                     nutritionInputs[key as keyof typeof nutritionInputs]
                   inputProps.handleNull()
@@ -264,10 +272,10 @@ export const ProductOptionsArea = () => {
 
       {/* 삭제 / 복사 */}
       <div className="flex items-center justify-end gap-16">
-        <button className="text-gray-700">
+        <button className="text-gray-700" onClick={handleDelete}>
           <Trash2 size={20} />
         </button>
-        <button className="text-gray-700">
+        <button className="text-gray-700" onClick={handleCopy}>
           <Copy size={20} />
         </button>
       </div>

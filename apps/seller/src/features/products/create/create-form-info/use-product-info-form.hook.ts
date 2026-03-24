@@ -28,18 +28,14 @@ export function useProductInfoForm() {
         : Math.max(price * (1 - discountAmount / 100), 0)
       : null
 
-  const priceInput = useNumberInput(form.watch('price'), (val) => {
+  const priceInput = useNumberInput(price, (val) => {
     form.setValue('price', val, { shouldValidate: true })
-    if (form.watch('discountAmount') !== null) form.trigger('discountAmount')
+    if (discountAmount !== null) form.trigger('discountAmount')
   })
-  const discountInput = useNumberInput(form.watch('discountAmount'), (val) => {
+  const discountInput = useNumberInput(discountAmount, (val) => {
     form.setValue('discountAmount', val, { shouldValidate: true })
-    if (form.watch('price') !== null) form.trigger('price')
+    if (price !== null) form.trigger('price')
   })
-
-  // const onSubmit = form.handleSubmit((data) => {
-  //   console.log('제출된 데이터:', data)
-  // })
 
   return {
     form,
