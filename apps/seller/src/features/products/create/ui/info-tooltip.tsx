@@ -17,7 +17,7 @@ export const InfoTooltip = ({
   return (
     <Tooltip position="bottom">
       <Tooltip.Trigger>
-        <Info size={iconSize} />
+        <Info size={iconSize} aria-label="정보 보기" />
       </Tooltip.Trigger>
       <Tooltip.Content className={cn('px-8 py-6', className)}>
         <p>{children}</p>
