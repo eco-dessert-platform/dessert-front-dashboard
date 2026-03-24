@@ -1,4 +1,5 @@
 import {
+  OrderFilters,
   OrderItem,
   OrderListResponse,
   OrderStatus,
@@ -474,16 +475,64 @@ const TAB_TO_STATUS: Partial<Record<OrderStatusTab, OrderStatus>> = {
 }
 
 // Mock API 필터 함수
-export function filterOrdersByTab(
+export function filterOrders(
   orders: OrderItem[],
-  tab?: OrderStatusTab,
+  filters: OrderFilters,
 ): OrderItem[] {
-  if (!tab || tab === 'all') {
-    return orders
-  }
-  const status = TAB_TO_STATUS[tab]
+  let result = orders
 
-  return status ? orders.filter((o) => o.orderStatus === status) : orders
+  // 탭 필터
+  if (filters.tab && filters.tab !== 'all') {
+    const status = TAB_TO_STATUS[filters.tab]
+    if (status) result = result.filter((o) => o.orderStatus === status)
+  }
+
+  // 날짜 필터
+  if (filters.startDate) {
+    result = result.filter((o) => o.paymentDate >= filters.startDate!)
+  }
+  if (filters.endDate) {
+    result = result.filter((o) => o.paymentDate <= filters.endDate!)
+  }
+
+  // 배송상태 필터
+  if (filters.deliveryStatus) {
+    result = result.filter((o) => o.deliveryStatus === filters.deliveryStatus)
+  }
+
+  // 검색 키워드 필터
+  if (filters.searchKeyword && filters.searchType) {
+    const keyword = filters.searchKeyword.toLowerCase()
+    result = result.filter((o) => {
+      switch (filters.searchType) {
+        case 'ORDER_NUMBER':
+          return o.orderNumber.includes(keyword)
+        case 'RECIPIENT_NAME':
+          return o.recipientName.toLowerCase().includes(keyword)
+        case 'PRODUCT_NAME':
+          return o.products.some((p) =>
+            p.productName.toLowerCase().includes(keyword),
+          )
+        case 'TRACKING_NUMBER':
+          return o.trackingNumber?.includes(keyword) ?? false
+        default:
+          return true
+      }
+    })
+  }
+
+  // 정렬
+  if (filters.sort === 'ASC') {
+    result = [...result].sort(
+      (a, b) => a.paymentDate.localeCompare(b.paymentDate),
+    )
+  } else {
+    result = [...result].sort(
+      (a, b) => b.paymentDate.localeCompare(a.paymentDate),
+    )
+  }
+
+  return result
 }
 
 // statusCount를 실시간으로 계산
@@ -508,15 +557,15 @@ export function calcStatusCount(orders: OrderItem[]) {
 
 // Mock API 응답 생성
 export function getMockOrderListResponse(
-  tab?: OrderStatusTab,
-  page = 0,
-  size = 10,
+  filters: OrderFilters,
 ): OrderListResponse {
-  const filtered = filterOrdersByTab(MOCK_ORDERS, tab)
+  const page = filters.page ? Number(filters.page) : 0
+  const size = filters.size ? Number(filters.size) : 10
+  const filtered = filterOrders(MOCK_ORDERS, filters)
   const start = page * size
 
   return {
-    statusCount: calcStatusCount(MOCK_ORDERS), // 탭과 무관하게 전체 카운트
+    statusCount: calcStatusCount(MOCK_ORDERS),
     content: filtered.slice(start, start + size),
     page,
     size,

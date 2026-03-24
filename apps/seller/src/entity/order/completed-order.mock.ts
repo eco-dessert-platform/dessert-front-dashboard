@@ -1,4 +1,5 @@
 import {
+  CompletedOrderFilters,
   CompletedOrderListResponse,
   CompletedOrderTab,
   OrderItem,
@@ -286,13 +287,59 @@ const TAB_TO_STATUSES: Record<CompletedOrderTab, OrderStatus[]> = {
   exchanged: ['EXCHANGED'],
 }
 
-export function filterCompletedOrdersByTab(
+export function filterCompletedOrders(
   orders: OrderItem[],
-  tab?: CompletedOrderTab,
+  filters: CompletedOrderFilters,
 ): OrderItem[] {
-  if (!tab) return orders
-  const statuses = TAB_TO_STATUSES[tab]
-  return orders.filter((o) => statuses.includes(o.orderStatus))
+  let result = orders
+
+  // 탭 필터
+  if (filters.tab) {
+    const statuses = TAB_TO_STATUSES[filters.tab]
+    result = result.filter((o) => statuses.includes(o.orderStatus))
+  }
+
+  // 날짜 필터
+  if (filters.startDate) {
+    result = result.filter((o) => o.paymentDate >= filters.startDate!)
+  }
+  if (filters.endDate) {
+    result = result.filter((o) => o.paymentDate <= filters.endDate!)
+  }
+
+  // 검색 키워드 필터
+  if (filters.searchKeyword && filters.searchType) {
+    const keyword = filters.searchKeyword.toLowerCase()
+    result = result.filter((o) => {
+      switch (filters.searchType) {
+        case 'ORDER_NUMBER':
+          return o.orderNumber.includes(keyword)
+        case 'RECIPIENT_NAME':
+          return o.recipientName.toLowerCase().includes(keyword)
+        case 'PRODUCT_NAME':
+          return o.products.some((p) =>
+            p.productName.toLowerCase().includes(keyword),
+          )
+        case 'TRACKING_NUMBER':
+          return o.trackingNumber?.includes(keyword) ?? false
+        default:
+          return true
+      }
+    })
+  }
+
+  // 정렬
+  if (filters.sort === 'ASC') {
+    result = [...result].sort(
+      (a, b) => a.paymentDate.localeCompare(b.paymentDate),
+    )
+  } else {
+    result = [...result].sort(
+      (a, b) => b.paymentDate.localeCompare(a.paymentDate),
+    )
+  }
+
+  return result
 }
 
 export function calcCompletedStatusCount(
@@ -308,11 +355,11 @@ export function calcCompletedStatusCount(
 }
 
 export function getMockCompletedOrderListResponse(
-  tab?: CompletedOrderTab,
-  page = 0,
-  size = 10,
+  filters: CompletedOrderFilters,
 ): CompletedOrderListResponse {
-  const filtered = filterCompletedOrdersByTab(MOCK_COMPLETED_ORDERS, tab)
+  const page = filters.page ? Number(filters.page) : 0
+  const size = filters.size ? Number(filters.size) : 10
+  const filtered = filterCompletedOrders(MOCK_COMPLETED_ORDERS, filters)
   const start = page * size
 
   return {
