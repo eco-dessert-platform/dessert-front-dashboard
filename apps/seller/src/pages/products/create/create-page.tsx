@@ -7,19 +7,17 @@ import { ProductDeliveryArea } from '@/features/products/create/create-form-deli
 import { ProductInfoArea } from '@/features/products/create/create-form-info/create-form-info-area'
 import { ProductOptionsArea } from '@/features/products/create/create-form-options/create-form-options-area'
 import { ProductHeader } from '@/features/products/create/create-header/create-header'
+import { CreateFormContainer } from '@/features/products/create/ui/create-form-container'
 
 import { useCreateProductForm } from './create-form'
-
 function CreatePage() {
   const form = useCreateProductForm()
   return (
-    <>
-      <FormProvider {...form}>
-        <FormStepsProvider>
-          <CreatePageInner />
-        </FormStepsProvider>
-      </FormProvider>
-    </>
+    <FormProvider {...form}>
+      <FormStepsProvider>
+        <CreatePageInner />
+      </FormStepsProvider>
+    </FormProvider>
   )
 }
 
@@ -29,25 +27,19 @@ function CreatePageInner() {
   return (
     <>
       <ProductHeader />
-      <div className="mt-22 bg-white">
-        <div className="px-24 pt-16 pb-24">
-          {/* TODO: 릴리스 전 제거 - 폼 완성 상태 디버그 표시 */}
-          {productFields.productInfo ? 'true' : 'false'}
-          <ProductInfoArea />
-        </div>
-      </div>
-      <div className="mt-20 bg-white">
-        <div className="px-24 pt-16 pb-24">
-          {productFields.productDelivery ? 'true' : 'false'}
-          <ProductDeliveryArea />
-        </div>
-      </div>
-      <div className="mt-20 bg-white">
-        <div className="px-24 pt-16 pb-24">
-          {productFields.productOptions ? 'true' : 'false'}
-          <ProductOptionsArea />
-        </div>
-      </div>
+      <CreateFormContainer className="mt-22">
+        {/* TODO: 릴리스 전 제거 - 폼 완성 상태 디버그 표시 */}
+        {productFields.productInfo ? 'true' : 'false'}
+        <ProductInfoArea />
+      </CreateFormContainer>
+      <CreateFormContainer>
+        {productFields.productDelivery ? 'true' : 'false'}
+        <ProductDeliveryArea />
+      </CreateFormContainer>
+      <CreateFormContainer>
+        {productFields.productOptions ? 'true' : 'false'}
+        <ProductOptionsArea />
+      </CreateFormContainer>
 
       <div className="flex gap-12">
         {/* TODO: 후속 작업 필요  - 함수 미구현 상태 입니다 */}
