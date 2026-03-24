@@ -20,16 +20,13 @@ export function useProductDeliveryForm() {
     return false
   })()
 
-  const deliveryFeeInput = useNumberInput(form.watch('deliveryFee'), (val) => {
+  const deliveryFeeInput = useNumberInput(deliveryFee, (val) => {
     form.setValue('deliveryFee', val, { shouldValidate: true })
   })
-  const deliveryMinFeeInput = useNumberInput(
-    form.watch('deliveryMinFee'),
-    (val) => {
-      form.setValue('deliveryMinFee', val, { shouldValidate: true })
-      if (form.watch('deliveryFee') !== null) form.trigger('deliveryFee')
-    },
-  )
+  const deliveryMinFeeInput = useNumberInput(deliveryMinFee, (val) => {
+    form.setValue('deliveryMinFee', val, { shouldValidate: true })
+    if (deliveryMinFee !== null) form.trigger('deliveryFee')
+  })
 
   return {
     form,
