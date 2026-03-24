@@ -20,7 +20,7 @@ export const deliverySchema = z
   .refine(
     (data) => {
       if (data.deliveryTerms === 'free') return true
-      return data.deliveryFee && data.deliveryFee <= 100000 ? true : false
+      return data.deliveryFee !== null && data.deliveryFee <= 100000
     },
     { message: '올바른 금액을 입력해주세요', path: ['deliveryFee'] },
   )
