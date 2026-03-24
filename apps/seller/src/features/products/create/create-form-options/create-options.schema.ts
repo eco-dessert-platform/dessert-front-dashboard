@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const productOptionSchema = z
   .object({
-    mainCategory: z.string(),
+    mainCategory: z.enum(['bread', 'snack']),
     subCategory: z.string(),
     optionName: z.string(),
     ingredientCategories: z.array(z.enum(['glutenFree', 'vegan'])),

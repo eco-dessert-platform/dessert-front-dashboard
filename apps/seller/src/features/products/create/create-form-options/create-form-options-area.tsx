@@ -4,7 +4,7 @@ import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
 import { Copy, Trash2 } from 'lucide-react'
 import { Controller } from 'react-hook-form'
 
-import { NUTRITION_FIELDS } from '@/entity/products/create/create-options/product-nutritions.contant'
+import { NUTRITION_FIELDS } from '@/entity/products/create/create-options/product-nutritions.constant'
 import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/product-options.constant'
 import DaySelector from '@/shared/block/day-selector/day-selector'
 
@@ -107,7 +107,7 @@ export const ProductOptionsArea = () => {
           <Label
             label="성분 카테고리"
             required
-            className="mb-3.5 block typo-heading-18-r"
+            className="typo-heading-18-r mb-3.5 block"
           />
           {errors.ingredientCategories && (
             <p className="mb-4 text-sm text-red-500">

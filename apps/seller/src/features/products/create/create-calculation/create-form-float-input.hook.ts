@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export function useFloatInput(
   value: number | null,
@@ -10,9 +10,16 @@ export function useFloatInput(
 
   useEffect(() => {
     const stringVal = value !== null ? String(value) : ''
-    if (Number(stringVal) !== Number(inputValue)) {
+
+    if (value !== null && Number(inputValue) !== value) {
+      setInputValue(stringVal)
+    } else if (value === null && inputValue !== '') {
       setInputValue(stringVal)
     }
+
+    // if (Number(stringVal) !== Number(inputValue)) {
+    //   setInputValue(stringVal)
+    // }
   }, [value, inputValue])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
