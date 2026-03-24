@@ -31,6 +31,7 @@ function CreatePageInner() {
       <ProductHeader />
       <div className="mt-22 bg-white">
         <div className="px-24 pt-16 pb-24">
+          {/* TODO: 릴리스 전 제거 - 폼 완성 상태 디버그 표시 */}
           {productFields.productInfo ? 'true' : 'false'}
           <ProductInfoArea />
         </div>
