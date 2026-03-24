@@ -1,6 +1,6 @@
 import React, { createContext } from 'react'
 
-type FormStepStatus = Record<string, boolean>
+export type FormStepStatus = Record<string, boolean>
 
 interface FormStepsContextType {
   productFields: FormStepStatus

@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
-import { FormStepsContext } from './create-form-steps.context'
-
-type FormStepStatus = Record<string, boolean>
+import { FormStepStatus, FormStepsContext } from './create-form-steps.context'
 
 export const FormStepsProvider = ({
   children,
