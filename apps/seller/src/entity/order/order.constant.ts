@@ -3,6 +3,8 @@ import { VariantProps } from 'class-variance-authority'
 
 import {
   ActionButton,
+  CompletedOrderStatus,
+  CompletedOrderTab,
   DeliveryStatus,
   OrderStatus,
   OrderStatusTab,
@@ -229,6 +231,65 @@ export const ORDER_ACTION_BAR_CONFIG: Record<OrderStatusTab, ActionButton[]> = {
         { label: '반품반려', action: 'turnDownReturn' },
         { label: '반품보류', action: 'holdReturn' },
       ],
+    },
+  ],
+}
+
+// ─── 완료 주문 내역 ───────────────────────────────────────
+
+export const COMPLETED_ORDER_TABS: Array<{
+  value: CompletedOrderTab
+  label: string
+}> = [
+  { value: 'completed', label: '완료' },
+  { value: 'canceled', label: '취소' },
+  { value: 'returned', label: '반품' },
+  { value: 'exchanged', label: '교환' },
+]
+
+export const COMPLETED_ORDER_STATUS_OPTIONS: Array<{
+  value: CompletedOrderStatus
+  label: string
+}> = [
+  { value: 'ALL', label: '전체' },
+  { value: 'PURCHASE_CONFIRMED', label: '구매확정' },
+  { value: 'DELIVERY_COMPLETED', label: '배송완료' },
+]
+
+export const COMPLETED_ORDER_ACTION_BAR_CONFIG: Record<
+  CompletedOrderTab,
+  ActionButton[]
+> = {
+  completed: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+  ],
+  canceled: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+  ],
+  returned: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
+    },
+  ],
+  exchanged: [
+    {
+      type: 'single',
+      label: '상세보기',
+      variant: 'primary-outlined',
+      action: 'detailView',
     },
   ],
 }
