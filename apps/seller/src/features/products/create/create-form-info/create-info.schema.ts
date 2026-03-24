@@ -14,8 +14,8 @@ export const productSchema = z
     ]),
     discountAmount: z.union([
       z
-        .number({ error: '올바른 가격을 입력해주세요1' })
-        .min(0, '올바른 가격을 입력해주세요2'),
+        .number({ error: '올바른 가격을 입력해주세요' })
+        .min(0, '올바른 가격을 입력해주세요'),
       z.null(),
     ]),
     discountType: z.enum(['won', 'percentage']),
