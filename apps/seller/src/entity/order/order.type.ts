@@ -154,6 +154,42 @@ export interface CompletedOrderFilters {
   sort?: SortOrder
 }
 
+export interface OrderDetail {
+  orderNumber: string
+  orderInfo: {
+    orderDate: string
+    orderStatusLabel: string
+  }
+  buyer: {
+    recipientName: string
+    buyerName: string
+    buyerPhone1: string
+    buyerPhone2: string | null
+  }
+  shipping: {
+    statusLabel: string
+    courierCompany: CourierName | null
+    trackingNumber: string | null
+    shippingFee: number
+    address: string
+    memo: string | null
+  }
+  orderItem: {
+    boardTitle: string
+    itemName: string
+    quantity: number
+    unitPrice: number
+    totalPrice: number
+  }
+}
+
+export interface OrderDetailResponse {
+  success: boolean
+  code: number
+  message: string
+  result: OrderDetail[]
+}
+
 export interface CompletedOrderListResponse {
   statusCount: CompletedOrderStatusCount
   content: OrderItem[]

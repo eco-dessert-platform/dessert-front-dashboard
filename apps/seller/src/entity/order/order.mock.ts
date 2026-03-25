@@ -1,4 +1,6 @@
 import {
+  OrderDetail,
+  OrderDetailResponse,
   OrderFilters,
   OrderItem,
   OrderListResponse,
@@ -552,6 +554,71 @@ export function calcStatusCount(orders: OrderItem[]) {
     canceled: orders.filter((o) => o.orderStatus === 'CANCELED').length,
     returned: orders.filter((o) => o.orderStatus === 'RETURNED').length,
     exchanged: orders.filter((o) => o.orderStatus === 'EXCHANGED').length,
+  }
+}
+
+// ─── 주문 상세 Mock ───────────────────────────────────
+
+function buildMockOrderDetails(order: OrderItem): OrderDetail[] {
+  return order.products.map((product) => ({
+    orderNumber: order.orderNumber,
+    orderInfo: {
+      orderDate: order.paymentDate,
+      orderStatusLabel:
+        {
+          PAYMENT_COMPLETED: '결제완료',
+          ORDER_CONFIRMED: '발주확인',
+          PRODUCT_SHIPPED: '상품발송',
+          DELIVERY_COMPLETED: '배송완료',
+          CANCELED: '취소',
+          RETURNED: '반품',
+          EXCHANGED: '교환',
+        }[order.orderStatus] ?? order.orderStatus,
+    },
+    buyer: {
+      recipientName: order.recipientName,
+      buyerName: order.recipientName,
+      buyerPhone1: '010-1234-5678',
+      buyerPhone2: Math.random() > 0.5 ? '010-5678-9000' : null,
+    },
+    shipping: {
+      statusLabel: order.deliveryStatus
+        ? {
+            PRODUCT_PREPARING: '상품준비중',
+            COLLECTING: '수거중',
+            COLLECT_COMPLETED: '수거완료',
+            DELIVERING: '배송중',
+            DELIVERY_COMPLETED: '배송완료',
+          }[order.deliveryStatus]
+        : '-',
+      courierCompany: order.courierName,
+      trackingNumber: order.trackingNumber,
+      shippingFee: 3000,
+      address: '서울시 강남구 테헤란로 1234, 100호',
+      memo: '문 앞에 놓아주세요.',
+    },
+    orderItem: {
+      boardTitle: product.productName,
+      itemName: product.optionName ?? product.productName,
+      quantity: product.quantity,
+      unitPrice: product.price,
+      totalPrice: product.price * product.quantity,
+    },
+  }))
+}
+
+export function getMockOrderDetailResponse(
+  orderNumbers: string[],
+): OrderDetailResponse {
+  const details = MOCK_ORDERS.filter((o) =>
+    orderNumbers.includes(o.orderNumber),
+  ).flatMap(buildMockOrderDetails)
+
+  return {
+    success: true,
+    code: 0,
+    message: 'Success',
+    result: details,
   }
 }
 

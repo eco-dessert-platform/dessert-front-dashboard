@@ -1,11 +1,15 @@
+import { useState } from 'react'
+
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
 import { orderQueries } from '@/entity/order/order.query'
 import { OrderStatusCount, OrderStatusTab } from '@/entity/order/order.type'
 import { OrderActionBar } from '@/features/order/order-action-bar/order-action-bar.ui'
+import { OrderDetailModal } from '@/features/order/order-detail-modal/order-detail-modal.ui'
 import { useOrderFilter } from '@/features/order/order-filters/order-filters.hook'
 import { OrderFilters } from '@/features/order/order-filters/order-filters.ui'
+import { OrderSelectAlertModal } from '@/features/order/order-select-alert-modal/order-select-alert-modal.ui'
 import { OrderStatusTabs } from '@/features/order/order-status-tabs/order-status-tabs.ui'
 import { useOrderSelection } from '@/features/order/order-table/order-selection.hook'
 import { OrderTable } from '@/features/order/order-table/order-table.ui'
@@ -33,6 +37,8 @@ const DEFAULT_STATUS_COUNT: OrderStatusCount = {
 }
 
 function AllOrdersPage() {
+  const [detailOpen, setDetailOpen] = useState(false)
+  const [alertOpen, setAlertOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const statusParam = searchParams.get('status')
   const selectedTab: OrderStatusTab = VALID_TABS.includes(
@@ -89,8 +95,14 @@ function AllOrdersPage() {
     setAppliedFilters((prev) => ({ ...prev, page: String(page - 1) }))
   }
 
-  const handleAction = () => {
-    // todos: Modal feature 컴포넌트 구현 과정에서 연결
+  const handleAction = (action: string) => {
+    if (action === 'detailView') {
+      if (selectedIds.length === 0) {
+        setAlertOpen(true)
+        return
+      }
+      setDetailOpen(true)
+    }
   }
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
@@ -136,6 +148,13 @@ function AllOrdersPage() {
           onToggleProduct={toggleProduct}
         />
       </section>
+
+      <OrderDetailModal
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
+        orderNumbers={selectedIds}
+      />
+      <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
     </div>
   )
 }
