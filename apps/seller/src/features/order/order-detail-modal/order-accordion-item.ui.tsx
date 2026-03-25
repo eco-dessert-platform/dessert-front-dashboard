@@ -86,7 +86,7 @@ export function OrderAccordionItem({
               {details.map((detail, idx) => (
                 <div
                   key={idx}
-                  className="flex h-22 items-center gap-10"
+                  className="flex h-[22px] items-center gap-10"
                 >
                   <div className="flex flex-1 items-center gap-10">
                     <span className="max-w-[400px] truncate typo-title-14-r text-gray-900">
@@ -96,7 +96,7 @@ export function OrderAccordionItem({
                       {detail.orderItem.itemName} / {detail.orderItem.quantity}개
                     </span>
                   </div>
-                  <span className="w-80 text-right typo-body-12-b text-gray-800">
+                  <span className="w-[80px] text-right typo-body-12-b text-gray-800">
                     {detail.orderItem.totalPrice.toLocaleString()}원
                   </span>
                 </div>
@@ -106,7 +106,7 @@ export function OrderAccordionItem({
             <div className="my-12 border-t border-gray-200" />
 
             <div className="flex items-center gap-8">
-              <span className="w-90 typo-title-14-sb text-gray-600">
+              <span className="w-[90px] typo-title-14-sb text-gray-600">
                 총 구매금액
               </span>
               <span className="flex-1 text-right typo-title-16-sb text-primary-500">
