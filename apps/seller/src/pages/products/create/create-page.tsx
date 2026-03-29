@@ -4,6 +4,7 @@ import { FormProvider } from 'react-hook-form'
 import { FormStepsProvider } from '@/features/products/create/create-form/create-form-provider'
 import { useCreateFormSteps } from '@/features/products/create/create-form/use-create-form-steps.hook'
 import { ProductDeliveryArea } from '@/features/products/create/create-form-delivery/create-form-delivery-area'
+import { ProductDetailArea } from '@/features/products/create/create-form-detail/create-form-detail-area'
 import { ProductInfoArea } from '@/features/products/create/create-form-info/create-form-info-area'
 import { ProductOptionsArea } from '@/features/products/create/create-form-options/create-form-options-area'
 import { ProductHeader } from '@/features/products/create/create-header/create-header'
@@ -39,6 +40,11 @@ function CreatePageInner() {
       <CreateFormContainer>
         {productFields.productOptions ? 'true' : 'false'}
         <ProductOptionsArea />
+      </CreateFormContainer>
+
+      <CreateFormContainer>
+        {productFields.productDetail ? 'true' : 'false'}
+        <ProductDetailArea />
       </CreateFormContainer>
 
       <div className="flex gap-12">
