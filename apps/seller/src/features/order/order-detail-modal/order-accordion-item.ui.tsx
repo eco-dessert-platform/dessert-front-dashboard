@@ -126,10 +126,10 @@ export function OrderAccordionItem({
                 <DetailRow
                   label="수취인명"
                   value={buyer.recipientName}
-                  labelWidth="w-60"
+                  labelWidth="w-[60px]"
                 />
                 <div className="flex items-start gap-8 typo-title-14-r">
-                  <span className="w-60 shrink-0 typo-title-14-m text-gray-600">
+                  <span className="w-[60px] shrink-0 typo-title-14-m text-gray-600">
                     연락처
                   </span>
                   <div className="flex min-w-0 flex-1 flex-col gap-4 text-right text-gray-800">

@@ -7,7 +7,7 @@ interface DetailRowProps {
 export function DetailRow({
   label,
   value,
-  labelWidth = 'w-60',
+  labelWidth = 'w-[60px]',
 }: DetailRowProps) {
   return (
     <div className="flex items-center gap-8 typo-title-14-r">

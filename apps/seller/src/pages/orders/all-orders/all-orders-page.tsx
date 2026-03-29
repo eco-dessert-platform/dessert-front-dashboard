@@ -9,6 +9,11 @@ import { OrderActionBar } from '@/features/order/order-action-bar/order-action-b
 import { OrderDetailModal } from '@/features/order/order-detail-modal/order-detail-modal.ui'
 import { useOrderFilter } from '@/features/order/order-filters/order-filters.hook'
 import { OrderFilters } from '@/features/order/order-filters/order-filters.ui'
+import {
+  REASON_REQUIRED_ACTIONS,
+  ReasonAction,
+} from '@/features/order/reason-input-modal/reason-input-modal.constant'
+import { ReasonInputModal } from '@/features/order/reason-input-modal/reason-input-modal.ui'
 import { OrderSelectAlertModal } from '@/features/order/order-select-alert-modal/order-select-alert-modal.ui'
 import { OrderStatusTabs } from '@/features/order/order-status-tabs/order-status-tabs.ui'
 import { useOrderSelection } from '@/features/order/order-table/order-selection.hook'
@@ -39,6 +44,8 @@ const DEFAULT_STATUS_COUNT: OrderStatusCount = {
 function AllOrdersPage() {
   const [detailOpen, setDetailOpen] = useState(false)
   const [alertOpen, setAlertOpen] = useState(false)
+  const [reasonModalOpen, setReasonModalOpen] = useState(false)
+  const [reasonAction, setReasonAction] = useState<ReasonAction>('cancelOrder')
   const [searchParams, setSearchParams] = useSearchParams()
   const statusParam = searchParams.get('status')
   const selectedTab: OrderStatusTab = VALID_TABS.includes(
@@ -102,7 +109,26 @@ function AllOrdersPage() {
         return
       }
       setDetailOpen(true)
+      return
     }
+
+    if (REASON_REQUIRED_ACTIONS.has(action)) {
+      if (selectedIds.length === 0) {
+        setAlertOpen(true)
+        return
+      }
+      setReasonAction(action as ReasonAction)
+      setReasonModalOpen(true)
+    }
+  }
+
+  const handleReasonConfirm = (data: {
+    reasonType: string
+    reasonDetail: string
+    images: File[]
+  }) => {
+    // TODO: API 연동 - 주문상태 변경 API 호출
+    console.log('reason confirm:', { action: reasonAction, ...data, orderNumbers: selectedIds })
   }
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
@@ -155,6 +181,12 @@ function AllOrdersPage() {
         orderNumbers={selectedIds}
       />
       <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
+      <ReasonInputModal
+        open={reasonModalOpen}
+        onOpenChange={setReasonModalOpen}
+        action={reasonAction}
+        onConfirm={handleReasonConfirm}
+      />
     </div>
   )
 }
