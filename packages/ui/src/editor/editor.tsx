@@ -36,7 +36,7 @@
  * ```
  */
 
-import { useMemo } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 
 import ReactQuill from 'react-quill-new'
 import 'react-quill-new/dist/quill.snow.css'
@@ -52,10 +52,15 @@ export interface EditorProps {
   toolbar?: boolean
   /**
    * 이미지 버튼 활성화 여부. 기본값: false
-   * - 업로드 처리는 사용하는 쪽에서 직접 구현해야 합니다.
    * - `toolbar={false}`일 때는 이 prop이 무시됩니다.
    */
   image?: boolean
+  /**
+   * 이미지 업로드 핸들러
+   * - image={true}일 때 필수적으로 제공해야 실제 업로드가 동작합니다.
+   * - 업로드된 이미지의 URL을 반환해야 합니다.
+   */
+  onImageUpload?: (file: File) => Promise<string>
   className?: string
   height?: number
 }
@@ -70,10 +75,9 @@ const BASE_TOOLBAR = [
 ]
 
 const MINIMAL_TOOLBAR = [
-  ['bold', 'italic', 'underline'],
+  ['bold'],
   [{ list: 'ordered' }, { list: 'bullet' }],
   ['link'],
-  ['clean'],
 ]
 
 const BASE_FORMATS = [
@@ -95,10 +99,41 @@ const Editor = ({
   disabled = false,
   toolbar = true,
   image = false,
+  onImageUpload,
   className = '',
   height = 300,
 }: EditorProps) => {
   const isReadOnly = disabled || !onChange
+  const quillRef = useRef<ReactQuill>(null)
+
+  const imageHandler = useCallback(() => {
+    if (!onImageUpload) {
+      alert('이미지 업로드 기능이 설정되지 않았습니다.')
+      return
+    }
+
+    const input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.setAttribute('accept', 'image/*')
+    input.click()
+
+    input.onchange = async () => {
+      const file = input.files ? input.files[0] : null
+      if (!file) return
+
+      try {
+        const url = await onImageUpload(file)
+        const quill = quillRef.current?.getEditor()
+        if (quill) {
+          const range = quill.getSelection(true) || { index: quill.getLength() }
+          quill.insertEmbed(range.index, 'image', url)
+          quill.setSelection(range.index + 1, 0)
+        }
+      } catch (error) {
+        console.error('Image upload failed:', error)
+      }
+    }
+  }, [onImageUpload])
 
   const modules = useMemo(() => {
     if (!toolbar) return { toolbar: MINIMAL_TOOLBAR }
@@ -113,8 +148,13 @@ const Editor = ({
         })
       : BASE_TOOLBAR
 
-    return { toolbar: toolbarConfig }
-  }, [toolbar, image])
+    return {
+      toolbar: {
+        container: toolbarConfig,
+        handlers: image ? { image: imageHandler } : undefined,
+      },
+    }
+  }, [toolbar, image, imageHandler])
 
   const formats = useMemo(
     () => (image ? [...BASE_FORMATS, 'image'] : BASE_FORMATS),
@@ -131,6 +171,7 @@ const Editor = ({
       )}
     >
       <ReactQuill
+        ref={quillRef}
         theme="snow"
         value={value}
         onChange={onChange ?? (() => {})}

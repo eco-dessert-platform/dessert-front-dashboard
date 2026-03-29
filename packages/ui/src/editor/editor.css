@@ -33,7 +33,7 @@
 }
 
 /* 포커스 스타일 */
-.quill-wrapper:has(.ql-editor:focus) {
+.quill-wrapper:focus-within {
   border-color: var(--color-gray-700);
   box-shadow: 0 0 0 2px rgba(97, 97, 97, 0.3);
 }
