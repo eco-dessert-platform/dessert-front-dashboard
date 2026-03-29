@@ -42,7 +42,7 @@ export function OrderAccordionItem({
     <div className="overflow-hidden rounded-10 border border-gray-200">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full cursor-pointer items-center justify-between bg-gray-050 px-16 py-20"
+        className="flex w-full cursor-pointer items-center justify-between bg-gray-50 px-16 py-20"
       >
         <div className="flex items-center gap-30">
           <div className="flex items-center gap-10">
