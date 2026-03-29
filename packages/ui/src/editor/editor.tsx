@@ -15,8 +15,8 @@
  *   value={value}
  *   onChange={setValue}
  *   placeholder="내용을 입력하세요."
- *   toolbar={true}   // false: 최소 툴바(Bold, List, Link만)
- *   image={true}     // 이미지 버튼 활성화 (기본값: false)
+ *   toolbar={true}   // false: 최소 툴바(Bold, List, Link만). false일 때는 image prop이 무시됩니다.
+ *   image={true}     // 이미지 버튼 활성화 (기본값: false, toolbar=true일 때만 동작)
  *                    // 이미지 업로드는 사용하는 쪽에서 직접 처리해야 합니다
  *   height={400}     // 에디터 높이(px), 기본값 300
  *   disabled={false}
@@ -37,11 +37,11 @@
  */
 
 import { useMemo } from 'react'
+
 import ReactQuill from 'react-quill-new'
 import 'react-quill-new/dist/quill.snow.css'
 
 import { cn } from '../lib/utils'
-
 import './editor.css'
 
 export interface EditorProps {
@@ -50,7 +50,11 @@ export interface EditorProps {
   placeholder?: string
   disabled?: boolean
   toolbar?: boolean
-  /** 이미지 버튼 활성화 여부. 업로드 처리는 사용하는 쪽에서 직접 구현해야 합니다. 기본값: false */
+  /**
+   * 이미지 버튼 활성화 여부. 기본값: false
+   * - 업로드 처리는 사용하는 쪽에서 직접 구현해야 합니다.
+   * - `toolbar={false}`일 때는 이 prop이 무시됩니다.
+   */
   image?: boolean
   className?: string
   height?: number
@@ -94,14 +98,19 @@ const Editor = ({
   className = '',
   height = 300,
 }: EditorProps) => {
+  const isReadOnly = disabled || !onChange
+
   const modules = useMemo(() => {
     if (!toolbar) return { toolbar: MINIMAL_TOOLBAR }
 
     const toolbarConfig = image
-      ? BASE_TOOLBAR.map((group) =>
+      ? BASE_TOOLBAR.map((group) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (group as any[]).includes('link') ? [...group, 'image'] : group,
-        )
+          if ((group as any[]).includes('link')) {
+            return [...group, 'image']
+          }
+          return group
+        })
       : BASE_TOOLBAR
 
     return { toolbar: toolbarConfig }
@@ -115,6 +124,7 @@ const Editor = ({
   return (
     <div
       className={cn(
+        // eslint-disable-next-line better-tailwindcss/no-unknown-classes
         'quill-wrapper w-full overflow-hidden rounded-10 border border-gray-300 bg-white transition-all duration-200',
         disabled && 'cursor-not-allowed bg-gray-100 opacity-60',
         className,
@@ -123,11 +133,11 @@ const Editor = ({
       <ReactQuill
         theme="snow"
         value={value}
-        onChange={onChange}
+        onChange={onChange ?? (() => {})}
         modules={modules}
         formats={formats}
         placeholder={placeholder}
-        readOnly={disabled}
+        readOnly={isReadOnly}
         style={{ height }}
       />
     </div>

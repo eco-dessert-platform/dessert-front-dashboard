@@ -1,8 +1,8 @@
-import { useState } from 'react'
-
-import type { Meta, StoryObj } from '@storybook/react'
+import { useEffect, useState } from 'react'
 
 import { Editor, type EditorProps } from './editor'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/Editor',
@@ -24,6 +24,11 @@ type Story = StoryObj<typeof meta>
 
 const Template = (args: EditorProps) => {
   const [value, setValue] = useState(args.value || '')
+
+  useEffect(() => {
+    setValue(args.value || '')
+  }, [args.value])
+
   return (
     <div className="w-[700px] pb-16">
       <Editor {...args} value={value} onChange={setValue} />
