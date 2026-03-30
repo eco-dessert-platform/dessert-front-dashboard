@@ -5,18 +5,22 @@ import {
   DeliveryFormInput,
   ProductFormInput,
   ProductOptionFormInput,
+  ProductDisclosureFormInput,
 } from '@/entity/products/create/create-form/product-form.type'
 import { deliverySchema } from '@/features/products/create/create-form-delivery/create-delivery.schema'
+import { disclosureSchema } from '@/features/products/create/create-form-disclosure/create-disclosure.schema'
 import { productSchema } from '@/features/products/create/create-form-info/create-info.schema'
 import { productOptionSchema } from '@/features/products/create/create-form-options/create-options.schema'
 
 export type CreateProductForm = ProductFormInput &
   DeliveryFormInput &
-  ProductOptionFormInput
+  ProductOptionFormInput &
+  ProductDisclosureFormInput
 
 const createProductSchema = productSchema
   .and(deliverySchema)
   .and(productOptionSchema)
+  .and(disclosureSchema)
 
 export const useCreateProductForm = () => {
   return useForm<CreateProductForm>({
@@ -49,6 +53,37 @@ export const useCreateProductForm = () => {
       protein: null,
       fat: null,
       sodium: null,
+
+      productInfoNotice: {
+        productName: '',
+        foodType: '',
+        manufacturer: '',
+        originLocation: '',
+        manufactureDate: '',
+        expirationDate: '',
+        storageGuide: '',
+        packagingQuantityUnit: '',
+        rawMaterialName: '',
+        nutritionInfo: '',
+        transgenic: '',
+        customerWarning: '',
+        importFood: '',
+      },
+      productInfoNoticeMode: {
+        productName: 'default',
+        foodType: 'default',
+        manufacturer: 'default',
+        originLocation: 'default',
+        manufactureDate: 'default',
+        expirationDate: 'default',
+        storageGuide: 'default',
+        packagingQuantityUnit: 'default',
+        rawMaterialName: 'default',
+        nutritionInfo: 'default',
+        transgenic: 'default',
+        customerWarning: 'default',
+        importFood: 'default',
+      },
     },
     mode: 'onChange',
   })

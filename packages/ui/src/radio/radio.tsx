@@ -38,7 +38,7 @@ const Radio = ({
       {options.map((option) => (
         <label
           key={option.value}
-          className={`flex items-center gap-2 ${
+          className={`flex items-center gap-8 ${
             option.disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
           }`}
         >

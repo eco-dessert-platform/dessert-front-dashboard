@@ -5,6 +5,7 @@ import { FormStepsProvider } from '@/features/products/create/create-form/create
 import { useCreateFormSteps } from '@/features/products/create/create-form/use-create-form-steps.hook'
 import { ProductDeliveryArea } from '@/features/products/create/create-form-delivery/create-form-delivery-area'
 import { ProductDetailArea } from '@/features/products/create/create-form-detail/create-form-detail-area'
+import { ProductDisclosureArea } from '@/features/products/create/create-form-disclosure/create-form-disclosure-area'
 import { ProductInfoArea } from '@/features/products/create/create-form-info/create-form-info-area'
 import { ProductOptionsArea } from '@/features/products/create/create-form-options/create-form-options-area'
 import { ProductHeader } from '@/features/products/create/create-header/create-header'
@@ -45,6 +46,11 @@ function CreatePageInner() {
       <CreateFormContainer>
         {productFields.productDetail ? 'true' : 'false'}
         <ProductDetailArea />
+      </CreateFormContainer>
+
+      <CreateFormContainer>
+        {productFields.productDisclosure ? 'true' : 'false'}
+        <ProductDisclosureArea />
       </CreateFormContainer>
 
       <div className="flex gap-12">
