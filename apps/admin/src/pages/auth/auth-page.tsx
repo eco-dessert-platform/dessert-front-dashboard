@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { useAdminLoginMutation } from '@/entity/auth/auth-query'
-import { AUTH_MESSAGES } from '@/features/auth/login/constant/message'
 import { LoginFooter } from '@/features/auth/login/login-footer'
 import { AuthLoginImage } from '@/features/auth/login/login-image'
 import {
@@ -46,11 +45,13 @@ const AuthPage = () => {
             className="flex flex-1 flex-col justify-center gap-3.75 px-5 py-10 lg:py-0"
           >
             <div className="flex flex-col items-start gap-1">
-              <h1 className="typo-heading-18-b text-gray-900">
-                {AUTH_MESSAGES.LOGIN.TITLE}
-              </h1>
+              <h1 className="typo-heading-18-b text-gray-900">🎉 환영합니다</h1>
               <p className="typo-title-16-m whitespace-pre-wrap text-gray-900">
-                {AUTH_MESSAGES.LOGIN.DESCRIPTION}
+                빵그리의 오븐{' '}
+                <span className="text-primary-500">어드민 채널</span>
+                입니다.
+                <br />
+                로그인 또는 회원가입을 진행하시려면 아래 버튼을 눌러주세요.
               </p>
             </div>
 
