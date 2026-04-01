@@ -32,6 +32,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '우체국택배',
     trackingNumber: '102938475619283',
+    returnStatus: null,
+    exchangeStatus: null,
   },
   {
     recipientName: '이서연',
@@ -51,6 +53,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: 'CJ대한통운',
     trackingNumber: '293847561928374',
+    returnStatus: null,
+    exchangeStatus: null,
   },
   {
     recipientName: '박지훈',
@@ -70,6 +74,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '한진택배',
     trackingNumber: '384756192837465',
+    returnStatus: null,
+    exchangeStatus: null,
   },
   {
     recipientName: '최유나',
@@ -89,6 +95,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: 'CJ대한통운',
     trackingNumber: '475619283746519',
+    returnStatus: null,
+    exchangeStatus: null,
   },
   {
     recipientName: '정우진',
@@ -114,6 +122,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '우체국택배',
     trackingNumber: '102938475619283',
+    returnStatus: null,
+    exchangeStatus: null,
   },
   {
     recipientName: '강하늘',
@@ -133,6 +143,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '롯데택배',
     trackingNumber: '561928374651928',
+    returnStatus: null,
+    exchangeStatus: null,
   },
   // 배송완료 (4개)
   {
@@ -153,6 +165,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: 'CJ대한통운',
     trackingNumber: '619283746519283',
+    returnStatus: null,
+    exchangeStatus: null,
   },
   {
     recipientName: '임도현',
@@ -172,6 +186,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '한진택배',
     trackingNumber: '719283746519284',
+    returnStatus: null,
+    exchangeStatus: null,
   },
   {
     recipientName: '신예린',
@@ -191,6 +207,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '로젠택배',
     trackingNumber: '819283746519285',
+    returnStatus: null,
+    exchangeStatus: null,
   },
   {
     recipientName: '오지아',
@@ -210,6 +228,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: 'CJ대한통운',
     trackingNumber: '919283746519286',
+    returnStatus: null,
+    exchangeStatus: null,
   },
 
   // 취소 (2개)
@@ -231,6 +251,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: null,
     courierName: null,
     trackingNumber: null,
+    returnStatus: null,
+    exchangeStatus: null,
   },
   {
     recipientName: '전미래',
@@ -256,6 +278,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: null,
     courierName: null,
     trackingNumber: null,
+    returnStatus: null,
+    exchangeStatus: null,
   },
 
   // 반품 (1개)
@@ -277,6 +301,8 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     deliveryStatus: 'COLLECTING',
     courierName: 'CJ대한통운',
     trackingNumber: '789012345678',
+    returnStatus: 'RETURN_COMPLETED',
+    exchangeStatus: null,
   },
 ]
 

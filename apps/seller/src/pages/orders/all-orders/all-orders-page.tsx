@@ -4,7 +4,11 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
 import { orderQueries } from '@/entity/order/order.query'
-import { OrderStatusCount, OrderStatusTab } from '@/entity/order/order.type'
+import {
+  CourierName,
+  OrderStatusCount,
+  OrderStatusTab,
+} from '@/entity/order/order.type'
 import { OrderActionBar } from '@/features/order/order-action-bar/order-action-bar.ui'
 import { OrderDetailModal } from '@/features/order/order-detail-modal/order-detail-modal.ui'
 import { useOrderFilter } from '@/features/order/order-filters/order-filters.hook'
@@ -18,6 +22,7 @@ import { OrderSelectAlertModal } from '@/features/order/order-select-alert-modal
 import { OrderStatusTabs } from '@/features/order/order-status-tabs/order-status-tabs.ui'
 import { useOrderSelection } from '@/features/order/order-table/order-selection.hook'
 import { OrderTable } from '@/features/order/order-table/order-table.ui'
+import { TrackingNumberModal } from '@/features/order/tracking-number-modal/tracking-number-modal.ui'
 
 const VALID_TABS: OrderStatusTab[] = [
   'all',
@@ -46,6 +51,13 @@ function AllOrdersPage() {
   const [alertOpen, setAlertOpen] = useState(false)
   const [reasonModalOpen, setReasonModalOpen] = useState(false)
   const [reasonAction, setReasonAction] = useState<ReasonAction>('cancelOrder')
+  const [trackingModalOpen, setTrackingModalOpen] = useState(false)
+  const [trackingMode, setTrackingMode] = useState<'create' | 'edit'>('create')
+  const [trackingTarget, setTrackingTarget] = useState<{
+    orderNumber: string
+    courier?: CourierName | null
+    trackingNumber?: string | null
+  } | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
   const statusParam = searchParams.get('status')
   const selectedTab: OrderStatusTab = VALID_TABS.includes(
@@ -63,7 +75,6 @@ function AllOrdersPage() {
     reset: filtersReset,
   } = useOrderFilter(selectedTab)
 
-  // todos: Table 공통 컴포넌트에 loading 관련 props를 추가하고 OrderTable 컴포넌트로 props drilling 예정
   const { data } = useQuery({
     ...orderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
@@ -112,6 +123,22 @@ function AllOrdersPage() {
       return
     }
 
+    if (action === 'completeReturn') {
+      if (selectedIds.length === 0) {
+        setAlertOpen(true)
+        return
+      }
+      return
+    }
+
+    if (action === 'completeExchange') {
+      if (selectedIds.length === 0) {
+        setAlertOpen(true)
+        return
+      }
+      return
+    }
+
     if (REASON_REQUIRED_ACTIONS.has(action)) {
       if (selectedIds.length === 0) {
         setAlertOpen(true)
@@ -127,8 +154,23 @@ function AllOrdersPage() {
     reasonDetail: string
     images: File[]
   }) => {
-    // TODO: API 연동 - 주문상태 변경 API 호출
-    console.log('reason confirm:', { action: reasonAction, ...data, orderNumbers: selectedIds })
+  }
+
+  const handleTrackingOpen = (
+    mode: 'create' | 'edit',
+    orderNumber: string,
+    courier?: CourierName | null,
+    trackingNumber?: string | null,
+  ) => {
+    setTrackingMode(mode)
+    setTrackingTarget({ orderNumber, courier, trackingNumber })
+    setTrackingModalOpen(true)
+  }
+
+  const handleTrackingConfirm = (
+    courier: CourierName,
+    trackingNumber: string,
+  ) => {
   }
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
@@ -172,6 +214,7 @@ function AllOrdersPage() {
           onToggleAll={toggleAll}
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
+          onTrackingOpen={handleTrackingOpen}
         />
       </section>
 
@@ -186,6 +229,15 @@ function AllOrdersPage() {
         onOpenChange={setReasonModalOpen}
         action={reasonAction}
         onConfirm={handleReasonConfirm}
+      />
+      <TrackingNumberModal
+        key={trackingTarget?.orderNumber ?? ''}
+        open={trackingModalOpen}
+        onOpenChange={setTrackingModalOpen}
+        mode={trackingMode}
+        defaultCourier={trackingTarget?.courier}
+        defaultTrackingNumber={trackingTarget?.trackingNumber}
+        onConfirm={handleTrackingConfirm}
       />
     </div>
   )

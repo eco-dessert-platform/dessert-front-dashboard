@@ -7,7 +7,9 @@
  * - requestReturn, approveReturn → 반품 사유
  * - rejectReturn, turnDownReturn → 반품 거절 사유
  * - holdReturn → 반품 보류 사유
- * - requestExchange → 교환 사유
+ * - requestExchange, approveExchange → 교환 사유
+ * - rejectExchange, turnDownExchange → 교환 거절 사유
+ * - holdExchange → 교환 보류 사유
  */
 
 /** 사유 입력이 필요한 주문 액션 타입 */
@@ -16,11 +18,15 @@ export type ReasonAction =
   | 'approveCancellation' // 취소승인 (취소 탭)
   | 'rejectCancellation' // 취소거절 (취소 탭)
   | 'requestReturn' // 반품 (발주확인/상품발송/배송완료 탭)
-  | 'approveReturn' // 반품승인 (반품/교환 탭)
-  | 'rejectReturn' // 반품거절 (반품/교환 탭)
-  | 'turnDownReturn' // 반품반려 (반품/교환 탭)
-  | 'holdReturn' // 반품보류 (반품/교환 탭)
+  | 'approveReturn' // 반품승인 (반품 탭)
+  | 'rejectReturn' // 반품거절 (반품 탭)
+  | 'turnDownReturn' // 반품반려 (반품 탭)
+  | 'holdReturn' // 반품보류 (반품 탭)
   | 'requestExchange' // 교환 (발주확인/상품발송/배송완료 탭)
+  | 'approveExchange' // 교환승인 (교환 탭)
+  | 'rejectExchange' // 교환거절 (교환 탭)
+  | 'turnDownExchange' // 교환반려 (교환 탭)
+  | 'holdExchange' // 교환보류 (교환 탭)
 
 /** 액션별 모달 타이틀 */
 export const REASON_MODAL_TITLE: Record<ReasonAction, string> = {
@@ -33,6 +39,10 @@ export const REASON_MODAL_TITLE: Record<ReasonAction, string> = {
   turnDownReturn: '반품 거절 사유',
   holdReturn: '반품 보류 사유',
   requestExchange: '교환 사유',
+  approveExchange: '교환 사유',
+  rejectExchange: '교환 거절 사유',
+  turnDownExchange: '교환 거절 사유',
+  holdExchange: '교환 보류 사유',
 }
 
 /** 액션별 토스트 메시지 */
@@ -46,6 +56,10 @@ export const REASON_TOAST_MESSAGE: Record<ReasonAction, string> = {
   turnDownReturn: '반품 거절을 완료했어요.',
   holdReturn: '반품 보류를 완료했어요.',
   requestExchange: '교환을 완료했어요.',
+  approveExchange: '교환승인을 완료했어요.',
+  rejectExchange: '교환거절을 완료했어요.',
+  turnDownExchange: '교환반려를 완료했어요.',
+  holdExchange: '교환보류를 완료했어요.',
 }
 
 type SelectOption = { label: string; value: string }
@@ -106,6 +120,26 @@ const EXCHANGE_OPTIONS: SelectOption[] = [
   { label: '기타', value: '기타' },
 ]
 
+/** 교환 거절 사유 옵션 */
+const REJECT_EXCHANGE_OPTIONS: SelectOption[] = [
+  { label: '소비자 과실 손상', value: '소비자 과실 손상' },
+  { label: '교환 기한 초과', value: '교환 기한 초과' },
+  {
+    label: '주문 실수(신선식품일 경우만)',
+    value: '주문 실수(신선식품일 경우만)',
+  },
+]
+
+/** 교환 보류 사유 옵션 */
+const HOLD_EXCHANGE_OPTIONS: SelectOption[] = [
+  {
+    label: '교환 요청 기한 내 판단 불가',
+    value: '교환 요청 기한 내 판단 불가',
+  },
+  { label: '추가 확인 필요', value: '추가 확인 필요' },
+  { label: '기타', value: '기타' },
+]
+
 /** 액션별 사유유형 드롭다운 옵션 */
 export const REASON_TYPE_OPTIONS: Record<ReasonAction, SelectOption[]> = {
   cancelOrder: CANCEL_OPTIONS,
@@ -117,6 +151,10 @@ export const REASON_TYPE_OPTIONS: Record<ReasonAction, SelectOption[]> = {
   turnDownReturn: REJECT_RETURN_OPTIONS,
   holdReturn: HOLD_RETURN_OPTIONS,
   requestExchange: EXCHANGE_OPTIONS,
+  approveExchange: EXCHANGE_OPTIONS,
+  rejectExchange: REJECT_EXCHANGE_OPTIONS,
+  turnDownExchange: REJECT_EXCHANGE_OPTIONS,
+  holdExchange: HOLD_EXCHANGE_OPTIONS,
 }
 
 /** 사유 입력이 필요한 액션인지 확인 */
@@ -130,4 +168,8 @@ export const REASON_REQUIRED_ACTIONS: Set<string> = new Set<string>([
   'turnDownReturn',
   'holdReturn',
   'requestExchange',
+  'approveExchange',
+  'rejectExchange',
+  'turnDownExchange',
+  'holdExchange',
 ])

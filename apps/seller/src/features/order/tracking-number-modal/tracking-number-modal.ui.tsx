@@ -95,7 +95,7 @@ export function TrackingNumberModal({
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex gap-8">
+        <div className="flex gap-4">
           <Select
             label="택배사"
             options={COURIER_OPTIONS}
@@ -107,9 +107,11 @@ export function TrackingNumberModal({
           <Input
             label="운송장 번호"
             placeholder="운송장 번호를 입력해주세요."
+            helperText="숫자만 입력 가능합니다."
             value={trackingNumber}
             onChange={handleTrackingNumberChange}
             maxLength={20}
+            className="flex-1"
           />
         </div>
 
@@ -119,7 +121,7 @@ export function TrackingNumberModal({
           </DialogClose>
           <Button
             title="확인"
-            variant="primary-filled"
+            variant="secondary-filled"
             disabled={!canConfirm}
             onClick={handleConfirm}
           />

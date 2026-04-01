@@ -17,6 +17,29 @@ export type OrderStatus =
   | 'RETURNED' // 반품
   | 'EXCHANGED' // 교환
 
+export type ReturnStatus =
+  | 'RETURN_REQUESTED' // 반품요청
+  | 'RETURN_APPROVED' // 반품승인
+  | 'RETURN_REJECTED' // 반품거절
+  | 'PRODUCT_COLLECTING' // 상품회수
+  | 'PRODUCT_CHECKING' // 상품확인
+  | 'RETURN_IN_PROGRESS' // 반품진행
+  | 'RETURN_ON_HOLD' // 반품보류
+  | 'RETURN_TURNED_DOWN' // 반품반려
+  | 'RETURN_COMPLETED' // 반품완료
+
+export type ExchangeStatus =
+  | 'EXCHANGE_REQUESTED' // 교환요청
+  | 'EXCHANGE_APPROVED' // 교환승인
+  | 'EXCHANGE_REJECTED' // 교환거절
+  | 'PRODUCT_COLLECTING' // 상품회수
+  | 'PRODUCT_CHECKING' // 상품확인
+  | 'EXCHANGE_IN_PROGRESS' // 교환진행
+  | 'EXCHANGE_SHIPPING' // 교환배송
+  | 'EXCHANGE_ON_HOLD' // 교환보류
+  | 'EXCHANGE_TURNED_DOWN' // 교환반려
+  | 'EXCHANGE_COMPLETED' // 교환완료
+
 export type DeliveryStatus =
   | 'PRODUCT_PREPARING' // 상품준비
   | 'COLLECTING' // 수거중
@@ -62,6 +85,8 @@ export interface OrderItem {
   deliveryStatus: DeliveryStatus | null
   courierName: CourierName | null
   trackingNumber: string | null
+  returnStatus: ReturnStatus | null
+  exchangeStatus: ExchangeStatus | null
 }
 
 export interface OrderStatusCount {
