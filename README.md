@@ -144,7 +144,7 @@ apps/seller/src/
 | Commit   | `feat(scope):`, `fix(scope):` 등 타입 + 모노레포 scope |
 
 → **[코드 컨벤션 가이드 자세히 보기](/docs/convention/code-convention.md)**
-→ **[Git 컨벤션 가이드 자세히 보기](/docs/convention/git-convention.md)**
+→ **[커밋 컨벤션 가이드 자세히 보기](/docs/convention/commit-convention.md)**
 
 <br/>
 

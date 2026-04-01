@@ -1,11 +1,11 @@
-# Git 컨벤션 가이드
+# 커밋 컨벤션 가이드
 
 <br/>
 
 ## 커밋 메시지 (Conventional Commits)
 
 ```
-<type>(<scope>): <subject>
+[<scope>] <type>(<issue-number>): <subject>
 
 <body> (선택)
 ```
@@ -37,16 +37,20 @@
 | `config`    | `packages/config` (`@dessert/config`)                          |
 | `workspace` | 루트 설정, turbo, CI/CD 등 특정 앱·패키지에 귀속되지 않는 변경 |
 
+### issue-number
+
+- 작업과 연결된 GitHub Issue 번호를 명시합니다.
+
 ### 예시
 
 ```
-feat(seller): 주문 목록 무한스크롤 구현
+[seller] feat(123): 주문 목록 무한스크롤 구현
 
-fix(seller): 상품 등록 시 이미지 미리보기 깨짐 수정
+[seller] fix(124): 상품 등록 시 이미지 미리보기 깨짐 수정
 
-feat(ui): DateRangePicker 컴포넌트 추가
+[ui] feat(125): DateRangePicker 컴포넌트 추가
 
-chore(workspace): @tanstack/react-query 5.90.20으로 업데이트
+[workspace] chore(126): @tanstack/react-query 5.90.20으로 업데이트
 
-docs(workspace): FSD 온보딩 가이드 작성
+[workspace] docs(127): FSD 온보딩 가이드 작성
 ```
