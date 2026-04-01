@@ -5,11 +5,14 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { cn } from '../lib/utils'
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData, TValue> {
     getRowSpan?: (cell: Cell<TData, TValue>) => number
     getColSpan?: (cell: Cell<TData, TValue>) => number
+    className?: string
+    headerClassName?: string
   }
 }
 
@@ -49,7 +52,10 @@ function Table<T>({
                   <th
                     key={header.id}
                     colSpan={header.colSpan}
-                    className="text-center align-middle typo-body-12-m text-gray-800"
+                    className={cn(
+                      'text-center align-middle typo-body-12-m text-gray-800',
+                      header.column.columnDef.meta?.headerClassName,
+                    )}
                     style={{ width: header.getSize() }}
                   >
                     {header.isPlaceholder ? null : (
@@ -86,7 +92,10 @@ function Table<T>({
                       key={cell.id}
                       rowSpan={rowSpan}
                       colSpan={colSpan}
-                      className="text-center align-middle"
+                      className={cn(
+                        'text-center align-middle',
+                        cell.column.columnDef.meta?.className,
+                      )}
                       style={{ width: cell.column.getSize() }}
                     >
                       <div className="p-10">
