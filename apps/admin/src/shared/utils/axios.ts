@@ -5,7 +5,7 @@ import { getCookie } from '@/shared/utils/cookieUtils'
 const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL
 
 export const client = axios.create({
-  baseURL: '',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },

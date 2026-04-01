@@ -17,10 +17,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={ROUTES.PRODUCTS.ROOT} replace />,
+        element: <Navigate to={ROUTES.HOME} replace />,
       },
       {
-        path: ROUTES.PRODUCTS.ROOT,
+        path: ROUTES.LOGIN.ROOT,
         element: <AuthPage />,
       },
     ],

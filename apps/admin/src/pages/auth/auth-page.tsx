@@ -1,4 +1,4 @@
-import { Button, Input, LogoHeader } from '@dessert/ui'
+import { Button, Input, LogoHeader, toast } from '@dessert/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
@@ -28,8 +28,13 @@ const AuthPage = () => {
   const { mutate, isPending } = useAdminLoginMutation()
   const onSubmit = (data: LoginFormValues) => {
     mutate(data, {
-      onError: () => {
-        console.error('로그인 실패')
+      onSuccess: () => {
+        toast.success('로그인 성공했어요')
+        console.log('로그인 성공!~~!!!')
+      },
+      onError: (error) => {
+        toast.error('로그인 정보를 확인하세요', '아이디/비밀번호를 확인하세요')
+        console.error('로그인 실패', error)
       },
     })
   }
