@@ -322,8 +322,13 @@ __metadata:
     happy-dom: "npm:^17.5.4"
     msw: "npm:^2.10.0"
   peerDependencies:
+    "@tailwindcss/vite": ^4.0.0
+    "@vitejs/plugin-react-swc": ^3.0.0
     react: ^19.0.0
     react-dom: ^19.0.0
+    vite: ^6.0.0
+    vite-plugin-svgr: ^4.0.0
+    vitest: ^3.0.0
   languageName: unknown
   linkType: soft
 
