@@ -67,7 +67,6 @@ const AuthPage = () => {
                 required
                 placeholder="아이디를 입력해주세요"
                 {...register('accountId')}
-                // error={!!errors.id}
               />
               <Input
                 label="비밀번호"
@@ -76,7 +75,6 @@ const AuthPage = () => {
                 required
                 placeholder="비밀번호를 입력해주세요"
                 {...register('password')}
-                // error={!!errors.password}
               />
             </div>
 
