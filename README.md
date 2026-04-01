@@ -3,7 +3,7 @@
 > 이 문서는 새로운 팀원이 프로젝트에 빠르게 적응할 수 있도록 안내하는 허브 문서입니다.
 > 각 섹션의 링크를 통해 더 자세한 내용을 확인하세요.
 
----
+<br/>
 
 ## 🌐 배포 URL
 
@@ -14,7 +14,7 @@
 | Storybook (UI)    | `<!-- TODO: Storybook UI 배포 URL 입력 -->`                            | `@dessert/ui` 컴포넌트 탐색기  |
 | Storybook (Icons) | `<!-- TODO: Storybook Icons 배포 URL 입력 -->`                         | `@dessert/icons` 아이콘 탐색기 |
 
----
+<br/>
 
 ## 🚀 빠른 시작 (Quick Start)
 
@@ -67,7 +67,7 @@ yarn storybook:ui
 yarn storybook:icons
 ```
 
----
+<br/>
 
 ## 📦 의존성 관리 (Yarn Workspaces)
 
@@ -90,7 +90,7 @@ yarn add -D some-dev-tool
 
 → **[모노레포 의존성 관리 자세히 보기](/docs/monorepo/monorepo-package-json-guide.md)**
 
----
+<br/>
 
 ## 🗂️ 프로젝트 구조
 
@@ -109,7 +109,7 @@ dessert-front-dashboard/
 
 → **[모노레포 아키텍처 자세히 보기](/docs/monorepo/monorepo-packages-architecture-guide.md)**
 
----
+<br/>
 
 ## 🏗️ FSD (Feature-Sliced Design) 아키텍처
 
@@ -133,7 +133,7 @@ apps/seller/src/
 
 → **[FSD 아키텍처 가이드 자세히 보기](/docs/fsd/fsd-guide.md)**
 
----
+<br/>
 
 ## 🎨 컨벤션
 
@@ -146,7 +146,7 @@ apps/seller/src/
 → **[코드 컨벤션 가이드 자세히 보기](/docs/convention/code-convention.md)**
 → **[Git 컨벤션 가이드 자세히 보기](/docs/convention/git-convention.md)**
 
----
+<br/>
 
 ## 🖼️ @dessert/icons 사용법
 
@@ -167,7 +167,7 @@ import { SearchIcon, HeartRedIcon } from '@dessert/icons'
 
 → **[아이콘 사용 가이드 자세히 보기](/docs/packages/icons-usage-guide.md)**
 
----
+<br/>
 
 ## 🔄 작업 파이프라인
 
