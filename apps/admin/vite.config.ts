@@ -18,7 +18,7 @@ export default defineConfig({
 
   // 포트지정
   server: {
-    port: 3000,
+    port: 6078,
   },
 
   base: '/',
