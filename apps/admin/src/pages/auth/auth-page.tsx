@@ -1,6 +1,7 @@
 import { Button, Input, LogoHeader, toast } from '@dessert/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { useAdminLoginMutation } from '@/entity/auth/auth-query'
 import { LoginFooter } from '@/features/auth/login/login-footer'
@@ -16,6 +17,7 @@ import {
 } from '@/features/auth/ui'
 
 const AuthPage = () => {
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -30,6 +32,7 @@ const AuthPage = () => {
     mutate(data, {
       onSuccess: () => {
         toast.success('로그인 성공했어요')
+        navigate('/', { replace: true })
         console.log('로그인 성공!~~!!!')
       },
       onError: (error) => {
