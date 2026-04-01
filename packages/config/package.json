@@ -3,11 +3,29 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
   "exports": {
-    "./test/setup": "./src/test/setup.ts",
-    "./vitest/create-config": "./src/vitest/create-config.ts",
-    "./vite/base": "./src/vite/base.ts",
-    "./vite/plugins": "./src/vite/plugins.ts"
+    "./test/setup": {
+      "import": "./dist/test/setup.js",
+      "types": "./dist/test/setup.d.ts"
+    },
+    "./vitest/create-config": {
+      "import": "./dist/vitest/create-config.js",
+      "types": "./dist/vitest/create-config.d.ts"
+    },
+    "./vite/base": {
+      "import": "./dist/vite/base.js",
+      "types": "./dist/vite/base.d.ts"
+    },
+    "./vite/plugins": {
+      "import": "./dist/vite/plugins.js",
+      "types": "./dist/vite/plugins.d.ts"
+    }
+  },
+  "devDependencies": {
+    "typescript": "~5.7.2"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",
