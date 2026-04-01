@@ -17,16 +17,19 @@ export function fontPreloadPlugin(appRoot: string): Plugin {
 
         function walk(dir: string) {
           const files = fs.readdirSync(dir)
+
           for (const file of files) {
             const fullPath = path.join(dir, file)
             const stat = fs.statSync(fullPath)
+
             if (stat.isDirectory()) {
               walk(fullPath)
             } else if (file.endsWith('.woff') || file.endsWith('.woff2')) {
               const publicPath = fullPath.split('assets')[1].replace(/\\/g, '/')
               const type = file.endsWith('.woff2') ? 'font/woff2' : 'font/woff'
               const fontName = file.split('.')[0]
-              if (usedFonts.includes(fontName)) {
+
+              if (usedFonts.includes(fontName.toLowerCase())) {
                 preloadLinks.push(
                   `<link rel="preload" href="/assets${publicPath}" as="font" type="${type}" crossorigin>`,
                 )
@@ -35,6 +38,9 @@ export function fontPreloadPlugin(appRoot: string): Plugin {
           }
         }
 
+        if (!fs.existsSync(fontDir)) {
+          return html
+        }
         walk(fontDir)
         return html.replace('</head>', preloadLinks.join('\n') + '\n</head>')
       },

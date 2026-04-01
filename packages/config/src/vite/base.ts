@@ -19,29 +19,24 @@ export const baseViteConfig = defineConfig({
     chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
-        manualChunks: {
-          // React 관련 모듈
-          'vendor-react': [
-            'react',
-            'react-dom',
-            'scheduler',
-            'react/jsx-runtime',
-          ],
-          // 애니메이션 관련 모듈
-          'vendor-motion': ['framer-motion'],
-          // 아이콘 관련 모듈
-          'vendor-icons': ['lucide-react'],
-          // Radix UI 관련 모듈
-          'vendor-radix': [
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-label',
-            '@radix-ui/react-scroll-area',
-            '@radix-ui/react-separator',
-            '@radix-ui/react-slot',
-            '@radix-ui/react-switch',
-            '@radix-ui/react-tabs',
-            '@radix-ui/react-tooltip',
-          ],
+        // 함수 형태: 실제 번들에 포함된 모듈만 청킹 (미설치 패키지는 자동으로 건너뜀)
+        manualChunks(id) {
+          if (
+            id.includes('node_modules/react/') ||
+            id.includes('node_modules/react-dom/') ||
+            id.includes('node_modules/scheduler/')
+          ) {
+            return 'vendor-react'
+          }
+          if (id.includes('node_modules/framer-motion/')) {
+            return 'vendor-motion'
+          }
+          if (id.includes('node_modules/lucide-react/')) {
+            return 'vendor-icons'
+          }
+          if (id.includes('node_modules/@radix-ui/')) {
+            return 'vendor-radix'
+          }
         },
       },
     },
