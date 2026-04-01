@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 import Lnb from '@/shared/block/lnb/lnb'
 
-const FixedLayout = () => {
+export function FixedLayout() {
   return (
     <>
       <LogoHeader />
@@ -19,5 +19,3 @@ const FixedLayout = () => {
     </>
   )
 }
-
-export default FixedLayout

@@ -15,7 +15,7 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   layout?: 'vertical' | 'horizontal'
 }
 
-export default function InputField({
+export function InputField({
   label,
   required,
   placeholder,

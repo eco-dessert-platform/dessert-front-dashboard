@@ -1,4 +1,4 @@
-import BottomNavBar from '@/shared/block/bottom-nav-bar/bottom-nav-bar'
+import { BottomNavBar } from './bottom-nav-bar'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

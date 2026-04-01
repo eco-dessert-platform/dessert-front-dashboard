@@ -16,11 +16,11 @@ const DAYS = [
   { value: 'sun', label: '일' },
 ]
 
-const DaySelector = ({
+export function DaySelector({
   selectedDays = [],
   onDayChange,
   className = '',
-}: DaySelectorProps) => {
+}: DaySelectorProps) {
   const handleDayClick = (dayValue: string) => {
     const newSelectedDays = selectedDays.includes(dayValue)
       ? selectedDays.filter((d) => d !== dayValue)
@@ -55,5 +55,3 @@ const DaySelector = ({
     </div>
   )
 }
-
-export default DaySelector

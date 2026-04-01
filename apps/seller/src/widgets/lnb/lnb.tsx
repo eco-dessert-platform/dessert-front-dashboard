@@ -70,7 +70,7 @@ const MENU_LIST = [
   },
 ]
 
-function Lnb() {
+export function Lnb() {
   return (
     <nav className="relative flex h-[calc(100vh-80px)] w-[240px] flex-col border-r border-border">
       <div className="flex-1 overflow-y-auto px-3 py-4">
@@ -99,8 +99,6 @@ function Lnb() {
     </nav>
   )
 }
-
-export default Lnb
 
 function MenuItemLink({ href, title }: { href: string; title: string }) {
   const navigate = useNavigate()

@@ -11,7 +11,7 @@ interface FileUploadInputProps {
   disabled?: boolean
 }
 
-const FileUploadInput = ({
+export function FileUploadInput({
   label,
   required = false,
   placeholder,
@@ -20,7 +20,7 @@ const FileUploadInput = ({
   value,
   onChange,
   disabled = false,
-}: FileUploadInputProps) => {
+}: FileUploadInputProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
     onChange?.(file)
@@ -66,5 +66,3 @@ const FileUploadInput = ({
     </div>
   )
 }
-
-export default FileUploadInput

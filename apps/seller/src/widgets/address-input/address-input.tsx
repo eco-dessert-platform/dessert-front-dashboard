@@ -9,14 +9,14 @@ interface AddressInputProps {
   disabled?: boolean
 }
 
-const AddressInput = ({
+export function AddressInput({
   postalCode,
   address,
   detailAddress,
   onPostalCodeSearch,
   onDetailAddressChange,
   disabled = false,
-}: AddressInputProps) => {
+}: AddressInputProps) {
   return (
     <>
       <div className="flex items-start gap-16 self-stretch px-20 py-10">
@@ -71,5 +71,3 @@ const AddressInput = ({
     </>
   )
 }
-
-export default AddressInput

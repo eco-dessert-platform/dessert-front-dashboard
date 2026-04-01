@@ -2,7 +2,7 @@ import { ComponentProps, useEffect, useState } from 'react'
 
 import { fn } from '@storybook/test'
 
-import InputField from './input-field'
+import { InputField } from './input-field'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

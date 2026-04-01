@@ -10,7 +10,7 @@ interface EmailInputProps {
   disabled?: boolean
 }
 
-const EmailInput = ({
+export function EmailInput({
   label,
   required = false,
   localPart,
@@ -18,7 +18,7 @@ const EmailInput = ({
   onLocalPartChange,
   onDomainChange,
   disabled = false,
-}: EmailInputProps) => {
+}: EmailInputProps) {
   return (
     <>
       <div className="flex flex-1/2 flex-col items-start gap-4">
@@ -51,5 +51,3 @@ const EmailInput = ({
     </>
   )
 }
-
-export default EmailInput
