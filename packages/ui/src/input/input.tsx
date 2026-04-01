@@ -7,6 +7,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   helperText?: string
   error?: boolean
   errorMessage?: string
+  labelClassName?: string
 }
 
 const formFieldBase =
@@ -25,6 +26,7 @@ const Input = ({
   helperText,
   className = '',
   maxLength,
+  labelClassName,
   ...restProps
 }: InputProps) => {
   return (
@@ -34,7 +36,9 @@ const Input = ({
         className,
       )}
     >
-      {label && <Label label={label} required={required} />}
+      {label && (
+        <Label label={label} required={required} className={labelClassName} />
+      )}
       <div className="relative w-full">
         <input
           type={type}
