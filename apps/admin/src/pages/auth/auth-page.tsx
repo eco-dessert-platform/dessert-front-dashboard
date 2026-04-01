@@ -33,11 +33,9 @@ const AuthPage = () => {
       onSuccess: () => {
         toast.success('로그인 성공했어요')
         navigate('/', { replace: true })
-        console.log('로그인 성공!~~!!!')
       },
       onError: (error) => {
         toast.error('로그인 정보를 확인하세요', '아이디/비밀번호를 확인하세요')
-        console.error('로그인 실패', error)
       },
     })
   }
