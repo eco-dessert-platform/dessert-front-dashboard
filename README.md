@@ -137,16 +137,18 @@ apps/seller/src/
 
 ## 🎨 컨벤션
 
-| 도구     | 핵심 규칙                                            |
-| -------- | ---------------------------------------------------- |
-| Prettier | 싱글쿼트, 세미콜론 없음, 탭 2칸, trailing comma      |
-| ESLint   | import 정렬, React Hooks 규칙, Tailwind 클래스 순서  |
-| Commit   | `[seller] feat(123):` 등 scope + type + issue number |
-| Branch   | `feat/order-infinite-scroll` 등 type/kebab-case      |
+| 도구     | 핵심 규칙                                               |
+| -------- | ------------------------------------------------------- |
+| Prettier | 싱글쿼트, 세미콜론 없음, 탭 2칸, trailing comma         |
+| ESLint   | import 정렬, React Hooks 규칙, Tailwind 클래스 순서     |
+| Commit   | `[seller] feat(123):` 등 scope + type + issue number    |
+| Branch   | `feat/order-infinite-scroll` 등 type/kebab-case         |
+| Env      | `VITE_` 접두사 필수, `.env.example` 업데이트 및 PR 명시 |
 
 → **[코드 컨벤션 가이드 자세히 보기](/docs/convention/code-convention.md)**
 → **[커밋 컨벤션 가이드 자세히 보기](/docs/convention/commit-convention.md)**
 → **[브랜치 컨벤션 가이드 자세히 보기](/docs/convention/branch-convention.md)**
+→ **[환경변수 관리 가이드 자세히 보기](/docs/convention/env-convention.md)**
 
 <br/>
 
