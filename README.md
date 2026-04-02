@@ -7,12 +7,12 @@
 
 ## 🌐 배포 URL
 
-| 서비스            | URL                                                                    | 설명                           |
-| ----------------- | ---------------------------------------------------------------------- | ------------------------------ |
-| Seller            | [d2bjxba8wrj4ap.cloudfront.net](https://d2bjxba8wrj4ap.cloudfront.net) | 판매자 대시보드                |
-| Admin             | [dgr167g0ydf6y.cloudfront.net](https://dgr167g0ydf6y.cloudfront.net)   | 관리자 대시보드                |
-| Storybook (UI)    | `<!-- TODO: Storybook UI 배포 URL 입력 -->`                            | `@dessert/ui` 컴포넌트 탐색기  |
-| Storybook (Icons) | `<!-- TODO: Storybook Icons 배포 URL 입력 -->`                         | `@dessert/icons` 아이콘 탐색기 |
+| 서비스            | URL                                                  | 설명                           |
+| ----------------- | ---------------------------------------------------- | ------------------------------ |
+| Seller            | [seller.bbanggree.com](https://seller.bbanggree.com) | 판매자 대시보드                |
+| Admin             | [admin.bbanggree.com](https://admin.bbanggree.com)   | 관리자 대시보드                |
+| Storybook (UI)    | `<!-- TODO: Storybook UI 배포 URL 입력 -->`          | `@dessert/ui` 컴포넌트 탐색기  |
+| Storybook (Icons) | `<!-- TODO: Storybook Icons 배포 URL 입력 -->`       | `@dessert/icons` 아이콘 탐색기 |
 
 <br/>
 
