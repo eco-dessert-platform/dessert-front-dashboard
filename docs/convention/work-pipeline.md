@@ -125,13 +125,13 @@ Issue 생성 후 현재 주차 **Milestone**에 연결합니다.
 
 ## Step 4. 브랜치 생성 및 개발
 
-Issue 번호를 기반으로 브랜치를 생성합니다.
+브랜치 네이밍 규칙에 따라 브랜치를 생성합니다.
 
 ```bash
-# 브랜치 네이밍 규칙: <type>/<번호>-<간략한-설명>
-git checkout -b feat/42-order-infinite-scroll
-git checkout -b fix/55-image-preview-broken
-git checkout -b chore/60-update-dependencies
+# 브랜치 네이밍 규칙: <type>/<description>
+git checkout -b feat/order-infinite-scroll
+git checkout -b fix/image-preview-broken
+git checkout -b chore/update-dependencies
 ```
 
 <br/>
