@@ -3,8 +3,6 @@
 > 이 문서는 새로운 팀원이 프로젝트에 빠르게 적응할 수 있도록 안내하는 허브 문서입니다.
 > 각 섹션의 링크를 통해 더 자세한 내용을 확인하세요.
 
-<br/>
-
 ## 🌐 배포 URL
 
 | 서비스            | URL                                                  | 설명                           |
@@ -145,10 +143,10 @@ apps/seller/src/
 | Branch   | `feat/order-infinite-scroll` 등 type/kebab-case         |
 | Env      | `VITE_` 접두사 필수, `.env.example` 업데이트 및 PR 명시 |
 
-→ **[코드 컨벤션 가이드 자세히 보기](/docs/convention/code-convention.md)**
-→ **[커밋 컨벤션 가이드 자세히 보기](/docs/convention/commit-convention.md)**
-→ **[브랜치 컨벤션 가이드 자세히 보기](/docs/convention/branch-convention.md)**
-→ **[환경변수 관리 가이드 자세히 보기](/docs/convention/env-convention.md)**
+→ **[코드 컨벤션 가이드 자세히 보기](/docs/convention/code-convention.md)**<br/>
+→ **[커밋 컨벤션 가이드 자세히 보기](/docs/convention/commit-convention.md)**<br/>
+→ **[브랜치 컨벤션 가이드 자세히 보기](/docs/convention/branch-convention.md)**<br/>
+→ **[환경변수 관리 가이드 자세히 보기](/docs/convention/env-convention.md)**<br/>
 
 <br/>
 

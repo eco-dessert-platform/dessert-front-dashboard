@@ -1,7 +1,5 @@
 # @dessert/icons 사용 가이드
 
-<br/>
-
 ## 개요
 
 `@dessert/icons`는 **SVGR** 기반의 SVG 아이콘 패키지입니다.

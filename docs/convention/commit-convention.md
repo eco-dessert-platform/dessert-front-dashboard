@@ -1,7 +1,5 @@
 # 커밋 컨벤션 가이드
 
-<br/>
-
 ## 커밋 메시지 (Conventional Commits)
 
 ```

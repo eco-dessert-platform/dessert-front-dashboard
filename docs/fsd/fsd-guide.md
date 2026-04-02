@@ -2,8 +2,6 @@
 
 > FSD 공식 문서: https://feature-sliced.design/kr
 
-<br/>
-
 ## 이 프로젝트의 레이어 구조
 
 이 프로젝트는 FSD를 기반으로 하되, **Widgets 레이어 없이** 프로젝트 규모에 맞게 단순화한 구조를 사용합니다.
@@ -76,8 +74,6 @@ import { ProductSelector } from '@/features/product' // ← 위반!
 - 순환 참조(Circular Dependency) → 빌드 실패
 - 독립적 테스트 불가능
 
-<br/>
-
 ### 규칙 2: Public API — 각 슬라이스는 `index.ts`로만 노출
 
 각 슬라이스(레이어 안의 폴더)는 반드시 **`index.ts`를 통해서만** 외부에 기능을 공개합니다.
@@ -106,8 +102,6 @@ import { OrderCard } from '@/entity/order/ui/OrderCard' // ← 위반!
 - 내부 구현을 바꿔도 외부에 영향을 주지 않음 (캡슐화)
 - `index.ts`만 보면 해당 슬라이스가 무엇을 제공하는지 한눈에 파악 가능
 - 의도치 않은 의존성 생성 방지
-
-<br/>
 
 ### 규칙 3: Cross-import 금지 — 같은 레이어 내 슬라이스 간 참조 금지
 
@@ -188,8 +182,6 @@ export const useCreateOrder = () => {
 > entity에 두면 중복 없이 공유할 수 있습니다.
 > `useCreateOrder`는 **주문 생성 기능에만** 사용되므로 해당 features에 두는 것이 응집도를 높입니다.
 
-<br/>
-
 ### Segments — 슬라이스 내부 구조
 
 슬라이스(레이어 내 폴더) 내부는 **segments(세그먼트)** 로 역할을 나눕니다.
@@ -237,8 +229,6 @@ features/order/
 
 > **핵심 원칙**: `features`에는 `.api.ts`가 없습니다.
 > API 호출은 항상 `entity`의 `query.ts`를 통해 `useQuery`로만 이루어집니다.
-
-<br/>
 
 ### `shared/block` vs `shared/ui` — 언제 어디에 둘까?
 
@@ -344,8 +334,6 @@ seller와 admin 둘 다 쓰는가?
 
 현재 프로젝트에서 개선이 필요하다고 판단되는 부분입니다. 팀원들의 의견을 듣고 방향을 결정하고자 합니다.
 
-<br/>
-
 ### 1. Public API (`index.ts`) 도입
 
 **현재 상태**: 각 슬라이스에 `index.ts`가 없어 내부 파일 경로로 직접 import함
@@ -375,8 +363,6 @@ import { OrderItem, orderQueries } from '@/entity/order'
 - 의도치 않은 내부 구현 의존 방지
 
 **논의 포인트**: 기존 import 경로를 일괄 변경하는 비용 vs 장기적 유지보수 이점
-
-<br/>
 
 ### 2. `shared/block` → `widgets` 레이어 마이그레이션
 

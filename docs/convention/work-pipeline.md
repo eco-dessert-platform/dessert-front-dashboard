@@ -1,7 +1,5 @@
 # 작업 파이프라인 가이드
 
-<br/>
-
 ## 개요
 
 모든 작업은 **Notion 개발 일정 → GitHub Issue → Milestone 연동 → 구현 → PR** 순서로 진행됩니다.

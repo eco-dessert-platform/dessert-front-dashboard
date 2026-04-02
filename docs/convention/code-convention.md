@@ -1,7 +1,5 @@
 # 코드 컨벤션 가이드
 
-<br/>
-
 ## Prettier
 
 - 코드 포맷팅은 **Prettier**가 자동으로 처리합니다.
@@ -92,8 +90,6 @@ export default function OrderCard() { ... }
 export function OrderCard() { ... }
 ```
 
-<br/>
-
 ### Props 타입 — `interface` 사용 (Utility Type 미사용 시)
 
 - Utility Type(`Record`, `Partial`, `Omit` 등)을 사용하지 않는 단순 Props는 `interface`로 통일합니다.
@@ -117,8 +113,6 @@ type PartialButtonProps = Partial<ButtonProps>
 type OrderRowProps = Omit<OrderItem, 'products'> & { isSelected: boolean }
 ```
 
-<br/>
-
 ### Props 타입 네이밍 — `${ComponentName}Props`
 
 - `Props`, `IButton`처럼 범용적인 이름은 타입 충돌 위험이 있고 출처 파악이 어렵습니다.
@@ -133,8 +127,6 @@ interface IButton { ... }
 interface ButtonProps { ... }
 interface OrderCardProps { ... }
 ```
-
-<br/>
 
 ### 파일·폴더 네이밍 — kebab-case
 
@@ -187,8 +179,6 @@ useQuery(ordersQuery)
 queryClient.prefetchQuery(ordersQuery)
 ```
 
-<br/>
-
 ### 계층적 queryKey 구조
 
 - 쿼리 키는 계층 구조로 정의합니다. 상위 키를 기준으로 관련 쿼리를 한 번에 무효화할 수 있습니다.
@@ -225,8 +215,6 @@ queryClient.invalidateQueries({ queryKey: orderQueries.all() })
 queryClient.invalidateQueries({ queryKey: orderQueries.lists() })
 ```
 
-<br/>
-
 ### 네이밍 규칙
 
 | 항목        | 규칙                 | 예시                                 |
@@ -244,8 +232,6 @@ export const ORDER_QUERY_KEY = { ... }
 export const orderQueries = { ... }
 export const productQueries = { ... }
 ```
-
-<br/>
 
 ### 정의 위치 — `entity` 레이어
 
