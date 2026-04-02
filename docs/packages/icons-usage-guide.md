@@ -1,7 +1,5 @@
 # @dessert/icons 사용 가이드
 
----
-
 ## 개요
 
 `@dessert/icons`는 **SVGR** 기반의 SVG 아이콘 패키지입니다.
@@ -13,7 +11,7 @@
 yarn storybook:icons  # 포트 6077에서 실행
 ```
 
----
+<br/>
 
 ## 기본 사용법
 
@@ -57,7 +55,7 @@ import { SearchIcon, ChevronLeftIcon, HeartRedIcon } from '@dessert/icons'
 <SearchIcon className="w-5 h-5 text-red-500" />    /* 레드 컬러 */
 ```
 
----
+<br/>
 
 ## 접근성 (aria-hidden)
 
@@ -104,7 +102,7 @@ import { SearchIcon, ChevronLeftIcon, HeartRedIcon } from '@dessert/icons'
                 └─ No (순수 장식) → aria-hidden="true"
 ```
 
----
+<br/>
 
 ## 아이콘 목록 (카테고리별)
 
