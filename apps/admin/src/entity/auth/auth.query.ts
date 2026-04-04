@@ -2,9 +2,9 @@ import { useMutation } from '@tanstack/react-query'
 
 import { getExpFromToken, setCookie } from '@/shared/utils/cookieUtils'
 
-import { adminLogin } from './auth-api'
-import { useAuthStore } from './auth-store'
-import { authKeys } from './key'
+import { adminLogin } from './auth.api'
+import { authKeys } from './auth.key'
+import { useAuthStore } from './auth.store'
 
 export const useAdminLoginMutation = () => {
   const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn)

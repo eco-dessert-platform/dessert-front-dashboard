@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
 
-import { useAuthStore } from './entity/auth/auth-store'
+import { useAuthStore } from './entity/auth/auth.store'
 
 function App({ router }: { router: ReturnType<typeof createBrowserRouter> }) {
   const [queryClient] = useState(() => new QueryClient())

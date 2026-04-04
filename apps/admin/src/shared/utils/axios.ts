@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { useAuthStore } from '@/entity/auth/auth-store'
+import { useAuthStore } from '@/entity/auth/auth.store'
 import { getCookie } from '@/shared/utils/cookieUtils'
 
 const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL

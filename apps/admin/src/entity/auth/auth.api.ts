@@ -2,8 +2,10 @@ import { AxiosResponse } from 'axios'
 
 import { client } from '@/shared/utils/axios'
 
-import { LoginResponse } from './types'
-
+export interface LoginResponse {
+  accessToken: string
+  refreshToken: string
+}
 export const adminLogin = async (data: {
   accountId: string
   password: string
