@@ -5,18 +5,25 @@ import {
   DeliveryFormInput,
   ProductFormInput,
   ProductOptionFormInput,
-} from '@/entity/products/create/create-form/product-form.type'
-import { deliverySchema } from '@/features/products/create/create-form-delivery/create-delivery.schema'
-import { productSchema } from '@/features/products/create/create-form-info/create-info.schema'
-import { productOptionSchema } from '@/features/products/create/create-form-options/create-options.schema'
+  ProductDisclosureFormInput,
+  DISCLOSURE_FIELDS,
+} from '@/entity/products'
+import {
+  deliverySchema,
+  disclosureSchema,
+  productSchema,
+  productOptionSchema,
+} from '@/features/products/create'
 
 export type CreateProductForm = ProductFormInput &
   DeliveryFormInput &
-  ProductOptionFormInput
+  ProductOptionFormInput &
+  ProductDisclosureFormInput
 
 const createProductSchema = productSchema
   .and(deliverySchema)
   .and(productOptionSchema)
+  .and(disclosureSchema)
 
 export const useCreateProductForm = () => {
   return useForm<CreateProductForm>({
@@ -49,6 +56,21 @@ export const useCreateProductForm = () => {
       protein: null,
       fat: null,
       sodium: null,
+
+      productInfoNotice: DISCLOSURE_FIELDS.reduce(
+        (acc, field) => ({
+          ...acc,
+          [field.key]: '',
+        }),
+        {} as CreateProductForm['productInfoNotice'],
+      ),
+      productInfoNoticeMode: DISCLOSURE_FIELDS.reduce(
+        (acc, field) => ({
+          ...acc,
+          [field.key]: 'default',
+        }),
+        {} as CreateProductForm['productInfoNoticeMode'],
+      ),
     },
     mode: 'onChange',
   })

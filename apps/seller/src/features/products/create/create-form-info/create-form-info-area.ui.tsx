@@ -8,7 +8,7 @@ import { productionTimes } from '@/entity/products/create/create-info/production
 
 import { useProductInfoForm } from './use-product-info-form.hook'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
-import { InfoTooltip } from '../ui/info-tooltip'
+import { InfoTooltip } from '../ui/info-tooltip.ui'
 
 export const ProductInfoArea = () => {
   const {
