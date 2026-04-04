@@ -1,14 +1,26 @@
 import { useState } from 'react'
 
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
+import {
+  completeExchange,
+  completeReturn,
+  updateOrderStatus,
+  updateTracking,
+} from '@/entity/order/order.api'
 import { orderQueries } from '@/entity/order/order.query'
 import {
   CourierName,
   OrderStatusCount,
   OrderStatusTab,
 } from '@/entity/order/order.type'
+import { toast } from '@dessert/ui'
 import { OrderActionBar } from '@/features/order/order-action-bar/order-action-bar.ui'
 import { OrderDetailModal } from '@/features/order/order-detail-modal/order-detail-modal.ui'
 import { useOrderFilter } from '@/features/order/order-filters/order-filters.hook'
@@ -47,6 +59,7 @@ const DEFAULT_STATUS_COUNT: OrderStatusCount = {
 }
 
 function AllOrdersPage() {
+  const queryClient = useQueryClient()
   const [detailOpen, setDetailOpen] = useState(false)
   const [alertOpen, setAlertOpen] = useState(false)
   const [reasonModalOpen, setReasonModalOpen] = useState(false)
@@ -80,6 +93,52 @@ function AllOrdersPage() {
     placeholderData: keepPreviousData,
   })
   const orders = data?.content ?? []
+
+  const updateStatusMutation = useMutation({
+    mutationFn: updateOrderStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+      selectionReset()
+    },
+    onError: () => {
+      toast.error('주문 상태 변경에 실패했습니다.')
+    },
+  })
+
+  const updateTrackingMutation = useMutation({
+    mutationFn: updateTracking,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+      toast.success('운송장 정보가 저장되었습니다.')
+    },
+    onError: () => {
+      toast.error('운송장 저장에 실패했습니다.')
+    },
+  })
+
+  const completeReturnMutation = useMutation({
+    mutationFn: completeReturn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+      toast.success('반품이 완료 처리되었습니다.')
+      selectionReset()
+    },
+    onError: () => {
+      toast.error('반품 완료 처리에 실패했습니다.')
+    },
+  })
+
+  const completeExchangeMutation = useMutation({
+    mutationFn: completeExchange,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+      toast.success('교환이 완료 처리되었습니다.')
+      selectionReset()
+    },
+    onError: () => {
+      toast.error('교환 완료 처리에 실패했습니다.')
+    },
+  })
 
   const {
     selectedIds,
@@ -128,6 +187,7 @@ function AllOrdersPage() {
         setAlertOpen(true)
         return
       }
+      completeReturnMutation.mutate({ orderNumbers: selectedIds })
       return
     }
 
@@ -136,6 +196,7 @@ function AllOrdersPage() {
         setAlertOpen(true)
         return
       }
+      completeExchangeMutation.mutate({ orderNumbers: selectedIds })
       return
     }
 
@@ -154,6 +215,12 @@ function AllOrdersPage() {
     reasonDetail: string
     images: File[]
   }) => {
+    updateStatusMutation.mutate({
+      orderNumbers: selectedIds,
+      reasonType: data.reasonType,
+      reasonDetail: data.reasonDetail,
+      images: data.images,
+    })
   }
 
   const handleTrackingOpen = (
@@ -171,6 +238,12 @@ function AllOrdersPage() {
     courier: CourierName,
     trackingNumber: string,
   ) => {
+    if (!trackingTarget?.orderNumber) return
+    updateTrackingMutation.mutate({
+      orderNumber: trackingTarget.orderNumber,
+      courierName: courier,
+      trackingNumber,
+    })
   }
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1

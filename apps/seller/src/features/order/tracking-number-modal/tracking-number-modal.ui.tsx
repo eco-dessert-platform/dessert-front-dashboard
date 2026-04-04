@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   Button,
@@ -54,6 +54,11 @@ export function TrackingNumberModal({
   const [trackingNumber, setTrackingNumber] = useState(
     defaultTrackingNumber ?? '',
   )
+
+  useEffect(() => {
+    setCourier(defaultCourier ?? '')
+    setTrackingNumber(defaultTrackingNumber ?? '')
+  }, [defaultCourier, defaultTrackingNumber])
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen) {

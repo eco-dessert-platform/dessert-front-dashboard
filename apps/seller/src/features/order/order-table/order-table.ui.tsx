@@ -347,10 +347,11 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
       return <p className="typo-body-12-r text-gray-800">-</p>
     }
 
-    if (
-      returnStatus === 'RETURN_APPROVED' ||
-      returnStatus === 'RETURN_REJECTED'
-    ) {
+    if (returnStatus === 'RETURN_REJECTED') {
+      return <p className="typo-body-12-r text-gray-800">-</p>
+    }
+
+    if (returnStatus === 'RETURN_APPROVED') {
       return (
         <Button
           variant="secondary-outlined"
