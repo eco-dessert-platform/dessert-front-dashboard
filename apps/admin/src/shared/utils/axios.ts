@@ -27,9 +27,14 @@ client.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const { logout } = useAuthStore.getState()
-      logout()
-      window.location.href = '/login'
+      const isLoginRequest = error.config?.url?.includes('/admin/login')
+
+      // 로그인 요청의 401은 무시 (onError에서 처리)
+      if (!isLoginRequest) {
+        const { logout } = useAuthStore.getState()
+        logout()
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   },
