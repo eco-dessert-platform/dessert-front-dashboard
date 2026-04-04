@@ -86,7 +86,7 @@ export function TrackingNumberModal({
   }
 
   const handleConfirm = () => {
-    if (!canConfirm || courier === '') return
+    if (courier === '' || trackingNumber.length === 0 || !hasChanged) return
     onConfirm(courier, trackingNumber)
   }
 
