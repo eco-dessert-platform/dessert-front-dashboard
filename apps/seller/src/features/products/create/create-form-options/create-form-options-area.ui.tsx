@@ -10,7 +10,7 @@ import DaySelector from '@/shared/block/day-selector/day-selector'
 
 import { useProductOptionForm } from './use-product-options.form.hook'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
-import { InfoTooltip } from '../ui/info-tooltip'
+import { InfoTooltip } from '../ui/info-tooltip.ui'
 
 export const ProductOptionsArea = () => {
   const {
