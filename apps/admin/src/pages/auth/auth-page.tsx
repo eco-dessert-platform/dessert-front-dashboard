@@ -3,10 +3,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { useAdminLoginMutation } from '@/entity/auth/auth.query'
-import { LoginFooter } from '@/features/auth/login-footer.ui'
-import { AuthLoginImage } from '@/features/auth/login-image.ui'
-import { LoginFormValues, loginSchema } from '@/features/auth/login.schema'
+import {
+  AuthLoginImage,
+  LoginFooter,
+  LoginFormValues,
+  loginSchema,
+  useAdminLoginMutation,
+} from '@/features/auth'
 
 const AuthPage = () => {
   const navigate = useNavigate()

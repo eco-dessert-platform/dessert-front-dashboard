@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 
-import { client } from '@/shared/utils/axios'
+import { client } from '@/shared/utils'
 
 export interface LoginResponse {
   accessToken: string

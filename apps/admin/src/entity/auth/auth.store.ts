@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { deleteCookie, getCookie } from '@/shared/utils/cookieUtils'
+import { deleteCookie, getCookie } from '@/shared/utils'
 
 interface AuthState {
   isLoggedIn: boolean
