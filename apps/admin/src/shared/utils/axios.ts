@@ -27,8 +27,8 @@ client.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const isLoginRequest = error.config?.url?.includes('/admin/login')
-
+      const requestUrl = error.config?.url ?? ''
+      const isLoginRequest = /\/api\/v1\/admin\/login(?:\?|$)/.test(requestUrl)
       // 로그인 요청의 401은 무시 (onError에서 처리)
       if (!isLoginRequest) {
         const { logout } = useAuthStore.getState()
