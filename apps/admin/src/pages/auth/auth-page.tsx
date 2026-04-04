@@ -1,40 +1,8 @@
-import { Button, Input, LogoHeader, toast } from '@dessert/ui'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { LogoHeader } from '@dessert/ui'
 
-import {
-  AuthLoginImage,
-  LoginFooter,
-  LoginForm,
-  LoginFormValues,
-  loginSchema,
-  useAdminLoginMutation,
-} from '@/features/auth'
+import { AuthLoginImage, LoginFooter, LoginForm } from '@/features/auth'
 
 const AuthPage = () => {
-  const navigate = useNavigate()
-  const {
-    register,
-    handleSubmit,
-    formState: { isValid },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    mode: 'onChange',
-  })
-
-  const { mutate, isPending } = useAdminLoginMutation()
-  const onSubmit = (data: LoginFormValues) => {
-    mutate(data, {
-      onSuccess: () => {
-        toast.success('로그인 성공했어요')
-        navigate('/', { replace: true })
-      },
-      onError: () => {
-        toast.error('로그인 정보를 확인하세요', '아이디/비밀번호를 확인하세요')
-      },
-    })
-  }
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-gray-50">
       <LogoHeader />
