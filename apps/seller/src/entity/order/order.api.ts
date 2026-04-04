@@ -107,3 +107,13 @@ export async function completeExchange(
 
   await client.post('/api/v1/seller/orders/exchange/complete', request)
 }
+
+export async function confirmOrder(
+  request: CompleteOrderRequest,
+): Promise<void> {
+  if (useMock) {
+    return Promise.resolve()
+  }
+
+  await client.post('/api/v1/seller/orders/confirm', request)
+}

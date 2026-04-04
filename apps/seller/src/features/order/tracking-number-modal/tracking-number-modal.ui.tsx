@@ -14,7 +14,7 @@ import {
 
 import { CourierName } from '@/entity/order/order.type'
 
-const COURIER_OPTIONS: Array<{ label: string; value: string }> = [
+const COURIER_OPTIONS: Array<{ label: string; value: CourierName }> = [
   { label: 'CJ대한통운', value: 'CJ대한통운' },
   { label: '롯데택배', value: '롯데택배' },
   { label: '한진택배', value: '한진택배' },
@@ -50,7 +50,7 @@ export function TrackingNumberModal({
   defaultTrackingNumber = null,
   onConfirm,
 }: TrackingNumberModalProps) {
-  const [courier, setCourier] = useState<string>(defaultCourier ?? '')
+  const [courier, setCourier] = useState<CourierName | ''>(defaultCourier ?? '')
   const [trackingNumber, setTrackingNumber] = useState(
     defaultTrackingNumber ?? '',
   )
@@ -86,9 +86,8 @@ export function TrackingNumberModal({
   }
 
   const handleConfirm = () => {
-    if (!canConfirm) return
-    onConfirm(courier as CourierName, trackingNumber)
-    onOpenChange(false)
+    if (!canConfirm || courier === '') return
+    onConfirm(courier, trackingNumber)
   }
 
   return (
@@ -105,7 +104,7 @@ export function TrackingNumberModal({
             label="택배사"
             options={COURIER_OPTIONS}
             value={courier}
-            onValueChange={setCourier}
+            onValueChange={(value) => setCourier(value as CourierName)}
             placeholder="전체"
             className="w-[186px] shrink-0"
           />

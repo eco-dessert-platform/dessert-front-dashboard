@@ -343,11 +343,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
 
   // 반품 탭: returnStatus에 따라 운송장 셀 렌더링
   if (tab === 'returned') {
-    if (returnStatus === 'RETURN_REQUESTED') {
-      return <p className="typo-body-12-r text-gray-800">-</p>
-    }
-
-    if (returnStatus === 'RETURN_REJECTED') {
+    if (!returnStatus || returnStatus === 'RETURN_REQUESTED' || returnStatus === 'RETURN_REJECTED') {
       return <p className="typo-body-12-r text-gray-800">-</p>
     }
 
@@ -385,6 +381,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
   // 교환 탭: exchangeStatus에 따라 운송장 셀 렌더링
   if (tab === 'exchanged') {
     if (
+      !exchangeStatus ||
       exchangeStatus === 'EXCHANGE_REQUESTED' ||
       exchangeStatus === 'EXCHANGE_REJECTED'
     ) {

@@ -11,6 +11,7 @@ import { useSearchParams } from 'react-router-dom'
 import {
   completeExchange,
   completeReturn,
+  confirmOrder,
   updateOrderStatus,
   updateTracking,
 } from '@/entity/order/order.api'
@@ -110,6 +111,7 @@ function AllOrdersPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: orderQueries.all() })
       toast.success('운송장 정보가 저장되었습니다.')
+      setTrackingModalOpen(false)
     },
     onError: () => {
       toast.error('운송장 저장에 실패했습니다.')
@@ -137,6 +139,18 @@ function AllOrdersPage() {
     },
     onError: () => {
       toast.error('교환 완료 처리에 실패했습니다.')
+    },
+  })
+
+  const confirmOrderMutation = useMutation({
+    mutationFn: confirmOrder,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+      toast.success('발주가 확인되었습니다.')
+      selectionReset()
+    },
+    onError: () => {
+      toast.error('발주 확인에 실패했습니다.')
     },
   })
 
@@ -179,6 +193,15 @@ function AllOrdersPage() {
         return
       }
       setDetailOpen(true)
+      return
+    }
+
+    if (action === 'confirmOrder') {
+      if (selectedIds.length === 0) {
+        setAlertOpen(true)
+        return
+      }
+      confirmOrderMutation.mutate({ orderNumbers: selectedIds })
       return
     }
 
