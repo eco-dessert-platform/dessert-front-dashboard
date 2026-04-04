@@ -1,24 +1,53 @@
-export const setCookie = (name: string, value: string, expires: Date) => {
-  document.cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`
+import { jwtDecode } from 'jwt-decode'
+
+export const setCookie = (name: string, value: string, expires?: Date) => {
+  const exp = expires ?? new Date(Date.now() + 3600 * 1000)
+  const isProduction = import.meta.env.PROD
+
+  document.cookie = [
+    `${name}=${encodeURIComponent(value)}`,
+    `expires=${exp.toUTCString()}`,
+    `path=/`,
+    `SameSite=Lax`,
+    isProduction ? 'Secure' : '',
+  ]
+    .filter(Boolean)
+    .join('; ')
 }
 
 export const getCookie = (name: string): string | null => {
   const matches = document.cookie.match(
     new RegExp(
-      '(?:^|; )' + name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1') + '=([^;]*)',
+      '(?:^|; )' + name.replace(/([.$?*|{}()[\]/+^])/g, '\\$1') + '=([^;]*)',
     ),
   )
-  return matches ? decodeURIComponent(matches[1]) : null
+  if (!matches) return null
+
+  try {
+    return decodeURIComponent(matches[1])
+  } catch {
+    return null
+  }
 }
 
 export const deleteCookie = (name: string) => {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+  const isProduction = import.meta.env.PROD
+
+  document.cookie = [
+    `${name}=`,
+    `expires=Thu, 01 Jan 1970 00:00:00 UTC`,
+    `path=/`,
+    `SameSite=Lax`,
+    isProduction ? 'Secure' : '',
+  ]
+    .filter(Boolean)
+    .join('; ')
 }
 
 export const getExpFromToken = (token: string): Date => {
   try {
-    const payload = JSON.parse(atob(token.split('.')[1]))
-    return new Date(payload.exp * 1000)
+    const { exp } = jwtDecode<{ exp: number }>(token)
+    return new Date(exp * 1000)
   } catch {
     return new Date(Date.now() + 3600 * 1000)
   }
