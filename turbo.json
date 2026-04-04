@@ -7,11 +7,23 @@
       "outputs": ["dist/**"]
     },
     "dev": {
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
     "lint": {},
-    "test": {},
+
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "env": ["VITE_API_BASE_URL"]
+    },
+
+    "test:run": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "env": ["VITE_API_BASE_URL"]
+    },
 
     "storybook": {
       "cache": false,
