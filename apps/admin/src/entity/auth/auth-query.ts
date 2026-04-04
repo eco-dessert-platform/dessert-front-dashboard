@@ -15,9 +15,13 @@ export const useAdminLoginMutation = () => {
     onSuccess: (response) => {
       const { accessToken, refreshToken } = response.data
 
-      setCookie('accessToken', accessToken, getExpFromToken(accessToken))
-      setCookie('refreshToken', refreshToken, getExpFromToken(refreshToken))
-
+      try {
+        setCookie('accessToken', accessToken, getExpFromToken(accessToken))
+        setCookie('refreshToken', refreshToken, getExpFromToken(refreshToken))
+      } catch {
+        setCookie('accessToken', accessToken)
+        setCookie('refreshToken', refreshToken)
+      }
       setIsLoggedIn(true)
     },
   })

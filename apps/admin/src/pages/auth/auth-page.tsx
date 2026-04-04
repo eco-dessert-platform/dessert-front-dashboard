@@ -21,7 +21,7 @@ const AuthPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid },
+    formState: { isValid },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
@@ -34,7 +34,7 @@ const AuthPage = () => {
         toast.success('로그인 성공했어요')
         navigate('/', { replace: true })
       },
-      onError: (error) => {
+      onError: () => {
         toast.error('로그인 정보를 확인하세요', '아이디/비밀번호를 확인하세요')
       },
     })
