@@ -6,6 +6,7 @@ import {
   ProductFormInput,
   ProductOptionFormInput,
   ProductDisclosureFormInput,
+  DISCLOSURE_FIELDS,
 } from '@/entity/products'
 import {
   deliverySchema,
@@ -56,36 +57,20 @@ export const useCreateProductForm = () => {
       fat: null,
       sodium: null,
 
-      productInfoNotice: {
-        productName: '',
-        foodType: '',
-        manufacturer: '',
-        originLocation: '',
-        manufactureDate: '',
-        expirationDate: '',
-        storageGuide: '',
-        packagingQuantityUnit: '',
-        rawMaterialName: '',
-        nutritionInfo: '',
-        transgenic: '',
-        customerWarning: '',
-        importFood: '',
-      },
-      productInfoNoticeMode: {
-        productName: 'default',
-        foodType: 'default',
-        manufacturer: 'default',
-        originLocation: 'default',
-        manufactureDate: 'default',
-        expirationDate: 'default',
-        storageGuide: 'default',
-        packagingQuantityUnit: 'default',
-        rawMaterialName: 'default',
-        nutritionInfo: 'default',
-        transgenic: 'default',
-        customerWarning: 'default',
-        importFood: 'default',
-      },
+      productInfoNotice: DISCLOSURE_FIELDS.reduce(
+        (acc, field) => ({
+          ...acc,
+          [field.key]: '',
+        }),
+        {} as CreateProductForm['productInfoNotice'],
+      ),
+      productInfoNoticeMode: DISCLOSURE_FIELDS.reduce(
+        (acc, field) => ({
+          ...acc,
+          [field.key]: 'default',
+        }),
+        {} as CreateProductForm['productInfoNoticeMode'],
+      ),
     },
     mode: 'onChange',
   })

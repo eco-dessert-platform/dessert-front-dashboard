@@ -51,6 +51,7 @@ const DisclosureFieldItem = ({
             value={value as string}
             onChange={onChange}
             className="gap-12"
+            labelClassName="gap-8"
           />
         )}
       />

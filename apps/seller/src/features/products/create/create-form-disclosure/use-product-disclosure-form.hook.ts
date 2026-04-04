@@ -23,9 +23,10 @@ export const useProductDisclosureForm = () => {
   const noticeValues = useWatch({ control, name: 'productInfoNotice' })
   const noticeModes = useWatch({ control, name: 'productInfoNoticeMode' })
 
-  // 2. 모드 전환 시 값 초기화 동기화 로직 (Subscription 유지)
+  // 2. 모드 전환 시 값 초기화 동기화 로직 및 원본 상품명 실시간 반영
   useEffect(() => {
     const subscription = watch((value, { name }) => {
+      // 2-1. 모드가 'default'로 바뀔 때 값 초기화
       if (name?.startsWith('productInfoNoticeMode.')) {
         const fieldKey = name.split('.')[1] as NoticeFieldKey
         const currentMode = value.productInfoNoticeMode?.[fieldKey]
@@ -37,9 +38,16 @@ export const useProductDisclosureForm = () => {
           })
         }
       }
+
+      // 2-2. 원본 상품명이 바뀔 때, 고시상품명 모드가 'default'이면 자동 동기화 (CodeRabbit 피드백 반영)
+      if (name === 'productName' && noticeModes?.productName === 'default') {
+        setValue('productInfoNotice.productName', sourceProductName, {
+          shouldValidate: true,
+        })
+      }
     })
     return () => subscription.unsubscribe()
-  }, [watch, setValue, sourceProductName])
+  }, [watch, setValue, sourceProductName, noticeModes?.productName])
 
   // 3. 완료 상태 체크 로직 최적화
   useEffect(() => {
