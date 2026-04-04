@@ -7,10 +7,12 @@ import {
   ProductOptionFormInput,
   ProductDisclosureFormInput,
 } from '@/entity/products'
-import { deliverySchema } from '@/features/products/create/create-form-delivery/create-delivery.schema'
-import { disclosureSchema } from '@/features/products/create/create-form-disclosure/create-disclosure.schema'
-import { productSchema } from '@/features/products/create/create-form-info/create-info.schema'
-import { productOptionSchema } from '@/features/products/create/create-form-options/create-options.schema'
+import {
+  deliverySchema,
+  disclosureSchema,
+  productSchema,
+  productOptionSchema,
+} from '@/features/products/create'
 
 export type CreateProductForm = ProductFormInput &
   DeliveryFormInput &

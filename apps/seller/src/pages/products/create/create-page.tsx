@@ -1,15 +1,17 @@
 import { Button } from '@dessert/ui'
 import { FormProvider } from 'react-hook-form'
 
-import { FormStepsProvider } from '@/features/products/create/create-form/create-form-provider'
-import { useCreateFormSteps } from '@/features/products/create/create-form/use-create-form-steps.hook'
-import { ProductDeliveryArea } from '@/features/products/create/create-form-delivery/create-form-delivery-area'
-import { ProductDetailArea } from '@/features/products/create/create-form-detail/create-form-detail-area'
-import { ProductDisclosureArea } from '@/features/products/create/create-form-disclosure/create-form-disclosure-area'
-import { ProductInfoArea } from '@/features/products/create/create-form-info/create-form-info-area'
-import { ProductOptionsArea } from '@/features/products/create/create-form-options/create-form-options-area'
-import { ProductHeader } from '@/features/products/create/create-header/create-header'
-import { CreateFormContainer } from '@/features/products/create/ui/create-form-container'
+import {
+  FormStepsProvider,
+  useCreateFormSteps,
+  ProductDeliveryArea,
+  ProductDetailArea,
+  ProductDisclosureArea,
+  ProductInfoArea,
+  ProductOptionsArea,
+  ProductHeader,
+} from '@/features/products/create'
+import { CreateFormContainer } from '@/features/products/create/ui/create-form-container.ui'
 
 import { useCreateProductForm } from './create-form'
 function CreatePage() {
