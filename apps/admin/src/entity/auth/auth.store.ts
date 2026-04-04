@@ -6,6 +6,7 @@ import { deleteCookie, getCookie } from '@/shared/utils'
 interface AuthState {
   isLoggedIn: boolean
   setIsLoggedIn: (isLoggedIn: boolean) => void
+  isReady: boolean
   logout: () => void
   syncAuthState: () => void
 }
@@ -20,9 +21,10 @@ export const useAuthStore = create<AuthState>()(
         deleteCookie('refreshToken')
         set({ isLoggedIn: false })
       },
+      isReady: false,
       syncAuthState: () => {
         const accessToken = getCookie('accessToken')
-        set({ isLoggedIn: !!accessToken })
+        set({ isLoggedIn: !!accessToken, isReady: true })
       },
     }),
     {
