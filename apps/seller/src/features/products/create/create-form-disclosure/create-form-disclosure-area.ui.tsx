@@ -47,7 +47,7 @@ const DisclosureFieldItem = ({
         render={({ field: { value, onChange } }) => (
           <Radio
             name={`productInfoNoticeMode.${field.key}`}
-            options={[...RADIO_OPTIONS]}
+            options={RADIO_OPTIONS}
             value={value as string}
             onChange={onChange}
             className="gap-12"

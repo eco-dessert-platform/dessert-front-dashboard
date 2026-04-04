@@ -32,22 +32,26 @@ export const useProductDisclosureForm = () => {
         const currentMode = value.productInfoNoticeMode?.[fieldKey]
 
         if (currentMode === 'default') {
-          const resetValue = fieldKey === 'productName' ? sourceProductName : ''
+          const resetValue =
+            fieldKey === 'productName' ? (value.productName ?? '') : ''
           setValue(`productInfoNotice.${fieldKey}`, resetValue, {
             shouldValidate: true,
           })
         }
       }
 
-      // 2-2. 원본 상품명이 바뀔 때, 고시상품명 모드가 'default'이면 자동 동기화 (CodeRabbit 피드백 반영)
-      if (name === 'productName' && noticeModes?.productName === 'default') {
-        setValue('productInfoNotice.productName', sourceProductName, {
+      // 2-2. 원본 상품명이 바뀔 때, 고시상품명 모드가 'default'이면 자동 동기화 (CodeRabbit 피드백 반영: 클로저 안전 보장)
+      if (
+        name === 'productName' &&
+        value.productInfoNoticeMode?.productName === 'default'
+      ) {
+        setValue('productInfoNotice.productName', value.productName ?? '', {
           shouldValidate: true,
         })
       }
     })
     return () => subscription.unsubscribe()
-  }, [watch, setValue, sourceProductName, noticeModes?.productName])
+  }, [watch, setValue])
 
   // 3. 완료 상태 체크 로직 최적화
   useEffect(() => {

@@ -9,7 +9,7 @@ interface RadioOption {
 }
 
 export interface RadioProps {
-  options: RadioOption[]
+  options: readonly RadioOption[]
   value?: string
   name: string
   direction?: 'horizontal' | 'vertical'
