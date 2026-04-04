@@ -1,7 +1,5 @@
 # 코드 컨벤션 가이드
 
----
-
 ## Prettier
 
 - 코드 포맷팅은 **Prettier**가 자동으로 처리합니다.
@@ -21,7 +19,7 @@
 yarn run format
 ```
 
----
+<br/>
 
 ## ESLint
 
@@ -67,7 +65,7 @@ import type { Order } from '@/entities/order'
 | `import/no-cycle`                   | warn | 순환 의존성 경고        |
 | `import/no-duplicates`              | warn | 중복 import 경고        |
 
----
+<br/>
 
 ## TypeScript
 
@@ -75,7 +73,7 @@ import type { Order } from '@/entities/order'
 - 컴포넌트 props는 `interface` 또는 `type`으로 명시적 정의
 - `as` 타입 단언은 최소화, 불가피한 경우 주석으로 이유 설명
 
----
+<br/>
 
 ## React 컴포넌트 작성 패턴
 
@@ -91,8 +89,6 @@ export default function OrderCard() { ... }
 // ✅ Good
 export function OrderCard() { ... }
 ```
-
----
 
 ### Props 타입 — `interface` 사용 (Utility Type 미사용 시)
 
@@ -117,8 +113,6 @@ type PartialButtonProps = Partial<ButtonProps>
 type OrderRowProps = Omit<OrderItem, 'products'> & { isSelected: boolean }
 ```
 
----
-
 ### Props 타입 네이밍 — `${ComponentName}Props`
 
 - `Props`, `IButton`처럼 범용적인 이름은 타입 충돌 위험이 있고 출처 파악이 어렵습니다.
@@ -133,8 +127,6 @@ interface IButton { ... }
 interface ButtonProps { ... }
 interface OrderCardProps { ... }
 ```
-
----
 
 ### 파일·폴더 네이밍 — kebab-case
 
@@ -156,7 +148,7 @@ order-filters/
 > 단, React 컴포넌트 함수명과 TypeScript 타입명은 PascalCase를 유지합니다.
 > **파일·폴더 이름만** kebab-case를 적용합니다.
 
----
+<br/>
 
 ## TanStack Query 사용 패턴
 
@@ -186,8 +178,6 @@ const ordersQuery = queryOptions({
 useQuery(ordersQuery)
 queryClient.prefetchQuery(ordersQuery)
 ```
-
----
 
 ### 계층적 queryKey 구조
 
@@ -225,8 +215,6 @@ queryClient.invalidateQueries({ queryKey: orderQueries.all() })
 queryClient.invalidateQueries({ queryKey: orderQueries.lists() })
 ```
 
----
-
 ### 네이밍 규칙
 
 | 항목        | 규칙                 | 예시                                 |
@@ -244,8 +232,6 @@ export const ORDER_QUERY_KEY = { ... }
 export const orderQueries = { ... }
 export const productQueries = { ... }
 ```
-
----
 
 ### 정의 위치 — `entity` 레이어
 
@@ -273,7 +259,7 @@ function OrdersPage() {
 }
 ```
 
----
+<br/>
 
 ## VSCode 권장 설정
 
@@ -289,7 +275,7 @@ function OrdersPage() {
 }
 ```
 
----
+<br/>
 
 ## TODO (추후 추가 예정)
 
