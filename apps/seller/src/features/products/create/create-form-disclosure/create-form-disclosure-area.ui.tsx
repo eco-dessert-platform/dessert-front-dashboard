@@ -4,9 +4,8 @@ import { Control, Controller, FieldErrors, useWatch } from 'react-hook-form'
 import { DISCLOSURE_FIELDS, RADIO_OPTIONS } from '@/entity/products'
 import { cn } from '@/shared/libs/utils'
 
-import { CreateProductForm } from '@/pages/products/create/create-form'
-
 import { useProductDisclosureForm } from './use-product-disclosure-form.hook'
+import { CreateProductForm } from '../create-form/product-create.types'
 
 /**
  * [Refactoring] DisclosureFieldItem

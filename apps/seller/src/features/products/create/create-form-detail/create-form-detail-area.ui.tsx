@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+
 
 import { PlusIcon, SquarePenIcon } from '@dessert/icons'
 import { Button, Label } from '@dessert/ui'
+import { useNavigate } from 'react-router-dom'
 
 import AppLogoImage from '@/assets/images/apple-120x120.png'
 import { ROUTES } from '@/shared/constant/routes'
@@ -44,7 +45,7 @@ export const ProductDetailArea = () => {
       {hasContent ? (
         // 1. 작성된 데이터가 있을 때 나오는 UI
         <div className="flex w-full flex-col">
-          <div className="flex flex-col items-center justify-center gap-8 pb-20 pt-10">
+          <div className="flex flex-col items-center justify-center gap-8 pt-10 pb-20">
             <img
               src={AppLogoImage}
               alt="App Logo"

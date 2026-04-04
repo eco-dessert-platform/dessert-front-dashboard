@@ -8,7 +8,7 @@ import { productionTimes } from '@/entity/products/create/create-info/production
 
 import { useProductInfoForm } from './use-product-info-form.hook'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
-import { InfoTooltip } from '../ui/info-tooltip.ui'
+import { InfoTooltip } from '../create-form/info-tooltip.ui'
 
 export const ProductInfoArea = () => {
   const {
@@ -94,7 +94,7 @@ export const ProductInfoArea = () => {
       <Label
         label="상품 제작 시간"
         required
-        className="typo-heading-18-r block pt-32"
+        className="block pt-32 typo-heading-18-r"
       />
       <p className="mt-2 typo-title-16-r text-gray-600">
         고객 주문 취소 시점에 활용되니 정확히 입력해주세요.
@@ -170,7 +170,7 @@ export const ProductInfoArea = () => {
                 {price.toLocaleString('ko-KR')}
               </p>
             )}
-            <p className="typo-heading-18-r flex items-center gap-4 text-primary-500">
+            <p className="flex items-center gap-4 typo-heading-18-r text-primary-500">
               <span className="typo-heading-24-sb">
                 {finalPrice.toLocaleString('ko-KR')}
               </span>

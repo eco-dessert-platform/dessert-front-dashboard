@@ -2,18 +2,16 @@ import { Button } from '@dessert/ui'
 import { FormProvider } from 'react-hook-form'
 
 import {
+  CreateFormContainer,
   FormStepsProvider,
-  useCreateFormSteps,
   ProductDeliveryArea,
   ProductDetailArea,
   ProductDisclosureArea,
+  ProductHeader,
   ProductInfoArea,
   ProductOptionsArea,
-  ProductHeader,
+  useCreateProductForm,
 } from '@/features/products/create'
-import { CreateFormContainer } from '@/features/products/create/ui/create-form-container.ui'
-
-import { useCreateProductForm } from './create-form'
 
 function CreatePage() {
   const form = useCreateProductForm()
@@ -50,7 +48,7 @@ function CreatePageInner() {
         <ProductDisclosureArea />
       </CreateFormContainer>
 
-      <div className="flex gap-12 mt-40">
+      <div className="mt-40 flex gap-12">
         <Button
           title="미리보기"
           variant="primary-outlined"

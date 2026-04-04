@@ -10,7 +10,7 @@ import DaySelector from '@/shared/block/day-selector/day-selector'
 
 import { useProductOptionForm } from './use-product-options.form.hook'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
-import { InfoTooltip } from '../ui/info-tooltip.ui'
+import { InfoTooltip } from '../create-form/info-tooltip.ui'
 
 export const ProductOptionsArea = () => {
   const {
@@ -115,7 +115,7 @@ export const ProductOptionsArea = () => {
           <Label
             label="성분 카테고리"
             required
-            className="typo-heading-18-r mb-3.5 block"
+            className="mb-3.5 block typo-heading-18-r"
           />
           {errors.ingredientCategories && (
             <p className="mb-4 text-sm text-red-500">

@@ -2,8 +2,8 @@ import { z } from 'zod'
 
 import { DISCLOSURE_FIELDS } from '@/entity/products'
 
-// DISCLOSURE_FIELDS 상수를 기반으로 스키마 객체를 동적 생성하여
-// 상수와 스키마 간의 불일치(Drift)를 원천 차단합니다.
+// DISCLOSURE_FIELDS 상수를 기반으로 스키마 객체를 동적 생성합니다.
+// 타입 추론을 위해 ZodTypeAny를 사용합니다.
 const noticeSchemaObject = DISCLOSURE_FIELDS.reduce(
   (acc, field) => ({
     ...acc,
@@ -17,7 +17,7 @@ const modeSchemaObject = DISCLOSURE_FIELDS.reduce(
     ...acc,
     [field.key]: z.enum(['default', 'manual']),
   }),
-  {} as Record<(typeof DISCLOSURE_FIELDS)[number]['key'], any>,
+  {} as Record<(typeof DISCLOSURE_FIELDS)[number]['key'], z.ZodTypeAny>,
 )
 
 export const disclosureSchema = z
@@ -32,7 +32,6 @@ export const disclosureSchema = z
     DISCLOSURE_FIELDS.forEach((field) => {
       if (noticeMode[field.key] === 'manual') {
         const val = noticeValue[field.key]
-        // CodeRabbit AI 피드백 반영: trim() 추가하여 공백 입력 우회 방지
         if (val.trim().length < 3 || val.trim().length >= 50) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,

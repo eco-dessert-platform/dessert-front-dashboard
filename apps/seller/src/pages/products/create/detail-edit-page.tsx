@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom'
 
 import { BbanggreuiOvenLogo } from '@dessert/icons'
 import { Button, Editor } from '@dessert/ui'
+import { useNavigate } from 'react-router-dom'
 
 import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
 
@@ -10,9 +10,9 @@ export function DetailEditPage() {
   const { productDetail, setProductDetail } = useProductCreationStore()
 
   return (
-    <div className="flex h-screen w-full flex-col overflow-hidden bg-[#fafafa]">
+    <div className="flex h-screen w-full flex-col overflow-hidden bg-gray-50">
       {/* Header */}
-      <header className="flex h-[80px] shrink-0 items-center border-b border-gray-300 bg-white px-24 py-10">
+      <header className="flex h-header shrink-0 items-center border-b border-gray-300 bg-white px-24 py-10">
         <div className="flex items-center">
           <BbanggreuiOvenLogo className="h-[42px] w-auto" />
         </div>

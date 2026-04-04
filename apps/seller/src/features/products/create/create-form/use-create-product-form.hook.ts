@@ -1,29 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Resolver, useForm } from 'react-hook-form'
 
-import {
-  DeliveryFormInput,
-  ProductFormInput,
-  ProductOptionFormInput,
-  ProductDisclosureFormInput,
-  DISCLOSURE_FIELDS,
-} from '@/entity/products'
-import {
-  deliverySchema,
-  disclosureSchema,
-  productSchema,
-  productOptionSchema,
-} from '@/features/products/create'
-
-export type CreateProductForm = ProductFormInput &
-  DeliveryFormInput &
-  ProductOptionFormInput &
-  ProductDisclosureFormInput
-
-const createProductSchema = productSchema
-  .and(deliverySchema)
-  .and(productOptionSchema)
-  .and(disclosureSchema)
+import { DISCLOSURE_FIELDS } from '@/entity/products'
+import { CreateProductForm, createProductSchema } from './product-create.types'
 
 export const useCreateProductForm = () => {
   return useForm<CreateProductForm>({
