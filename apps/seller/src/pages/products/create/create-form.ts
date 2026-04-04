@@ -6,7 +6,7 @@ import {
   ProductFormInput,
   ProductOptionFormInput,
   ProductDisclosureFormInput,
-} from '@/entity/products/create/create-form/product-form.type'
+} from '@/entity/products'
 import { deliverySchema } from '@/features/products/create/create-form-delivery/create-delivery.schema'
 import { disclosureSchema } from '@/features/products/create/create-form-disclosure/create-disclosure.schema'
 import { productSchema } from '@/features/products/create/create-form-info/create-info.schema'

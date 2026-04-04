@@ -3,8 +3,7 @@ import { useEffect } from 'react'
 import { Dropdown, Input, Label } from '@dessert/ui'
 import { Controller } from 'react-hook-form'
 
-import { DeliveryCompany } from '@/entity/products/create/create-delivery/product-delivery-company'
-import { DeliveryTerms } from '@/entity/products/create/create-delivery/product-delivery-terms'
+import { DeliveryCompany, DeliveryTerms } from '@/entity/products'
 import { InfoTooltip } from '@/features/products/create/ui/info-tooltip'
 import { cn } from '@/shared/libs/utils'
 

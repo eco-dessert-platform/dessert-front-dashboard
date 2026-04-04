@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useFormContext, useWatch } from 'react-hook-form'
 
-import { DISCLOSURE_FIELDS } from '@/entity/products/create/create-disclosure/product-disclosure.constant'
+import { DISCLOSURE_FIELDS } from '@/entity/products'
 import { CreateProductForm } from '@/pages/products/create/create-form'
 
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'

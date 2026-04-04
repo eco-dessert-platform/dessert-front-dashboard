@@ -7,8 +7,7 @@ import {
 } from '@dessert/ui'
 import { ChevronDown } from 'lucide-react'
 
-import { CategoryOptions } from '@/entity/products/create/create-header/category-options.constants'
-import { EssentialOptions } from '@/entity/products/create/create-header/essential-options.constants'
+import { CategoryOptions, EssentialOptions } from '@/entity/products'
 
 import { ProductHeaderTags } from './create-header-tags'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
