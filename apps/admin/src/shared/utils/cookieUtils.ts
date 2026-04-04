@@ -45,15 +45,11 @@ export const deleteCookie = (name: string) => {
 }
 
 export const getExpFromToken = (token: string): Date => {
-  try {
-    const { exp } = jwtDecode<{ exp: number }>(token)
+  const { exp } = jwtDecode<{ exp: number }>(token)
 
-    if (typeof exp !== 'number' || !isFinite(exp) || exp <= 0) {
-      throw new Error('유효하지 않은 exp 값')
-    }
-
-    return new Date(exp * 1000)
-  } catch {
-    return new Date(Date.now() + 3600 * 1000)
+  if (typeof exp !== 'number' || !isFinite(exp) || exp <= 0) {
+    throw new Error('유효하지 않은 exp 값')
   }
+
+  return new Date(exp * 1000)
 }
