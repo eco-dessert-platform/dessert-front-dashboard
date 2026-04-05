@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+import { TOKEN_COOKIE_KEYS } from '@/shared/constant'
 import { deleteCookie, getCookie } from '@/shared/utils'
 
 interface AuthState {
@@ -17,13 +18,13 @@ export const useAuthStore = create<AuthState>()(
       isLoggedIn: false,
       setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
       logout: () => {
-        deleteCookie('accessToken')
-        deleteCookie('refreshToken')
+        deleteCookie(TOKEN_COOKIE_KEYS.ACCESS)
+        deleteCookie(TOKEN_COOKIE_KEYS.REFRESH)
         set({ isLoggedIn: false })
       },
       isReady: false,
       syncAuthState: () => {
-        const accessToken = getCookie('accessToken')
+        const accessToken = getCookie(TOKEN_COOKIE_KEYS.ACCESS)
         set({ isLoggedIn: !!accessToken, isReady: true })
       },
     }),

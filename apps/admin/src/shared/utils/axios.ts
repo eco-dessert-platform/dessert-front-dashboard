@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-import { useAuthStore } from '@/entity/auth/auth.store'
+import { useAuthStore } from '@/entity/auth'
+import { TOKEN_COOKIE_KEYS } from '@/shared/constant'
 import { getCookie } from '@/shared/utils/cookieUtils'
-
 const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL
 
 export const client = axios.create({
@@ -14,7 +14,7 @@ export const client = axios.create({
 
 client.interceptors.request.use(
   (config) => {
-    const token = getCookie('accessToken')
+    const token = getCookie(TOKEN_COOKIE_KEYS.ACCESS)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }

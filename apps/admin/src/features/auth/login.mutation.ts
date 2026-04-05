@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 
 import { adminLogin, authKeys, useAuthStore } from '@/entity/auth'
+import { TOKEN_COOKIE_KEYS } from '@/shared/constant'
 import { getExpFromToken, setCookie } from '@/shared/utils'
 
 export const useAdminLoginMutation = () => {
@@ -13,11 +14,19 @@ export const useAdminLoginMutation = () => {
       const { accessToken, refreshToken } = response.data
 
       try {
-        setCookie('accessToken', accessToken, getExpFromToken(accessToken))
-        setCookie('refreshToken', refreshToken, getExpFromToken(refreshToken))
+        setCookie(
+          TOKEN_COOKIE_KEYS.ACCESS,
+          accessToken,
+          getExpFromToken(accessToken),
+        )
+        setCookie(
+          TOKEN_COOKIE_KEYS.REFRESH,
+          refreshToken,
+          getExpFromToken(refreshToken),
+        )
       } catch {
-        setCookie('accessToken', accessToken)
-        setCookie('refreshToken', refreshToken)
+        setCookie(TOKEN_COOKIE_KEYS.ACCESS, accessToken)
+        setCookie(TOKEN_COOKIE_KEYS.REFRESH, refreshToken)
       }
       setIsLoggedIn(true)
     },
