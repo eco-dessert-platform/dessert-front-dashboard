@@ -3,4 +3,7 @@ export const ROUTES = {
   PRODUCTS: {
     ROOT: '/product',
   },
+  LOGIN: {
+    ROOT: '/login',
+  },
 } as const

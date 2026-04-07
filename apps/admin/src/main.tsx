@@ -4,6 +4,7 @@ import '@/styles/index.css'
 import ReactDOM from 'react-dom/client'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 
+import AuthPage from './pages/auth/auth-page'
 import ProductPage from '@/pages/product/product-page'
 import { ROUTES } from '@/shared/constant/routes'
 
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.PRODUCTS.ROOT,
         element: <ProductPage />,
+      },
+      {
+        path: ROUTES.LOGIN.ROOT,
+        element: <AuthPage />,
       },
     ],
   },
