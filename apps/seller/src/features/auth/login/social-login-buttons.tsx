@@ -1,58 +1,21 @@
-import { openCenteredPopup } from '@/shared/utils/popup'
-import GoogleIcon from 'src/assets/icons/social/google.svg?react'
-import KakaoIcon from 'src/assets/icons/social/kakao.svg?react'
-import { useAuthStore } from 'src/entity/auth/auth-store'
-import { GOOGLE, KAKAO } from 'src/entity/auth/constants'
-
-import { setGooglePopup, setKakaoPopup } from './login-hooks'
+import GoogleIcon from '@/assets/icons/social/google.svg?react'
+import KakaoIcon from '@/assets/icons/social/kakao.svg?react'
+import { OAUTH_URLS } from '@/entity/auth/constants'
 
 export const SocialLoginButtons = () => {
-  const { setSocialLoginType } = useAuthStore()
-
-  const openKakaoLoginPopup = () => {
-    const query = new URLSearchParams({
-      client_id: KAKAO.client_id,
-      redirect_uri: KAKAO.redirect_uri,
-      response_type: KAKAO.response_type,
-    } as Record<string, string>)
-
-    const url = `${KAKAO.authUrl}?${query}`
-    const popup = openCenteredPopup(url, 'kakao-login', {
-      width: 400,
-      height: 650,
-    })
-
-    if (popup) {
-      setKakaoPopup(popup)
-      setSocialLoginType('KAKAO')
-    }
+  const handleKakaoLogin = () => {
+    window.location.href = OAUTH_URLS.kakao
   }
 
-  const openGoogleLoginPopup = () => {
-    const query = new URLSearchParams({
-      client_id: GOOGLE.client_id,
-      redirect_uri: GOOGLE.redirect_uri,
-      response_type: GOOGLE.response_type,
-      scope: GOOGLE.scope,
-    } as Record<string, string>)
-
-    const url = `${GOOGLE.authUrl}?${query}`
-    const popup = openCenteredPopup(url, 'google-login', {
-      width: 400,
-      height: 650,
-    })
-
-    if (popup) {
-      setGooglePopup(popup)
-      setSocialLoginType('GOOGLE')
-    }
+  const handleGoogleLogin = () => {
+    window.location.href = OAUTH_URLS.google
   }
 
   return (
     <div className="flex flex-col items-center gap-3 self-stretch">
       <button
         type="button"
-        onClick={openKakaoLoginPopup}
+        onClick={handleKakaoLogin}
         className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-10 bg-[#FEE500] py-[13px] text-base font-semibold text-[#191919] transition-all duration-200 hover:bg-[#FDD835] active:scale-[0.98]"
       >
         <KakaoIcon width={16} height={16} />
@@ -60,7 +23,7 @@ export const SocialLoginButtons = () => {
       </button>
       <button
         type="button"
-        onClick={openGoogleLoginPopup}
+        onClick={handleGoogleLogin}
         className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-10 border border-[#F5F5F5] bg-white py-[13px] text-base font-semibold text-black transition-all duration-200 hover:bg-gray-50 active:scale-[0.98]"
       >
         <GoogleIcon width={18} height={18} />

@@ -1,5 +1,9 @@
 export const ROUTES = {
   HOME: '/',
+  AUTH: '/auth',
+  CALLBACK: {
+    SOCIAL: '/callback/social',
+  },
   ORDERS: {
     ALL: '/orders',
     COMPLETED: '/orders/completed',

@@ -2,7 +2,6 @@ import { LogoHeader } from '@dessert/ui'
 
 import { AUTH_MESSAGES } from '@/features/auth/login/constant/message'
 import { LoginFooter } from '@/features/auth/login/login-footer'
-import { useSocialLogin } from '@/features/auth/login/login-hooks'
 import AuthLoginImage from '@/features/auth/login/login-image'
 import { SocialLoginButtons } from '@/features/auth/login/social-login-buttons'
 import {
@@ -12,8 +11,6 @@ import {
 } from '@/features/auth/ui'
 
 const AuthPage = () => {
-  useSocialLogin()
-
   return (
     <AuthPageContainer>
       <LogoHeader />

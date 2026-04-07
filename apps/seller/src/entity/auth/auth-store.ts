@@ -1,12 +1,13 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { SocialType } from './types'
+import { SellerStatus } from './types'
 
 interface AuthState {
   isLoggedIn: boolean
-  socialLoginType: SocialType | null
-  setSocialLoginType: (type: SocialType | null) => void
+  sellerId: number | null
+  sellerStatus: SellerStatus | null
+  setAuth: (sellerId: number, status: SellerStatus) => void
   setIsLoggedIn: (isLoggedIn: boolean) => void
   logout: () => void
 }
@@ -15,10 +16,17 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       isLoggedIn: false,
-      socialLoginType: null,
-      setSocialLoginType: (type) => set({ socialLoginType: type }),
+      sellerId: null,
+      sellerStatus: null,
+      setAuth: (sellerId, status) =>
+        set({ isLoggedIn: true, sellerId, sellerStatus: status }),
       setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
-      logout: () => set({ isLoggedIn: false, socialLoginType: null }),
+      logout: () =>
+        set({
+          isLoggedIn: false,
+          sellerId: null,
+          sellerStatus: null,
+        }),
     }),
     {
       name: 'auth-storage',

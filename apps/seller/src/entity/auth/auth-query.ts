@@ -1,37 +1,42 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { getExpFromToken, setCookie } from 'src/shared/utils/cookieUtils'
+import { getExpFromToken, setCookie } from '@/shared/utils/cookieUtils'
 
-import { googleLogin, kakaoLogin } from './auth-api'
+import { issueToken, logout } from './auth-api'
 import { useAuthStore } from './auth-store'
 import { authKeys } from './key'
 
-export const useKakaoLoginMutation = () => {
-  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn)
+export const useIssueTokenMutation = () => {
+  const setAuth = useAuthStore((state) => state.setAuth)
 
   return useMutation({
     mutationKey: authKeys.all,
-    mutationFn: (code: string) => kakaoLogin(code),
-    onSuccess: (response) => {
-      const { accessToken, refreshToken } = response.data
-      setCookie('accessToken', accessToken, getExpFromToken(accessToken))
-      setCookie('refreshToken', refreshToken, getExpFromToken(refreshToken))
-      setIsLoggedIn(true)
+    mutationFn: (generateToken: string) => issueToken(generateToken),
+    onSuccess: (data) => {
+      if (data.accessToken) {
+        setCookie(
+          'accessToken',
+          data.accessToken,
+          getExpFromToken(data.accessToken),
+        )
+      }
+
+      if (data.result) {
+        setAuth(data.result.sellerId, data.result.status)
+      }
     },
   })
 }
 
-export const useGoogleLoginMutation = () => {
-  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn)
+export const useLogoutMutation = () => {
+  const logoutStore = useAuthStore((state) => state.logout)
 
   return useMutation({
-    mutationKey: authKeys.all,
-    mutationFn: (code: string) => googleLogin(code),
-    onSuccess: (response) => {
-      const { accessToken, refreshToken } = response.data
-      setCookie('accessToken', accessToken, getExpFromToken(accessToken))
-      setCookie('refreshToken', refreshToken, getExpFromToken(refreshToken))
-      setIsLoggedIn(true)
+    mutationKey: [...authKeys.all, 'logout'],
+    mutationFn: () => logout(),
+    onSuccess: () => {
+      logoutStore()
+      window.location.href = '/auth'
     },
   })
 }

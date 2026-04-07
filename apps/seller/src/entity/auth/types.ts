@@ -1,19 +1,19 @@
-export interface KakaoAuthResponse {
-  access_token: string
-  token_type: string
-  refresh_token: string
-  expires_in: number
-  scope: string
-  refresh_token_expires_in: number
+export type SocialProvider = 'google' | 'kakao'
+
+export type SellerStatus = 'NEW' | 'PENDING' | 'APPROVED' | 'REJECTED'
+
+export interface OAuthTokenRequest {
+  generateToken: string
 }
 
-export interface GoogleAuthResponse {
-  access_token: string
+export interface OAuthTokenResult {
+  sellerId: number
+  status: SellerStatus
 }
 
-export interface LoginResponse {
-  accessToken: string
-  refreshToken: string
+export interface ApiResponse<T = undefined> {
+  success: boolean
+  code: number
+  message: string
+  result?: T
 }
-
-export type SocialType = 'KAKAO' | 'GOOGLE'
