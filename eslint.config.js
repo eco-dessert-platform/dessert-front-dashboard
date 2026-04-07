@@ -7,7 +7,20 @@ import betterTailwind from 'eslint-plugin-better-tailwindcss'
 import importPlugin from 'eslint-plugin-import'
 
 export default tseslint.config(
-  { ignores: ['**/dist', '.yarn/releases'] },
+  {
+    ignores: [
+      // 빌드 산출물
+      '**/dist',
+      '**/storybook-static',
+      // 테스트 커버리지 리포트
+      '**/coverage',
+      // Turbo 캐시
+      '**/.turbo',
+      // Yarn 내부 파일
+      '.yarn/releases',
+      '.yarn/cache',
+    ],
+  },
 
   // ── 공통 규칙: seller + admin + packages 모두 적용 ──
   {
@@ -117,7 +130,7 @@ export default tseslint.config(
         },
       },
       'better-tailwindcss': {
-        entryPoint: './apps/admin/src/styles/index.css',
+        entryPoint: `${import.meta.dirname}/apps/admin/src/styles/index.css`,
       },
     },
   },

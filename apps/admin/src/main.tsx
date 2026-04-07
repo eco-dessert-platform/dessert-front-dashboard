@@ -1,15 +1,14 @@
+import React from 'react'
 import '@/styles/index.css'
 
 import ReactDOM from 'react-dom/client'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 
-// import ProductPage from '@/pages/product/product-page'
-// import { ROUTES } from '@/shared/constant/routes'
-
+import AuthPage from './pages/auth/auth-page'
+import ProductPage from '@/pages/product/product-page'
 import { ROUTES } from '@/shared/constant/routes'
 
 import App from './App'
-import AuthPage from './pages/auth/auth-page'
 
 const router = createBrowserRouter([
   {
@@ -17,7 +16,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={ROUTES.LOGIN.ROOT} replace />,
+        element: <Navigate to={ROUTES.PRODUCTS.ROOT} replace />,
+      },
+      {
+        path: ROUTES.PRODUCTS.ROOT,
+        element: <ProductPage />,
       },
       {
         path: ROUTES.LOGIN.ROOT,
@@ -32,4 +35,8 @@ if (!rootElement) {
   throw new Error('Root element not found')
 }
 
-ReactDOM.createRoot(rootElement).render(<App router={router} />)
+ReactDOM.createRoot(rootElement).render(
+  <React.StrictMode>
+    <App router={router} />
+  </React.StrictMode>,
+)
