@@ -201,6 +201,7 @@ function AllOrdersPage() {
         setAlertOpen(true)
         return
       }
+      if (confirmOrderMutation.isPending) return
       confirmOrderMutation.mutate({ orderNumbers: selectedIds })
       return
     }
@@ -210,6 +211,7 @@ function AllOrdersPage() {
         setAlertOpen(true)
         return
       }
+      if (completeReturnMutation.isPending) return
       completeReturnMutation.mutate({ orderNumbers: selectedIds })
       return
     }
@@ -219,6 +221,7 @@ function AllOrdersPage() {
         setAlertOpen(true)
         return
       }
+      if (completeExchangeMutation.isPending) return
       completeExchangeMutation.mutate({ orderNumbers: selectedIds })
       return
     }
