@@ -1,19 +1,19 @@
 import { Button, Pagination } from '@dessert/ui'
 
-import { ORDER_ACTION_BAR_CONFIG } from '@/entity/order/order.constant'
-import { ActionButton, OrderStatusTab } from '@/entity/order/order.type'
+import { COMPLETED_ORDER_ACTION_BAR_CONFIG } from '@/entity/order/order.constant'
+import { ActionButton, CompletedOrderTab } from '@/entity/order/order.type'
 
-interface OrderActionBarProps {
-  tab: OrderStatusTab
+interface CompletedOrderActionBarProps {
+  tab: CompletedOrderTab
   onAction: (action: string) => void
-  selectedCount: number // 선택된 주문 수
-  totalCount: number // 전체 주문 수
+  selectedCount: number
+  totalCount: number
   currentPage: number
   totalPages: number
-  onPageChange: (page: number) => void // 페이지네이션 버튼 이벤트 핸드러
+  onPageChange: (page: number) => void
 }
 
-export function OrderActionBar({
+export function CompletedOrderActionBar({
   tab,
   onAction,
   selectedCount,
@@ -21,13 +21,13 @@ export function OrderActionBar({
   currentPage,
   totalPages,
   onPageChange,
-}: OrderActionBarProps) {
-  const buttons = ORDER_ACTION_BAR_CONFIG[tab]
+}: CompletedOrderActionBarProps) {
+  const buttons = COMPLETED_ORDER_ACTION_BAR_CONFIG[tab]
 
   return (
     <div className="flex h-14.5 items-center justify-between px-24 py-16">
       <div className="flex items-center gap-16">
-        <OrderActionButton buttons={buttons} onAction={onAction} />
+        <CompletedOrderActionButton buttons={buttons} onAction={onAction} />
         <div className="flex items-center gap-4">
           <span>
             <span className="typo-title-14-r text-gray-700">선택 </span>
@@ -54,12 +54,15 @@ export function OrderActionBar({
   )
 }
 
-interface OrderActionButtonProps {
+interface CompletedOrderActionButtonProps {
   buttons: ActionButton[]
   onAction: (action: string) => void
 }
 
-function OrderActionButton({ buttons, onAction }: OrderActionButtonProps) {
+function CompletedOrderActionButton({
+  buttons,
+  onAction,
+}: CompletedOrderActionButtonProps) {
   return (
     <div className="flex items-center gap-10">
       {buttons.map((button, index) => {
@@ -75,7 +78,6 @@ function OrderActionButton({ buttons, onAction }: OrderActionButtonProps) {
           )
         }
 
-        // todo: type === 'group' -> ButtonGroup 공통 컴포넌트로 추출 예정
         return (
           <div
             key={index}
@@ -84,7 +86,7 @@ function OrderActionButton({ buttons, onAction }: OrderActionButtonProps) {
             {button.items.map((item) => (
               <button
                 key={item.action}
-                className="cursor-pointer border-r border-gray-200 px-10 py-6 typo-body-12-m text-gray-800 last:border-r-0"
+                className="border-r border-gray-200 px-10 py-6 typo-body-12-m text-gray-800 last:border-r-0"
                 onClick={() => onAction(item.action)}
               >
                 {item.label}

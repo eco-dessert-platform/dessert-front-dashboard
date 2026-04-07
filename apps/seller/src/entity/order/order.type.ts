@@ -17,6 +17,29 @@ export type OrderStatus =
   | 'RETURNED' // 반품
   | 'EXCHANGED' // 교환
 
+export type ReturnStatus =
+  | 'RETURN_REQUESTED' // 반품요청
+  | 'RETURN_APPROVED' // 반품승인
+  | 'RETURN_REJECTED' // 반품거절
+  | 'PRODUCT_COLLECTING' // 상품회수
+  | 'PRODUCT_CHECKING' // 상품확인
+  | 'RETURN_IN_PROGRESS' // 반품진행
+  | 'RETURN_ON_HOLD' // 반품보류
+  | 'RETURN_TURNED_DOWN' // 반품반려
+  | 'RETURN_COMPLETED' // 반품완료
+
+export type ExchangeStatus =
+  | 'EXCHANGE_REQUESTED' // 교환요청
+  | 'EXCHANGE_APPROVED' // 교환승인
+  | 'EXCHANGE_REJECTED' // 교환거절
+  | 'PRODUCT_COLLECTING' // 상품회수
+  | 'PRODUCT_CHECKING' // 상품확인
+  | 'EXCHANGE_IN_PROGRESS' // 교환진행
+  | 'EXCHANGE_SHIPPING' // 교환배송
+  | 'EXCHANGE_ON_HOLD' // 교환보류
+  | 'EXCHANGE_TURNED_DOWN' // 교환반려
+  | 'EXCHANGE_COMPLETED' // 교환완료
+
 export type DeliveryStatus =
   | 'PRODUCT_PREPARING' // 상품준비
   | 'COLLECTING' // 수거중
@@ -62,6 +85,8 @@ export interface OrderItem {
   deliveryStatus: DeliveryStatus | null
   courierName: CourierName | null
   trackingNumber: string | null
+  returnStatus: ReturnStatus | null
+  exchangeStatus: ExchangeStatus | null
 }
 
 export interface OrderStatusCount {
@@ -122,3 +147,79 @@ type GroupButton = {
 }
 
 export type ActionButton = SingleButton | GroupButton
+
+// 완료 주문 내역
+export type CompletedOrderTab =
+  | 'completed' // 완료
+  | 'canceled' // 취소
+  | 'returned' // 반품
+  | 'exchanged' // 교환
+
+export type CompletedOrderStatus =
+  | 'ALL' // 전체
+  | 'PURCHASE_CONFIRMED' // 구매확정
+  | 'DELIVERY_COMPLETED' // 배송완료
+
+export interface CompletedOrderStatusCount {
+  completed: number
+  canceled: number
+  returned: number
+  exchanged: number
+}
+
+export interface CompletedOrderFilters {
+  tab?: CompletedOrderTab
+  startDate?: string
+  endDate?: string
+  orderStatus?: CompletedOrderStatus
+  searchType?: SearchType
+  searchKeyword?: string
+  page?: string
+  size?: string
+  sort?: SortOrder
+}
+
+export interface OrderDetail {
+  orderNumber: string
+  orderInfo: {
+    orderDate: string
+    orderStatusLabel: string
+  }
+  buyer: {
+    recipientName: string
+    buyerName: string
+    buyerPhone1: string
+    buyerPhone2: string | null
+  }
+  shipping: {
+    statusLabel: string
+    courierCompany: CourierName | null
+    trackingNumber: string | null
+    shippingFee: number
+    address: string
+    memo: string | null
+  }
+  orderItem: {
+    boardTitle: string
+    itemName: string
+    quantity: number
+    unitPrice: number
+    totalPrice: number
+  }
+}
+
+export interface OrderDetailResponse {
+  success: boolean
+  code: number
+  message: string
+  result: OrderDetail[]
+}
+
+export interface CompletedOrderListResponse {
+  statusCount: CompletedOrderStatusCount
+  content: OrderItem[]
+  page: number
+  size: number
+  totalPages: number
+  totalElements: number
+}

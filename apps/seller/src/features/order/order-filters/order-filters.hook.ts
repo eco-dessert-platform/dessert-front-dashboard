@@ -7,7 +7,6 @@ const createInitialState = (initialTab: OrderStatusTab): OrderFilters => ({
   searchType: 'ORDER_NUMBER',
   sort: 'DESC',
   searchKeyword: '',
-  deliveryStatus: 'PRODUCT_PREPARING',
   size: '10',
 })
 
