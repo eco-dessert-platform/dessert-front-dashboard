@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { useEffect, useState } from 'react'
-=======
-import { useState } from 'react'
->>>>>>> e685ec69a02a28a9f693dd98a3a69c308fddc8ae
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
