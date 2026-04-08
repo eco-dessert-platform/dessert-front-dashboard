@@ -1,12 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
 
+import { useAuthStore } from '@/entity/auth'
+
 function App({ router }: { router: ReturnType<typeof createBrowserRouter> }) {
   const [queryClient] = useState(() => new QueryClient())
+  const syncAuthState = useAuthStore((state) => state.syncAuthState)
+
+  const isReady = useAuthStore((state) => state.isReady)
+
+  useEffect(() => {
+    syncAuthState()
+  }, [syncAuthState])
+
+  if (!isReady) return null
+
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
