@@ -26,6 +26,8 @@ winget install jdx.mise
 
 > 💡 현재 쉘 확인: `echo $SHELL`
 
+<br/>
+
 ## 2️⃣ mise 활성화 (최초 1회만)
 
 **zsh (macOS 기본, 대부분의 Linux)**
@@ -42,6 +44,8 @@ echo 'eval "$(mise activate bash)"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
+<br/>
+
 ## 3️⃣ 프로젝트 신뢰하기
 
 <img width="755" height="98" alt="Image" src="https://github.com/user-attachments/assets/f70939bf-3c20-4747-b7c5-ac50b976c9e7" />
@@ -52,6 +56,8 @@ source ~/.bashrc
 cd your-project
 mise trust
 ```
+
+<br/>
 
 ## 4️⃣ 문제 해결
 
@@ -72,7 +78,7 @@ mise doctor
 
 ✅ 위의 이미지가 보여야 정상입니다.
 
----
+<br/>
 
 ## 📚 자세한 내용
 
