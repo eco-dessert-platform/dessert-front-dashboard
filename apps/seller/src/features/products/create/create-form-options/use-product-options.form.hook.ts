@@ -2,11 +2,11 @@ import { useFormContext } from 'react-hook-form'
 
 import { ProductOptionFormInput } from '@/entity/products/create/create-form/product-form.type'
 import { SUB_CATEGORY_MAP } from '@/entity/products/create/create-options/product-options.constant'
-import { CreateProductForm } from '@/pages/products/create/create-form'
 
 import { productOptionSchema } from './create-options.schema'
 import { useFloatInput } from '../create-calculation/create-form-float-input.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
+import { CreateProductForm } from '../create-form/product-create.types'
 
 export function useProductOptionForm(basePrice: number | null = null) {
   const form = useFormContext<CreateProductForm>()
