@@ -59,10 +59,19 @@ export const useProductDisclosureForm = () => {
     const isComplete = DISCLOSURE_FIELDS.every((field) => {
       const mode = noticeModes[field.key]
       const value = noticeValues[field.key]
-      return mode === 'default' || (mode === 'manual' && value?.length >= 3)
+
+      if (mode === 'default') return true
+      if (mode === 'manual') {
+        const trimmed = (value ?? '').trim()
+        return trimmed.length >= 3 && trimmed.length < 50
+      }
+      return false
     })
 
-    setProductFields((prev) => ({ ...prev, productDisclosure: isComplete }))
+    setProductFields((prev) => {
+      if (prev.productDisclosure === isComplete) return prev
+      return { ...prev, productDisclosure: isComplete }
+    })
   }, [noticeModes, noticeValues, setProductFields])
 
   return {

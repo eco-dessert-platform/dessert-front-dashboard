@@ -1,6 +1,6 @@
-
 import { BbanggreuiOvenLogo } from '@dessert/icons'
 import { Button, Editor } from '@dessert/ui'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
@@ -8,6 +8,9 @@ import { useProductCreationStore } from '@/features/products/create/create-form/
 export function DetailEditPage() {
   const navigate = useNavigate()
   const { productDetail, setProductDetail } = useProductCreationStore()
+
+  // 편집 시 로컬 상태를 사용하고 등록 시에만 스토어에 반영합니다 (CodeRabbit 피드백 반영)
+  const [localDetail, setLocalDetail] = useState(productDetail)
 
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden bg-gray-50">
@@ -23,8 +26,8 @@ export function DetailEditPage() {
         {/* Editor wrapper */}
         <div className="mt-32 flex min-h-[710px] w-full max-w-[1440px] flex-col bg-white p-32 shadow-sm">
           <Editor
-            value={productDetail}
-            onChange={setProductDetail}
+            value={localDetail}
+            onChange={setLocalDetail}
             image={true}
             height={600}
             placeholder="자유롭게 상세페이지를 작성해보세요 (권장크기 : 가로 860px)"
@@ -47,7 +50,7 @@ export function DetailEditPage() {
           variant="primary-filled"
           size="lg"
           onClick={() => {
-            // 구현 후속 시 상태를 저장하고 이전 폼 페이지로 돌아가도록 수정 필요
+            setProductDetail(localDetail)
             navigate(-1)
           }}
         />
