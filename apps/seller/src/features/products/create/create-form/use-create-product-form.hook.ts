@@ -1,22 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Resolver, useForm } from 'react-hook-form'
 
-import {
-  DeliveryFormInput,
-  ProductFormInput,
-  ProductOptionFormInput,
-} from '@/entity/products/create/create-form/product-form.type'
-import { deliverySchema } from '@/features/products/create/create-form-delivery/create-delivery.schema'
-import { productSchema } from '@/features/products/create/create-form-info/create-info.schema'
-import { productOptionSchema } from '@/features/products/create/create-form-options/create-options.schema'
-
-export type CreateProductForm = ProductFormInput &
-  DeliveryFormInput &
-  ProductOptionFormInput
-
-const createProductSchema = productSchema
-  .and(deliverySchema)
-  .and(productOptionSchema)
+import { DISCLOSURE_FIELDS } from '@/entity/products'
+import { CreateProductForm, createProductSchema } from './product-create.types'
 
 export const useCreateProductForm = () => {
   return useForm<CreateProductForm>({
@@ -49,6 +35,21 @@ export const useCreateProductForm = () => {
       protein: null,
       fat: null,
       sodium: null,
+
+      productInfoNotice: DISCLOSURE_FIELDS.reduce(
+        (acc, field) => ({
+          ...acc,
+          [field.key]: '',
+        }),
+        {} as CreateProductForm['productInfoNotice'],
+      ),
+      productInfoNoticeMode: DISCLOSURE_FIELDS.reduce(
+        (acc, field) => ({
+          ...acc,
+          [field.key]: 'default',
+        }),
+        {} as CreateProductForm['productInfoNoticeMode'],
+      ),
     },
     mode: 'onChange',
   })
