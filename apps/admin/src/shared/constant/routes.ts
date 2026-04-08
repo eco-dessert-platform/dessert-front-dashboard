@@ -14,7 +14,4 @@ export const ROUTES = {
   LOGIN: {
     ROOT: '/login',
   },
-  LOGIN: {
-    ROOT: '/login',
-  },
 } as const
