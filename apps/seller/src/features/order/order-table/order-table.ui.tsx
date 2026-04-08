@@ -5,10 +5,15 @@ import { ColumnDef, Row } from '@tanstack/react-table'
 
 import {
   DELIVERY_STATUS_LABELS,
+  EXCHANGE_STATUS_BADGE_COLOR,
+  EXCHANGE_STATUS_LABELS,
   ORDER_STATUS_BADGE_COLOR,
   ORDER_STATUS_LABELS,
+  RETURN_STATUS_BADGE_COLOR,
+  RETURN_STATUS_LABELS,
 } from '@/entity/order/order.constant'
 import {
+  CourierName,
   OrderItem,
   OrderProduct,
   OrderStatusTab,
@@ -43,6 +48,12 @@ interface OrderTableProps {
   onToggleAll: () => void
   onToggleOne: (orderNumber: string) => void
   onToggleProduct: (productKey: string, orderNumber: string) => void
+  onTrackingOpen?: (
+    mode: 'create' | 'edit',
+    orderNumber: string,
+    courier?: CourierName | null,
+    trackingNumber?: string | null,
+  ) => void
 }
 
 export function OrderTable({
@@ -55,6 +66,7 @@ export function OrderTable({
   onToggleAll,
   onToggleOne,
   onToggleProduct,
+  onTrackingOpen,
 }: OrderTableProps) {
   const flatRows = useMemo(() => flattenOrders(orders), [orders])
   const getRowSpanForOrder = useCallback(
@@ -179,12 +191,34 @@ export function OrderTable({
         accessorKey: 'orderStatus',
         header: '주문상태',
         meta: { getCellClassName: getProductCellClassName },
-        cell: ({ row }) => (
-          <Badge
-            color={ORDER_STATUS_BADGE_COLOR[row.original.orderStatus]}
-            content={ORDER_STATUS_LABELS[row.original.orderStatus]}
-          />
-        ),
+        cell: ({ row }) => {
+          const { returnStatus, exchangeStatus, orderStatus } = row.original
+
+          if (tab === 'returned' && returnStatus) {
+            return (
+              <Badge
+                color={RETURN_STATUS_BADGE_COLOR[returnStatus]}
+                content={RETURN_STATUS_LABELS[returnStatus]}
+              />
+            )
+          }
+
+          if (tab === 'exchanged' && exchangeStatus) {
+            return (
+              <Badge
+                color={EXCHANGE_STATUS_BADGE_COLOR[exchangeStatus]}
+                content={EXCHANGE_STATUS_LABELS[exchangeStatus]}
+              />
+            )
+          }
+
+          return (
+            <Badge
+              color={ORDER_STATUS_BADGE_COLOR[orderStatus]}
+              content={ORDER_STATUS_LABELS[orderStatus]}
+            />
+          )
+        },
         size: 66,
         enableResizing: false,
       },
@@ -256,7 +290,13 @@ export function OrderTable({
           getRowSpan: ({ row }) => getRowSpanForOrder(row.index),
         },
         cell: ({ row }) => {
-          return <TrackingNumberCell row={row} tab={tab} />
+          return (
+            <TrackingNumberCell
+              row={row}
+              tab={tab}
+              onTrackingOpen={onTrackingOpen}
+            />
+          )
         },
         size: 90,
         enableResizing: false,
@@ -273,6 +313,7 @@ export function OrderTable({
       productSelectedIds,
       onToggleProduct,
       tab,
+      onTrackingOpen,
     ],
   )
 
@@ -289,18 +330,111 @@ export function OrderTable({
 interface TrackingNumberCellProps {
   row: Row<FlatOrderRow>
   tab: OrderStatusTab
+  onTrackingOpen?: (
+    mode: 'create' | 'edit',
+    orderNumber: string,
+    courier?: CourierName | null,
+    trackingNumber?: string | null,
+  ) => void
 }
 
-function TrackingNumberCell({ row, tab }: TrackingNumberCellProps) {
-  if (tab === 'orderConfirmed') {
-    return <Button variant="secondary-outlined" size="sm" title="입력" />
-  }
+function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProps) {
+  const { orderNumber, trackingNumber, courierName, returnStatus, exchangeStatus } = row.original
 
-  if (tab === 'productShipped' || tab == 'deliveryCompleted') {
+  // 반품 탭: returnStatus에 따라 운송장 셀 렌더링
+  if (tab === 'returned') {
+    if (!returnStatus || returnStatus === 'RETURN_REQUESTED' || returnStatus === 'RETURN_REJECTED') {
+      return <p className="typo-body-12-r text-gray-800">-</p>
+    }
+
+    if (returnStatus === 'RETURN_APPROVED') {
+      return (
+        <Button
+          variant="secondary-outlined"
+          size="sm"
+          title="입력"
+          onClick={() => onTrackingOpen?.('create', orderNumber)}
+        />
+      )
+    }
+
     return (
       <div className="flex flex-col gap-2">
         <p className="typo-body-12-r wrap-break-word text-gray-800">
-          {row.original.trackingNumber ? row.original.trackingNumber : '-'}
+          {trackingNumber ?? '-'}
+        </p>
+        <div className="flex flex-1 justify-center">
+          <Button
+            variant="secondary-outlined"
+            size="sm"
+            title="수정"
+            className="w-56"
+            onClick={() =>
+              onTrackingOpen?.('edit', orderNumber, courierName, trackingNumber)
+            }
+          />
+        </div>
+      </div>
+    )
+  }
+
+  // 교환 탭: exchangeStatus에 따라 운송장 셀 렌더링
+  if (tab === 'exchanged') {
+    if (
+      !exchangeStatus ||
+      exchangeStatus === 'EXCHANGE_REQUESTED' ||
+      exchangeStatus === 'EXCHANGE_REJECTED'
+    ) {
+      return <p className="typo-body-12-r text-gray-800">-</p>
+    }
+
+    if (exchangeStatus === 'EXCHANGE_APPROVED') {
+      return (
+        <Button
+          variant="secondary-outlined"
+          size="sm"
+          title="입력"
+          onClick={() => onTrackingOpen?.('create', orderNumber)}
+        />
+      )
+    }
+
+    return (
+      <div className="flex flex-col gap-2">
+        <p className="typo-body-12-r wrap-break-word text-gray-800">
+          {trackingNumber ?? '-'}
+        </p>
+        <div className="flex flex-1 justify-center">
+          <Button
+            variant="secondary-outlined"
+            size="sm"
+            title="수정"
+            className="w-56"
+            onClick={() =>
+              onTrackingOpen?.('edit', orderNumber, courierName, trackingNumber)
+            }
+          />
+        </div>
+      </div>
+    )
+  }
+
+  if (tab === 'orderConfirmed') {
+    return (
+      <Button
+        variant="secondary-outlined"
+        size="sm"
+        title="입력"
+        onClick={() => onTrackingOpen?.('create', orderNumber)}
+      />
+    )
+  }
+
+  if (tab === 'productShipped' || tab === 'deliveryCompleted') {
+    return (
+      <div className="flex flex-col gap-2">
+        <p className="typo-body-12-r wrap-break-word text-gray-800">
+          {trackingNumber ?? '-'}
         </p>
 
         <div className="flex flex-1 justify-center">
@@ -309,6 +443,9 @@ function TrackingNumberCell({ row, tab }: TrackingNumberCellProps) {
             size="sm"
             title="수정"
             className="w-56"
+            onClick={() =>
+              onTrackingOpen?.('edit', orderNumber, courierName, trackingNumber)
+            }
           />
         </div>
       </div>
@@ -318,7 +455,7 @@ function TrackingNumberCell({ row, tab }: TrackingNumberCellProps) {
   return (
     <div>
       <p className="typo-body-12-r wrap-break-word text-gray-800">
-        {row.original.trackingNumber ? row.original.trackingNumber : '-'}
+        {trackingNumber ?? '-'}
       </p>
     </div>
   )

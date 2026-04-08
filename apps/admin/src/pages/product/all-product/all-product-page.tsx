@@ -1,11 +1,9 @@
 import { ProductTable } from '@/features/product'
 
-function ProductPage() {
+export function AllProductPage() {
   return (
-    <div className="p-24">
+    <div className="px-24">
       <ProductTable />
     </div>
   )
 }
-
-export default ProductPage
