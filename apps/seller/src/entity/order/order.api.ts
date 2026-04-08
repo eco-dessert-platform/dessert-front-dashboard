@@ -1,21 +1,39 @@
-import { getMockOrderListResponse } from './order.mock'
+import { client } from '@/shared/utils/axios'
+
 import { OrderFilters, OrderListResponse } from './order.type'
 
 export async function getOrders(
   filters: OrderFilters,
 ): Promise<OrderListResponse> {
-  const page = filters.page ? Number(filters.page) : 0
-  const size = filters.size ? Number(filters.size) : 10
+  const { tab, page, size, sort, searchKeyword, startDate, endDate, searchType, deliveryStatus, ...rest } = filters
 
-  return getMockOrderListResponse(filters.tab, page, size)
+  const today = new Date().toISOString().split('T')[0]
 
-  /* 실제 API 연동 시 아래 주석 해제하여 사용
-  const { data } = await client.get<OrderListResponse>(
-    '/api/v1/seller/orders',
+  const TAB_TO_STATUS: Record<string, string> = {
+    all: 'NONE',
+    paymentCompleted: 'PAYMENT_COMPLETED',
+    orderConfirmed: 'ORDER_CONFIRMED',
+    productShipped: 'PRODUCT_SHIPPED',
+    deliveryCompleted: 'DELIVERY_COMPLETED',
+    canceled: 'CANCELED',
+    returned: 'RETURNED',
+    exchanged: 'EXCHANGED',
+  }
+
+  const { data } = await client.post<OrderListResponse>(
+    '/api/v1/seller/orders/list',
     {
-      params: filters,
+      orderStatus: TAB_TO_STATUS[tab ?? 'all'] ?? 'NONE',
+      searchType: searchType ?? 'BUYER_NAME',
+      keywords: searchKeyword ? [searchKeyword] : [],
+      isMultipleSearch: false,
+      startDate: startDate ?? today,
+      endDate: endDate ?? today,
+    },
+    {
+      params: { page: page ?? 0, size: size ?? 100, sort: sort ?? 'orderDate,DESC' },
     },
   )
+  console.log('orders response:', data)
   return data
-  */
 }

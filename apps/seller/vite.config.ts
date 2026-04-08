@@ -10,8 +10,8 @@ export default mergeConfig(baseViteConfig, {
 
   // 포트지정
   server: {
-    // port: 3000,
-    port: 6075,
+    port: 3000,
+    //port: 6075,
   },
 
   resolve: {
