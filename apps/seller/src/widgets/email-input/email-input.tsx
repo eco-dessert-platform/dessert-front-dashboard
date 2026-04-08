@@ -10,7 +10,7 @@ interface EmailInputProps {
   disabled?: boolean
 }
 
-const EmailInput = ({
+export function EmailInput({
   label,
   required = false,
   localPart,
@@ -18,7 +18,7 @@ const EmailInput = ({
   onLocalPartChange,
   onDomainChange,
   disabled = false,
-}: EmailInputProps) => {
+}: EmailInputProps) {
   return (
     <>
       <div className="flex flex-1/2 flex-col items-start gap-4">
@@ -51,10 +51,3 @@ const EmailInput = ({
     </>
   )
 }
-
-/**
- * @deprecated `widgets` 폴더로 이동되었습니다.
- * 리팩토링 기간 이후 이 컴포넌트는 삭제될 예정입니다.
- * 새로운 코드에서는 `@/widgets` 폴더에 구현된 컴포넌트를 사용해주세요.
- */
-export default EmailInput

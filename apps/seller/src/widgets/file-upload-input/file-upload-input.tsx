@@ -11,7 +11,7 @@ interface FileUploadInputProps {
   disabled?: boolean
 }
 
-const FileUploadInput = ({
+export function FileUploadInput({
   label,
   required = false,
   placeholder,
@@ -20,7 +20,7 @@ const FileUploadInput = ({
   value,
   onChange,
   disabled = false,
-}: FileUploadInputProps) => {
+}: FileUploadInputProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
     onChange?.(file)
@@ -66,10 +66,3 @@ const FileUploadInput = ({
     </div>
   )
 }
-
-/**
- * @deprecated `widgets` 폴더로 이동되었습니다.
- * 리팩토링 기간 이후 이 컴포넌트는 삭제될 예정입니다.
- * 새로운 코드에서는 `@/widgets` 폴더에 구현된 컴포넌트를 사용해주세요.
- */
-export default FileUploadInput
