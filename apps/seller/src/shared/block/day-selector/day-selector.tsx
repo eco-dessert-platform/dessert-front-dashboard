@@ -1,5 +1,10 @@
 import { clsx } from 'clsx'
 
+/**
+ * @deprecated `widgets` 폴도로 이동되었습니다.
+ * 리팩토링 기간 이후 이 컴포넌트는 삭제될 예정입니다.
+ * 새로운 코드에서는 `@/widgets` 폴더에 구현된 컴포넌트를 사용해주세요.
+ */
 export interface DaySelectorProps {
   selectedDays?: string[]
   onDayChange?: (days: string[]) => void
@@ -56,4 +61,9 @@ const DaySelector = ({
   )
 }
 
+/**
+ * @deprecated `widgets` 폴도로 이동되었습니다.
+ * 리팩토링 기간 이후 이 컴포넌트는 삭제될 예정입니다.
+ * 새로운 코드에서는 `@/widgets` 폴더에 구현된 컴포넌트를 사용해주세요.
+ */
 export default DaySelector
