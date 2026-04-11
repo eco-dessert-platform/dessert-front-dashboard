@@ -33,6 +33,14 @@ let pendingRequests: Array<{
   reject: (error: Error) => void
 }> = []
 
+// 토큰 재발급 제외 경로
+const AUTH_PATHS = ['/api/v1/auth/reissue', '/api/v1/seller/oauth/tokens']
+
+const isAuthPath = (url?: string) => {
+  if (!url) return false
+  return AUTH_PATHS.some((path) => url.includes(path))
+}
+
 const processPendingRequests = (token: string | null, error?: Error) => {
   pendingRequests.forEach(({ resolve, reject }) => {
     if (token) {
@@ -49,7 +57,12 @@ client.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
 
-    if (error.response?.status !== 401 || originalRequest._retry) {
+    // auth 경로는 재발급 대상에서 제외
+    if (
+      error.response?.status !== 401 ||
+      originalRequest._retry ||
+      isAuthPath(originalRequest.url)
+    ) {
       return Promise.reject(error)
     }
 
@@ -104,8 +117,3 @@ client.interceptors.response.use(
     }
   },
 )
-
-export const stream = axios.create({
-  baseURL: import.meta.env.VITE_API_HOST,
-  responseType: 'stream',
-})

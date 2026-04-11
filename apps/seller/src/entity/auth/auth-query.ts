@@ -11,16 +11,22 @@ export const useIssueTokenMutation = () => {
 
   return useMutation({
     mutationKey: authKeys.all,
-    mutationFn: (generateToken: string) => issueToken(generateToken),
-    onSuccess: (data) => {
-      if (data.accessToken && data.result) {
-        setCookie(
-          'accessToken',
-          data.accessToken,
-          getExpFromToken(data.accessToken),
-        )
-        setAuth(data.result.sellerId, data.result.status)
+    mutationFn: async (generateToken: string) => {
+      const data = await issueToken(generateToken)
+
+      if (!data.accessToken || !data.result) {
+        throw new Error('토큰 또는 사용자 정보가 응답에 포함되지 않았습니다.')
       }
+
+      return data
+    },
+    onSuccess: (data) => {
+      setCookie(
+        'accessToken',
+        data.accessToken!,
+        getExpFromToken(data.accessToken!),
+      )
+      setAuth(data.result!.sellerId, data.result!.status)
     },
   })
 }
@@ -31,7 +37,8 @@ export const useLogoutMutation = () => {
   return useMutation({
     mutationKey: [...authKeys.all, 'logout'],
     mutationFn: () => logout(),
-    onSuccess: () => {
+    onSettled: () => {
+      // 성공/실패 여부와 관계없이 로컬 세션 정리
       deleteCookie('accessToken')
       logoutStore()
       window.location.href = '/auth'
