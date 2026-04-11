@@ -9,7 +9,7 @@
 | FSD `shared` 레이어  | **앱 내부** | seller 안에서 features/pages/entity가 공통으로 사용 |
 | 모노레포 `packages/` | **앱 전체** | seller ↔ admin 둘 다 사용하는 것                   |
 
----
+<br/>
 
 ## 3-Tier 공유 구조
 
@@ -19,7 +19,7 @@
 [Tier 3] apps/seller/src/shared/block  ← seller 전용 복합 컴포넌트 (비즈니스 로직 포함)
 ```
 
----
+<br/>
 
 ## packages/ 구조
 
@@ -43,7 +43,7 @@ packages/
 
 > ⚠️ **ESLint는 `packages/config`에 넣지 않습니다.** 루트 단일 `eslint.config.js`로 관리합니다. (아래 ESLint 섹션 참고)
 
----
+<br/>
 
 ## apps/seller/src/shared/ 구조
 
@@ -70,7 +70,7 @@ shared/
     └── utils.ts         # cn() — 추후 @dessert/ui로 이동 가능
 ```
 
----
+<br/>
 
 ## 어디에 둘까? — 판단 기준
 
@@ -97,7 +97,7 @@ shared/
 
 > **원칙**: 미리 package 폴더에 포함시키지 않습니다. **중복이 생기는 시점에 이동합니다.**
 
----
+<br/>
 
 ## 스타일 공유 방법
 
@@ -116,7 +116,7 @@ shared/
 @import '@dessert/ui/styles'; /* 동일한 공유 스타일 */
 ```
 
----
+<br/>
 
 ## Factory Function 패턴 — 인프라 코드 공유 방법
 
@@ -172,7 +172,7 @@ export const client = createApiClient({
 > **핵심**: `createApiClient`는 공통 인터셉터 로직을 담은 팩토리 함수입니다.
 > 각 앱의 `axios.ts`는 앱별 `baseURL`과 토큰 전략을 주입해 실제 axios 인스턴스를 생성합니다.
 
----
+<br/>
 
 ## ESLint 설정
 
@@ -181,7 +181,7 @@ ESLint는 **루트 단일 `eslint.config.js`** 로 관리합니다. `packages/co
 앱별로 다른 설정(tsconfig 경로, CSS entryPoint 등)은 ESLint flat config의 `files` 패턴으로 분기합니다.
 자세한 설정은 루트의 `eslint.config.js`를 참고하세요.
 
----
+<br/>
 
 ## 레이어 간 의존성 흐름
 
@@ -212,7 +212,7 @@ apps/seller/src/pages/orders/           import { OrderTable } from '@/features/o
 - `packages/`는 외부 라이브러리처럼 취급합니다. FSD 레이어 규칙 적용 대상이 아닙니다.
 - FSD 레이어 규칙은 `apps/` 내부에서만 적용됩니다.
 
----
+<br/>
 
 ## FAQ
 

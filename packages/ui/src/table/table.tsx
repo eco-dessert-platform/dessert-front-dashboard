@@ -5,6 +5,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+
 import { cn } from '../lib/utils'
 
 declare module '@tanstack/react-table' {
