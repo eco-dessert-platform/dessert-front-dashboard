@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { getExpFromToken, setCookie } from '@/shared/utils/cookieUtils'
+import { deleteCookie, getExpFromToken, setCookie } from '@/shared/utils/cookieUtils'
 
 import { issueToken, logout } from './auth-api'
 import { useAuthStore } from './auth-store'
@@ -13,15 +13,12 @@ export const useIssueTokenMutation = () => {
     mutationKey: authKeys.all,
     mutationFn: (generateToken: string) => issueToken(generateToken),
     onSuccess: (data) => {
-      if (data.accessToken) {
+      if (data.accessToken && data.result) {
         setCookie(
           'accessToken',
           data.accessToken,
           getExpFromToken(data.accessToken),
         )
-      }
-
-      if (data.result) {
         setAuth(data.result.sellerId, data.result.status)
       }
     },
@@ -35,6 +32,7 @@ export const useLogoutMutation = () => {
     mutationKey: [...authKeys.all, 'logout'],
     mutationFn: () => logout(),
     onSuccess: () => {
+      deleteCookie('accessToken')
       logoutStore()
       window.location.href = '/auth'
     },

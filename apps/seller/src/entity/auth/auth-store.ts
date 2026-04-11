@@ -8,7 +8,6 @@ interface AuthState {
   sellerId: number | null
   sellerStatus: SellerStatus | null
   setAuth: (sellerId: number, status: SellerStatus) => void
-  setIsLoggedIn: (isLoggedIn: boolean) => void
   logout: () => void
 }
 
@@ -20,7 +19,6 @@ export const useAuthStore = create<AuthState>()(
       sellerStatus: null,
       setAuth: (sellerId, status) =>
         set({ isLoggedIn: true, sellerId, sellerStatus: status }),
-      setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
       logout: () =>
         set({
           isLoggedIn: false,

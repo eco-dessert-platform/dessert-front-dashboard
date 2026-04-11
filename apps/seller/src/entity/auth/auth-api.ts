@@ -8,7 +8,7 @@ export const issueToken = async (generateToken: string) => {
     { generateToken } satisfies OAuthTokenRequest,
   )
 
-  const accessToken = response.headers['authorization']?.replace('Bearer ', '')
+  const accessToken = response.headers['authorization']?.replace(/^Bearer\s+/i, '')
 
   return {
     ...response.data,
@@ -23,7 +23,7 @@ export const reissueToken = async () => {
     { withCredentials: true },
   )
 
-  const accessToken = response.headers['authorization']?.replace('Bearer ', '')
+  const accessToken = response.headers['authorization']?.replace(/^Bearer\s+/i, '')
 
   return { ...response.data, accessToken }
 }

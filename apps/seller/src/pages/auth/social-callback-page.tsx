@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { useIssueTokenMutation } from '@/entity/auth/auth-query'
+import { ROUTES } from '@/shared/constant/routes'
 
 const ERROR_MESSAGES: Record<string, string> = {
   NOT_SUPPORTED_SERVER: '지원하지 않는 서버입니다.',
@@ -14,6 +15,7 @@ const SocialCallbackPage = () => {
   const navigate = useNavigate()
   const issueTokenMutation = useIssueTokenMutation()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const generateToken = searchParams.get('generateToken')
     const error = searchParams.get('error')
@@ -21,18 +23,18 @@ const SocialCallbackPage = () => {
     if (error) {
       const message = ERROR_MESSAGES[error] ?? '로그인 중 오류가 발생했습니다.'
       toast.error(message)
-      navigate('/auth', { replace: true })
+      navigate(ROUTES.AUTH, { replace: true })
       return
     }
 
     if (generateToken) {
       issueTokenMutation.mutate(generateToken, {
         onSuccess: () => {
-          navigate('/products', { replace: true })
+          navigate(ROUTES.PRODUCTS.ALL, { replace: true })
         },
         onError: () => {
           toast.error('로그인에 실패했습니다.')
-          navigate('/auth', { replace: true })
+          navigate(ROUTES.AUTH, { replace: true })
         },
       })
     }

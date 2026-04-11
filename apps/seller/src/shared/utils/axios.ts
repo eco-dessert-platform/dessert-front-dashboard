@@ -28,7 +28,21 @@ client.interceptors.request.use(
 
 // 401 응답 시 토큰 재발급
 let isRefreshing = false
-let pendingRequests: Array<(token: string) => void> = []
+let pendingRequests: Array<{
+  resolve: (token: string) => void
+  reject: (error: Error) => void
+}> = []
+
+const processPendingRequests = (token: string | null, error?: Error) => {
+  pendingRequests.forEach(({ resolve, reject }) => {
+    if (token) {
+      resolve(token)
+    } else {
+      reject(error ?? new Error('토큰 재발급 실패'))
+    }
+  })
+  pendingRequests = []
+}
 
 client.interceptors.response.use(
   (response) => response,
@@ -40,10 +54,13 @@ client.interceptors.response.use(
     }
 
     if (isRefreshing) {
-      return new Promise((resolve) => {
-        pendingRequests.push((token: string) => {
-          originalRequest.headers.Authorization = `Bearer ${token}`
-          resolve(client(originalRequest))
+      return new Promise((resolve, reject) => {
+        pendingRequests.push({
+          resolve: (token: string) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`
+            resolve(client(originalRequest))
+          },
+          reject,
         })
       })
     }
@@ -59,25 +76,32 @@ client.interceptors.response.use(
       )
 
       const newAccessToken = response.headers['authorization']?.replace(
-        'Bearer ',
+        /^Bearer\s+/i,
         '',
       )
 
       if (newAccessToken) {
         setCookie('accessToken', newAccessToken, getExpFromToken(newAccessToken))
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
-        pendingRequests.forEach((cb) => cb(newAccessToken))
-        pendingRequests = []
+        processPendingRequests(newAccessToken)
         return client(originalRequest)
+      } else {
+        const noTokenError = new Error('토큰이 응답에 포함되지 않았습니다.')
+        processPendingRequests(null, noTokenError)
+        window.location.href = '/auth'
+        return Promise.reject(noTokenError)
       }
-    } catch {
-      // console.error('토큰 재발급 실패 - 리다이렉트 임시 차단')
+    } catch (refreshError) {
+      const error =
+        refreshError instanceof Error
+          ? refreshError
+          : new Error('토큰 재발급 실패')
+      processPendingRequests(null, error)
       window.location.href = '/auth'
+      return Promise.reject(error)
     } finally {
       isRefreshing = false
     }
-
-    return Promise.reject(error)
   },
 )
 
