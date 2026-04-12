@@ -22,6 +22,7 @@ interface TableProps<T> {
   columns: ColumnDef<T>[]
   topArea?: React.ReactNode
   maxHeight?: string | number
+  getRowClassName?: (row: T) => string
 }
 
 function Table<T>({
@@ -29,6 +30,7 @@ function Table<T>({
   columns,
   topArea,
   maxHeight = '600px',
+  getRowClassName,
 }: TableProps<T>) {
   const table = useReactTable<T>({
     data,
@@ -76,7 +78,10 @@ function Table<T>({
             {getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
-                className="border-b border-gray-300 last:border-b-0"
+                className={cn(
+                  'border-b border-gray-300 last:border-b-0',
+                  getRowClassName?.(row.original),
+                )}
               >
                 {row.getVisibleCells().map((cell) => {
                   const rowSpan =

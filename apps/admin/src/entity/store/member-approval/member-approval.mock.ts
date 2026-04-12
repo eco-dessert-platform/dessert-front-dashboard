@@ -12,6 +12,7 @@ export const tableData: TableRow[] = [
     bankName: '우리은행',
     accountNumber: '123-88542-45522',
     joinDate: '2025.11.12',
+    isNewMember: false,
   },
   {
     id: '2',
@@ -24,6 +25,7 @@ export const tableData: TableRow[] = [
     bankName: '우리은행',
     accountNumber: '123-88542-45522',
     joinDate: '2025.11.12',
+    isNewMember: true,
   },
   {
     id: '3',
@@ -36,6 +38,7 @@ export const tableData: TableRow[] = [
     bankName: '우리은행',
     accountNumber: '123-88542-45522',
     joinDate: '2025.11.12',
+    isNewMember: true,
   },
   {
     id: '4',
@@ -48,5 +51,6 @@ export const tableData: TableRow[] = [
     bankName: '우리은행',
     accountNumber: '123-88542-45522',
     joinDate: '2025.11.12',
+    isNewMember: true,
   },
 ]

@@ -156,6 +156,10 @@ export const DefaultTable = () => {
     })
   }, [])
 
+  const getRowClassName = (row: TableRow) => {
+    return row.isNewMember ? '' : 'bg-[#FFE8E3]'
+  }
+
   const columns = exampleColumns({
     allSelected,
     selectedIds,
@@ -171,6 +175,7 @@ export const DefaultTable = () => {
       topArea={
         <TableTopArea totlaCount={totalCount} selectedCount={selectedCount} />
       }
+      getRowClassName={getRowClassName}
     />
   )
 }

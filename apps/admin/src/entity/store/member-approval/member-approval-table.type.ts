@@ -9,4 +9,5 @@ export type TableRow = {
   bankName: string
   accountNumber: string
   joinDate: string
+  isNewMember: boolean
 }
