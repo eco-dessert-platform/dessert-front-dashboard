@@ -134,6 +134,9 @@ export const DefaultTable = () => {
     setSelectedIds(isChecked ? tableData.map((row) => row.id) : [])
   }
 
+  const totalCount = tableData.length
+  const selectedCount = selectedIds.length
+
   const toggleRow = (rowId: string, checked: boolean | 'indeterminate') => {
     const isChecked = checked === true
     setSelectedIds((prev) =>
@@ -161,5 +164,13 @@ export const DefaultTable = () => {
     toggleRow,
   })
 
-  return <Table data={tableData} columns={columns} topArea={<TableTopArea />} />
+  return (
+    <Table
+      data={tableData}
+      columns={columns}
+      topArea={
+        <TableTopArea totlaCount={totalCount} selectedCount={selectedCount} />
+      }
+    />
+  )
 }
