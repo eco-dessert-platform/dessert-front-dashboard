@@ -35,14 +35,14 @@ export function Lnb() {
   return (
     <nav
       aria-label="관리자 메뉴"
-      className="relative flex h-[calc(100vh-80px)] w-[240px] flex-col border-r border-border"
+      className="relative flex h-[calc(100vh-80px)] w-[240px] shrink-0 flex-col border-r border-border"
     >
-      <div className="flex-1 overflow-y-auto px-3 py-4">
+      <div className="flex-1 overflow-y-auto px-10 py-16">
         <Accordion type="multiple" className="gap-10">
           {MENU_LIST.map((menu) => (
             <AccordionItem value={menu.group} key={menu.group}>
               <AccordionTrigger>
-                <span className="typo-title-16-m text-gray-800">
+                <span className="typo-title-16-sb text-gray-800">
                   {menu.group}
                 </span>
               </AccordionTrigger>
