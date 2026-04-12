@@ -58,7 +58,7 @@ const exampleColumns = ({
           {row.original.phoneNumber}
         </p>
         <p className="text-center typo-title-14-r text-gray-900">
-          {row.original.phoneNumber}
+          {row.original.additionalPhoneNumber}
         </p>
       </div>
     ),
@@ -95,7 +95,7 @@ const exampleColumns = ({
           {row.original.depositor}
         </p>
         <div className="text-center typo-body-12-r text-gray-900">
-          {row.original.depositor}
+          {row.original.bankName}
         </div>
       </div>
     ),
