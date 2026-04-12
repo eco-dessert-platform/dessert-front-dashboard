@@ -2,20 +2,11 @@ import { useCallback, useState } from 'react'
 
 import { Checkbox, Table, getRowSpanForGroup } from '@dessert/ui'
 
+import { TableRow, tableData } from '@/entity/store/member-approval'
+
 import { TableTopArea } from './table-top-area.ui'
 
 import type { ColumnDef } from '@tanstack/react-table'
-
-type TableRow = {
-  id: string
-  storeName: string
-  phoneNumber: string
-  emailAddress: string
-  address: string
-  depositor: string
-  accountNumber: string
-  joinDate: string
-}
 
 type ExampleColumnArgs = {
   allSelected: boolean
@@ -129,29 +120,6 @@ const exampleColumns = ({
       </p>
     ),
     size: 100,
-  },
-]
-
-const tableData: TableRow[] = [
-  {
-    id: '1',
-    storeName: '빵그리 빵집',
-    phoneNumber: '010-1234-1234',
-    emailAddress: 'bbang@naver.com',
-    address: '(우편번호)인천 계양구 xxx xxxxxx, 102호',
-    depositor: '빵그리',
-    accountNumber: '123-88542-45522',
-    joinDate: '2025.11.12',
-  },
-  {
-    id: '2',
-    storeName: '빵그리 빵집2',
-    phoneNumber: '010-1234-1234',
-    emailAddress: 'bbang@naver.com',
-    address: '(우편번호)인천 계양구 xxx xxxxxx, 102호',
-    depositor: '빵그리',
-    accountNumber: '123-88542-45522',
-    joinDate: '2025.11.12',
   },
 ]
 
