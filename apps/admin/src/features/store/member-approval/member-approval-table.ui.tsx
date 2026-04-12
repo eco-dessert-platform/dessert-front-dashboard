@@ -2,6 +2,8 @@ import { useCallback, useState } from 'react'
 
 import { Button, Checkbox, Table } from '@dessert/ui'
 
+import { TableTopArea } from './table-top-area.ui'
+
 import type { ColumnDef } from '@tanstack/react-table'
 
 export type RowSpanOptions<T> = {
@@ -225,9 +227,5 @@ export const DefaultTable = () => {
     toggleRow,
   })
 
-  return <Table data={tableData} columns={columns} topArea={<TopArea />} />
-}
-
-function TopArea() {
-  return <Button title="top area button" />
+  return <Table data={tableData} columns={columns} topArea={<TableTopArea />} />
 }
