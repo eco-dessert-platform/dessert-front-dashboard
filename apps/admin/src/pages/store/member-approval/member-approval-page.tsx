@@ -26,7 +26,7 @@ export function MemberApprovalPage() {
         {/* 페이지네이션 */}
         <Pagination currentPage={1} totalPages={2} />
       </div>
-
+      text-center typo-body-12-r text-gray-900
       <div className="mt-12">
         <DefaultTable />
       </div>

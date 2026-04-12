@@ -1,1 +1,1 @@
-export { DefaultTable } from './tabletest'
+export { DefaultTable } from './member-approval-table.ui'
