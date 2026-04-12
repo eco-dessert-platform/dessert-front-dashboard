@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Checkbox, Table, getRowSpanForGroup } from '@dessert/ui'
+import { Checkbox, Input, Table, getRowSpanForGroup } from '@dessert/ui'
 
 import { TableRow, tableData } from '@/entity/store/member-approval'
 
@@ -11,7 +11,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 type ExampleColumnArgs = {
   allSelected: boolean
   selectedIds: string[]
-  getRowSpanForSeller: (rowIndex: number) => number
+  getRowSpanForAdmin: (rowIndex: number) => number
   toggleAll: (checked: boolean | 'indeterminate') => void
   toggleRow: (rowId: string, checked: boolean | 'indeterminate') => void
 }
@@ -19,7 +19,7 @@ type ExampleColumnArgs = {
 const exampleColumns = ({
   allSelected,
   selectedIds,
-  getRowSpanForSeller,
+  getRowSpanForAdmin,
   toggleAll,
   toggleRow,
 }: ExampleColumnArgs): ColumnDef<TableRow>[] => [
@@ -40,7 +40,7 @@ const exampleColumns = ({
     header: '스토어명',
     accessorKey: 'storeName',
     meta: {
-      getRowSpan: (cell) => getRowSpanForSeller(cell.row.index),
+      getRowSpan: (cell) => getRowSpanForAdmin(cell.row.index),
     },
     cell: ({ row }) => (
       <div className="text-center typo-title-14-r text-gray-900">
@@ -148,7 +148,7 @@ export const DefaultTable = () => {
     )
   }
 
-  const getRowSpanForSeller = useCallback((rowIndex: number) => {
+  const getRowSpanForAdmin = useCallback((rowIndex: number) => {
     return getRowSpanForGroup({
       rows: tableData,
       rowIndex,
@@ -160,10 +160,35 @@ export const DefaultTable = () => {
     return row.isNewMember ? '' : 'bg-[#FFE8E3]'
   }
 
+  const renderSubRow = (row: TableRow) => {
+    if (!selectedIds.includes(row.id)) return null
+
+    const labelClassName = 'typo-title-14-b text-center'
+
+    return (
+      <tr className="bg-gray-50">
+        <td colSpan={2} className="border-r border-r-gray-300">
+          <Input
+            label="대표자명"
+            labelClassName={labelClassName}
+            className="items-center gap-2 border-r border-r-gray-300 p-10"
+          />
+        </td>
+        <td colSpan={6}>
+          <Input
+            label="사업자 번호"
+            labelClassName={labelClassName}
+            className="w-[274px] items-center gap-2 border-r border-r-gray-300 p-10"
+          />
+        </td>
+      </tr>
+    )
+  }
+
   const columns = exampleColumns({
     allSelected,
     selectedIds,
-    getRowSpanForSeller,
+    getRowSpanForAdmin,
     toggleAll,
     toggleRow,
   })
@@ -176,6 +201,7 @@ export const DefaultTable = () => {
         <TableTopArea totlaCount={totalCount} selectedCount={selectedCount} />
       }
       getRowClassName={getRowClassName}
+      renderSubRow={renderSubRow}
     />
   )
 }
