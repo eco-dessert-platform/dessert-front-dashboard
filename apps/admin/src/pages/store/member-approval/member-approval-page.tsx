@@ -1,4 +1,6 @@
-import { Button, Pagination, Table } from '@dessert/ui'
+import { Button, Pagination } from '@dessert/ui'
+
+import { DefaultTable } from '@/features/store/member-approval'
 
 export function MemberApprovalPage() {
   return (
@@ -25,7 +27,9 @@ export function MemberApprovalPage() {
         <Pagination currentPage={1} totalPages={2} />
       </div>
 
-      <div className="mt-12"></div>
+      <div className="mt-12">
+        <DefaultTable />
+      </div>
     </section>
   )
 }

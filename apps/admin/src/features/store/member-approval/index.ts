@@ -1,0 +1,1 @@
+export { DefaultTable } from './tabletest'
