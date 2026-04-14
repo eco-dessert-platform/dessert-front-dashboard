@@ -44,6 +44,7 @@ export const useMemberApproval = () => {
 
     if (isInvalid) {
       // toast 혹은 alert 처리
+      toast.error('항목을 입력하세요', '사업자 번호, 대표자명 입력하세요')
       return
     }
 

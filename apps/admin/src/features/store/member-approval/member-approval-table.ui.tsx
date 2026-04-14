@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useEffectEvent, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { Checkbox, Input, Table, getRowSpanForGroup } from '@dessert/ui'
 
