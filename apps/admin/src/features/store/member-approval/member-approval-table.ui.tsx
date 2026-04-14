@@ -10,7 +10,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 
 import { useMemberApproval } from './member-approval.hook'
 
-type ExampleColumnArgs = {
+type MemberApprovalTableArgs = {
   allSelected: boolean
   selectedIds: string[]
   getRowSpanForAdmin: (rowIndex: number) => number
@@ -18,13 +18,13 @@ type ExampleColumnArgs = {
   toggleRow: (rowId: string, checked: boolean | 'indeterminate') => void
 }
 
-const exampleColumns = ({
+const MemberApprovalTableColumns = ({
   allSelected,
   selectedIds,
   getRowSpanForAdmin,
   toggleAll,
   toggleRow,
-}: ExampleColumnArgs): ColumnDef<TableRow>[] => [
+}: MemberApprovalTableArgs): ColumnDef<TableRow>[] => [
   {
     id: 'select',
     header: () => (
@@ -125,7 +125,7 @@ const exampleColumns = ({
   },
 ]
 
-export const DefaultTable = () => {
+export const MemberApprovalTable = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
   const { toggleBusinessOwner, updateBusinessOwner, submitApproval } =
@@ -201,7 +201,7 @@ export const DefaultTable = () => {
     )
   }
 
-  const columns = exampleColumns({
+  const columns = MemberApprovalTableColumns({
     allSelected,
     selectedIds,
     getRowSpanForAdmin,
