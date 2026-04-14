@@ -6,6 +6,9 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
 
 import { useAuthStore } from '@/entity/auth'
+import { setupAuthResponseInterceptor } from '@/shared/utils'
+
+setupAuthResponseInterceptor(() => useAuthStore.getState().logout())
 
 function App({ router }: { router: ReturnType<typeof createBrowserRouter> }) {
   const [queryClient] = useState(() => new QueryClient())
