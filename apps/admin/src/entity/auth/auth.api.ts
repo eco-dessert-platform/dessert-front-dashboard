@@ -3,9 +3,16 @@ import { AxiosResponse } from 'axios'
 import { client } from '@/shared/utils'
 
 export interface LoginResponse {
-  accessToken: string
-  refreshToken: string
+  success: boolean
+  code: number
+  message: string
+  fieldErrors: Array<{ field: string; msg: string }>
+  result: {
+    accessToken: string
+    refreshToken: string
+  }
 }
+
 export const adminLogin = async (data: {
   accountId: string
   password: string
