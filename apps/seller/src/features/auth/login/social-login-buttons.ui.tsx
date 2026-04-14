@@ -1,6 +1,6 @@
 import GoogleIcon from '@/assets/icons/social/google.svg?react'
 import KakaoIcon from '@/assets/icons/social/kakao.svg?react'
-import { OAUTH_URLS } from '@/entity/auth/constants'
+import { OAUTH_URLS } from '@/entity/auth'
 
 export const SocialLoginButtons = () => {
   const handleKakaoLogin = () => {

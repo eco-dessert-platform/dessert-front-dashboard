@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/entity/auth/auth-store'
+import { useAuthStore } from '@/entity/auth'
 import { FilterCategory } from '@/features/products/product/filter/filter-category'
 import { FilterTabs } from '@/features/products/product/filter/filter-tabs'
 import { ResultTable } from '@/features/products/product/product-list/product-list-table'

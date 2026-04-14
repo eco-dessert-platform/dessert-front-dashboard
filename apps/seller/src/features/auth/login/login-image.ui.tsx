@@ -6,7 +6,7 @@ interface AuthLoginImageProps {
   className?: string
 }
 
-const AuthLoginImage = ({ className = '' }: AuthLoginImageProps) => {
+export const AuthLoginImage = ({ className = '' }: AuthLoginImageProps) => {
   return (
     <div
       className={clsx('relative flex-1 shrink-0 overflow-hidden', className)}
@@ -19,5 +19,3 @@ const AuthLoginImage = ({ className = '' }: AuthLoginImageProps) => {
     </div>
   )
 }
-
-export default AuthLoginImage

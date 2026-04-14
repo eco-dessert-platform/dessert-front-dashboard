@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { useIssueTokenMutation } from '@/entity/auth/auth-query'
+import { useIssueTokenMutation } from '@/features/auth/login'
 
 const ERROR_MESSAGES: Record<string, string> = {
   NOT_SUPPORTED_SERVER: '지원하지 않는 서버입니다.',
@@ -36,6 +36,8 @@ const SocialCallbackPage = () => {
         },
       })
     }
+    // OAuth 콜백은 마운트 시 1회만 실행되어야 하므로 deps 의도적으로 생략
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
