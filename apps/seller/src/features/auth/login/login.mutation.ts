@@ -15,15 +15,11 @@ export const useIssueTokenMutation = () => {
         throw new Error('토큰 또는 사용자 정보가 응답에 포함되지 않았습니다.')
       }
 
-      return data
+      return { accessToken: data.accessToken, result: data.result }
     },
-    onSuccess: (data) => {
-      setCookie(
-        'accessToken',
-        data.accessToken!,
-        getExpFromToken(data.accessToken!),
-      )
-      setAuth(data.result!.sellerId, data.result!.status)
+    onSuccess: ({ accessToken, result }) => {
+      setCookie('accessToken', accessToken, getExpFromToken(accessToken))
+      setAuth(result.sellerId, result.status)
     },
   })
 }

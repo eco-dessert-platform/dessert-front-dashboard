@@ -1,5 +1,9 @@
 const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL
 
+if (!baseURL) {
+  throw new Error('VITE_PUBLIC_SERVER_URL 환경변수가 설정되지 않았습니다.')
+}
+
 const profile = import.meta.env.DEV ? 'local' : 'prod'
 
 export const OAUTH_URLS = {
