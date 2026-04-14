@@ -1,5 +1,9 @@
 export const ROUTES = {
   HOME: '/',
+  AUTH: '/auth',
+  CALLBACK: {
+    SOCIAL: '/callback/social',
+  },
   ORDERS: {
     ALL: '/orders',
     COMPLETED: '/orders/completed',
@@ -7,7 +11,6 @@ export const ROUTES = {
   PRODUCTS: {
     ALL: '/products',
     CREATE: '/products/create',
-    CREATE_DETAIL: '/products/create/detail',
   },
   SETTLEMENTS: {
     ALL: '/settlements',

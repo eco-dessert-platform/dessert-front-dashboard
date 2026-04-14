@@ -3,16 +3,18 @@
 > 이 문서는 새로운 팀원이 프로젝트에 빠르게 적응할 수 있도록 안내하는 허브 문서입니다.
 > 각 섹션의 링크를 통해 더 자세한 내용을 확인하세요.
 
+---
+
 ## 🌐 배포 URL
 
-| 서비스            | URL                                                  | 설명                           |
-| ----------------- | ---------------------------------------------------- | ------------------------------ |
-| Seller            | [seller.bbanggree.com](https://seller.bbanggree.com) | 판매자 대시보드                |
-| Admin             | [admin.bbanggree.com](https://admin.bbanggree.com)   | 관리자 대시보드                |
-| Storybook (UI)    | `<!-- TODO: Storybook UI 배포 URL 입력 -->`          | `@dessert/ui` 컴포넌트 탐색기  |
-| Storybook (Icons) | `<!-- TODO: Storybook Icons 배포 URL 입력 -->`       | `@dessert/icons` 아이콘 탐색기 |
+| 서비스            | URL                                                                    | 설명                           |
+| ----------------- | ---------------------------------------------------------------------- | ------------------------------ |
+| Seller            | [d2bjxba8wrj4ap.cloudfront.net](https://d2bjxba8wrj4ap.cloudfront.net) | 판매자 대시보드                |
+| Admin             | [dgr167g0ydf6y.cloudfront.net](https://dgr167g0ydf6y.cloudfront.net)   | 관리자 대시보드                |
+| Storybook (UI)    | `<!-- TODO: Storybook UI 배포 URL 입력 -->`                            | `@dessert/ui` 컴포넌트 탐색기  |
+| Storybook (Icons) | `<!-- TODO: Storybook Icons 배포 URL 입력 -->`                         | `@dessert/icons` 아이콘 탐색기 |
 
-<br/>
+---
 
 ## 🚀 빠른 시작 (Quick Start)
 
@@ -65,7 +67,7 @@ yarn storybook:ui
 yarn storybook:icons
 ```
 
-<br/>
+---
 
 ## 📦 의존성 관리 (Yarn Workspaces)
 
@@ -88,7 +90,7 @@ yarn add -D some-dev-tool
 
 → **[모노레포 의존성 관리 자세히 보기](/docs/monorepo/monorepo-package-json-guide.md)**
 
-<br/>
+---
 
 ## 🗂️ 프로젝트 구조
 
@@ -107,7 +109,7 @@ dessert-front-dashboard/
 
 → **[모노레포 아키텍처 자세히 보기](/docs/monorepo/monorepo-packages-architecture-guide.md)**
 
-<br/>
+---
 
 ## 🏗️ FSD (Feature-Sliced Design) 아키텍처
 
@@ -131,24 +133,20 @@ apps/seller/src/
 
 → **[FSD 아키텍처 가이드 자세히 보기](/docs/fsd/fsd-guide.md)**
 
-<br/>
+---
 
 ## 🎨 컨벤션
 
-| 도구     | 핵심 규칙                                               |
-| -------- | ------------------------------------------------------- |
-| Prettier | 싱글쿼트, 세미콜론 없음, 탭 2칸, trailing comma         |
-| ESLint   | import 정렬, React Hooks 규칙, Tailwind 클래스 순서     |
-| Commit   | `[seller] feat(123):` 등 scope + type + issue number    |
-| Branch   | `feat/order-infinite-scroll` 등 type/kebab-case         |
-| Env      | `VITE_` 접두사 필수, `.env.example` 업데이트 및 PR 명시 |
+| 도구     | 핵심 규칙                                              |
+| -------- | ------------------------------------------------------ |
+| Prettier | 싱글쿼트, 세미콜론 없음, 탭 2칸, trailing comma        |
+| ESLint   | import 정렬, React Hooks 규칙, Tailwind 클래스 순서    |
+| Commit   | `feat(scope):`, `fix(scope):` 등 타입 + 모노레포 scope |
 
-→ **[코드 컨벤션 가이드 자세히 보기](/docs/convention/code-convention.md)**<br/>
-→ **[커밋 컨벤션 가이드 자세히 보기](/docs/convention/commit-convention.md)**<br/>
-→ **[브랜치 컨벤션 가이드 자세히 보기](/docs/convention/branch-convention.md)**<br/>
-→ **[환경변수 관리 가이드 자세히 보기](/docs/convention/env-convention.md)**<br/>
+→ **[코드 컨벤션 가이드 자세히 보기](/docs/convention/code-convention.md)**
+→ **[Git 컨벤션 가이드 자세히 보기](/docs/convention/git-convention.md)**
 
-<br/>
+---
 
 ## 🖼️ @dessert/icons 사용법
 
@@ -169,7 +167,7 @@ import { SearchIcon, HeartRedIcon } from '@dessert/icons'
 
 → **[아이콘 사용 가이드 자세히 보기](/docs/packages/icons-usage-guide.md)**
 
-<br/>
+---
 
 ## 🔄 작업 파이프라인
 

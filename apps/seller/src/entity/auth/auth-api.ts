@@ -1,60 +1,37 @@
-import { AxiosResponse } from 'axios'
+import { client } from '@/shared/utils/axios'
 
-import {
-  client,
-  googleOAuthClient,
-  kakaoOAuthClient,
-} from 'src/shared/utils/axios'
+import { ApiResponse, OAuthTokenRequest, OAuthTokenResult } from './types'
 
-import { GOOGLE, KAKAO } from './constants'
-import { GoogleAuthResponse, KakaoAuthResponse, LoginResponse } from './types'
-
-export const kakaoLogin = async (
-  code: string,
-): Promise<AxiosResponse<LoginResponse>> => {
-  const params = new URLSearchParams({
-    grant_type: 'authorization_code',
-    client_id: KAKAO.client_id as string,
-    redirect_uri: KAKAO.redirect_uri as string,
-    code,
-  })
-
-  const { data: tokenData } = await kakaoOAuthClient.post<KakaoAuthResponse>(
-    '/oauth/token',
-    params.toString(),
+export const issueToken = async (generateToken: string) => {
+  const response = await client.post<ApiResponse<OAuthTokenResult>>(
+    '/api/v1/seller/oauth/tokens',
+    { generateToken } satisfies OAuthTokenRequest,
   )
 
-  const response = await client.get<LoginResponse>(
-    `/api/v1/oauth/seller/login/kakao?token=${tokenData.access_token}`,
-  )
+  const accessToken = response.headers['authorization']?.replace('Bearer ', '')
 
-  return response
+  return {
+    ...response.data,
+    accessToken,
+  }
 }
 
-export const googleLogin = async (
-  code: string,
-): Promise<AxiosResponse<LoginResponse>> => {
-  const params = new URLSearchParams({
-    code,
-    client_id: GOOGLE.client_id as string,
-    redirect_uri: GOOGLE.redirect_uri as string,
-    client_secret: GOOGLE.clientsecret as string,
-    grant_type: 'authorization_code',
-  })
-
-  const { data: tokenData } = await googleOAuthClient.post<GoogleAuthResponse>(
-    '/token',
-    params.toString(),
+export const reissueToken = async () => {
+  const response = await client.post<ApiResponse>(
+    '/api/v1/auth/reissue',
+    null,
+    { withCredentials: true },
   )
 
-  const response = await client.get<LoginResponse>(
-    `/api/v1/oauth/seller/login/google?token=${tokenData.access_token}`,
-  )
+  const accessToken = response.headers['authorization']?.replace('Bearer ', '')
 
-  return response
+  return { ...response.data, accessToken }
 }
 
-export const refreshToken = async (
-  token: string,
-): Promise<AxiosResponse<{ accessToken: string }>> =>
-  await client.post('api/v1/token', { refreshToken: token })
+export const logout = async () => {
+  const response = await client.delete<ApiResponse>('/api/v1/auth/logout', {
+    withCredentials: true,
+  })
+
+  return response.data
+}

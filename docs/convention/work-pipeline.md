@@ -1,11 +1,13 @@
 # 작업 파이프라인 가이드
 
+---
+
 ## 개요
 
 모든 작업은 **Notion 개발 일정 → GitHub Issue → Milestone 연동 → 구현 → PR** 순서로 진행됩니다.
 이 파이프라인을 통해 작업 현황을 투명하게 공유하고, 데드라인을 명확하게 관리합니다.
 
-<br/>
+---
 
 ## 전체 플로우
 
@@ -25,7 +27,7 @@
 7. 주간 Milestone으로 데드라인 관리
 ```
 
-<br/>
+---
 
 ## Step 1. Notion 작업 보드 작성
 
@@ -40,7 +42,7 @@ GitHub Issue 템플릿과 동일한 구조로 작성하여 일관성을 유지�
 - 🛠 예상 소요시간
 - 📝 참고 사항 (생략 가능)
 
-<br/>
+---
 
 ## Step 2. GitHub Issue 생성
 
@@ -107,7 +109,7 @@ Issue 템플릿을 사용하면 일관된 형식으로 작성할 수 있습니�
 Issue를 생성할 때 반드시 **본인을 Assignee로 지정**합니다.
 Milestone 진행률과 작업 현황 파악을 위해 필수입니다.
 
-<br/>
+---
 
 ## Step 3. Milestone 연동
 
@@ -119,20 +121,20 @@ Issue 생성 후 현재 주차 **Milestone**에 연결합니다.
 
 > Milestone이 없다면 Step 7을 참고해 먼저 생성하세요.
 
-<br/>
+---
 
 ## Step 4. 브랜치 생성 및 개발
 
-브랜치 네이밍 규칙에 따라 브랜치를 생성합니다.
+Issue 번호를 기반으로 브랜치를 생성합니다.
 
 ```bash
-# 브랜치 네이밍 규칙: <type>/<description>
-git checkout -b feat/order-infinite-scroll
-git checkout -b fix/image-preview-broken
-git checkout -b chore/update-dependencies
+# 브랜치 네이밍 규칙: <type>/<번호>-<간략한-설명>
+git checkout -b feat/42-order-infinite-scroll
+git checkout -b fix/55-image-preview-broken
+git checkout -b chore/60-update-dependencies
 ```
 
-<br/>
+---
 
 ## Step 5. PR 생성
 
@@ -173,7 +175,7 @@ PR 본문에 `Closes #<Issue번호>`를 작성하면 PR Merge 시 Issue가 자�
 Closes #42
 ```
 
-<br/>
+---
 
 ## Step 6. 코드 리뷰 & Merge
 
@@ -181,7 +183,7 @@ Closes #42
 - 리뷰어는 코드 리뷰 후 **Approve** 또는 **Request Changes**
 - 최소 1명의 Approve 후 `develop` 브랜치로 Merge
 
-<br/>
+---
 
 ## Step 7. Milestone으로 데드라인 관리
 

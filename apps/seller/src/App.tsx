@@ -11,7 +11,7 @@ function App({ router }: { router: ReturnType<typeof createBrowserRouter> }) {
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
       <ToastContainer
-        position="bottom-right"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={true}
         newestOnTop={true}

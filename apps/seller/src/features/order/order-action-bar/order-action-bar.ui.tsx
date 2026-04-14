@@ -84,7 +84,7 @@ function OrderActionButton({ buttons, onAction }: OrderActionButtonProps) {
             {button.items.map((item) => (
               <button
                 key={item.action}
-                className="cursor-pointer border-r border-gray-200 px-10 py-6 typo-body-12-m text-gray-800 last:border-r-0"
+                className="border-r border-gray-200 px-10 py-6 typo-body-12-m text-gray-800 last:border-r-0"
                 onClick={() => onAction(item.action)}
               >
                 {item.label}

@@ -9,12 +9,11 @@ interface RadioOption {
 }
 
 export interface RadioProps {
-  options: readonly RadioOption[]
+  options: RadioOption[]
   value?: string
   name: string
   direction?: 'horizontal' | 'vertical'
   className?: string
-  labelClassName?: string // 개별 선택지 라벨 커스텀용
   onChange?: (value: string) => void
   size?: 'md' | 'lg'
 }
@@ -25,7 +24,6 @@ const Radio = ({
   name,
   direction = 'horizontal',
   className = '',
-  labelClassName = '',
   onChange,
   size = 'lg',
 }: RadioProps) => {
@@ -40,13 +38,9 @@ const Radio = ({
       {options.map((option) => (
         <label
           key={option.value}
-          className={cn(
-            `flex items-center gap-2`,
-            option.disabled
-              ? 'cursor-not-allowed opacity-50'
-              : 'cursor-pointer',
-            labelClassName,
-          )}
+          className={`flex items-center gap-2 ${
+            option.disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+          }`}
         >
           <input
             type="radio"

@@ -76,10 +76,6 @@ reviews:
   auto_review:
     enabled: true # 자동 리뷰 켬
     drafts: false # Draft PR은 자동 리뷰 안 함
-    # 리뷰 대상 base 브랜치 패턴 (develop + feat/* 간 PR도 리뷰)
-    base_branches:
-      - develop
-      - 'feat/.*'
 
   # 에이전트용 프롬프트를 추가로 출력/활용할지 여부
   enable_prompt_for_ai_agents: false

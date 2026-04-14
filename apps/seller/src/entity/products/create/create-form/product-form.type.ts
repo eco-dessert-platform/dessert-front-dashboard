@@ -1,5 +1,3 @@
-import { ProductInfoNoticeKey } from '../create-disclosure/product-disclosure.constant'
-
 export type ProductFormInput = {
   productName: string
   isFresh: boolean
@@ -32,9 +30,4 @@ export type ProductOptionFormInput = {
   protein: number | null
   fat: number | null
   sodium: number | null
-}
-
-export type ProductDisclosureFormInput = {
-  productInfoNotice: Record<ProductInfoNoticeKey, string>
-  productInfoNoticeMode: Record<ProductInfoNoticeKey, 'default' | 'manual'>
 }

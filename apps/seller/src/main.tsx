@@ -3,10 +3,11 @@ import '@/styles/index.css'
 import ReactDOM from 'react-dom/client'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 
+import AuthPage from '@/pages/auth/auth-page'
+import SocialCallbackPage from '@/pages/auth/social-callback-page'
 import AllOrdersPage from '@/pages/orders/all-orders/all-orders-page'
 import CompletedOrdersPage from '@/pages/orders/completed-orders/completed-orders-page'
 import CreatePage from '@/pages/products/create/create-page'
-import { DetailEditPage } from '@/pages/products/create/detail-edit-page'
 import ProductsPage from '@/pages/products/product/product-page'
 import SettlementPage from '@/pages/settlement/settlement-page'
 import { ROUTES } from '@/shared/constant/routes'
@@ -15,6 +16,14 @@ import App from './App'
 import FixedLayout from './shared/block/fixed-layout/fixed-layout'
 
 const router = createBrowserRouter([
+  {
+    path: ROUTES.AUTH,
+    element: <AuthPage />,
+  },
+  {
+    path: ROUTES.CALLBACK.SOCIAL,
+    element: <SocialCallbackPage />,
+  },
   {
     path: ROUTES.HOME,
     element: <FixedLayout />,
@@ -29,10 +38,6 @@ const router = createBrowserRouter([
       { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
       { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
     ],
-  },
-  {
-    path: ROUTES.PRODUCTS.CREATE_DETAIL,
-    element: <DetailEditPage />,
   },
 ])
 
