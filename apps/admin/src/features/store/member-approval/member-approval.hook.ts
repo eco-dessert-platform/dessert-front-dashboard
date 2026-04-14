@@ -51,10 +51,15 @@ export const useMemberApproval = () => {
     // API 호출로직 추가 예정
   }
 
+  const handleDownloadFile = () => {
+    //서류다운로드 기능 추가 예정
+  }
+
   return {
     businessOwners,
     updateBusinessOwner,
     toggleBusinessOwner,
     submitApproval,
+    handleDownloadFile,
   }
 }

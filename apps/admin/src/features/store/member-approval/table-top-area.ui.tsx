@@ -4,12 +4,14 @@ interface TableTopAreaProps {
   totlaCount: number
   selectedCount: number
   onSubmitApproval: () => void
+  handleDownloadFile: () => void
 }
 
 export const TableTopArea = ({
   totlaCount,
   selectedCount,
   onSubmitApproval,
+  handleDownloadFile,
 }: TableTopAreaProps) => {
   return (
     <div className="flex w-full items-center justify-between">
@@ -21,7 +23,11 @@ export const TableTopArea = ({
             variant="primary-outlined"
             onClick={onSubmitApproval}
           />
-          <Button title="서류 다운로드" variant="secondary-outlined" />
+          <Button
+            title="서류 다운로드"
+            variant="secondary-outlined"
+            onClick={handleDownloadFile}
+          />
         </div>
         {/* 선택갯수 */}
         <div className="flex items-center gap-4">
@@ -41,7 +47,7 @@ export const TableTopArea = ({
         </div>
       </div>
       {/* 페이지네이션 */}
-      <Pagination currentPage={1} totalPages={2} />
+      <Pagination currentPage={1} totalPages={1} />
     </div>
   )
 }
