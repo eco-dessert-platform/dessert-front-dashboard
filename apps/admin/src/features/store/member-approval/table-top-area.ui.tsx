@@ -3,18 +3,24 @@ import { Button, Pagination } from '@dessert/ui'
 interface TableTopAreaProps {
   totlaCount: number
   selectedCount: number
+  onSubmitApproval: () => void
 }
 
 export const TableTopArea = ({
   totlaCount,
   selectedCount,
+  onSubmitApproval,
 }: TableTopAreaProps) => {
   return (
     <div className="flex w-full items-center justify-between">
       <div className="flex gap-16">
         {/* 버튼 */}
         <div className="flex gap-10">
-          <Button title="승인" variant="primary-outlined" />
+          <Button
+            title="승인"
+            variant="primary-outlined"
+            onClick={onSubmitApproval}
+          />
           <Button title="서류 다운로드" variant="secondary-outlined" />
         </div>
         {/* 선택갯수 */}

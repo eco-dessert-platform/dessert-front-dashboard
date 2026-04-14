@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useEffectEvent, useState } from 'react'
 
 import { Checkbox, Input, Table, getRowSpanForGroup } from '@dessert/ui'
 
@@ -7,6 +7,8 @@ import { TableRow, tableData } from '@/entity/store/member-approval'
 import { TableTopArea } from './table-top-area.ui'
 
 import type { ColumnDef } from '@tanstack/react-table'
+
+import { useMemberApproval } from './member-approval.hook'
 
 type ExampleColumnArgs = {
   allSelected: boolean
@@ -126,6 +128,9 @@ const exampleColumns = ({
 export const DefaultTable = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
+  const { toggleBusinessOwner, updateBusinessOwner, submitApproval } =
+    useMemberApproval()
+
   const allSelected =
     tableData.length > 0 && selectedIds.length === tableData.length
 
@@ -146,6 +151,7 @@ export const DefaultTable = () => {
           : [...prev, rowId]
         : prev.filter((id) => id !== rowId),
     )
+    toggleBusinessOwner(rowId, checked)
   }
 
   const getRowSpanForAdmin = useCallback((rowIndex: number) => {
@@ -166,12 +172,15 @@ export const DefaultTable = () => {
     const labelClassName = 'typo-title-14-b text-center'
 
     return (
-      <tr className="bg-gray-50">
+      <tr className="bg-gray-50" key={`${row.id}-additional`}>
         <td colSpan={2} className="border-r border-r-gray-300">
           <Input
             label="대표자명"
             labelClassName={labelClassName}
             className="items-center gap-2 border-r border-r-gray-300 p-10"
+            onChange={(e) =>
+              updateBusinessOwner(row.id, 'ownerName', e.currentTarget.value)
+            }
           />
         </td>
         <td colSpan={6}>
@@ -179,6 +188,13 @@ export const DefaultTable = () => {
             label="사업자 번호"
             labelClassName={labelClassName}
             className="w-[274px] items-center gap-2 border-r border-r-gray-300 p-10"
+            onChange={(e) =>
+              updateBusinessOwner(
+                row.id,
+                'businessNumber',
+                e.currentTarget.value,
+              )
+            }
           />
         </td>
       </tr>
@@ -198,7 +214,11 @@ export const DefaultTable = () => {
       data={tableData}
       columns={columns}
       topArea={
-        <TableTopArea totlaCount={totalCount} selectedCount={selectedCount} />
+        <TableTopArea
+          onSubmitApproval={submitApproval}
+          totlaCount={totalCount}
+          selectedCount={selectedCount}
+        />
       }
       getRowClassName={getRowClassName}
       renderSubRow={renderSubRow}
