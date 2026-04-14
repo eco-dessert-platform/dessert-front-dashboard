@@ -8,19 +8,22 @@ export const useIssueTokenMutation = () => {
 
   return useMutation({
     mutationKey: authKeys.all,
-    mutationFn: (generateToken: string) => issueToken(generateToken),
-    onSuccess: (data) => {
-      if (data.accessToken) {
-        setCookie(
-          'accessToken',
-          data.accessToken,
-          getExpFromToken(data.accessToken),
-        )
+    mutationFn: async (generateToken: string) => {
+      const data = await issueToken(generateToken)
+
+      if (!data.accessToken || !data.result) {
+        throw new Error('토큰 또는 사용자 정보가 응답에 포함되지 않았습니다.')
       }
 
-      if (data.result) {
-        setAuth(data.result.sellerId, data.result.status)
-      }
+      return data
+    },
+    onSuccess: (data) => {
+      setCookie(
+        'accessToken',
+        data.accessToken!,
+        getExpFromToken(data.accessToken!),
+      )
+      setAuth(data.result!.sellerId, data.result!.status)
     },
   })
 }
