@@ -11,6 +11,7 @@ export const ROUTES = {
   PRODUCTS: {
     ALL: '/products',
     CREATE: '/products/create',
+    CREATE_DETAIL: '/products/create/detail',
   },
   SETTLEMENTS: {
     ALL: '/settlements',

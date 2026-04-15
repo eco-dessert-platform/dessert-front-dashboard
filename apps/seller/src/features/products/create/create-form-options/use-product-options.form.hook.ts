@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form'
 
 import { ProductOptionFormInput } from '@/entity/products/create/create-form/product-form.type'
 import { SUB_CATEGORY_MAP } from '@/entity/products/create/create-options/product-options.constant'
-import { CreateProductForm } from '@/pages/products/create/create-form'
+import { CreateProductForm } from '@/features/products/create/create-form/product-create.types'
 
 import { productOptionSchema } from './create-options.schema'
 import { useFloatInput } from '../create-calculation/create-form-float-input.hook'

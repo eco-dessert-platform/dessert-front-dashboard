@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form'
 
-import { CreateProductForm } from '@/pages/products/create/create-form'
+import { CreateProductForm } from '@/features/products/create/create-form/product-create.types'
 
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
 

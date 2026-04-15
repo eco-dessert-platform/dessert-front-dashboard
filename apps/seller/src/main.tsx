@@ -8,6 +8,7 @@ import SocialCallbackPage from '@/pages/auth/social-callback-page'
 import AllOrdersPage from '@/pages/orders/all-orders/all-orders-page'
 import CompletedOrdersPage from '@/pages/orders/completed-orders/completed-orders-page'
 import CreatePage from '@/pages/products/create/create-page'
+import { DetailEditPage } from '@/pages/products/create/detail-edit-page'
 import ProductsPage from '@/pages/products/product/product-page'
 import SettlementPage from '@/pages/settlement/settlement-page'
 import { ROUTES } from '@/shared/constant/routes'
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       { path: ROUTES.ORDERS.COMPLETED, element: <CompletedOrdersPage /> },
       { path: ROUTES.PRODUCTS.ALL, element: <ProductsPage /> },
       { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
+      { path: ROUTES.PRODUCTS.CREATE_DETAIL, element: <DetailEditPage /> },
       { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
     ],
   },
