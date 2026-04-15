@@ -5,7 +5,6 @@ import { cn } from '@/shared/libs/utils'
 
 const ContainerStyle = 'rounded-10 border border-gray-300 bg-white'
 function ProductsPage() {
-
   return (
     <div>
       <FilterTabs />

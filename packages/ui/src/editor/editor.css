@@ -1,0 +1,59 @@
+/* Quill 에디터 스타일 오버라이드 */
+
+/* 툴바 스타일 */
+.quill-wrapper .ql-toolbar {
+  border: none;
+  border-bottom: 1px solid var(--color-gray-200);
+  padding: 8px 12px;
+  font-family: inherit;
+}
+
+/* 에디터 본문 스타일 */
+.quill-wrapper .ql-container {
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.quill-wrapper .ql-editor {
+  padding: 12px;
+  line-height: 1.6;
+  color: var(--color-gray-900);
+  overflow-y: auto;
+  flex: 1;
+  outline: none;
+}
+
+.quill-wrapper .ql-editor.ql-blank::before {
+  color: var(--color-gray-500);
+  font-style: normal;
+  left: 12px;
+}
+
+/* 포커스 시 브라우저 기본 아웃라인 제거 및 국문 입력 시 placeholder 겹침 방지 */
+.quill-wrapper .ql-editor:focus::before {
+  display: none !important;
+}
+
+.quill-wrapper .ql-editor:focus {
+  outline: none !important;
+}
+
+/* 툴바 포커스 시에도 하이라이트 방지 */
+.quill-wrapper .ql-toolbar button:focus,
+.quill-wrapper .ql-toolbar .ql-picker:focus {
+  outline: none !important;
+}
+
+/* disabled 스타일 */
+.quill-wrapper .ql-disabled .ql-editor {
+  cursor: not-allowed;
+}
+
+/* 이미지 최대 너비 */
+.quill-wrapper .ql-editor img {
+  max-width: 100%;
+}

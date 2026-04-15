@@ -1,8 +1,6 @@
 import { XIcon } from '@dessert/icons'
 import { clsx } from 'clsx'
 
-import { cn } from '../lib/utils'
-
 interface ChipProps {
   children: React.ReactNode
   size?: 'sm' | 'md'
