@@ -41,7 +41,7 @@ const Select = ({
 }: SelectProps) => {
   return (
     <div
-      className={cn('flex flex-col items-start gap-4 self-stretch', className)}
+      className={cn('flex flex-col items-start gap-1.5 self-stretch', className)}
     >
       {label && (
         <Label label={label} required={required} className={labelClassName} />
