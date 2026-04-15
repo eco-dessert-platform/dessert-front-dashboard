@@ -11,6 +11,16 @@ interface LoginResponse {
   } | null
 }
 
+export interface LogoutResponse {
+  success: boolean
+  code: number
+  message: string
+  fieldErrors?: {
+    field: string
+    msg: string
+  }[]
+}
+
 export const adminLogin = async (data: {
   accountId: string
   password: string
@@ -22,4 +32,12 @@ export const adminLogin = async (data: {
   }
 
   return response.data.result
+}
+
+export const adminLogout = async (): Promise<void> => {
+  const response = await client.post<LogoutResponse>('/api/v1/admin/logout')
+
+  if (!response.data.success) {
+    throw new Error(response.data.message)
+  }
 }

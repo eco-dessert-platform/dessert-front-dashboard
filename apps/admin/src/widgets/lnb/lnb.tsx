@@ -7,6 +7,7 @@ import {
 } from '@dessert/ui'
 import { Link, useLocation } from 'react-router'
 
+import { useLogout } from '@/features/auth'
 import { ROUTES } from '@/shared/constant/routes'
 import { cn } from '@/shared/libs/utils'
 
@@ -84,10 +85,14 @@ function MenuItemLink({ href, title }: { href: string; title: string }) {
 }
 
 function LogoutButton() {
+  const { onLogout, isPending } = useLogout()
+
   return (
     <button
       type="button"
       className="flex h-[49px] w-full cursor-pointer items-center justify-start border-t border-gray-300 px-4 text-left"
+      onClick={onLogout}
+      disabled={isPending}
     >
       <LogOutIcon className="mr-2 size-20" />
       <span className="typo-title-16-m text-gray-800">로그아웃</span>
