@@ -47,6 +47,7 @@ export const TableTopArea = ({
         </div>
       </div>
       {/* 페이지네이션 */}
+      {/* currentPage, totalPage는 임시로 하드코딩 값으로 넣었습니다. */}
       <Pagination currentPage={1} totalPages={1} />
     </div>
   )
