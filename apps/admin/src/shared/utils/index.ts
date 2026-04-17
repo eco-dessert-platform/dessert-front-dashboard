@@ -5,4 +5,4 @@ export {
   getExpFromToken,
 } from './cookieUtils'
 
-export { client } from './axios'
+export { client, setupAuthResponseInterceptor } from './axios'

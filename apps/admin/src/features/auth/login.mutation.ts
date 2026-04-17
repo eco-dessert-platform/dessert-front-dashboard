@@ -10,9 +10,7 @@ export const useAdminLoginMutation = () => {
   return useMutation({
     mutationKey: authKeys.all,
     mutationFn: adminLogin,
-    onSuccess: (response) => {
-      const { accessToken, refreshToken } = response.data
-
+    onSuccess: ({ accessToken, refreshToken }) => {
       try {
         setCookie(
           TOKEN_COOKIE_KEYS.ACCESS,

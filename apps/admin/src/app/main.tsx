@@ -44,11 +44,11 @@ const router = createBrowserRouter([
         path: ROUTES.HOMEPAGE.NOTICE,
         element: <NoticePage />,
       },
-      {
-        path: ROUTES.LOGIN.ROOT,
-        element: <AuthPage />,
-      },
     ],
+  },
+  {
+    path: ROUTES.LOGIN,
+    element: <AuthPage />,
   },
 ])
 

@@ -1,15 +1,12 @@
-export const KAKAO = {
-  authUrl: 'https://kauth.kakao.com/oauth/authorize',
-  client_id: import.meta.env.VITE_KAKAO_AUTH_CLIENT_ID,
-  redirect_uri: import.meta.env.VITE_KAKAO_AUTH_REDIRECT_URI,
-  response_type: 'code',
-} as const
+const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL
 
-export const GOOGLE = {
-  authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
-  client_id: import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID,
-  redirect_uri: import.meta.env.VITE_GOOGLE_AUTH_REDIRECT_URI,
-  clientsecret: import.meta.env.VITE_GOOGLE_AUTH_CLIENT_SECRET,
-  response_type: 'code',
-  scope: 'openid email profile',
+if (!baseURL) {
+  throw new Error('VITE_PUBLIC_SERVER_URL 환경변수가 설정되지 않았습니다.')
+}
+
+const profile = import.meta.env.DEV ? 'local' : 'prod'
+
+export const OAUTH_URLS = {
+  google: `${baseURL}/api/v1/oauth/authorization/google?user=seller&profile=${profile}`,
+  kakao: `${baseURL}/api/v1/oauth/authorization/kakao?user=seller&profile=${profile}`,
 } as const
