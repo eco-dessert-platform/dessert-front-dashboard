@@ -1,7 +1,5 @@
 # 모노레포 package.json 가이드
 
----
-
 ## 1. 전체 구조
 
 ```
@@ -31,7 +29,7 @@ dessert-front-dashboard/
 > **핵심**: `packages/` 안의 각 폴더는 반드시 자체 `package.json`이 있어야 합니다.
 > `package.json`이 있어야 `@dessert/ui`, `@dessert/utils`라는 이름으로 import할 수 있습니다.
 
----
+<br/>
 
 ## 2. Root package.json
 
@@ -74,7 +72,7 @@ workspace를 선언하고, turbo 스크립트를 통해 하위 앱들을 관리�
 > ⚠️ `"private": true`로 package.json 설정을 해야 합니다.
 > 이 설정이 없으면 루트 패키지가 npm에 실수로 publish될 수 있습니다.
 
----
+<br/>
 
 ## 3. apps/\*/package.json
 
@@ -115,7 +113,7 @@ workspace를 선언하고, turbo 스크립트를 통해 하위 앱들을 관리�
 
 > `apps/admin/package.json`도 동일한 방식으로 관리합니다.
 
----
+<br/>
 
 ## 4. packages/\*/package.json — 공유 패키지
 
@@ -181,7 +179,7 @@ axios factory function, debounce, 날짜/숫자 포맷터 등 순수 인프라 �
 }
 ```
 
----
+<br/>
 
 ## 5. 의존성은 어디에 넣을까?
 

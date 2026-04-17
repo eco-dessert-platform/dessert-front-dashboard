@@ -7,12 +7,11 @@ import {
 } from '@dessert/ui'
 import { ChevronDown } from 'lucide-react'
 
-import { CategoryOptions } from '@/entity/products/create/create-header/category-options.constants'
-import { EssentialOptions } from '@/entity/products/create/create-header/essential-options.constants'
+import { CategoryOptions, EssentialOptions } from '@/entity/products'
 
-import { ProductHeaderTags } from './create-header-tags'
+import { ProductHeaderTags } from './create-header-tags.ui'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
-import { InfoTooltip } from '../ui/info-tooltip'
+import { InfoTooltip } from '../create-form/info-tooltip.ui'
 
 const stagestep = [
   '상품 정보',

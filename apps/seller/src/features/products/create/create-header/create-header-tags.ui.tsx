@@ -1,6 +1,6 @@
 import { Chip, Label, Tooltip } from '@dessert/ui'
 
-import { OptionTags } from '@/entity/products/create/create-header/options-tag.type'
+import { OptionTags } from '@/entity/products'
 
 interface TagsProps {
   title: string
