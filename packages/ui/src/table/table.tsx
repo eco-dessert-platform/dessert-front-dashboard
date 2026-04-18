@@ -22,6 +22,8 @@ interface TableProps<T> {
   columns: ColumnDef<T>[]
   topArea?: React.ReactNode
   maxHeight?: string | number
+  getRowClassName?: (row: T) => string
+  renderSubRow?: (row: T) => React.ReactNode
 }
 
 function Table<T>({
@@ -29,6 +31,8 @@ function Table<T>({
   columns,
   topArea,
   maxHeight = '600px',
+  getRowClassName,
+  renderSubRow,
 }: TableProps<T>) {
   const table = useReactTable<T>({
     data,
@@ -74,41 +78,47 @@ function Table<T>({
           </thead>
           <tbody>
             {getRowModel().rows.map((row) => (
-              <tr
-                key={row.id}
-                className="border-b border-gray-300 last:border-b-0"
-              >
-                {row.getVisibleCells().map((cell) => {
-                  const rowSpan =
-                    cell.column.columnDef.meta?.getRowSpan?.(cell) ?? 1
-                  const colSpan =
-                    cell.column.columnDef.meta?.getColSpan?.(cell) ?? 1
+              <>
+                <tr
+                  key={row.id}
+                  className={cn(
+                    'border-b border-gray-300 last:border-b-0',
+                    getRowClassName?.(row.original),
+                  )}
+                >
+                  {row.getVisibleCells().map((cell) => {
+                    const rowSpan =
+                      cell.column.columnDef.meta?.getRowSpan?.(cell) ?? 1
+                    const colSpan =
+                      cell.column.columnDef.meta?.getColSpan?.(cell) ?? 1
 
-                  if (rowSpan === 0 || colSpan === 0) {
-                    return null
-                  }
+                    if (rowSpan === 0 || colSpan === 0) {
+                      return null
+                    }
 
-                  return (
-                    <td
-                      key={cell.id}
-                      rowSpan={rowSpan}
-                      colSpan={colSpan}
-                      className={cn(
-                        'text-center align-middle',
-                        cell.column.columnDef.meta?.className,
-                      )}
-                      style={{ width: cell.column.getSize() }}
-                    >
-                      <div className="p-10">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
+                    return (
+                      <td
+                        key={cell.id}
+                        rowSpan={rowSpan}
+                        colSpan={colSpan}
+                        className={cn(
+                          'border-r border-r-gray-300 text-center align-middle last:border-r-0',
+                          cell.column.columnDef.meta?.className,
                         )}
-                      </div>
-                    </td>
-                  )
-                })}
-              </tr>
+                        style={{ width: cell.column.getSize() }}
+                      >
+                        <div className="p-10">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </div>
+                      </td>
+                    )
+                  })}
+                </tr>
+                {renderSubRow?.(row.original)}
+              </>
             ))}
           </tbody>
         </table>
