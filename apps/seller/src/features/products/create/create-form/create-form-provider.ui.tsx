@@ -10,6 +10,7 @@ export const FormStepsProvider = ({
   const [productFields, setProductFields] = useState<FormStepStatus>({
     productInfo: false,
     productDelivery: false,
+    productThumbnail: false,
     productOptions: false,
   })
 

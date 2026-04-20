@@ -5,7 +5,6 @@ import {
   AccordionTrigger,
   StageTab,
 } from '@dessert/ui'
-import { ChevronDownIcon } from 'lucide-react'
 
 import { CategoryOptions, EssentialOptions } from '@/entity/products'
 

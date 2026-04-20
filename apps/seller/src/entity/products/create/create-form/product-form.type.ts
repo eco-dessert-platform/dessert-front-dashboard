@@ -16,6 +16,11 @@ export type DeliveryFormInput = {
   deliveryMinFee: number | null
 }
 
+export type ThumbnailFormInput = {
+  mainImage: File | null
+  extraImages: File[]
+}
+
 export type ProductOptionFormInput = {
   mainCategory: string
   subCategory: string
