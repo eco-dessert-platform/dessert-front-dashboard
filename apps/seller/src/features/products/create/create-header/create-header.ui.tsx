@@ -5,13 +5,13 @@ import {
   AccordionTrigger,
   StageTab,
 } from '@dessert/ui'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDownIcon } from 'lucide-react'
 
 import { CategoryOptions, EssentialOptions } from '@/entity/products'
 
 import { ProductHeaderTags } from './create-header-tags.ui'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
+import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 const stagestep = [
   '상품 정보',
@@ -64,11 +64,10 @@ export const ProductHeader = () => {
               />
             </div>
           </AccordionContent>
-          <AccordionTrigger className="absolute right-[90px] -bottom-[66px] justify-center border p-0">
-            <div className="rounded-b-16 bg-white px-[26px] py-6">
-              <ChevronDown size={36} />
-            </div>
-          </AccordionTrigger>
+          <AccordionTrigger
+            customIcon
+            className="absolute top-[unset] right-0 -bottom-64 h-48 w-22 items-center justify-center rounded-b-16 border border-gray-300 bg-white"
+          ></AccordionTrigger>
         </AccordionItem>
       </Accordion>
     </div>

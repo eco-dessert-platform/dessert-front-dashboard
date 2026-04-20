@@ -33,11 +33,17 @@ function AccordionItem({
   )
 }
 
+interface CustomTriggerProps
+  extends React.ComponentProps<typeof AccordionPrimitive.Trigger> {
+  customIcon?: React.ReactNode
+}
+
 function AccordionTrigger({
   className,
   children,
+  customIcon = false,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+}: CustomTriggerProps) {
   return (
     <AccordionPrimitive.Header className="flex items-center">
       <AccordionPrimitive.Trigger
@@ -50,8 +56,12 @@ function AccordionTrigger({
       >
         {children}
         <ChevronDownIcon
+          fontSize={36}
           data-slot="accordion-trigger-icon"
-          className="pointer-events-none shrink-0 transition-transform group-data-[state=open]:rotate-180"
+          className={cn(
+            'pointer-events-none shrink-0 transition-transform group-data-[state=open]:rotate-180',
+            customIcon && 'm-0! size-9!',
+          )}
         />
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
