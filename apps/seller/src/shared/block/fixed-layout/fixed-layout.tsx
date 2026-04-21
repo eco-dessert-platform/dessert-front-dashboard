@@ -10,10 +10,15 @@ const FixedLayout = () => {
       <LogoHeader />
       <div className="flex h-[calc(100vh-80px)] w-full flex-row overflow-y-auto">
         <Lnb />
-        <main className="size-full max-w-[1240px] bg-gray-50">
+        {/* <main className="size-full max-w-[1240px] bg-gray-50">
           <ScrollArea className="size-full px-[90px] py-40">
             <Outlet />
           </ScrollArea>
+        </main> */}
+        <main className="h-full max-w-[calc(100vw-240px)] overflow-y-auto bg-gray-50">
+          <div className="relative px-[90px] py-40">
+            <Outlet />
+          </div>
         </main>
       </div>
     </>
