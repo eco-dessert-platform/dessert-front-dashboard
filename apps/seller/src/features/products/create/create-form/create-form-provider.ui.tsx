@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 import { FormStepStatus, FormStepsContext } from './create-form-steps.context'
 
+// FormStepsProvider - scrollToStep 수정
 export const FormStepsProvider = ({
   children,
 }: {
@@ -13,13 +14,17 @@ export const FormStepsProvider = ({
     productThumbnail: false,
     productOptions: false,
     productDetail: false,
-    productDisClosure: false,
+    productDisclosure: false,
   })
 
   const [currentStep, setCurrentStep] = useState(1)
+  const [headerHeight, setHeaderHeight] = useState(0)
 
-  // 특정 영역으로 스크롤 이동하는 함수
-  const scrollToStep = (index: number) => {
+  // 🔑 클릭으로 스크롤 중인지 여부를 ref로 관리 (리렌더 불필요)
+  const isScrollingToStep = useRef(false)
+  const scrollEndTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const scrollToStep = useCallback((index: number) => {
     const stepIds = [
       'productInfo',
       'productDelivery',
@@ -31,20 +36,34 @@ export const FormStepsProvider = ({
     const targetId = stepIds[index]
     const element = document.getElementById(targetId)
 
-    console.log(element)
+    if (!element) return
 
-    const container = document.querySelector('main')
+    // 1. Observer 일시 비활성화 + step 즉시 확정
+    isScrollingToStep.current = true
+    setCurrentStep(index + 1)
 
-    if (element && container) {
-      const headerOffset = 250
-      const elementPosition = element.offsetTop // 부모 컨테이너 기준 위치
+    // 2. 이전 타이머 초기화
+    if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current)
 
-      container.scrollTo({
-        top: elementPosition - headerOffset,
-        behavior: 'smooth',
-      })
+    // 3. 스크롤
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+    // 4. scrollend 이벤트 지원 시 사용, 미지원 시 timeout fallback
+    const unlock = () => {
+      isScrollingToStep.current = false
+      window.removeEventListener('scrollend', unlock)
+      if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current)
     }
-  }
+
+    if ('onscrollend' in window) {
+      window.addEventListener('scrollend', unlock, { once: true })
+      // scrollend가 발화 안 될 경우 대비 안전망
+      scrollEndTimer.current = setTimeout(unlock, 1000)
+    } else {
+      // fallback: smooth scroll 최대 소요 시간 대기
+      scrollEndTimer.current = setTimeout(unlock, 800)
+    }
+  }, [])
 
   return (
     <FormStepsContext.Provider
@@ -54,6 +73,9 @@ export const FormStepsProvider = ({
         currentStep,
         setCurrentStep,
         scrollToStep,
+        headerHeight,
+        setHeaderHeight,
+        isScrollingToStep, // ref 전달
       }}
     >
       {children}

@@ -29,7 +29,9 @@ function CreatePage() {
 }
 
 function CreatePageInner() {
-  const { setCurrentStep } = useCreateFormSteps()
+  const { setCurrentStep, headerHeight, isScrollingToStep } =
+    useCreateFormSteps()
+
   const stepIds = [
     'productInfo',
     'productDelivery',
@@ -40,30 +42,41 @@ function CreatePageInner() {
   ]
 
   useEffect(() => {
+    const elements = stepIds.map((id) => document.getElementById(id))
+    const topMargin = Math.max(0, headerHeight - 30)
+
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          // 화면 중앙(또는 상단)에 위치할 때 해당 스텝을 활성화
-          if (entry.isIntersecting) {
-            const index = stepIds.indexOf(entry.target.id)
-            setCurrentStep(index + 1)
-          }
+        if (isScrollingToStep.current) return
+
+        // 현재 화면에 보이는 섹션들 중 가장 위에 있는 것을 active로
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
+
+        if (visibleEntries.length === 0) return
+
+        // rootMargin 기준선을 통과한 entry 중 index가 가장 큰 것 선택
+        // (스크롤 방향 무관하게 "현재 보이는 가장 상단 섹션" 기준)
+        const topEntry = visibleEntries.reduce((prev, curr) => {
+          // boundingClientRect.top이 작을수록 화면 상단에 가까움
+          return curr.boundingClientRect.top < prev.boundingClientRect.top
+            ? curr
+            : prev
         })
+
+        const index = stepIds.indexOf(topEntry.target.id)
+        if (index !== -1) setCurrentStep(index + 1)
       },
       {
-        root: null, // 브라우저 뷰포트 기준
-        rootMargin: '-30% 0px -60% 0px', // 감지 영역 조정
+        rootMargin: `-${topMargin}px 0px -60% 0px`,
         threshold: 0,
       },
     )
 
-    stepIds.forEach((id) => {
-      const el = document.getElementById(id)
+    elements.forEach((el) => {
       if (el) observer.observe(el)
     })
-
     return () => observer.disconnect()
-  }, [setCurrentStep])
+  }, [headerHeight, setCurrentStep, isScrollingToStep])
 
   return (
     <>
@@ -71,12 +84,15 @@ function CreatePageInner() {
       <CreateFormContainer id="productInfo" className="mt-22">
         <ProductInfoArea />
       </CreateFormContainer>
+
       <CreateFormContainer id="productDelivery">
         <ProductDeliveryArea />
       </CreateFormContainer>
+
       <CreateFormContainer id="productThumbnail">
         <ThumbnailUploadArea />
       </CreateFormContainer>
+
       <CreateFormContainer id="productOptions">
         <ProductOptionsArea />
       </CreateFormContainer>

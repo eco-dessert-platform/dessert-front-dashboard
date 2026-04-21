@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 import {
   Accordion,
   AccordionContent,
@@ -22,30 +24,38 @@ const stagestep = [
 ]
 
 export const ProductHeader = () => {
-  const { productFields, currentStep, scrollToStep } = useCreateFormSteps()
+  const { productFields, currentStep, scrollToStep, setHeaderHeight } =
+    useCreateFormSteps()
+  const headerRef = useRef<HTMLDivElement>(null)
   const steps = Object.values(productFields).filter((e) => e === true).length
   const totalSteps = Object.keys(productFields).length
+  useEffect(() => {
+    if (!headerRef.current) return
 
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        // 💡 소수점 때문에 발생하는 불필요한 리렌더링 방지 (Math.round)
+        const height = Math.round(entry.target.clientHeight)
+        setHeaderHeight(height)
+      }
+    })
+
+    observer.observe(headerRef.current)
+    return () => observer.disconnect()
+  }, [setHeaderHeight])
   return (
-    <div className="sticky top-0 left-0 z-20 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16">
+    <div
+      ref={headerRef}
+      className="sticky top-0 left-0 z-20 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16"
+    >
       <div className="flex w-full items-center justify-between">
         <div className="relative">
           <StageTab
             currentStep={currentStep}
             steps={stagestep}
             className="w-fit justify-start border-none"
+            onStepClick={(idx) => scrollToStep(idx)}
           />
-          {/* 클릭 기능을 위한 투명 레이어 (선택 사항) */}
-          <div className="absolute inset-0 flex">
-            {stagestep.map((_, idx) => (
-              <button
-                key={idx}
-                className="h-full flex-1 cursor-pointer border"
-                onClick={() => scrollToStep(idx)}
-                title={`${stagestep[idx]} 이동`}
-              />
-            ))}
-          </div>
         </div>
 
         <p className="typo-title-16-sb">
