@@ -22,19 +22,32 @@ const stagestep = [
 ]
 
 export const ProductHeader = () => {
-  const { productFields } = useCreateFormSteps()
+  const { productFields, currentStep, scrollToStep } = useCreateFormSteps()
   const steps = Object.values(productFields).filter((e) => e === true).length
   const totalSteps = Object.keys(productFields).length
 
   return (
     <div className="sticky top-0 left-0 z-20 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16">
       <div className="flex w-full items-center justify-between">
-        {/* TODO : 추후 기능 추가 예정 */}
-        <StageTab
-          currentStep={1}
-          steps={stagestep}
-          className="w-fit justify-start border-none"
-        />
+        <div className="relative">
+          <StageTab
+            currentStep={currentStep}
+            steps={stagestep}
+            className="w-fit justify-start border-none"
+          />
+          {/* 클릭 기능을 위한 투명 레이어 (선택 사항) */}
+          <div className="absolute inset-0 flex">
+            {stagestep.map((_, idx) => (
+              <button
+                key={idx}
+                className="h-full flex-1 cursor-pointer border"
+                onClick={() => scrollToStep(idx)}
+                title={`${stagestep[idx]} 이동`}
+              />
+            ))}
+          </div>
+        </div>
+
         <p className="typo-title-16-sb">
           필수 입력 사항이{' '}
           <span className="text-primary-500">{totalSteps - steps}개</span>{' '}
