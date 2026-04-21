@@ -1,31 +1,43 @@
 import { z } from 'zod'
 
 export const UploadApprovalSchema = z.object({
-  boardId: z.number(),
+  boardId: z.number().int().positive(),
   storeName: z.string(),
   boardTitle: z.string(),
 })
 
 export const UploadApprovalListResultSchema = z.object({
   content: z.array(UploadApprovalSchema),
-  page: z.number(),
-  size: z.number(),
-  totalPages: z.number(),
-  totalElements: z.number(),
+  page: z.number().int().nonnegative(),
+  size: z.number().int().positive(),
+  totalPages: z.number().int().nonnegative(),
+  totalElements: z.number().int().nonnegative(),
 })
 
-export const UploadApprovalListResponseSchema = z.object({
-  success: z.boolean(),
+const BaseResponseSchema = z.object({
   code: z.number(),
   message: z.string(),
   fieldErrors: z
     .array(z.object({ field: z.string(), msg: z.string() }))
     .optional(),
-  result: UploadApprovalListResultSchema,
 })
 
+export const UploadApprovalListResponseSchema = z.discriminatedUnion(
+  'success',
+  [
+    BaseResponseSchema.extend({
+      success: z.literal(true),
+      result: UploadApprovalListResultSchema,
+    }),
+    BaseResponseSchema.extend({
+      success: z.literal(false),
+      result: z.null().optional(),
+    }),
+  ],
+)
+
 export const GetUploadApprovalsRequestParamsSchema = z.object({
-  page: z.number().optional(),
-  size: z.number().optional(),
+  page: z.number().int().nonnegative().optional(),
+  size: z.number().int().positive().optional(),
   sort: z.array(z.string()).optional(),
 })
