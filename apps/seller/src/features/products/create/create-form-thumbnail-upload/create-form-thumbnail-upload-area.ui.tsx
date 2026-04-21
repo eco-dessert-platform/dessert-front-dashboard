@@ -1,16 +1,14 @@
 import React, { useEffect, useRef } from 'react'
 
-import { CameraIcon, XIcon } from 'lucide-react' // 아이콘 라이브러리 적절히 사용
-import { useFieldArray, useFormContext } from 'react-hook-form'
-
-import { cn } from '@/shared/libs/utils'
+import { Label } from '@dessert/ui'
+import { Camera, XIcon } from 'lucide-react'
 
 import { useProductThumbnailForm } from './use-product-thumnail-form.hook'
+import { InfoTooltip } from '../create-form/info-tooltip.ui'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 export function ThumbnailUploadArea() {
   const {
-    form,
     mainImage,
     extraImages,
     isFormField,
@@ -56,15 +54,21 @@ export function ThumbnailUploadArea() {
   }
 
   return (
-    <div className="flex flex-col gap-8 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
-      <h3 className="text-gray-900">썸네일 등록</h3>
-
+    <>
+      <div className="mb-24 flex items-center gap-2">
+        <Label
+          label="썸네일 등록"
+          className="typo-heading-20-sb text-gray-900"
+        />
+      </div>
       {/* 대표 이미지 영역 */}
-      <div className="flex flex-col gap-4">
-        <label className="typo-body-14-m text-gray-700">
-          대표 이미지 등록<span className="text-red-500">*</span>
-        </label>
-        <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-8">
+        <Label
+          label="대표 이미지 등록"
+          required
+          className="typo-heading-18-r text-gray-800"
+        />
+        <div className="flex flex-col gap-8">
           {mainImage ? (
             <ImagePreviewItem
               src={URL.createObjectURL(mainImage)}
@@ -78,7 +82,7 @@ export function ThumbnailUploadArea() {
               onChange={(e) => handleFileChange(e, 'main')}
             />
           )}
-          <p className="mt-2 typo-body-12-r text-gray-400">
+          <p className="mt-8 typo-title-16-r text-gray-600">
             권장 크기 1000×1000, 최소 160×160 이상 (1:1 비율) · jpg, jpeg, png
             형식 · 10MB 이하 파일만 업로드 가능해요
           </p>
@@ -86,8 +90,11 @@ export function ThumbnailUploadArea() {
       </div>
 
       {/* 추가 이미지 영역 */}
-      <div className="flex flex-col gap-4">
-        <label className="typo-body-14-m text-gray-700">추가 이미지</label>
+      <div className="mt-32 flex flex-col gap-8">
+        <Label
+          label="추가 이미지"
+          className="typo-heading-18-r text-gray-800"
+        />
         <div className="flex flex-wrap gap-3">
           {/* 추가 이미지들은 업로드 버튼이 항상 앞에 오거나 뒤에 오도록 배치 */}
           {extraImages.length < 9 && (
@@ -108,7 +115,7 @@ export function ThumbnailUploadArea() {
           ))}
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -130,12 +137,11 @@ function UploadButton({
   return (
     <label
       htmlFor={id}
-      className="flex h-[120px] w-[120px] cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-gray-200 bg-gray-50 transition-colors hover:bg-gray-100"
+      className="flex h-[120px] w-[120px] cursor-pointer flex-col items-center justify-center rounded-16 border border-dashed border-gray-200 bg-white transition-colors hover:bg-gray-100"
     >
-      <CameraIcon className="size-6 text-gray-300" />
-      <span className="mt-2 typo-body-12-m text-gray-400">
-        사진 <span className={count > 0 ? 'text-primary' : ''}>{count}</span>/
-        {max}
+      <Camera className="w-4.25 text-gray-300" />
+      <span className="typo-body-12-r text-gray-800">
+        사진 <span className="text-primary-500">{count}</span>/{max}
       </span>
       <input
         id={id}
