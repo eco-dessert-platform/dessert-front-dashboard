@@ -15,5 +15,3 @@ export {
 export { getUploadApprovals } from './product.api'
 
 export { productQueries } from './product.query'
-
-export { getProductMockData } from './product.mock'
