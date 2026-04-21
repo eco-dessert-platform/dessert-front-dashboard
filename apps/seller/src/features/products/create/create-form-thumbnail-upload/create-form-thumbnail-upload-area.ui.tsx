@@ -15,50 +15,22 @@ import { Camera, XIcon } from 'lucide-react'
 import { useProductThumbnailForm } from './use-product-thumnail-form.hook'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
-export function ThumbnailUploadArea() {
+export const ThumbnailUploadArea = () => {
   const {
     mainImage,
     extraImages,
     isFormField,
-    handleMainImageChange,
-    handleExtraImagesChange,
+    deleteTarget,
+    setDeleteTarget,
+    handleFileChange,
+    handleImageDelete,
   } = useProductThumbnailForm()
 
   const { setProductFields } = useCreateFormSteps()
 
-  // 삭제 대상 관리를 위한 상태 (index 번호 또는 'main')
-  const [deleteTarget, setDeleteTarget] = useState<number | 'main' | null>(null)
-
   useEffect(() => {
     setProductFields((prev) => ({ ...prev, productThumbnail: isFormField }))
   }, [isFormField, setProductFields])
-
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    type: 'main' | 'extra',
-  ) => {
-    const files = e.target.files
-    if (!files) return
-
-    if (type === 'main') {
-      handleMainImageChange(files[0])
-    } else {
-      const remainingSlots = 9 - extraImages.length
-      const newFiles = Array.from(files).slice(0, remainingSlots)
-      handleExtraImagesChange([...extraImages, ...newFiles])
-    }
-    e.target.value = ''
-  }
-
-  const executeDelete = () => {
-    if (deleteTarget === 'main') {
-      handleMainImageChange(null)
-    } else if (typeof deleteTarget === 'number') {
-      const newImages = extraImages.filter((_, i) => i !== deleteTarget)
-      handleExtraImagesChange(newImages)
-    }
-    setDeleteTarget(null)
-  }
 
   return (
     <>
@@ -127,7 +99,7 @@ export function ThumbnailUploadArea() {
       <DeleteConfirmDialog
         isOpen={deleteTarget !== null}
         onClose={() => setDeleteTarget(null)}
-        onConfirm={executeDelete}
+        onConfirm={handleImageDelete}
       />
     </>
   )
