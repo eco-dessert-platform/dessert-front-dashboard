@@ -1,10 +1,18 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { Label } from '@dessert/ui'
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Label,
+} from '@dessert/ui'
 import { Camera, XIcon } from 'lucide-react'
 
 import { useProductThumbnailForm } from './use-product-thumnail-form.hook'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 export function ThumbnailUploadArea() {
@@ -18,22 +26,12 @@ export function ThumbnailUploadArea() {
 
   const { setProductFields } = useCreateFormSteps()
 
+  // 삭제 대상 관리를 위한 상태 (index 번호 또는 'main')
+  const [deleteTarget, setDeleteTarget] = useState<number | 'main' | null>(null)
+
   useEffect(() => {
-    setProductFields((prev) => ({ ...prev, productDelivery: isFormField }))
+    setProductFields((prev) => ({ ...prev, productThumbnail: isFormField }))
   }, [isFormField, setProductFields])
-
-  // 이미지 삭제 모달 상태 관리 (커스텀 필요)
-  const handleDelete = (index: number | 'main') => {
-    // 프로젝트 공통 모달이 있다면 window.confirm 대신 교체 가능
-    if (!window.confirm('이미지를 제거하시겠습니까?')) return
-
-    if (index === 'main') {
-      handleMainImageChange(null)
-    } else {
-      const newImages = extraImages.filter((_, i) => i !== index)
-      handleExtraImagesChange(newImages)
-    }
-  }
 
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -49,8 +47,17 @@ export function ThumbnailUploadArea() {
       const newFiles = Array.from(files).slice(0, remainingSlots)
       handleExtraImagesChange([...extraImages, ...newFiles])
     }
-    // 동일 파일 다시 선택 가능하도록 초기화
     e.target.value = ''
+  }
+
+  const executeDelete = () => {
+    if (deleteTarget === 'main') {
+      handleMainImageChange(null)
+    } else if (typeof deleteTarget === 'number') {
+      const newImages = extraImages.filter((_, i) => i !== deleteTarget)
+      handleExtraImagesChange(newImages)
+    }
+    setDeleteTarget(null)
   }
 
   return (
@@ -61,6 +68,7 @@ export function ThumbnailUploadArea() {
           className="typo-heading-20-sb text-gray-900"
         />
       </div>
+
       {/* 대표 이미지 영역 */}
       <div className="flex flex-col gap-8">
         <Label
@@ -72,7 +80,7 @@ export function ThumbnailUploadArea() {
           {mainImage ? (
             <ImagePreviewItem
               src={URL.createObjectURL(mainImage)}
-              onDelete={() => handleDelete('main')}
+              onDelete={() => setDeleteTarget('main')}
             />
           ) : (
             <UploadButton
@@ -95,8 +103,7 @@ export function ThumbnailUploadArea() {
           label="추가 이미지"
           className="typo-heading-18-r text-gray-800"
         />
-        <div className="flex flex-wrap gap-3">
-          {/* 추가 이미지들은 업로드 버튼이 항상 앞에 오거나 뒤에 오도록 배치 */}
+        <div className="flex flex-wrap gap-12">
           {extraImages.length < 9 && (
             <UploadButton
               id="extra-images"
@@ -108,13 +115,20 @@ export function ThumbnailUploadArea() {
           )}
           {extraImages.map((file: File, idx: number) => (
             <ImagePreviewItem
-              key={idx}
+              key={`${file.name}-${idx}`}
               src={URL.createObjectURL(file)}
-              onDelete={() => handleDelete(idx)}
+              onDelete={() => setDeleteTarget(idx)}
             />
           ))}
         </div>
       </div>
+
+      {/* 삭제 확인 모달 */}
+      <DeleteConfirmDialog
+        isOpen={deleteTarget !== null}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={executeDelete}
+      />
     </>
   )
 }
@@ -139,7 +153,7 @@ function UploadButton({
       htmlFor={id}
       className="flex h-[120px] w-[120px] cursor-pointer flex-col items-center justify-center rounded-16 border border-dashed border-gray-200 bg-white transition-colors hover:bg-gray-100"
     >
-      <Camera className="w-4.25 text-gray-300" />
+      <Camera className="w-16 text-gray-300" />
       <span className="typo-body-12-r text-gray-800">
         사진 <span className="text-primary-500">{count}</span>/{max}
       </span>
@@ -155,7 +169,6 @@ function UploadButton({
   )
 }
 
-// 프리뷰 아이템 컴포넌트
 function ImagePreviewItem({
   src,
   onDelete,
@@ -164,15 +177,55 @@ function ImagePreviewItem({
   onDelete: () => void
 }) {
   return (
-    <div className="relative h-[120px] w-[120px] overflow-hidden rounded-lg border border-gray-100 bg-gray-50">
+    <div className="relative h-[120px] w-[120px] overflow-hidden rounded-16 border border-gray-100 bg-gray-50">
       <img src={src} alt="preview" className="size-full object-cover" />
       <button
         type="button"
         onClick={onDelete}
-        className="absolute top-1 right-1 rounded-full bg-gray-900/50 p-1 text-white transition-colors hover:bg-gray-900"
+        className="absolute top-6 right-6 rounded-full bg-black/10 p-2 text-white transition-colors hover:bg-gray-900/50"
       >
-        <XIcon className="size-3" />
+        <XIcon className="size-12" />
       </button>
     </div>
+  )
+}
+
+interface DeleteConfirmDialogProps {
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
+}
+
+function DeleteConfirmDialog({
+  isOpen,
+  onClose,
+  onConfirm,
+}: DeleteConfirmDialogProps) {
+  return (
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent showCloseButton={false}>
+        <DialogHeader>
+          <DialogTitle>이미지를 삭제 하시겠어요?</DialogTitle>
+          <DialogDescription>
+            현재 등록된 대표 이미지를 삭제하면 기존에
+            <br /> 등록된 이미지를 복구할 수 없어요.{' '}
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button
+            title="취소"
+            variant="secondary-outlined"
+            onClick={onClose}
+            className="flex-1"
+          />
+          <Button
+            title="확인"
+            variant="secondary-filled"
+            onClick={onConfirm}
+            className="flex-1"
+          />
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
