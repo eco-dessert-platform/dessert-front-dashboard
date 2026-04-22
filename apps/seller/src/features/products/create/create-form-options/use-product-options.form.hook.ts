@@ -5,9 +5,11 @@ import { SUB_CATEGORY_MAP } from '@/entity/products/create/create-options/produc
 
 import { productOptionSchema } from './create-options.schema'
 import { useFloatInput, useNumberInput } from '../create-calculation'
-import { CreateProductForm } from '../create-form'
+import { CreateProductForm, useCreateFormSteps } from '../create-form'
 
 export function useProductOptionForm(basePrice: number | null = null) {
+  const { productPrice } = useCreateFormSteps()
+
   const form = useFormContext<CreateProductForm>()
 
   const mainCategory = form.watch('mainCategory')
@@ -37,8 +39,8 @@ export function useProductOptionForm(basePrice: number | null = null) {
       : []
 
   const totalPrice =
-    basePrice !== null && additionalPrice !== null
-      ? basePrice + additionalPrice
+    productPrice !== null && additionalPrice !== null
+      ? productPrice + additionalPrice
       : null
 
   const handleMainCategoryChange = (val: string) => {

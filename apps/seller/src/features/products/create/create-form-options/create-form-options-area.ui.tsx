@@ -9,7 +9,7 @@ import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/p
 import DaySelector from '@/shared/block/day-selector/day-selector'
 
 import { useProductOptionForm } from './use-product-options.form.hook'
-import { useCreateFormSteps } from '../create-form'
+import { ProductFinalPrice, useCreateFormSteps } from '../create-form'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
 
 export const ProductOptionsArea = () => {
@@ -189,14 +189,11 @@ export const ProductOptionsArea = () => {
           </div>
         </div>
         {totalPrice !== null && (
-          <div className="mt-8 flex justify-end">
-            <p className="typo-title-16-r text-gray-600">
-              최종 가격:
-              <span className="typo-heading-18-b text-gray-900">
-                {totalPrice.toLocaleString('ko-KR')}원
-              </span>
-            </p>
-          </div>
+          <ProductFinalPrice
+            title="최종 상품 옵션 금액"
+            price={productPrice}
+            finalPrice={totalPrice}
+          />
         )}
       </div>
 
