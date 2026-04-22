@@ -2,11 +2,24 @@ import type { ApiResponse } from '@/entity/auth/types'
 import { client } from '@/shared/utils/axios'
 
 import {
+  getMockConfirmOrderResponse,
+  getMockCreateExchangeResponse,
+  getMockCreateReturnResponse,
+  getMockCreateShipmentResponse,
   getMockOrderDetailResponse,
   getMockOrderListResponse,
+  getMockUpdateShipmentResponse,
 } from './order.mock'
 import {
+  CancelDecisionRequest,
+  ConfirmOrderRequest,
+  ConfirmOrderResult,
   CourierName,
+  CreateExchangeRequest,
+  CreateExchangeResult,
+  CreateReturnRequest,
+  CreateReturnResult,
+  CreateShipmentResult,
   DeliveryStatus,
   OrderDeliveryStatusSpec,
   OrderDetail,
@@ -16,6 +29,9 @@ import {
   OrderListResponse,
   OrderListResult,
   OrderStatusCount,
+  ReturnDecisionRequest,
+  ShipmentRequest,
+  UpdateShipmentResult,
 } from './order.type'
 
 export interface UpdateOrderStatusRequest {
@@ -23,12 +39,6 @@ export interface UpdateOrderStatusRequest {
   reasonType: string
   reasonDetail: string
   images?: File[]
-}
-
-export interface UpdateTrackingRequest {
-  orderNumber: string
-  courierName: CourierName
-  trackingNumber: string
 }
 
 export interface CompleteOrderRequest {
@@ -199,14 +209,50 @@ export async function updateOrderStatus(
   })
 }
 
-export async function updateTracking(
-  request: UpdateTrackingRequest,
-): Promise<void> {
+export async function createShipment(
+  request: ShipmentRequest,
+): Promise<CreateShipmentResult> {
   if (useMock) {
-    return Promise.resolve()
+    return getMockCreateShipmentResponse(request)
   }
 
-  await client.put('/api/v1/seller/orders/tracking', request)
+  const { orderId, orderItemIds, courierName, trackingNumber } = request
+  const { data } = await client.post<
+    ApiResponse<{ content: CreateShipmentResult }>
+  >(`/api/v1/seller/orders/${orderId}/shipment`, {
+    orderItemIds,
+    courierName,
+    trackingNumber,
+  })
+
+  if (!data.result?.content) {
+    throw new Error(data.message ?? '운송장 등록에 실패했습니다.')
+  }
+
+  return data.result.content
+}
+
+export async function updateShipment(
+  request: ShipmentRequest,
+): Promise<UpdateShipmentResult> {
+  if (useMock) {
+    return getMockUpdateShipmentResponse(request)
+  }
+
+  const { orderId, orderItemIds, courierName, trackingNumber } = request
+  const { data } = await client.put<
+    ApiResponse<{ contents: UpdateShipmentResult }>
+  >(`/api/v1/seller/orders/${orderId}/shipment`, {
+    orderItemIds,
+    courierName,
+    trackingNumber,
+  })
+
+  if (!data.result?.contents) {
+    throw new Error(data.message ?? '운송장 수정에 실패했습니다.')
+  }
+
+  return data.result.contents
 }
 
 export async function completeReturn(
@@ -229,12 +275,104 @@ export async function completeExchange(
   await client.post('/api/v1/seller/orders/exchange/complete', request)
 }
 
-export async function confirmOrder(
-  request: CompleteOrderRequest,
+export async function createReturn(
+  request: CreateReturnRequest,
+): Promise<CreateReturnResult> {
+  if (useMock) {
+    return getMockCreateReturnResponse(request)
+  }
+
+  const { orderId, orderItemIds, reason, sellerComment } = request
+  const { data } = await client.post<
+    ApiResponse<{ content: CreateReturnResult }>
+  >(`/api/v1/seller/orders/${orderId}/returns`, {
+    orderItemIds,
+    reason,
+    sellerComment,
+  })
+
+  if (!data.result?.content) {
+    throw new Error(data.message ?? '반품 요청에 실패했습니다.')
+  }
+
+  return data.result.content
+}
+
+export async function createExchange(
+  request: CreateExchangeRequest,
+): Promise<CreateExchangeResult> {
+  if (useMock) {
+    return getMockCreateExchangeResponse(request)
+  }
+
+  const { orderId, orderItemIds, reason, sellerComment } = request
+  const { data } = await client.post<
+    ApiResponse<{ content: CreateExchangeResult }>
+  >(`/api/v1/seller/orders/${orderId}/exchanges`, {
+    orderItemIds,
+    reason,
+    sellerComment,
+  })
+
+  if (!data.result?.content) {
+    throw new Error(data.message ?? '교환 요청에 실패했습니다.')
+  }
+
+  return data.result.content
+}
+
+export async function decideCancel(
+  request: CancelDecisionRequest,
 ): Promise<void> {
   if (useMock) {
     return Promise.resolve()
   }
 
-  await client.post('/api/v1/seller/orders/confirm', request)
+  const { data } = await client.post<ApiResponse<never>>(
+    '/api/v1/seller/cancels/decision',
+    request,
+  )
+
+  if (!data.success) {
+    throw new Error(data.message ?? '주문 취소 처리에 실패했습니다.')
+  }
+}
+
+export async function decideReturn(
+  request: ReturnDecisionRequest,
+): Promise<void> {
+  if (useMock) {
+    return Promise.resolve()
+  }
+
+  const { data } = await client.post<ApiResponse<never>>(
+    '/api/v1/seller/returns/decision',
+    request,
+  )
+
+  if (!data.success) {
+    throw new Error(data.message ?? '반품 처리에 실패했습니다.')
+  }
+}
+
+export async function confirmOrder(
+  request: ConfirmOrderRequest,
+): Promise<ConfirmOrderResult> {
+  if (useMock) {
+    return getMockConfirmOrderResponse(request)
+  }
+
+  const { orderId, orderItemIds } = request
+  const { data } = await client.post<
+    ApiResponse<{ content: ConfirmOrderResult }>
+  >(
+    `/api/v1/seller/orders/${orderId}/confirm`,
+    { orderItemIds },
+  )
+
+  if (!data.result?.content) {
+    throw new Error(data.message ?? '발주 확인에 실패했습니다.')
+  }
+
+  return data.result.content
 }

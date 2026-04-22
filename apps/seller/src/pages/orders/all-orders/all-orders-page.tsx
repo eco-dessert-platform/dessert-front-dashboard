@@ -11,9 +11,7 @@ import { useSearchParams } from 'react-router-dom'
 import {
   completeExchange,
   completeReturn,
-  confirmOrder,
   updateOrderStatus,
-  updateTracking,
 } from '@/entity/order/order.api'
 import { orderQueries } from '@/entity/order/order.query'
 import {
@@ -22,20 +20,31 @@ import {
   OrderStatusTab,
 } from '@/entity/order/order.type'
 import { toast } from '@dessert/ui'
-import { OrderActionBar } from '@/features/order/order-action-bar/order-action-bar.ui'
+import {
+  OrderActionBar,
+  useConfirmOrderMutation,
+  useDecideCancelMutation,
+  useDecideReturnMutation,
+} from '@/features/order/order-action-bar'
 import { OrderDetailModal } from '@/features/order/order-detail-modal/order-detail-modal.ui'
 import { useOrderFilter } from '@/features/order/order-filters/order-filters.hook'
 import { OrderFilters } from '@/features/order/order-filters/order-filters.ui'
 import {
   REASON_REQUIRED_ACTIONS,
   ReasonAction,
-} from '@/features/order/reason-input-modal/reason-input-modal.constant'
-import { ReasonInputModal } from '@/features/order/reason-input-modal/reason-input-modal.ui'
+  ReasonInputModal,
+  useCreateExchangeMutation,
+  useCreateReturnMutation,
+} from '@/features/order/reason-input-modal'
 import { OrderSelectAlertModal } from '@/features/order/order-select-alert-modal/order-select-alert-modal.ui'
 import { OrderStatusTabs } from '@/features/order/order-status-tabs/order-status-tabs.ui'
 import { useOrderSelection } from '@/features/order/order-table/order-selection.hook'
 import { OrderTable } from '@/features/order/order-table/order-table.ui'
-import { TrackingNumberModal } from '@/features/order/tracking-number-modal/tracking-number-modal.ui'
+import {
+  TrackingNumberModal,
+  useCreateShipmentMutation,
+  useUpdateShipmentMutation,
+} from '@/features/order/tracking-number-modal'
 
 const VALID_TABS: OrderStatusTab[] = [
   'all',
@@ -106,17 +115,13 @@ function AllOrdersPage() {
     },
   })
 
-  const updateTrackingMutation = useMutation({
-    mutationFn: updateTracking,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('운송장 정보가 저장되었습니다.')
-      setTrackingModalOpen(false)
-    },
-    onError: () => {
-      toast.error('운송장 저장에 실패했습니다.')
-    },
-  })
+  const createShipmentMutation = useCreateShipmentMutation()
+  const updateShipmentMutation = useUpdateShipmentMutation()
+  const confirmOrderMutation = useConfirmOrderMutation()
+  const createReturnMutation = useCreateReturnMutation()
+  const createExchangeMutation = useCreateExchangeMutation()
+  const decideCancelMutation = useDecideCancelMutation()
+  const decideReturnMutation = useDecideReturnMutation()
 
   const completeReturnMutation = useMutation({
     mutationFn: completeReturn,
@@ -139,18 +144,6 @@ function AllOrdersPage() {
     },
     onError: () => {
       toast.error('교환 완료 처리에 실패했습니다.')
-    },
-  })
-
-  const confirmOrderMutation = useMutation({
-    mutationFn: confirmOrder,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('발주가 확인되었습니다.')
-      selectionReset()
-    },
-    onError: () => {
-      toast.error('발주 확인에 실패했습니다.')
     },
   })
 
@@ -186,6 +179,113 @@ function AllOrdersPage() {
     setAppliedFilters((prev) => ({ ...prev, page: String(page - 1) }))
   }
 
+  // 발주확인: 스펙 API는 1주문 당 1콜이라 선택된 주문 수만큼 병렬 호출 후 결과 집계
+  // TODO: 백엔드가 목록 응답에 orderId/orderItemId 노출 시 selection에서 정확한 ID 수집
+  // 임시: orderNumber 숫자 캐스팅을 orderId/orderItemId 양쪽에 사용
+  const handleConfirmOrders = async () => {
+    const results = await Promise.allSettled(
+      selectedIds.map((orderNumber) => {
+        const id = Number(orderNumber)
+        return confirmOrderMutation.mutateAsync({
+          orderId: id,
+          orderItemIds: [id],
+        })
+      }),
+    )
+
+    const successCount = results.filter(
+      (r) => r.status === 'fulfilled' && r.value.summary.successCount > 0,
+    ).length
+    const failCount = results.length - successCount
+
+    if (successCount > 0) {
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+      selectionReset()
+    }
+
+    if (failCount === 0) {
+      toast.success(`${successCount}건 발주 확인 완료`)
+    } else if (successCount > 0) {
+      toast.success(`${successCount}건 성공, ${failCount}건 실패`)
+    } else {
+      toast.error('발주 확인에 실패했습니다.')
+    }
+  }
+
+  // 반품 요청 생성: 스펙 API는 1주문 당 1콜, 선택된 주문 수만큼 병렬 호출
+  const handleCreateReturns = async (
+    reason: string | null,
+    sellerComment: string | null,
+  ) => {
+    const results = await Promise.allSettled(
+      selectedIds.map((orderNumber) => {
+        const id = Number(orderNumber)
+        return createReturnMutation.mutateAsync({
+          orderId: id,
+          orderItemIds: [id],
+          reason,
+          sellerComment,
+        })
+      }),
+    )
+
+    const successCount = results.filter(
+      (r) => r.status === 'fulfilled' && r.value.summary.successCount > 0,
+    ).length
+    const failCount = results.length - successCount
+
+    if (successCount > 0) {
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+      selectionReset()
+      setReasonModalOpen(false)
+    }
+
+    if (failCount === 0) {
+      toast.success(`${successCount}건 반품 요청 완료`)
+    } else if (successCount > 0) {
+      toast.success(`${successCount}건 성공, ${failCount}건 실패`)
+    } else {
+      toast.error('반품 요청에 실패했습니다.')
+    }
+  }
+
+  // 교환 요청 생성: 스펙 API는 1주문 당 1콜, 선택된 주문 수만큼 병렬 호출
+  const handleCreateExchanges = async (
+    reason: string | null,
+    sellerComment: string | null,
+  ) => {
+    const results = await Promise.allSettled(
+      selectedIds.map((orderNumber) => {
+        const id = Number(orderNumber)
+        return createExchangeMutation.mutateAsync({
+          orderId: id,
+          orderItemIds: [id],
+          reason,
+          sellerComment,
+        })
+      }),
+    )
+
+    const successCount = results.filter(
+      (r) => r.status === 'fulfilled' && r.value.summary.successCount > 0,
+    ).length
+    const failCount = results.length - successCount
+
+    if (successCount > 0) {
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+      selectionReset()
+      setReasonModalOpen(false)
+    }
+
+    if (failCount === 0) {
+      toast.success(`${successCount}건 교환 요청 완료`)
+    } else if (successCount > 0) {
+      toast.success(`${successCount}건 성공, ${failCount}건 실패`)
+    } else {
+      toast.error('교환 요청에 실패했습니다.')
+    }
+  }
+
   const handleAction = (action: string) => {
     if (action === 'detailView') {
       if (selectedIds.length === 0) {
@@ -202,7 +302,7 @@ function AllOrdersPage() {
         return
       }
       if (confirmOrderMutation.isPending) return
-      confirmOrderMutation.mutate({ orderNumbers: selectedIds })
+      void handleConfirmOrders()
       return
     }
 
@@ -241,6 +341,101 @@ function AllOrdersPage() {
     reasonDetail: string
     images: File[]
   }) => {
+    // 반품 요청 생성은 별도 엔드포인트로 분기
+    if (reasonAction === 'requestReturn') {
+      void handleCreateReturns(
+        data.reasonType || null,
+        data.reasonDetail || null,
+      )
+      return
+    }
+
+    // 교환 요청 생성은 별도 엔드포인트로 분기
+    if (reasonAction === 'requestExchange') {
+      void handleCreateExchanges(
+        data.reasonType || null,
+        data.reasonDetail || null,
+      )
+      return
+    }
+
+    // 반품 승인/거절은 별도 decision 엔드포인트로 분기
+    if (
+      reasonAction === 'approveReturn' ||
+      reasonAction === 'rejectReturn'
+    ) {
+      // TODO: 백엔드가 목록 응답에 returnId를 노출하면 selection에서 수집
+      // 임시: orderNumber 숫자 캐스팅을 returnId로 사용
+      const returnIds = selectedIds
+        .map((id) => Number(id))
+        .filter((n) => !Number.isNaN(n))
+      const reason = [data.reasonType, data.reasonDetail]
+        .filter(Boolean)
+        .join(' - ')
+      decideReturnMutation.mutate(
+        {
+          returnIds,
+          decisionType: reasonAction === 'approveReturn' ? 'APPROVE' : 'REJECT',
+          reason: reason || null,
+        },
+        {
+          onSuccess: (_, variables) => {
+            queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+            toast.success(
+              variables.decisionType === 'APPROVE'
+                ? '반품을 완료했어요.'
+                : '반품 거절을 완료했어요.',
+            )
+            selectionReset()
+            setReasonModalOpen(false)
+          },
+          onError: () => {
+            toast.error('반품 처리에 실패했습니다.')
+          },
+        },
+      )
+      return
+    }
+
+    // 취소 승인/거절은 별도 decision 엔드포인트로 분기
+    if (
+      reasonAction === 'approveCancellation' ||
+      reasonAction === 'rejectCancellation'
+    ) {
+      // TODO: 백엔드가 목록 응답에 cancelId를 노출하면 selection에서 수집
+      // 임시: orderNumber 숫자 캐스팅을 cancelId로 사용
+      const cancelIds = selectedIds
+        .map((id) => Number(id))
+        .filter((n) => !Number.isNaN(n))
+      const reason = [data.reasonType, data.reasonDetail]
+        .filter(Boolean)
+        .join(' - ')
+      decideCancelMutation.mutate(
+        {
+          cancelIds,
+          decisionType:
+            reasonAction === 'approveCancellation' ? 'APPROVE' : 'REJECT',
+          reason: reason || null,
+        },
+        {
+          onSuccess: (_, variables) => {
+            queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+            toast.success(
+              variables.decisionType === 'APPROVE'
+                ? '주문취소를 완료했어요.'
+                : '주문취소 거절을 완료했어요.',
+            )
+            selectionReset()
+            setReasonModalOpen(false)
+          },
+          onError: () => {
+            toast.error('주문 취소 처리에 실패했습니다.')
+          },
+        },
+      )
+      return
+    }
+
     updateStatusMutation.mutate({
       orderNumbers: selectedIds,
       reasonType: data.reasonType,
@@ -265,11 +460,46 @@ function AllOrdersPage() {
     trackingNumber: string,
   ) => {
     if (!trackingTarget?.orderNumber) return
-    updateTrackingMutation.mutate({
-      orderNumber: trackingTarget.orderNumber,
+    // TODO: 백엔드가 목록 응답에 orderId/orderItemId 노출 시 selection에서 정확한 ID 수집
+    // 임시: orderNumber 숫자 캐스팅을 orderId/orderItemId 양쪽에 사용
+    const id = Number(trackingTarget.orderNumber)
+    const payload = {
+      orderId: id,
+      orderItemIds: [id],
       courierName: courier,
       trackingNumber,
-    })
+    }
+    if (trackingMode === 'edit') {
+      updateShipmentMutation.mutate(payload, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+          toast.success('운송장 정보가 수정되었습니다.')
+          setTrackingModalOpen(false)
+        },
+        onError: () => {
+          toast.error('운송장 수정에 실패했습니다.')
+        },
+      })
+    } else {
+      createShipmentMutation.mutate(payload, {
+        onSuccess: (result) => {
+          const { successCount, failCount } = result.summary
+          if (failCount === 0) {
+            queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+            toast.success('운송장 정보가 저장되었습니다.')
+            setTrackingModalOpen(false)
+          } else if (successCount > 0) {
+            queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+            toast.success(`${successCount}건 등록 성공, ${failCount}건 실패`)
+          } else {
+            toast.error('운송장 저장에 실패했습니다.')
+          }
+        },
+        onError: () => {
+          toast.error('운송장 저장에 실패했습니다.')
+        },
+      })
+    }
   }
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1

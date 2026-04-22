@@ -1,10 +1,19 @@
 import {
+  ConfirmOrderRequest,
+  ConfirmOrderResult,
+  CreateExchangeRequest,
+  CreateExchangeResult,
+  CreateReturnRequest,
+  CreateReturnResult,
+  CreateShipmentResult,
   OrderDetail,
   OrderFilters,
   OrderItem,
   OrderListResponse,
   OrderStatus,
   OrderStatusTab,
+  ShipmentRequest,
+  UpdateShipmentResult,
 } from './order.type'
 
 // 20개 Mock 주문 데이터
@@ -993,6 +1002,88 @@ function buildMockOrderDetails(order: OrderItem): OrderDetail[] {
       totalPrice: product.price * product.quantity,
     },
   }))
+}
+
+// 운송장 입력(POST) mock — 요청한 itemIds 전부 성공 처리
+export function getMockCreateShipmentResponse(
+  request: ShipmentRequest,
+): CreateShipmentResult {
+  return {
+    orderId: request.orderId,
+    summary: {
+      requestedCount: request.orderItemIds.length,
+      successCount: request.orderItemIds.length,
+      failCount: 0,
+    },
+    successOrderItemIds: request.orderItemIds,
+    failedOrderItemIds: [],
+    courierName: request.courierName,
+    trackingNumber: request.trackingNumber,
+    shippedAt: new Date().toISOString(),
+  }
+}
+
+// 운송장 수정(PUT) mock — 요청한 itemIds 각각에 대해 업데이트 결과 반환
+export function getMockUpdateShipmentResponse(
+  request: ShipmentRequest,
+): UpdateShipmentResult {
+  const now = new Date().toISOString()
+  return request.orderItemIds.map(() => ({
+    orderId: request.orderId,
+    orderStatus: 'PRODUCT_SHIPPED' as const,
+    deliveryStatus: 'DELIVERING' as const,
+    courierName: request.courierName,
+    trackingNumber: request.trackingNumber,
+    updatedAt: now,
+  }))
+}
+
+// 반품 요청 생성 mock — 요청한 itemIds 전부 성공 처리
+export function getMockCreateReturnResponse(
+  request: CreateReturnRequest,
+): CreateReturnResult {
+  return {
+    orderId: request.orderId,
+    summary: {
+      requestedCount: request.orderItemIds.length,
+      successCount: request.orderItemIds.length,
+      failCount: 0,
+    },
+    successOrderItemIds: request.orderItemIds,
+    failedOrderItemIds: [],
+  }
+}
+
+// 교환 요청 생성 mock — 요청한 itemIds 전부 성공 처리
+export function getMockCreateExchangeResponse(
+  request: CreateExchangeRequest,
+): CreateExchangeResult {
+  return {
+    orderId: request.orderId,
+    summary: {
+      requestedCount: request.orderItemIds.length,
+      successCount: request.orderItemIds.length,
+      failCount: 0,
+    },
+    successOrderItemIds: request.orderItemIds,
+    failedOrderItemIds: [],
+  }
+}
+
+// 발주확인 mock — 요청한 itemIds 전부 성공 처리
+export function getMockConfirmOrderResponse(
+  request: ConfirmOrderRequest,
+): ConfirmOrderResult {
+  return {
+    orderId: request.orderId,
+    summary: {
+      requestedCount: request.orderItemIds.length,
+      successCount: request.orderItemIds.length,
+      failCount: 0,
+    },
+    confirmedOrderItemIds: request.orderItemIds,
+    failedOrderItemIds: [],
+  }
 }
 
 // TODO: 스펙은 orderItemId(number[])지만 mock 데이터에 ID가 없어 orderNumber를 숫자 캐스팅해 매칭
