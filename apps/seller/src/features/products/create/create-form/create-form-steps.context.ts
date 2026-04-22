@@ -2,6 +2,28 @@ import React, { createContext } from 'react'
 
 export type FormStepStatus = Record<string, boolean>
 
+export interface NutritionData {
+  sugar: number
+  protein: number
+  fat: number
+  ingredientCategories: string[]
+}
+
+export interface ActiveTags {
+  essential: {
+    isGlutenFree: boolean
+    isVegan: boolean
+    isHighProtein: boolean
+    isLowFat: boolean
+    isLowSugar: boolean
+  }
+  category: {
+    isCalorieDown: boolean
+    isProteinRich: boolean
+    isEasyDigestion: boolean
+  }
+}
+
 interface FormStepsContextType {
   productFields: FormStepStatus
   currentStep: number
@@ -13,6 +35,10 @@ interface FormStepsContextType {
   scrollToStep: (index: number) => void
 
   isScrollingToStep: React.MutableRefObject<boolean>
+
+  nutritionData: NutritionData
+  setNutritionData: React.Dispatch<React.SetStateAction<NutritionData>>
+  activeTags: ActiveTags
 }
 
 export const FormStepsContext = createContext<FormStepsContextType | null>(null)

@@ -34,7 +34,6 @@ export const ProductHeader = () => {
 
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        // 💡 소수점 때문에 발생하는 불필요한 리렌더링 방지 (Math.round)
         const height = Math.round(entry.target.clientHeight)
         setHeaderHeight(height)
       }

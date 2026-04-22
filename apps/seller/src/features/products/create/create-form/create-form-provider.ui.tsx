@@ -1,6 +1,11 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 
-import { FormStepStatus, FormStepsContext } from './create-form-steps.context'
+import {
+  ActiveTags,
+  FormStepStatus,
+  FormStepsContext,
+  NutritionData,
+} from './create-form-steps.context'
 
 // FormStepsProvider - scrollToStep 수정
 export const FormStepsProvider = ({
@@ -65,6 +70,48 @@ export const FormStepsProvider = ({
     }
   }, [])
 
+  //필수성분, 적용된 카테고리 부분
+
+  const [nutritionData, setNutritionData] = useState<NutritionData>({
+    sugar: 0,
+    protein: 0,
+    fat: 0,
+    ingredientCategories: [],
+  })
+
+  const activeTags: ActiveTags = useMemo(() => {
+    const { sugar, protein, fat, ingredientCategories } = nutritionData
+
+    // 값이 실제로 입력되었는지 확인 (비어있거나 0이면 false 처리)
+    const hasProtein = protein > 0
+    const hasSugar = sugar > 0
+    const hasFat = fat > 0
+
+    const isGlutenFree = ingredientCategories.includes('glutenFree')
+    const isVegan = ingredientCategories.includes('vegan')
+
+    // "값이 존재함 && 기준치 미만/이상" 두 조건을 모두 만족해야 함
+    const isHighProtein = hasProtein && protein >= 11
+    const isLowFat = hasFat && fat < 3
+    const isLowSugar = hasSugar && sugar < 5
+
+    return {
+      essential: {
+        isGlutenFree,
+        isVegan,
+        isHighProtein,
+        isLowFat,
+        isLowSugar,
+      },
+      category: {
+        // 칼로리 다운도 저당/저지방 둘 다 '실제 입력'이 있어야 함
+        isCalorieDown: isLowSugar && isLowFat,
+        isProteinRich: isHighProtein,
+        isEasyDigestion: isVegan && isGlutenFree,
+      },
+    }
+  }, [nutritionData])
+
   return (
     <FormStepsContext.Provider
       value={{
@@ -76,6 +123,9 @@ export const FormStepsProvider = ({
         headerHeight,
         setHeaderHeight,
         isScrollingToStep, // ref 전달
+        nutritionData,
+        setNutritionData,
+        activeTags,
       }}
     >
       {children}
