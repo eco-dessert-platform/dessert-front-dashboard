@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 
+import { CategoryOptions, EssentialOptions } from '@/entity/products'
+
 import {
   ActiveTags,
   FormStepStatus,
@@ -7,7 +9,7 @@ import {
   NutritionData,
 } from './create-form-steps.context'
 
-// FormStepsProvider - scrollToStep 수정
+// FormStepsProvider - scrollToStep
 export const FormStepsProvider = ({
   children,
 }: {
@@ -25,7 +27,7 @@ export const FormStepsProvider = ({
   const [currentStep, setCurrentStep] = useState(1)
   const [headerHeight, setHeaderHeight] = useState(0)
 
-  // 🔑 클릭으로 스크롤 중인지 여부를 ref로 관리 (리렌더 불필요)
+  // 클릭으로 스크롤 중인지 여부를 ref로 관리 (리렌더 불필요)
   const isScrollingToStep = useRef(false)
   const scrollEndTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -96,19 +98,17 @@ export const FormStepsProvider = ({
     const isLowSugar = hasSugar && sugar < 5
 
     return {
-      essential: {
-        isGlutenFree,
-        isVegan,
-        isHighProtein,
-        isLowFat,
-        isLowSugar,
-      },
-      category: {
-        // 칼로리 다운도 저당/저지방 둘 다 '실제 입력'이 있어야 함
-        isCalorieDown: isLowSugar && isLowFat,
-        isProteinRich: isHighProtein,
-        isEasyDigestion: isVegan && isGlutenFree,
-      },
+      // 필수 성분 매칭 (순서 기준)
+      [EssentialOptions[0].title]: isGlutenFree,
+      [EssentialOptions[1].title]: isVegan,
+      [EssentialOptions[2].title]: isHighProtein,
+      [EssentialOptions[3].title]: isLowFat,
+      [EssentialOptions[4].title]: isLowSugar,
+
+      // 적용 카테고리 매칭 (순서 기준)
+      [CategoryOptions[0].title]: isLowSugar && isLowFat,
+      [CategoryOptions[1].title]: isHighProtein,
+      [CategoryOptions[2].title]: isVegan && isGlutenFree,
     }
   }, [nutritionData])
 

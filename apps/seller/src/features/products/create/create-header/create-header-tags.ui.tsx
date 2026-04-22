@@ -18,19 +18,7 @@ export const ProductHeaderTags = ({
   tagData,
 }: TagsProps) => {
   const { activeTags } = useCreateFormSteps()
-  const { essential, category } = activeTags
-  const statusMap: Record<string, boolean> = {
-    // 필수성분
-    글루텐프리: essential.isGlutenFree,
-    비건: essential.isVegan,
-    고단백: essential.isHighProtein,
-    저지방: essential.isLowFat,
-    저당: essential.isLowSugar,
-    // 적용된 카테고리
-    '칼로리 다운': category.isCalorieDown,
-    '단백질 듬뿍': category.isProteinRich,
-    '속 편한 즐거움': category.isEasyDigestion,
-  }
+
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -43,7 +31,7 @@ export const ProductHeaderTags = ({
       </div>
       <div className="mt-10 flex gap-4">
         {tagData.map((items) => {
-          const isActive = statusMap[items.title] ?? false
+          const isActive = activeTags[items.title] ?? false
           return (
             <Tooltip position="bottom" key={items.title}>
               <Tooltip.Trigger>

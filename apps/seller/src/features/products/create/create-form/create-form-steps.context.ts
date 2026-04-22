@@ -10,18 +10,7 @@ export interface NutritionData {
 }
 
 export interface ActiveTags {
-  essential: {
-    isGlutenFree: boolean
-    isVegan: boolean
-    isHighProtein: boolean
-    isLowFat: boolean
-    isLowSugar: boolean
-  }
-  category: {
-    isCalorieDown: boolean
-    isProteinRich: boolean
-    isEasyDigestion: boolean
-  }
+  [key: string]: boolean
 }
 
 interface FormStepsContextType {
