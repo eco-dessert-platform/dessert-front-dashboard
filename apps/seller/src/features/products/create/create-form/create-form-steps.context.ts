@@ -28,6 +28,9 @@ interface FormStepsContextType {
   nutritionData: NutritionData
   setNutritionData: React.Dispatch<React.SetStateAction<NutritionData>>
   activeTags: ActiveTags
+
+  productPrice: number | null
+  setProductPrice: React.Dispatch<React.SetStateAction<number | null>>
 }
 
 export const FormStepsContext = createContext<FormStepsContextType | null>(null)

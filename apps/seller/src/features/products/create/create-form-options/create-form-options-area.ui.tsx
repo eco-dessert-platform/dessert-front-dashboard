@@ -9,8 +9,8 @@ import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/p
 import DaySelector from '@/shared/block/day-selector/day-selector'
 
 import { useProductOptionForm } from './use-product-options.form.hook'
+import { useCreateFormSteps } from '../create-form'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 export const ProductOptionsArea = () => {
   const {
@@ -37,14 +37,15 @@ export const ProductOptionsArea = () => {
     formState: { errors },
   } = form
 
-  const { setProductFields, setNutritionData } = useCreateFormSteps()
+  const { setProductFields, setNutritionData, productPrice } =
+    useCreateFormSteps()
 
   useEffect(() => {
     setProductFields((prev) => ({ ...prev, productOptions: isFormField }))
   }, [isFormField, setProductFields])
 
   useEffect(() => {
-    // 💡 값이 실제로 바뀔 때만 실행되도록 안에서 변환
+    // 값이 실제로 바뀔 때만 실행되도록 안에서 변환
     const sugar = Number(nutritionInputs.sugar?.displayValue || 0)
     const protein = Number(nutritionInputs.protein?.displayValue || 0)
     const fat = Number(nutritionInputs.fat?.displayValue || 0)
@@ -55,9 +56,6 @@ export const ProductOptionsArea = () => {
       fat,
       ingredientCategories,
     })
-
-    // 💡 의존성 배열에 객체(nutritionInputs) 대신
-    // 실제 변화를 감지할 '원시 값'들을 넣습니다.
   }, [
     nutritionInputs.sugar?.displayValue,
     nutritionInputs.protein?.displayValue,
@@ -171,7 +169,7 @@ export const ProductOptionsArea = () => {
               labelClassName="typo-title-16-r"
               placeholder="0~100,000"
               className="flex-1"
-              // value={toLocaleString('ko-KR') ?? ''}
+              value={productPrice ? productPrice.toLocaleString('ko-KR') : ''}
               disabled
             />
             <span className="relative top-11">원</span>

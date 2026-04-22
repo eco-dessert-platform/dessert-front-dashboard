@@ -112,6 +112,9 @@ export const FormStepsProvider = ({
     }
   }, [nutritionData])
 
+  //상품 정보, 상품 옵션 정보에서 공유하는 가격
+  const [productPrice, setProductPrice] = useState<number | null>(null)
+
   return (
     <FormStepsContext.Provider
       value={{
@@ -126,6 +129,8 @@ export const FormStepsProvider = ({
         nutritionData,
         setNutritionData,
         activeTags,
+        productPrice,
+        setProductPrice,
       }}
     >
       {children}
