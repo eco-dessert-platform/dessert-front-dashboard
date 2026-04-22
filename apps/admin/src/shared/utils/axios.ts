@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 
 import { TOKEN_COOKIE_KEYS } from '@/shared/constant'
 import { getCookie } from '@/shared/utils/cookieUtils'
@@ -9,6 +10,7 @@ export const client = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
 })
 
 client.interceptors.request.use(
