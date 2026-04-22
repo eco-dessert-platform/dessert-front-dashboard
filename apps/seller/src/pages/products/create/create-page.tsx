@@ -9,6 +9,7 @@ import {
   ProductDeliveryArea,
   ProductDetailArea,
   ProductDisclosureArea,
+  ProductFooter,
   ProductHeader,
   ProductInfoArea,
   ProductOptionsArea,
@@ -101,25 +102,10 @@ function CreatePageInner() {
         <ProductDetailArea />
       </CreateFormContainer>
 
-      <CreateFormContainer id="productDisclosure">
+      <CreateFormContainer id="productDisclosure" className="mb-40">
         <ProductDisclosureArea />
       </CreateFormContainer>
-
-      <div className="mt-40 flex gap-12">
-        <Button
-          title="미리보기"
-          variant="primary-outlined"
-          size="lg"
-          disabled
-        />
-        <Button
-          title="임시저장"
-          variant="primary-outlined"
-          size="lg"
-          disabled
-        />
-        <Button title="저장하기" variant="primary-filled" size="lg" disabled />
-      </div>
+      <ProductFooter />
     </>
   )
 }
