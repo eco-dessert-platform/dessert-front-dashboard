@@ -109,6 +109,68 @@ export interface OrderListResponse {
   totalElements: number
 }
 
+// ─── 주문 내역 조회 API 스펙 원본 응답 ────────────────
+// (fetcher 내부에서 OrderListResponse 로 transform)
+
+export type OrderDeliveryStatusSpec =
+  | 'PREPARING'
+  | 'COLLECTING'
+  | 'COLLECT_COMPLETED'
+  | 'DELIVERING'
+  | 'DELIVERY_COMPLETED'
+
+export interface OrderListItemInfo {
+  itemName: string
+  quantity: number
+  unitPrice: number
+  totalPrice: number
+}
+
+export interface OrderListItemDetail {
+  orderNumber: string
+  orderStatus: OrderStatus
+  orderItemInfo: OrderListItemInfo
+  orderDeliveryStatus: OrderDeliveryStatusSpec
+  courierCompany: CourierName | 'NONE' | null
+  trackingNumber: string | null
+}
+
+export interface OrderListPaymentInfo {
+  paymentStatus: string
+  paymentMethod: PaymentMethod
+}
+
+export interface OrderListContent {
+  orderNumber: string
+  recipientName: string
+  orderItems: OrderListItemDetail[]
+  paymentInfo: OrderListPaymentInfo
+  totalOrderPrice: string
+  sellerId: number
+}
+
+export interface OrderListSpecStatusCounts {
+  total: number
+  paymentCompleted: number
+  orderConfirmed: number
+  shipped: number
+  deliveryCompleted: number
+  cancelled: number
+  returned: number
+  exchanged: number
+}
+
+export interface OrderListResult {
+  orders: {
+    content: OrderListContent[]
+    page: number
+    size: number
+    totalPages: number
+    totalElements: number
+  }
+  statusCounts: OrderListSpecStatusCounts
+}
+
 export type SearchType =
   | 'ORDER_NUMBER'
   | 'RECIPIENT_NAME'
@@ -206,13 +268,6 @@ export interface OrderDetail {
     unitPrice: number
     totalPrice: number
   }
-}
-
-export interface OrderDetailResponse {
-  success: boolean
-  code: number
-  message: string
-  result: OrderDetail[]
 }
 
 export interface CompletedOrderListResponse {

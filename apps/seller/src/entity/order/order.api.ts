@@ -1,3 +1,4 @@
+import type { ApiResponse } from '@/entity/auth/types'
 import { client } from '@/shared/utils/axios'
 
 import {
@@ -6,9 +7,15 @@ import {
 } from './order.mock'
 import {
   CourierName,
-  OrderDetailResponse,
+  DeliveryStatus,
+  OrderDeliveryStatusSpec,
+  OrderDetail,
   OrderFilters,
+  OrderItem,
+  OrderListContent,
   OrderListResponse,
+  OrderListResult,
+  OrderStatusCount,
 } from './order.type'
 
 export interface UpdateOrderStatusRequest {
@@ -28,7 +35,7 @@ export interface CompleteOrderRequest {
   orderNumbers: string[]
 }
 
-const useMock = import.meta.env.VITE_USE_MOCK === 'true'
+const useMock = import.meta.env.VITE_USE_MOCK === 'false'
 
 export async function getOrders(
   filters: OrderFilters,
@@ -50,8 +57,7 @@ export async function getOrders(
 
   const today = new Date().toISOString().split('T')[0]
 
-  const TAB_TO_STATUS: Record<string, string> = {
-    all: 'NONE',
+  const TAB_TO_STATUS: Partial<Record<string, string>> = {
     paymentCompleted: 'PAYMENT_COMPLETED',
     orderConfirmed: 'ORDER_CONFIRMED',
     productShipped: 'PRODUCT_SHIPPED',
@@ -61,10 +67,10 @@ export async function getOrders(
     exchanged: 'EXCHANGED',
   }
 
-  const { data } = await client.post<OrderListResponse>(
+  const { data } = await client.post<ApiResponse<OrderListResult>>(
     '/api/v1/seller/orders/list',
     {
-      orderStatus: TAB_TO_STATUS[tab ?? 'all'] ?? 'NONE',
+      orderStatus: tab ? (TAB_TO_STATUS[tab] ?? null) : null,
       searchType: searchType ?? 'BUYER_NAME',
       keywords: searchKeyword ? [searchKeyword] : [],
       isMultipleSearch: false,
@@ -79,21 +85,98 @@ export async function getOrders(
       },
     },
   )
-  return data
+
+  if (!data.result) {
+    throw new Error(data.message ?? '주문 목록 조회에 실패했습니다.')
+  }
+
+  return transformOrderListResult(data.result)
+}
+
+// ─── 스펙 응답 → 기존 UI 타입 변환 ────────────────────
+// TODO: UI가 OrderListContent 구조에 맞게 리팩터되면 이 변환 제거
+
+const DELIVERY_STATUS_MAP: Record<OrderDeliveryStatusSpec, DeliveryStatus> = {
+  PREPARING: 'PRODUCT_PREPARING',
+  COLLECTING: 'COLLECTING',
+  COLLECT_COMPLETED: 'COLLECT_COMPLETED',
+  DELIVERING: 'DELIVERING',
+  DELIVERY_COMPLETED: 'DELIVERY_COMPLETED',
+}
+
+function transformOrderListResult(result: OrderListResult): OrderListResponse {
+  const { orders, statusCounts } = result
+
+  const mappedStatusCount: OrderStatusCount = {
+    total: statusCounts.total,
+    paymentCompleted: statusCounts.paymentCompleted,
+    orderConfirmed: statusCounts.orderConfirmed,
+    productShipped: statusCounts.shipped,
+    deliveryCompleted: statusCounts.deliveryCompleted,
+    canceled: statusCounts.cancelled,
+    returned: statusCounts.returned,
+    exchanged: statusCounts.exchanged,
+  }
+
+  return {
+    statusCount: mappedStatusCount,
+    content: orders.content.map(toOrderItem),
+    page: orders.page,
+    size: orders.size,
+    totalPages: orders.totalPages,
+    totalElements: orders.totalElements,
+  }
+}
+
+function toOrderItem(item: OrderListContent): OrderItem {
+  const first = item.orderItems[0]
+  const courier = first?.courierCompany
+  const validCourier =
+    courier && courier !== 'NONE' ? (courier as CourierName) : null
+
+  return {
+    recipientName: item.recipientName,
+    orderNumber: item.orderNumber,
+    products: item.orderItems.map((i) => ({
+      productName: i.orderItemInfo.itemName,
+      optionName: null,
+      quantity: i.orderItemInfo.quantity,
+      price: i.orderItemInfo.unitPrice,
+    })),
+    orderStatus: first?.orderStatus ?? 'PAYMENT_COMPLETED',
+    paymentMethod: item.paymentInfo.paymentMethod,
+    paymentDate: '',
+    totalOrderAmount: Number(item.totalOrderPrice) || 0,
+    deliveryStatus: first?.orderDeliveryStatus
+      ? (DELIVERY_STATUS_MAP[first.orderDeliveryStatus] ?? null)
+      : null,
+    courierName: validCourier,
+    trackingNumber:
+      first?.trackingNumber && first.trackingNumber !== '-'
+        ? first.trackingNumber
+        : null,
+    returnStatus: null,
+    exchangeStatus: null,
+  }
 }
 
 export async function getOrderDetails(
-  orderNumbers: string[],
-): Promise<OrderDetailResponse> {
+  orderItemIds: number[],
+): Promise<OrderDetail[]> {
   if (useMock) {
-    return getMockOrderDetailResponse(orderNumbers)
+    return getMockOrderDetailResponse(orderItemIds)
   }
 
-  const { data } = await client.post<OrderDetailResponse>(
+  const { data } = await client.post<ApiResponse<OrderDetail[]>>(
     '/api/v1/seller/orders/items',
-    orderNumbers,
+    orderItemIds,
   )
-  return data
+
+  if (!data.result) {
+    throw new Error(data.message ?? '주문 상세 조회에 실패했습니다.')
+  }
+
+  return data.result
 }
 
 export async function updateOrderStatus(

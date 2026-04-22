@@ -1,6 +1,5 @@
 import {
   OrderDetail,
-  OrderDetailResponse,
   OrderFilters,
   OrderItem,
   OrderListResponse,
@@ -996,19 +995,16 @@ function buildMockOrderDetails(order: OrderItem): OrderDetail[] {
   }))
 }
 
+// TODO: 스펙은 orderItemId(number[])지만 mock 데이터에 ID가 없어 orderNumber를 숫자 캐스팅해 매칭
 export function getMockOrderDetailResponse(
-  orderNumbers: string[],
-): OrderDetailResponse {
-  const details = MOCK_ORDERS.filter((o) =>
-    orderNumbers.includes(o.orderNumber),
-  ).flatMap(buildMockOrderDetails)
-
-  return {
-    success: true,
-    code: 0,
-    message: 'Success',
-    result: details,
-  }
+  orderItemIds: number[],
+): OrderDetail[] {
+  if (orderItemIds.length === 0) return []
+  const matched = MOCK_ORDERS.filter((o) =>
+    orderItemIds.includes(Number(o.orderNumber)),
+  )
+  const result = matched.length > 0 ? matched : MOCK_ORDERS.slice(0, orderItemIds.length)
+  return result.flatMap(buildMockOrderDetails)
 }
 
 // Mock API 응답 생성
