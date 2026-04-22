@@ -4,9 +4,8 @@ import { ProductOptionFormInput } from '@/entity/products/create/create-form/pro
 import { SUB_CATEGORY_MAP } from '@/entity/products/create/create-options/product-options.constant'
 
 import { productOptionSchema } from './create-options.schema'
-import { useFloatInput } from '../create-calculation/create-form-float-input.hook'
-import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
-import { CreateProductForm } from '../create-form/product-create.types'
+import { useFloatInput, useNumberInput } from '../create-calculation'
+import { CreateProductForm } from '../create-form'
 
 export function useProductOptionForm(basePrice: number | null = null) {
   const form = useFormContext<CreateProductForm>()
