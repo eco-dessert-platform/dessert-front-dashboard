@@ -10,7 +10,7 @@ export const client = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
+  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat', skipNulls: true }),
 })
 
 client.interceptors.request.use(
