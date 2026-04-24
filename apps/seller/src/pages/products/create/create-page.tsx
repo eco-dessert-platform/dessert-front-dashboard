@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { FormProvider } from 'react-hook-form'
 
@@ -16,6 +16,7 @@ import {
   useCreateFormSteps,
   useCreateProductForm,
 } from '@/features/products/create'
+import { ProductPreviewModal } from '@/features/products/create/create-preview/create-preview-modal.ui'
 
 function CreatePage() {
   const form = useCreateProductForm()
@@ -29,6 +30,8 @@ function CreatePage() {
 }
 
 function CreatePageInner() {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+
   const { setCurrentStep, headerHeight, isScrollingToStep } =
     useCreateFormSteps()
 
@@ -104,7 +107,11 @@ function CreatePageInner() {
       <CreateFormContainer id="productDisclosure" className="mb-40">
         <ProductDisclosureArea />
       </CreateFormContainer>
-      <ProductFooter />
+      <ProductFooter onPreview={() => setIsPreviewOpen(true)} />
+      <ProductPreviewModal
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)}
+      />
     </>
   )
 }
