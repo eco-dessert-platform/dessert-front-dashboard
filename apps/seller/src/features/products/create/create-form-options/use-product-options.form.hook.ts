@@ -130,24 +130,6 @@ export function useProductOptionForm(
   const isNutritionValid =
     !hasNutrition || nutritionValues.every((val) => val !== null)
 
-  const optionErrorFields = [
-    'mainCategory',
-    'subCategory',
-    'optionName',
-    'ingredientCategories',
-    'additionalPrice',
-    'stockQuantity',
-    'shippingDays',
-    'hasNutrition',
-    'totalWeight',
-    'calories',
-    'carbohydrate',
-    'sugar',
-    'protein',
-    'fat',
-    'sodium',
-  ] as const
-
   const errors = form.formState.errors.options?.[index]
   const hasOptionErrors = Object.keys(errors ?? {}).length > 0
 

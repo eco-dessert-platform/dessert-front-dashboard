@@ -41,12 +41,12 @@ const getOptionTags = (option: ProductOptionFormInput) => {
   const { ingredientCategories, protein, fat, sugar } = option
 
   if (ingredientCategories.includes('glutenFree'))
-    tags.push(EssentialOptions[0].title) // 글루텐프리
+    tags.push(EssentialOptions[0].title)
   if (ingredientCategories.includes('vegan'))
-    tags.push(EssentialOptions[1].title) // 비건
-  if (protein && protein >= 11) tags.push(EssentialOptions[2].title) // 고단백
-  if (fat && fat < 3) tags.push(EssentialOptions[3].title) // 저지방
-  if (sugar && sugar < 5) tags.push(EssentialOptions[4].title) // 저당
+    tags.push(EssentialOptions[1].title)
+  if (protein !== null && protein >= 11) tags.push(EssentialOptions[2].title)
+  if (fat !== null && fat < 3) tags.push(EssentialOptions[3].title)
+  if (sugar !== null && sugar < 5) tags.push(EssentialOptions[4].title)
 
   return tags
 }
@@ -59,7 +59,7 @@ export const ProductPreviewModal = ({
 }) => {
   const { watch } = useFormContext<CreateProductForm>()
   const formData = watch()
-  const { activeTags, productPrice } = useCreateFormSteps()
+  const { productPrice } = useCreateFormSteps()
 
   if (!isOpen) return null
 

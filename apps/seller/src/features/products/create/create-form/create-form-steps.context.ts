@@ -3,9 +3,9 @@ import React, { createContext } from 'react'
 export type FormStepStatus = Record<string, boolean>
 
 export interface NutritionData {
-  sugar: number
-  protein: number
-  fat: number
+  sugar: number | null
+  protein: number | null
+  fat: number | null
   ingredientCategories: string[]
 }
 

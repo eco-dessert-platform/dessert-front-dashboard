@@ -12,7 +12,7 @@ import { useProductOptionForm } from './use-product-options.form.hook'
 import { ProductFinalPrice, useCreateFormSteps } from '../create-form'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
 
-interface Props {
+interface ProductOptionFormProps {
   index: number
   isLast: boolean
   onDelete: () => void
@@ -26,7 +26,7 @@ export const ProductOptionForm = ({
   onDelete,
   onCopy,
   onAdd,
-}: Props) => {
+}: ProductOptionFormProps) => {
   const { setProductFields, setNutritionData, productPrice } =
     useCreateFormSteps()
   const {
@@ -55,9 +55,19 @@ export const ProductOptionForm = ({
   }, [isFormField, setProductFields])
 
   useEffect(() => {
-    const sugar = Number(nutritionInputs.sugar?.displayValue || 0)
-    const protein = Number(nutritionInputs.protein?.displayValue || 0)
-    const fat = Number(nutritionInputs.fat?.displayValue || 0)
+    const sugar =
+      nutritionInputs.sugar?.displayValue !== ''
+        ? Number(nutritionInputs.sugar?.displayValue)
+        : null
+    const protein =
+      nutritionInputs.protein?.displayValue !== ''
+        ? Number(nutritionInputs.protein?.displayValue)
+        : null
+    const fat =
+      nutritionInputs.fat?.displayValue !== ''
+        ? Number(nutritionInputs.fat?.displayValue)
+        : null
+
     setNutritionData(index, { sugar, protein, fat, ingredientCategories })
   }, [
     nutritionInputs.sugar?.displayValue,

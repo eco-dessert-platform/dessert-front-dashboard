@@ -76,9 +76,9 @@ export const FormStepsProvider = ({
 
   const [nutritionDataList, setNutritionDataList] = useState<NutritionData[]>([
     {
-      sugar: 0,
-      protein: 0,
-      fat: 0,
+      sugar: null,
+      protein: null,
+      fat: null,
       ingredientCategories: [],
     },
   ])
@@ -101,11 +101,12 @@ export const FormStepsProvider = ({
     const isGlutenFree = allCategories.includes('glutenFree')
     const isVegan = allCategories.includes('vegan')
     const isHighProtein = nutritionDataList.some(
-      (d) => d.protein > 0 && d.protein >= 11,
+      (d) => d.protein !== null && d.protein >= 11,
     )
-    const isLowFat = nutritionDataList.some((d) => d.fat > 0 && d.fat < 3)
-    const isLowSugar = nutritionDataList.some((d) => d.sugar > 0 && d.sugar < 5)
-
+    const isLowFat = nutritionDataList.some((d) => d.fat !== null && d.fat < 3)
+    const isLowSugar = nutritionDataList.some(
+      (d) => d.sugar !== null && d.sugar < 5,
+    )
     return {
       [EssentialOptions[0].title]: isGlutenFree,
       [EssentialOptions[1].title]: isVegan,
