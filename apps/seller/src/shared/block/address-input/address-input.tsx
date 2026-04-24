@@ -1,22 +1,49 @@
 import { Input, Label } from '@dessert/ui'
+import { useKakaoPostcodePopup } from 'react-daum-postcode'
+
+import { formatDaumAddress } from '@/shared/utils/format-daum-address'
+
+interface AddressSearchResult {
+  postalCode: string
+  address: string
+}
 
 interface AddressInputProps {
   postalCode?: string
   address?: string
   detailAddress?: string
-  onPostalCodeSearch?: () => void
+  onAddressSearch?: (result: AddressSearchResult) => void
   onDetailAddressChange?: (value: string) => void
+  errors?: {
+    postalCode?: string
+    address?: string
+    detailAddress?: string
+  }
   disabled?: boolean
 }
 
-const AddressInput = ({
+export const AddressInput = ({
   postalCode,
   address,
   detailAddress,
-  onPostalCodeSearch,
+  onAddressSearch,
   onDetailAddressChange,
+  errors,
   disabled = false,
 }: AddressInputProps) => {
+  const open = useKakaoPostcodePopup()
+
+  const handleSearchClick = () => {
+    open({
+      onComplete: (data) => {
+        onAddressSearch?.({
+          postalCode: data.zonecode,
+          address: formatDaumAddress(data),
+        })
+      },
+    })
+  }
+
   return (
     <>
       <div className="flex items-start gap-16 self-stretch px-20 py-10">
@@ -30,10 +57,12 @@ const AddressInput = ({
               value={postalCode}
               readOnly
               disabled={disabled}
+              error={!!errors?.postalCode}
+              errorMessage={errors?.postalCode}
             />
             <button
               className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 bg-primary-500 px-16 py-8 disabled:cursor-not-allowed"
-              onClick={onPostalCodeSearch}
+              onClick={handleSearchClick}
               disabled={disabled}
             >
               <p className="typo-title-16-m text-white">우편번호 검색</p>
@@ -50,6 +79,8 @@ const AddressInput = ({
               value={address}
               readOnly
               disabled={disabled}
+              error={!!errors?.address}
+              errorMessage={errors?.address}
             />
           </div>
         </div>
@@ -65,16 +96,11 @@ const AddressInput = ({
             value={detailAddress}
             onChange={(e) => onDetailAddressChange?.(e.target.value)}
             disabled={disabled}
+            error={!!errors?.detailAddress}
+            errorMessage={errors?.detailAddress}
           />
         </div>
       </div>
     </>
   )
 }
-
-/**
- * @deprecated `widgets` 폴더로 이동되었습니다.
- * 리팩토링 기간 이후 이 컴포넌트는 삭제될 예정입니다.
- * 새로운 코드에서는 `@/widgets` 폴더에 구현된 컴포넌트를 사용해주세요.
- */
-export default AddressInput
