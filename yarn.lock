@@ -401,6 +401,7 @@ __metadata:
     lucide-react: "npm:^0.562.0"
     playwright: "npm:1.55.1"
     react: "npm:^19.1.0"
+    react-daum-postcode: "npm:^4.0.0"
     react-day-picker: "npm:^9.11.2"
     react-dom: "npm:^19.1.0"
     react-hook-form: "npm:^7.71.2"
@@ -8678,6 +8679,15 @@ __metadata:
     parchment: "npm:^3.0.0"
     quill-delta: "npm:^5.1.0"
   checksum: 10c0/9897468b3e2b0fbf9c91471deea745d7b6494f866cb8caace63267769b2c4c6128e49da0988c4ed64f1a91a171fbf91c84009b663b1256a3caca0755204bb6b5
+  languageName: node
+  linkType: hard
+
+"react-daum-postcode@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "react-daum-postcode@npm:4.0.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 10c0/5f166b56fdcfa876ec3a02864d034b24d3522af47b9168497cb051df4fe24d692f1102e8894e51f4f860d2e8ff63eb017435d8063ea7797343a749186ae2a3a7
   languageName: node
   linkType: hard
 
