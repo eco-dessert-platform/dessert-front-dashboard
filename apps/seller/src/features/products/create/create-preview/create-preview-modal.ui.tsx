@@ -3,28 +3,24 @@ import { Button } from '@dessert/ui'
 import { ChevronDown, ChevronUp, Heart, Star } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
-import { EssentialOptions, ProductOptionFormInput } from '@/entity/products'
+import {
+  EssentialOptions,
+  ProductOptionFormInput,
+  SHIPPING_DAYS,
+} from '@/entity/products'
 
 import { useCreateFormSteps } from '../create-form'
 import { CreateProductForm } from '../create-form/product-create.types'
 
 const DaySelector = ({ selectedDays }: { selectedDays: string[] }) => {
-  const days = [
-    { key: 'mon', label: '월' },
-    { key: 'tue', label: '화' },
-    { key: 'wed', label: '수' },
-    { key: 'thu', label: '목' },
-    { key: 'fri', label: '금' },
-    { key: 'sat', label: '토' },
-    { key: 'sun', label: '일' },
-  ]
+  const days = SHIPPING_DAYS
   return (
     <div className="flex gap-4">
       {days.map((day) => (
         <span
-          key={day.key}
+          key={day.value}
           className={`flex size-32 items-center justify-center rounded-full border typo-body-12-sb ${
-            selectedDays.includes(day.key)
+            selectedDays.includes(day.value)
               ? 'border-[#F26565] bg-[#F26565] text-white'
               : 'border-gray-100 bg-white text-gray-400'
           }`}
