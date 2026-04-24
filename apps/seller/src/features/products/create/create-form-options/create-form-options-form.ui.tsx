@@ -9,7 +9,7 @@ import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/p
 import DaySelector from '@/shared/block/day-selector/day-selector'
 
 import { useProductOptionForm } from './use-product-options.form.hook'
-import { useCreateFormSteps } from '../create-form'
+import { ProductFinalPrice, useCreateFormSteps } from '../create-form'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
 
 interface Props {
@@ -27,6 +27,8 @@ export const ProductOptionForm = ({
   onCopy,
   onAdd,
 }: Props) => {
+  const { setProductFields, setNutritionData, productPrice } =
+    useCreateFormSteps()
   const {
     form,
     mainCategory,
@@ -44,10 +46,9 @@ export const ProductOptionForm = ({
     stockInput,
     nutritionInputs,
     toggleShippingDay,
-  } = useProductOptionForm(index)
+  } = useProductOptionForm(index, productPrice)
 
   const { control, register } = form
-  const { setProductFields, setNutritionData } = useCreateFormSteps()
 
   useEffect(() => {
     setProductFields((prev) => ({ ...prev, productOptions: isFormField }))
@@ -159,6 +160,7 @@ export const ProductOptionForm = ({
               labelClassName="typo-title-16-r"
               placeholder="0~100,000"
               className="flex-1"
+              value={productPrice ?? ''}
               disabled
             />
             <span className="relative top-11">원</span>
@@ -178,14 +180,11 @@ export const ProductOptionForm = ({
           </div>
         </div>
         {totalPrice !== null && (
-          <div className="mt-8 flex justify-end">
-            <p className="typo-title-16-r text-gray-600">
-              최종 가격:
-              <span className="typo-heading-18-b text-gray-900">
-                {totalPrice.toLocaleString('ko-KR')}원
-              </span>
-            </p>
-          </div>
+          <ProductFinalPrice
+            title={'최종 상품 옵션 금액'}
+            price={productPrice}
+            finalPrice={totalPrice}
+          />
         )}
       </div>
 

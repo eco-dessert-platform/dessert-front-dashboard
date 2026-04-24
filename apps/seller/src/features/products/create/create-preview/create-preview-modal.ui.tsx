@@ -98,7 +98,7 @@ export const ProductPreviewModal = ({
         </div>
 
         <div className="border-t border-gray-300 bg-white p-16">
-          {/* 💡 데이터 바인딩: productName */}
+          {/* 데이터 바인딩: productName */}
           <h2 className="typo-title-16-r text-gray-800">
             {formData.productName || '[미입력] 상품명'}
           </h2>
