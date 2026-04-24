@@ -1,11 +1,3 @@
-// import { useState } from 'react'
-
-// import { BbanggreuiOvenLogo } from '@dessert/icons'
-// import { Button, Editor } from '@dessert/ui'
-// import { useNavigate } from 'react-router-dom'
-
-// import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
-
 import { useState } from 'react'
 
 import { BbanggreuiOvenLogo } from '@dessert/icons'
