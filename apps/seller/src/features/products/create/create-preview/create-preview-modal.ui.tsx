@@ -46,13 +46,16 @@ const getOptionTags = (option: ProductOptionFormInput) => {
 
   return tags
 }
+
+interface ProductPreviewModalProps {
+  isOpen: boolean
+  onClose: () => void
+}
+
 export const ProductPreviewModal = ({
   isOpen,
   onClose,
-}: {
-  isOpen: boolean
-  onClose: () => void
-}) => {
+}: ProductPreviewModalProps) => {
   const { watch } = useFormContext<CreateProductForm>()
   const formData = watch()
   const { productPrice } = useCreateFormSteps()

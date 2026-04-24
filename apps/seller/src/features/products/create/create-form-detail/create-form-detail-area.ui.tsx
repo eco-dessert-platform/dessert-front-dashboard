@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-
+import { useEffect, useState } from 'react'
 
 import { PlusIcon, SquarePenIcon } from '@dessert/icons'
 import { Button, Label } from '@dessert/ui'
@@ -8,10 +7,12 @@ import { useNavigate } from 'react-router-dom'
 import AppLogoImage from '@/assets/images/apple-120x120.png'
 import { ROUTES } from '@/shared/constant/routes'
 
+import { ProductEditorModal } from './create-detail-editor-modal.ui'
 import { useProductCreationStore } from '../create-form/product-creation.store'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 export const ProductDetailArea = () => {
+  const [isEditorOpen, setIsEditorOpen] = useState(false)
   const navigate = useNavigate()
   const { productDetail } = useProductCreationStore()
   const { setProductFields } = useCreateFormSteps()
@@ -62,7 +63,7 @@ export const ProductDetailArea = () => {
             size="lg"
             leftIcon={<SquarePenIcon width={24} height={24} />}
             className="w-full"
-            onClick={handleEditClick}
+            onClick={() => setIsEditorOpen(true)}
           />
         </div>
       ) : (
@@ -74,9 +75,14 @@ export const ProductDetailArea = () => {
           size="lg"
           leftIcon={<PlusIcon width={24} height={24} />}
           className="w-full"
-          onClick={handleEditClick}
+          onClick={() => setIsEditorOpen(true)}
         />
       )}
+
+      <ProductEditorModal
+        isOpen={isEditorOpen}
+        onClose={() => setIsEditorOpen(false)}
+      />
     </>
   )
 }

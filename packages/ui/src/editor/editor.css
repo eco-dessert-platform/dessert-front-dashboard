@@ -1,11 +1,18 @@
 /* Quill 에디터 스타일 오버라이드 */
 
 /* 툴바 스타일 */
+
 .quill-wrapper .ql-toolbar {
   border: none;
   border-bottom: 1px solid var(--color-gray-200);
-  padding: 8px 12px;
+  padding: 20px 48px;
   font-family: inherit;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+  width: 100vw;
+  left: 0;
 }
 
 /* 에디터 본문 스타일 */
@@ -14,17 +21,22 @@
   font-family: inherit;
   font-size: 14px;
   max-height: 100%;
-  display: flex;
-  flex-direction: column;
+  background-color: #fafafa;
 }
 
 .quill-wrapper .ql-editor {
+  position: relative;
   padding: 12px;
   line-height: 1.6;
   color: var(--color-gray-900);
   overflow-y: auto;
   flex: 1;
   outline: none;
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-color: #fff;
 }
 
 .quill-wrapper .ql-editor.ql-blank::before {

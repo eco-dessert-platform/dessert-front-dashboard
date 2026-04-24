@@ -101,7 +101,7 @@ const Editor = ({
   image = false,
   onImageUpload,
   className = '',
-  height = 300,
+  height,
 }: EditorProps) => {
   const isReadOnly = disabled || !onChange
   const quillRef = useRef<ReactQuill>(null)
@@ -166,6 +166,7 @@ const Editor = ({
       className={cn(
         // eslint-disable-next-line better-tailwindcss/no-unknown-classes
         'quill-wrapper w-full overflow-hidden rounded-10 border border-gray-300 bg-white transition-all duration-200',
+        !height && 'flex flex-1 flex-col',
         disabled && 'cursor-not-allowed bg-gray-100 opacity-60',
         className,
       )}
@@ -179,7 +180,7 @@ const Editor = ({
         formats={formats}
         placeholder={placeholder}
         readOnly={isReadOnly}
-        style={{ height }}
+        style={height ? { height } : { height: 'calc(100% - 66px)' }}
       />
     </div>
   )

@@ -16,6 +16,7 @@ import {
   useCreateFormSteps,
   useCreateProductForm,
 } from '@/features/products/create'
+import { ProductEditorModal } from '@/features/products/create/create-form-detail/create-detail-editor-modal.ui'
 import { ProductPreviewModal } from '@/features/products/create/create-preview/create-preview-modal.ui'
 
 function CreatePage() {
