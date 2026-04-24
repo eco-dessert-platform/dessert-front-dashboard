@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const productOptionSchema = z
   .object({
-    mainCategory: z.enum(['bread', 'snack']),
+    mainCategory: z.enum(['bread', 'snack', '']),
     subCategory: z.string(),
     optionName: z.string(),
     ingredientCategories: z.array(z.enum(['glutenFree', 'vegan'])),
@@ -26,6 +26,10 @@ export const productOptionSchema = z
     fat: z.union([z.number().min(0), z.null()]),
     sodium: z.union([z.number().min(0), z.null()]),
   })
+  .refine((data) => data.mainCategory !== '', {
+    message: '카테고리를 선택해주세요',
+    path: ['mainCategory'],
+  })
   .refine(
     (data) =>
       data.optionName === '' ||
@@ -36,3 +40,8 @@ export const productOptionSchema = z
     message: '',
     path: ['additionalPrice'],
   })
+
+export const productOptionsWrapperSchema = z.object({
+  options: z.array(productOptionSchema).min(1, '옵션을 하나 이상 추가해주세요'),
+})
+export type ProductOptionsWrapper = z.infer<typeof productOptionsWrapperSchema>

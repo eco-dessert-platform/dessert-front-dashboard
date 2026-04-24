@@ -1,18 +1,24 @@
 import { useEffect, useState } from 'react'
 
 export function useNumberInput(
-  value: number | null,
+  value: number | null | undefined, // undefined 추가
   onChange: (value: number | null) => void,
   options?: { allowNegative?: boolean },
 ) {
   const { allowNegative = false } = options ?? {}
 
+  // 💡 undefined 체크 추가하여 에러 방지
   const [displayValue, setDisplayValue] = useState(
-    value !== null ? value.toLocaleString('ko-KR') : '',
+    value !== null && value !== undefined ? value.toLocaleString('ko-KR') : '',
   )
 
   useEffect(() => {
-    setDisplayValue(value !== null ? value.toLocaleString('ko-KR') : '')
+    // 💡 undefined 체크 추가하여 에러 방지
+    setDisplayValue(
+      value !== null && value !== undefined
+        ? value.toLocaleString('ko-KR')
+        : '',
+    )
   }, [value])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +28,6 @@ export function useNumberInput(
       ? raw.replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')
       : raw.replace(/[^0-9]/g, '')
 
-    // '-' 만 입력된 중간 상태는 표시만 유지, onChange는 호출 안 함
     if (cleaned === '-') {
       setDisplayValue('-')
       return

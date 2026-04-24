@@ -1,8 +1,9 @@
+import z from 'zod'
+
 import {
   DeliveryFormInput,
   ProductDisclosureFormInput,
   ProductFormInput,
-  ProductOptionFormInput,
   ThumbnailFormInput,
 } from '@/entity/products'
 
@@ -12,14 +13,19 @@ import { productSchema } from '../create-form-info/create-info.schema'
 import { productOptionSchema } from '../create-form-options/create-options.schema'
 import { thumbnailSchema } from '../create-form-thumbnail-upload'
 
+const productOptionsWrapperSchema = z.object({
+  options: z.array(productOptionSchema).min(1),
+})
+type ProductOptionsWrapper = z.infer<typeof productOptionsWrapperSchema>
+
 export type CreateProductForm = ProductFormInput &
   DeliveryFormInput &
-  ProductOptionFormInput &
+  ProductOptionsWrapper &
   ProductDisclosureFormInput &
   ThumbnailFormInput
 
 export const createProductSchema = productSchema
   .and(deliverySchema)
-  .and(productOptionSchema)
+  .and(productOptionsWrapperSchema)
   .and(disclosureSchema)
   .and(thumbnailSchema)

@@ -15,7 +15,7 @@ const FixedLayout = () => {
             <Outlet />
           </ScrollArea>
         </main> */}
-        <main className="h-full max-w-[calc(100vw-240px)] overflow-y-auto bg-gray-50">
+        <main className="size-full max-w-[calc(100vw-240px)] overflow-y-auto bg-gray-50">
           <div className="relative px-[90px] pt-40 pb-36">
             <Outlet />
           </div>
