@@ -3,6 +3,8 @@ import { Button } from '@dessert/ui'
 import { ChevronDown, ChevronUp, Heart, Star } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
+import { EssentialOptions, ProductOptionFormInput } from '@/entity/products'
+
 import { useCreateFormSteps } from '../create-form'
 import { CreateProductForm } from '../create-form/product-create.types'
 
@@ -33,7 +35,21 @@ const DaySelector = ({ selectedDays }: { selectedDays: string[] }) => {
     </div>
   )
 }
+const getOptionTags = (option: ProductOptionFormInput) => {
+  const tags: string[] = []
 
+  const { ingredientCategories, protein, fat, sugar } = option
+
+  if (ingredientCategories.includes('glutenFree'))
+    tags.push(EssentialOptions[0].title) // 글루텐프리
+  if (ingredientCategories.includes('vegan'))
+    tags.push(EssentialOptions[1].title) // 비건
+  if (protein && protein >= 11) tags.push(EssentialOptions[2].title) // 고단백
+  if (fat && fat < 3) tags.push(EssentialOptions[3].title) // 저지방
+  if (sugar && sugar < 5) tags.push(EssentialOptions[4].title) // 저당
+
+  return tags
+}
 export const ProductPreviewModal = ({
   isOpen,
   onClose,
@@ -43,7 +59,7 @@ export const ProductPreviewModal = ({
 }) => {
   const { watch } = useFormContext<CreateProductForm>()
   const formData = watch()
-  const { activeTags, productPrice, nutritionData } = useCreateFormSteps()
+  const { activeTags, productPrice } = useCreateFormSteps()
 
   if (!isOpen) return null
 
@@ -62,11 +78,6 @@ export const ProductPreviewModal = ({
     discountType === 'won'
       ? price - discountAmount
       : Math.round(price * (1 - discountAmount / 100))
-
-  //tags
-  const activeTagList = Object.entries(activeTags)
-    .filter(([, value]) => value)
-    .map(([key]) => key)
 
   // mainImage를 ObjectURL로 변환해서 미리보기
   const mainImageUrl = formData.mainImage
@@ -235,22 +246,24 @@ export const ProductPreviewModal = ({
 
                 {/* 태그 */}
                 <div className="flex flex-wrap gap-6 border-t border-gray-300 p-16">
-                  {activeTagList.length > 0 ? (
-                    activeTagList.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-4 border border-gray-200 px-6 py-2 typo-body-10-r text-gray-600"
-                      >
-                        {tag}
+                  {(() => {
+                    const tags = getOptionTags(option)
+                    return tags.length > 0 ? (
+                      tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-4 border border-gray-200 px-6 py-2 typo-body-10-r text-gray-600"
+                        >
+                          {tag}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="typo-body-12-r text-gray-400">
+                        성분 카테고리 미입력
                       </span>
-                    ))
-                  ) : (
-                    <span className="typo-body-12-r text-gray-400">
-                      성분 카테고리 미입력
-                    </span>
-                  )}
+                    )
+                  })()}
                 </div>
-
                 {/* 주문 가능날짜 */}
                 <div className="p-16 pt-0">
                   <p className="mb-2 typo-body-12-sb text-gray-500">

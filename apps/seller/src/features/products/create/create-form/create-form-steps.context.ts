@@ -25,8 +25,8 @@ interface FormStepsContextType {
 
   isScrollingToStep: React.MutableRefObject<boolean>
 
-  nutritionData: NutritionData
-  setNutritionData: React.Dispatch<React.SetStateAction<NutritionData>>
+  nutritionDataList: NutritionData[]
+  setNutritionData: (index: number, data: NutritionData) => void
   activeTags: ActiveTags
 
   productPrice: number | null

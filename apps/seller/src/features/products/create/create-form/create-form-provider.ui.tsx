@@ -74,43 +74,49 @@ export const FormStepsProvider = ({
 
   //필수성분, 적용된 카테고리 부분
 
-  const [nutritionData, setNutritionData] = useState<NutritionData>({
-    sugar: 0,
-    protein: 0,
-    fat: 0,
-    ingredientCategories: [],
-  })
+  const [nutritionDataList, setNutritionDataList] = useState<NutritionData[]>([
+    {
+      sugar: 0,
+      protein: 0,
+      fat: 0,
+      ingredientCategories: [],
+    },
+  ])
+
+  const setNutritionData = useCallback((index: number, data: NutritionData) => {
+    setNutritionDataList((prev) => {
+      const next = [...prev]
+      next[index] = data
+      return next
+    })
+  }, [])
 
   const activeTags: ActiveTags = useMemo(() => {
-    const { sugar, protein, fat, ingredientCategories } = nutritionData
+    // 모든 옵션의 ingredientCategories 합산
+    const allCategories = nutritionDataList.flatMap(
+      (d) => d.ingredientCategories,
+    )
 
-    // 값이 실제로 입력되었는지 확인 (비어있거나 0이면 false 처리)
-    const hasProtein = protein > 0
-    const hasSugar = sugar > 0
-    const hasFat = fat > 0
-
-    const isGlutenFree = ingredientCategories.includes('glutenFree')
-    const isVegan = ingredientCategories.includes('vegan')
-
-    // "값이 존재함 && 기준치 미만/이상" 두 조건을 모두 만족해야 함
-    const isHighProtein = hasProtein && protein >= 11
-    const isLowFat = hasFat && fat < 3
-    const isLowSugar = hasSugar && sugar < 5
+    // 각 영양소는 하나라도 기준 충족하면 활성화
+    const isGlutenFree = allCategories.includes('glutenFree')
+    const isVegan = allCategories.includes('vegan')
+    const isHighProtein = nutritionDataList.some(
+      (d) => d.protein > 0 && d.protein >= 11,
+    )
+    const isLowFat = nutritionDataList.some((d) => d.fat > 0 && d.fat < 3)
+    const isLowSugar = nutritionDataList.some((d) => d.sugar > 0 && d.sugar < 5)
 
     return {
-      // 필수 성분 매칭 (순서 기준)
       [EssentialOptions[0].title]: isGlutenFree,
       [EssentialOptions[1].title]: isVegan,
       [EssentialOptions[2].title]: isHighProtein,
       [EssentialOptions[3].title]: isLowFat,
       [EssentialOptions[4].title]: isLowSugar,
-
-      // 적용 카테고리 매칭 (순서 기준)
       [CategoryOptions[0].title]: isLowSugar && isLowFat,
       [CategoryOptions[1].title]: isHighProtein,
       [CategoryOptions[2].title]: isVegan && isGlutenFree,
     }
-  }, [nutritionData])
+  }, [nutritionDataList])
 
   //상품 정보, 상품 옵션 정보에서 공유하는 가격
   const [productPrice, setProductPrice] = useState<number | null>(null)
@@ -126,7 +132,7 @@ export const FormStepsProvider = ({
         headerHeight,
         setHeaderHeight,
         isScrollingToStep, // ref 전달
-        nutritionData,
+        nutritionDataList,
         setNutritionData,
         activeTags,
         productPrice,

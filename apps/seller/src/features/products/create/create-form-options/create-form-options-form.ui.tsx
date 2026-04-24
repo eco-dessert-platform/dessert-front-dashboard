@@ -58,7 +58,7 @@ export const ProductOptionForm = ({
     const sugar = Number(nutritionInputs.sugar?.displayValue || 0)
     const protein = Number(nutritionInputs.protein?.displayValue || 0)
     const fat = Number(nutritionInputs.fat?.displayValue || 0)
-    setNutritionData({ sugar, protein, fat, ingredientCategories })
+    setNutritionData(index, { sugar, protein, fat, ingredientCategories })
   }, [
     nutritionInputs.sugar?.displayValue,
     nutritionInputs.protein?.displayValue,
