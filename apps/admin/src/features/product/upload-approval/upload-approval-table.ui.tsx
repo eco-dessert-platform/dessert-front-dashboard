@@ -7,6 +7,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { UploadApproval, productQueries } from '@/entity/product'
 
 import { UploadApprovalActionGroup } from './upload-approval-action-group.ui'
+import { useDecideUploadApprovalMutation } from './upload-approval.mutation'
 
 const PAGE_SIZE = 10
 const HEADER_CLASS = 'border-b-[0.8px] border-b-gray-400'
@@ -27,9 +28,14 @@ export const UploadApprovalTable = () => {
     placeholderData: keepPreviousData,
   })
 
-  const handleApprove = useCallback((boardId: number) => {
-    alert(`승인: ${boardId}`)
-  }, [])
+  const { mutate: decideUploadApproval } = useDecideUploadApprovalMutation()
+
+  const handleApprove = useCallback(
+    (boardId: number) => {
+      decideUploadApproval({ boardId, body: { decisionType: 'APPROVE' } })
+    },
+    [decideUploadApproval],
+  )
 
   const handleReject = useCallback((boardId: number) => {
     alert(`거절: ${boardId}`)
