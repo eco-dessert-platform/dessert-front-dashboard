@@ -10,7 +10,7 @@ import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/p
 import DaySelector from '@/shared/block/day-selector/day-selector'
 
 import { useProductOptionForm } from './use-product-options.form.hook'
-import { CreateProductForm, useCreateFormSteps } from '../create-form'
+import { CreateProductForm } from '../create-form'
 import { ProductOptionForm } from './create-form-options-form.ui'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
 import { DEFAULT_PRODUCT_OPTION } from '../create-form/use-create-product-form.hook'

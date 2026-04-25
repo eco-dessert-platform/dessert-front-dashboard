@@ -13,7 +13,7 @@ import {
 } from '@/entity/products'
 import { cn } from '@/shared/libs/utils'
 
-import { useCreateFormSteps } from '../create-form'
+// import { useCreateFormSteps } from '../create-form'
 import { CreateProductForm } from '../create-form/product-create.types'
 import { useProductCreationStore } from '../create-form/product-creation.store'
 
@@ -63,7 +63,7 @@ export const ProductPreviewModal = ({
 }: ProductPreviewModalProps) => {
   const { watch } = useFormContext<CreateProductForm>()
   const formData = watch()
-  const { productPrice } = useCreateFormSteps()
+  // const { productPrice } = useCreateFormSteps()
   const { productDetail } = useProductCreationStore()
   if (!isOpen) return null
 
@@ -251,9 +251,9 @@ export const ProductPreviewModal = ({
                       10%
                     </span>
                     <span className="typo-title-14-sb text-gray-900">
-                      {(
+                      {/* {(
                         (productPrice ?? 0) + (option.additionalPrice ?? 0)
-                      ).toLocaleString()}
+                      ).toLocaleString()} */}
                       원
                     </span>
                     <ChevronUp className="ml-8 text-gray-900" size={20} />

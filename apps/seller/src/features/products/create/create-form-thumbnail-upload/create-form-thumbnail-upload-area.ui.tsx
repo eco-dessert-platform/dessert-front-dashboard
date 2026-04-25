@@ -13,7 +13,7 @@ import {
 import { Camera, XIcon } from 'lucide-react'
 
 import { useProductThumbnailForm } from './use-product-thumnail-form.hook'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+// import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 export const ThumbnailUploadArea = () => {
   const {
@@ -26,11 +26,11 @@ export const ThumbnailUploadArea = () => {
     handleImageDelete,
   } = useProductThumbnailForm()
 
-  const { setProductFields } = useCreateFormSteps()
+  // const { setProductFields } = useCreateFormSteps()
 
-  useEffect(() => {
-    setProductFields((prev) => ({ ...prev, productThumbnail: isFormField }))
-  }, [isFormField, setProductFields])
+  // useEffect(() => {
+  //   setProductFields((prev) => ({ ...prev, productThumbnail: isFormField }))
+  // }, [isFormField, setProductFields])
 
   return (
     <>

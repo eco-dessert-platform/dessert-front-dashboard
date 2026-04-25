@@ -2,7 +2,7 @@ import React from 'react'
 
 import { cn } from '@/shared/libs/utils'
 
-import { useCreateFormSteps } from './use-create-form-steps.hook'
+import { useCreateHeaderSteps } from './use-create-form-steps.hook'
 
 interface CreateFormContainerProps {
   className?: string
@@ -15,7 +15,7 @@ export const CreateFormContainer = ({
   children,
   id,
 }: CreateFormContainerProps) => {
-  const { headerHeight } = useCreateFormSteps()
+  const { headerHeight } = useCreateHeaderSteps()
 
   return (
     <div

@@ -13,7 +13,7 @@ export interface ActiveTags {
   [key: string]: boolean
 }
 
-interface FormStepsContextType {
+export interface FormStepsContextType {
   productFields: FormStepStatus
   currentStep: number
   headerHeight: number

@@ -4,8 +4,8 @@ import { useFormContext, useWatch } from 'react-hook-form'
 
 import { DISCLOSURE_FIELDS } from '@/entity/products'
 
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 import { CreateProductForm } from '../create-form/product-create.types'
+// import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 type NoticeFieldKey = keyof CreateProductForm['productInfoNotice']
 
@@ -16,7 +16,7 @@ export const useProductDisclosureForm = () => {
     setValue,
     formState: { errors },
   } = useFormContext<CreateProductForm>()
-  const { setProductFields } = useCreateFormSteps()
+  // const { setProductFields } = useCreateFormSteps()
 
   // 1. 필요한 값만 콕 집어서 감시 (불필요한 리렌더링 방지)
   const noticeValues = useWatch({ control, name: 'productInfoNotice' })
@@ -68,11 +68,11 @@ export const useProductDisclosureForm = () => {
       return false
     })
 
-    setProductFields((prev) => {
-      if (prev.productDisclosure === isComplete) return prev
-      return { ...prev, productDisclosure: isComplete }
-    })
-  }, [noticeModes, noticeValues, setProductFields])
+    // setProductFields((prev) => {
+    //   if (prev.productDisclosure === isComplete) return prev
+    //   return { ...prev, productDisclosure: isComplete }
+    // })
+  }, [noticeModes, noticeValues])
 
   return {
     control,

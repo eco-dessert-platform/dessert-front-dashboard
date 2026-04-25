@@ -9,7 +9,7 @@ import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/p
 import DaySelector from '@/shared/block/day-selector/day-selector'
 
 import { useProductOptionForm } from './use-product-options.form.hook'
-import { ProductFinalPrice, useCreateFormSteps } from '../create-form'
+import { ProductFinalPrice } from '../create-form'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
 
 interface ProductOptionFormProps {
@@ -27,8 +27,8 @@ export const ProductOptionForm = ({
   onCopy,
   onAdd,
 }: ProductOptionFormProps) => {
-  const { setProductFields, setNutritionData, productPrice } =
-    useCreateFormSteps()
+  // const { setProductFields, setNutritionData, productPrice } =
+  //   useCreateFormSteps()
   const {
     form,
     mainCategory,
@@ -46,13 +46,13 @@ export const ProductOptionForm = ({
     stockInput,
     nutritionInputs,
     toggleShippingDay,
-  } = useProductOptionForm(index, productPrice)
+  } = useProductOptionForm(index)
 
   const { control, register } = form
 
-  useEffect(() => {
-    setProductFields((prev) => ({ ...prev, productOptions: isFormField }))
-  }, [isFormField, setProductFields])
+  // useEffect(() => {
+  //   setProductFields((prev) => ({ ...prev, productOptions: isFormField }))
+  // }, [isFormField, setProductFields])
 
   useEffect(() => {
     const sugar =
@@ -68,13 +68,13 @@ export const ProductOptionForm = ({
         ? Number(nutritionInputs.fat?.displayValue)
         : null
 
-    setNutritionData(index, { sugar, protein, fat, ingredientCategories })
+    //setNutritionData(index, { sugar, protein, fat, ingredientCategories })
   }, [
     nutritionInputs.sugar?.displayValue,
     nutritionInputs.protein?.displayValue,
     nutritionInputs.fat?.displayValue,
     JSON.stringify(ingredientCategories),
-    setNutritionData,
+    // setNutritionData,
   ])
 
   return (
@@ -170,7 +170,7 @@ export const ProductOptionForm = ({
               labelClassName="typo-title-16-r"
               placeholder="0~100,000"
               className="flex-1"
-              value={productPrice ?? ''}
+              value={''}
               disabled
             />
             <span className="relative top-11">원</span>
@@ -192,7 +192,7 @@ export const ProductOptionForm = ({
         {totalPrice !== null && (
           <ProductFinalPrice
             title={'최종 상품 옵션 금액'}
-            price={productPrice}
+            price={100}
             finalPrice={totalPrice}
           />
         )}

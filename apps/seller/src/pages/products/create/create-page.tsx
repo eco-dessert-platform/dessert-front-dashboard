@@ -4,7 +4,6 @@ import { FormProvider } from 'react-hook-form'
 
 import {
   CreateFormContainer,
-  FormStepsProvider,
   ProductDeliveryArea,
   ProductDetailArea,
   ProductDisclosureArea,
@@ -13,28 +12,26 @@ import {
   ProductInfoArea,
   ProductOptionsArea,
   ThumbnailUploadArea,
-  useCreateFormSteps,
   useCreateProductForm,
 } from '@/features/products/create'
-import { ProductEditorModal } from '@/features/products/create/create-form-detail/create-detail-editor-modal.ui'
+import { useCreateHeaderSteps } from '@/features/products/create/create-form/use-create-form-steps.hook'
 import { ProductPreviewModal } from '@/features/products/create/create-preview/create-preview-modal.ui'
 
 function CreatePage() {
   const form = useCreateProductForm()
   return (
     <FormProvider {...form}>
-      <FormStepsProvider>
-        <CreatePageInner />
-      </FormStepsProvider>
+      <CreatePageInner />
     </FormProvider>
   )
 }
 
 function CreatePageInner() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-
   const { setCurrentStep, headerHeight, isScrollingToStep } =
-    useCreateFormSteps()
+    useCreateHeaderSteps()
+  // const { setCurrentStep, headerHeight, isScrollingToStep } =
+  //   useCreateFormSteps()
 
   const stepIds = [
     'productInfo',
@@ -47,41 +44,40 @@ function CreatePageInner() {
 
   useEffect(() => {
     const elements = stepIds.map((id) => document.getElementById(id))
-    const topMargin = Math.max(0, headerHeight - 30)
+
+    // 헤더가 가리는 만큼 상단 여백을 줌
+    const topMargin = headerHeight > 0 ? headerHeight : 100
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // 클릭해서 스크롤 중일 때는 단계 변경 무시
         if (isScrollingToStep.current) return
 
-        // 현재 화면에 보이는 섹션들 중 가장 위에 있는 것을 active로
         const visibleEntries = entries.filter((entry) => entry.isIntersecting)
-
         if (visibleEntries.length === 0) return
 
-        // rootMargin 기준선을 통과한 entry 중 index가 가장 큰 것 선택
-        // (스크롤 방향 무관하게 "현재 보이는 가장 상단 섹션" 기준)
+        // 화면 상단 기준선에 가장 가까운 섹션 찾기
         const topEntry = visibleEntries.reduce((prev, curr) => {
-          // boundingClientRect.top이 작을수록 화면 상단에 가까움
           return curr.boundingClientRect.top < prev.boundingClientRect.top
             ? curr
             : prev
         })
 
         const index = stepIds.indexOf(topEntry.target.id)
-        if (index !== -1) setCurrentStep(index + 1)
+        if (index !== -1) {
+          setCurrentStep(index + 1)
+        }
       },
       {
-        rootMargin: `-${topMargin}px 0px -60% 0px`,
+        // 상단은 헤더 높이만큼 빼고, 하단은 화면 절반 위로 오면 인식
+        rootMargin: `-${topMargin}px 0px -50% 0px`,
         threshold: 0,
       },
     )
 
-    elements.forEach((el) => {
-      if (el) observer.observe(el)
-    })
+    elements.forEach((el) => el && observer.observe(el))
     return () => observer.disconnect()
-  }, [headerHeight, setCurrentStep, isScrollingToStep])
-
+  }, [headerHeight, setCurrentStep]) // isScrollingToStep은 내부에서 ref로 참조되므로 생략 가능
   return (
     <>
       <ProductHeader />

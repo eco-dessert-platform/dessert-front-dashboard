@@ -12,7 +12,7 @@ import { CategoryOptions, EssentialOptions } from '@/entity/products'
 
 import { ProductHeaderTags } from './create-header-tags.ui'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { useCreateHeaderSteps } from '../create-form/use-create-form-steps.hook'
 
 const stagestep = [
   '상품 정보',
@@ -25,7 +25,7 @@ const stagestep = [
 
 export const ProductHeader = () => {
   const { productFields, currentStep, scrollToStep, setHeaderHeight } =
-    useCreateFormSteps()
+    useCreateHeaderSteps()
   const headerRef = useRef<HTMLDivElement>(null)
   const steps = Object.values(productFields).filter((e) => e === true).length
   const totalSteps = Object.keys(productFields).length

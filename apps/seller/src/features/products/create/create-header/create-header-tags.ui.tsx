@@ -2,7 +2,7 @@ import { Chip, Label, Tooltip } from '@dessert/ui'
 
 import { OptionTags } from '@/entity/products'
 
-import { useCreateFormSteps } from '../create-form'
+import { useCreateHeaderSteps } from '../create-form/use-create-form-steps.hook'
 
 interface TagsProps {
   title: string
@@ -17,7 +17,7 @@ export const ProductHeaderTags = ({
   titleTooltipProps,
   tagData,
 }: TagsProps) => {
-  const { activeTags } = useCreateFormSteps()
+  const { activeTags } = useCreateHeaderSteps()
 
   return (
     <div>
