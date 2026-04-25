@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { Button, Table } from '@dessert/ui'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
@@ -27,13 +27,13 @@ export const UploadApprovalTable = () => {
     placeholderData: keepPreviousData,
   })
 
-  const handleApprove = (boardId: number) => {
+  const handleApprove = useCallback((boardId: number) => {
     alert(`승인: ${boardId}`)
-  }
+  }, [])
 
-  const handleReject = (boardId: number) => {
+  const handleReject = useCallback((boardId: number) => {
     alert(`거절: ${boardId}`)
-  }
+  }, [])
 
   const columns = useMemo<ColumnDef<UploadApproval>[]>(
     () => [
@@ -64,7 +64,7 @@ export const UploadApprovalTable = () => {
         meta: { headerClassName: HEADER_CLASS, flexible: true },
         cell: ({ row }) => (
           <a
-            href={`${CUSTOMER_URL}/main/products/${row.original.boardId}/info`}
+            href={`${CUSTOMER_URL}/main/products/${encodeURIComponent(row.original.boardId)}/info`}
             target="_blank"
             rel="noopener noreferrer"
             className="typo-title-14-r text-primary-500 underline"
@@ -96,7 +96,7 @@ export const UploadApprovalTable = () => {
         size: 130,
       },
     ],
-    [currentPage],
+    [currentPage, handleApprove, handleReject],
   )
 
   return (
@@ -107,7 +107,7 @@ export const UploadApprovalTable = () => {
       topArea={
         <UploadApprovalActionGroup
           currentPage={currentPage}
-          totalPages={data?.totalPages ?? 1}
+          totalPages={data?.totalPages || 0}
           onPageChange={setCurrentPage}
         />
       }
