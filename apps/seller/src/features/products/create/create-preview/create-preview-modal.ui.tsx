@@ -1,57 +1,15 @@
 import { BbanggreuiOvenLogo } from '@dessert/icons'
 import { Button } from '@dessert/ui'
-import { ChevronDown, ChevronUp, Heart, Star } from 'lucide-react'
-import { useFormContext } from 'react-hook-form'
+import { ChevronDown, Heart, Star } from 'lucide-react'
 
 import NoThumb from '@/assets/icons/preview/noimage.svg'
 import Icon1 from '@/assets/icons/preview/preview-icon1.png'
 import Icon2 from '@/assets/icons/preview/preview-icon2.png'
 import Icon3 from '@/assets/icons/preview/preview-icon3.png'
-import {
-  CreateFormType,
-  ProductOptionFormInput,
-} from '@/entity/products/create/create-form'
-import { EssentialOptions } from '@/entity/products/create/create-header'
-import { SHIPPING_DAYS } from '@/entity/products/create/create-options'
 import { cn } from '@/shared/libs/utils'
 
-import { useCreateHeaderSteps } from '../create-store'
-import { useProductCreationStore } from '../create-store/product-creation.store'
-
-const DaySelector = ({ selectedDays }: { selectedDays: string[] }) => {
-  const days = SHIPPING_DAYS
-  return (
-    <div className="flex gap-4">
-      {days.map((day) => (
-        <span
-          key={day.value}
-          className={`flex size-32 items-center justify-center rounded-full border typo-body-12-sb ${
-            selectedDays.includes(day.value)
-              ? 'border-[#F26565] bg-[#F26565] text-white'
-              : 'border-gray-100 bg-white text-gray-400'
-          }`}
-        >
-          {day.label}
-        </span>
-      ))}
-    </div>
-  )
-}
-const getOptionTags = (option: ProductOptionFormInput) => {
-  const tags: string[] = []
-
-  const { ingredientCategories, protein, fat, sugar } = option
-
-  if (ingredientCategories.includes('glutenFree'))
-    tags.push(EssentialOptions[0].title)
-  if (ingredientCategories.includes('vegan'))
-    tags.push(EssentialOptions[1].title)
-  if (protein !== null && protein >= 11) tags.push(EssentialOptions[2].title)
-  if (fat !== null && fat < 3) tags.push(EssentialOptions[3].title)
-  if (sugar !== null && sugar < 5) tags.push(EssentialOptions[4].title)
-
-  return tags
-}
+import { CreatePreviewOptionItemUi } from './create-preview-option-item.ui'
+import { useCreatePreviewPreviewHook } from './create-preview.hook'
 
 interface ProductPreviewModalProps {
   isOpen: boolean
@@ -62,51 +20,20 @@ export const ProductPreviewModal = ({
   isOpen,
   onClose,
 }: ProductPreviewModalProps) => {
-  const { watch } = useFormContext<CreateFormType>()
-  const formData = watch()
-  const { productPrice } = useCreateHeaderSteps()
-  const { productDetail } = useProductCreationStore()
+  const {
+    formData,
+    productPrice,
+    productDetail,
+    discountPercent,
+    totalPrice,
+    isPriceEntered,
+    allImageUrls,
+    discountAmount,
+  } = useCreatePreviewPreviewHook()
+
   if (!isOpen) return null
 
-  // 1. 원본 데이터 추출 (null/undefined일 수 있음)
-  const rawPrice = formData.price
-  const rawDiscount = formData.discountAmount
-  const discountType = formData.discountType
-
-  // 2. 계산을 위한 기본값 처리
-  const price = rawPrice ?? 0
-  const discountAmount = rawDiscount ?? 0
-
-  // 3. 할인율 계산
-  const discountPercent =
-    discountType === 'won'
-      ? price > 0
-        ? Math.round((discountAmount / price) * 100)
-        : 0
-      : discountAmount
-
-  // 4. 최종 가격 계산
-  const totalPrice =
-    discountType === 'won'
-      ? price - discountAmount
-      : Math.round(price * (1 - discountAmount / 100))
-
-  // 5. [핵심] UI 노출 여부 판단
-  // 가격이 null이거나 0이면 아직 입력 전인 것으로 간주합니다.
-  const isPriceEntered = rawPrice !== null && rawPrice > 0
-
-  // mainImage를 ObjectURL로 변환해서 미리보기
-  const mainImageUrl = formData.mainImage
-    ? URL.createObjectURL(formData.mainImage)
-    : null
-  const extraImageUrls = (formData.extraImages ?? []).map((f) =>
-    URL.createObjectURL(f),
-  )
-  const allImageUrls = mainImageUrl ? [mainImageUrl, ...extraImageUrls] : []
-
   const options = formData.options ?? []
-
-  //뱃지 매핑
   const BADGES = [
     { label: '맛있어요', icon: Icon1 },
     { label: '담백해요', icon: Icon2 },
@@ -124,6 +51,7 @@ export const ProductPreviewModal = ({
       >
         <BbanggreuiOvenLogo />
       </div>
+
       <div
         className="relative h-full w-150 overflow-y-auto bg-white"
         onClick={(e) => e.stopPropagation()}
@@ -187,16 +115,12 @@ export const ProductPreviewModal = ({
           </h2>
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-4">
-              {' '}
-              {/* gap-4 유지! */}
               <span className="typo-heading-18-r text-primary-500">
-                {/* 0%일 때는 가이드 문구 노출 */}
                 {isPriceEntered && discountPercent > 0
                   ? `${discountPercent}%`
                   : '{{할인율}}'}
               </span>
               <span className="typo-heading-18-sb text-gray-900">
-                {/* 입력 전에는 가이드 문구 노출 */}
                 {isPriceEntered
                   ? `${totalPrice.toLocaleString()}원~`
                   : '{{상품가격}}'}
@@ -209,9 +133,7 @@ export const ProductPreviewModal = ({
             </div>
             <div className="flex items-center gap-2 typo-body-14-m text-gray-900">
               <Star className="fill-yellow-400 text-yellow-400" size={18} />
-              4.5 <span className="typo-body-12-r text-gray-500">
-                (1,000)
-              </span>{' '}
+              4.5 <span className="typo-body-12-r text-gray-500">(1,000)</span>
               <ChevronDown className="-rotate-90 text-gray-300" size={12} />
             </div>
           </div>
@@ -220,12 +142,12 @@ export const ProductPreviewModal = ({
         {/* 5. 배송비 */}
         <div className="bg-gray-50 px-16 py-12">
           <div className="typo-title-14-m text-gray-600">
-            배송비{' '}
+            배송비
             <span className="ml-4 typo-title-14-r text-gray-800">
               {formData.deliveryFee
                 ? `${formData.deliveryFee.toLocaleString()}원`
                 : '{{배송비}}'}
-            </span>{' '}
+            </span>
             {formData.deliveryMinFee && (
               <span className="ml-2 typo-body-12-r text-gray-500">
                 ({formData.deliveryMinFee.toLocaleString()}원 이상 구매 시 무료)
@@ -265,127 +187,16 @@ export const ProductPreviewModal = ({
               옵션을 입력해주세요
             </div>
           ) : (
-            options.map((option, idx) => {
-              // 1. 기초 데이터 계산
-              const basePrice = productPrice ?? 0
-              const additionalPrice = option.additionalPrice ?? 0
-              const originalPrice = basePrice + additionalPrice // 옵션이 포함된 정가
-              const discount = discountAmount ?? 0
-
-              // 2. 최종 가격 및 할인율 계산
-              const finalPrice = originalPrice - discount
-              const discountRate =
-                originalPrice > 0
-                  ? Math.round((discount / originalPrice) * 100)
-                  : 0
-
-              // 3. 값이 없을 때 표시할 텍스트 분기
-              const hasPrice = productPrice !== null
-              const displayDiscountRate = hasPrice
-                ? `${discountRate}%`
-                : '{{할인율}}'
-              const displayFinalPrice = hasPrice
-                ? `${finalPrice.toLocaleString()}원`
-                : '{{할인가격}}'
-
-              return (
-                <div key={idx} className="border-t border-gray-300">
-                  <div className="flex items-center justify-between p-16">
-                    <h4 className="mb-6 typo-title-14-r text-gray-800">
-                      {option.optionName || `{{옵션명 ${idx + 1}}}`}
-                    </h4>
-                    <div className="flex items-center gap-6">
-                      {discount > 0 && (
-                        <span className="typo-body-12-r text-gray-400 line-through">
-                          {originalPrice.toLocaleString()}원
-                        </span>
-                      )}
-
-                      {/* 할인율 */}
-                      <span className="typo-title-14-sb text-primary-500">
-                        {displayDiscountRate}
-                      </span>
-
-                      {/* 최종 할인가 */}
-                      <span className="typo-title-14-sb text-gray-900">
-                        {displayFinalPrice}
-                      </span>
-                      <ChevronUp className="ml-8 text-gray-900" size={20} />
-                    </div>
-                  </div>
-
-                  {/* 태그 */}
-                  <div className="flex flex-wrap gap-6 border-t border-gray-300 p-16">
-                    {(() => {
-                      const tags = getOptionTags(option)
-                      return tags.length > 0 ? (
-                        tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-4 border border-gray-200 px-6 py-2 typo-body-10-r text-gray-600"
-                          >
-                            {tag}
-                          </span>
-                        ))
-                      ) : (
-                        <span className="typo-body-12-r text-gray-400">
-                          성분 카테고리 미입력
-                        </span>
-                      )
-                    })()}
-                  </div>
-                  {/* 주문 가능날짜 */}
-                  <div className="p-16 pt-0">
-                    <p className="mb-2 typo-body-12-sb text-gray-500">
-                      주문 가능날짜
-                    </p>
-                    <div className="flex w-full items-center justify-between">
-                      <DaySelector selectedDays={option.shippingDays} />
-                      <div className="rounded-8 bg-gray-900 px-10 py-[5.5px] typo-body-12-m text-white">
-                        빵켓팅 알림 신청
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 영양정보 */}
-                  {option.hasNutrition && (
-                    <div className="p-16 pt-0">
-                      <div className="mb-10 flex items-center justify-between">
-                        <span className="mb-2 typo-body-12-sb text-gray-500">
-                          영양정보
-                        </span>
-                        <span className="typo-body-12-sb text-gray-700">
-                          총 내용량 {option.totalWeight ?? 0}g /{' '}
-                          {option.calories ?? 0}kcal
-                        </span>
-                      </div>
-                      <div className="mt-8 grid grid-cols-4 gap-6">
-                        {[
-                          { label: '단백질', key: 'protein' as const },
-                          { label: '당류', key: 'sugar' as const },
-                          { label: '탄수화물', key: 'carbohydrate' as const },
-                          { label: '지방', key: 'fat' as const },
-                        ].map((nutri) => (
-                          <div
-                            key={nutri.key}
-                            className="rounded-8 bg-gray-100 p-12 text-center"
-                          >
-                            <div className="mb-4 typo-body-11-r text-gray-500">
-                              {nutri.label}
-                            </div>
-                            <div className="typo-title-14-sb text-gray-900">
-                              {option[nutri.key] ?? 0}g
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )
-            })
+            options.map((option, idx) => (
+              <CreatePreviewOptionItemUi
+                key={idx}
+                option={option}
+                idx={idx}
+                productPrice={productPrice}
+                discountAmount={discountAmount}
+              />
+            ))
           )}
-
           <div className="p-16">
             <div className="mt-16 w-full rounded-10 border border-gray-200 py-8 text-center typo-title-16-m text-gray-800">
               간단히 보기
