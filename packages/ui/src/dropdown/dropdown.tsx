@@ -22,6 +22,7 @@ interface DropdownProps {
   disabled?: boolean
   type?: 'list' | 'checkbox'
   className?: string
+  listClassName?: string
   onSelect?: (value: string) => void
 }
 
@@ -32,6 +33,7 @@ const Dropdown = ({
   disabled = false,
   type = 'list',
   className = '',
+  listClassName = '',
   onSelect,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -102,7 +104,7 @@ const Dropdown = ({
             'animate-in duration-200 zoom-in-95 fade-in',
           )}
         >
-          <ul className="max-h-[178px] overflow-y-auto">
+          <ul className={cn("max-h-[178px] overflow-y-auto", listClassName)}>
             {options.map((option) => {
               const isSelected = option.value === value
               return (
