@@ -1,10 +1,10 @@
 export const ProductDiscountType = [
   {
     label: '원',
-    value: 'won',
+    value: 'AMOUNT',
   },
   {
     label: '%',
-    value: 'percentage',
+    value: 'PERCENT',
   },
 ]

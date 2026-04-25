@@ -19,14 +19,14 @@ export const useCreatePreviewPreviewHook = () => {
   const discountAmount = rawDiscount ?? 0
 
   const discountPercent =
-    discountType === 'won'
+    discountType === 'AMOUNT'
       ? price > 0
         ? Math.round((discountAmount / price) * 100)
         : 0
       : discountAmount
 
   const totalPrice =
-    discountType === 'won'
+    discountType === 'AMOUNT'
       ? price - discountAmount
       : Math.round(price * (1 - discountAmount / 100))
 

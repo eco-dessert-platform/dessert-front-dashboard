@@ -36,7 +36,7 @@ export const useCreateForm = () => {
       productionTime: '',
       price: null,
       discountAmount: null,
-      discountType: 'won',
+      discountType: 'AMOUNT',
 
       deliveryTerms: '',
       deliveryCompany: '',

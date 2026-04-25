@@ -133,7 +133,7 @@ export const ProductInfoArea = () => {
             <Input
               required
               label="할인 금액"
-              placeholder={discountType === 'won' ? '0~100,000' : '0~100'}
+              placeholder={discountType === 'AMOUNT' ? '0~100,000' : '0~100'}
               className="flex-1"
               labelClassName="typo-heading-18-r"
               value={discountInput.displayValue}

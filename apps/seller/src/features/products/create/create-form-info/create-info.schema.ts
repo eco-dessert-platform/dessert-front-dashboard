@@ -18,7 +18,7 @@ export const productSchema = z
         .min(0, '올바른 가격을 입력해주세요'),
       z.null(),
     ]),
-    discountType: z.enum(['won', 'percentage']),
+    discountType: z.enum(['AMOUNT', 'PERCENT']),
   })
 
   .refine(
@@ -36,16 +36,16 @@ export const productSchema = z
   .refine(
     (data) => {
       if (data.discountAmount === null) return true
-      return data.discountType === 'won' ? data.discountAmount <= 100000 : true
+      return data.discountType === 'AMOUNT'
+        ? data.discountAmount <= 100000
+        : true
     },
     { message: '올바른 금액을 입력해주세요', path: ['discountAmount'] },
   )
   .refine(
     (data) => {
       if (data.discountAmount === null) return true
-      return data.discountType === 'percentage'
-        ? data.discountAmount <= 100
-        : true
+      return data.discountType === 'PERCENT' ? data.discountAmount <= 100 : true
     },
     { message: '올바른 할인율을 입력해주세요', path: ['discountAmount'] },
   )
@@ -53,7 +53,7 @@ export const productSchema = z
     (data) => {
       if (data.price === null || data.discountAmount === null) return true
       const finalPrice =
-        data.discountType === 'won'
+        data.discountType === 'AMOUNT'
           ? data.price - data.discountAmount
           : data.price * (1 - data.discountAmount / 100)
       return finalPrice >= 0

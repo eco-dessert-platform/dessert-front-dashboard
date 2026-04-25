@@ -1,8 +1,8 @@
 import { useFormContext } from 'react-hook-form'
 
+import { CreateProductForm } from '../../../../entity/products/create/create-form/product-create.types'
 import { useNumberInput } from '../create-calculation'
 // import { useCreateFormSteps } from '../create-form'
-import { CreateProductForm } from '../../../../entity/products/create/create-form/product-create.types'
 import { useCreateHeaderSteps } from '../create-store'
 
 export function useProductInfoForm() {
@@ -25,7 +25,7 @@ export function useProductInfoForm() {
 
   const finalPrice =
     price !== null && discountAmount !== null
-      ? discountType === 'won'
+      ? discountType === 'AMOUNT'
         ? Math.max(price - discountAmount, 0)
         : Math.max(price * (1 - discountAmount / 100), 0)
       : null
