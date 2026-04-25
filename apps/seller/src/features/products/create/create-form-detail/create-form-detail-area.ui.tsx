@@ -8,23 +8,21 @@ import AppLogoImage from '@/assets/images/apple-120x120.png'
 import { ProductEditorModal } from './create-detail-editor-modal.ui'
 import { useProductCreationStore } from '../create-form/product-creation.store'
 // import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { useCreateHeaderSteps } from '../create-store'
 
 export const ProductDetailArea = () => {
   const [isEditorOpen, setIsEditorOpen] = useState(false)
   const { productDetail } = useProductCreationStore()
-  // const { setProductFields } = useCreateFormSteps()
+  const { setProductFields } = useCreateHeaderSteps()
 
   // Quill 에디터의 빈 콘텐츠 체크 로직 (Zustand 상태 기반)
   const hasContent =
     productDetail.trim() !== '' && productDetail !== '<p><br></p>'
 
   // 내용 유무에 따라 상품 등록 폼의 완료 상태 업데이트
-  // useEffect(() => {
-  //   setProductFields((prev) => ({
-  //     ...prev,
-  //     productDetail: hasContent,
-  //   }))
-  // }, [hasContent, setProductFields])
+  useEffect(() => {
+    setProductFields({ productDetail: hasContent })
+  }, [hasContent, setProductFields])
 
   return (
     <>

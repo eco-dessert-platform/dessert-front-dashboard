@@ -8,6 +8,7 @@ import { cn } from '@/shared/libs/utils'
 
 import { useProductDeliveryForm } from './use-product-delivery-form.hook'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
+import { useCreateHeaderSteps } from '../create-store'
 
 export const ProductDeliveryArea = () => {
   const {
@@ -24,11 +25,11 @@ export const ProductDeliveryArea = () => {
     formState: { errors },
   } = form
 
-  // const { setProductFields } = useCreateFormSteps()
+  const { setProductFields } = useCreateHeaderSteps()
 
-  // useEffect(() => {
-  //   setProductFields((prev) => ({ ...prev, productDelivery: isFormField }))
-  // }, [isFormField, setProductFields])
+  useEffect(() => {
+    setProductFields({ productDelivery: isFormField })
+  }, [isFormField, setProductFields])
 
   return (
     <>

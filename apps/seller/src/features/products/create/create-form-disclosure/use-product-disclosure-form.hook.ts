@@ -5,7 +5,7 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import { DISCLOSURE_FIELDS } from '@/entity/products'
 
 import { CreateProductForm } from '../create-form/product-create.types'
-// import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { useCreateHeaderSteps } from '../create-store'
 
 type NoticeFieldKey = keyof CreateProductForm['productInfoNotice']
 
@@ -16,35 +16,37 @@ export const useProductDisclosureForm = () => {
     setValue,
     formState: { errors },
   } = useFormContext<CreateProductForm>()
-  // const { setProductFields } = useCreateFormSteps()
 
-  // 1. 필요한 값만 콕 집어서 감시 (불필요한 리렌더링 방지)
+  // Zustand 스토어 액션 가져오기
+  const { setProductFields } = useCreateHeaderSteps()
+
   const noticeValues = useWatch({ control, name: 'productInfoNotice' })
   const noticeModes = useWatch({ control, name: 'productInfoNoticeMode' })
 
-  // 2. 모드 전환 시 값 초기화 동기화 로직 및 원본 상품명 실시간 반영
   useEffect(() => {
     const subscription = watch((value, { name }) => {
-      // 2-1. 모드가 'default'로 바뀔 때 값 초기화
       if (name?.startsWith('productInfoNoticeMode.')) {
         const fieldKey = name.split('.')[1] as NoticeFieldKey
         const currentMode = value.productInfoNoticeMode?.[fieldKey]
 
         if (currentMode === 'default') {
+          // 기획: 기본값 정보가 없을 경우 "해당항목 없음" 노출 (상품명 제외)
           const resetValue =
-            fieldKey === 'productName' ? (value.productName ?? '') : ''
+            fieldKey === 'productName'
+              ? value.productName || ''
+              : '해당항목 없음'
+
           setValue(`productInfoNotice.${fieldKey}`, resetValue, {
             shouldValidate: true,
           })
         }
       }
 
-      // 2-2. 원본 상품명이 바뀔 때, 고시상품명 모드가 'default'이면 자동 동기화 (CodeRabbit 피드백 반영: 클로저 안전 보장)
       if (
         name === 'productName' &&
         value.productInfoNoticeMode?.productName === 'default'
       ) {
-        setValue('productInfoNotice.productName', value.productName ?? '', {
+        setValue('productInfoNotice.productName', value.productName || '', {
           shouldValidate: true,
         })
       }
@@ -52,7 +54,7 @@ export const useProductDisclosureForm = () => {
     return () => subscription.unsubscribe()
   }, [watch, setValue])
 
-  // 3. 완료 상태 체크 로직 최적화
+  // 완료 상태 체크 및 Zustand 업데이트
   useEffect(() => {
     if (!noticeModes || !noticeValues) return
 
@@ -68,11 +70,9 @@ export const useProductDisclosureForm = () => {
       return false
     })
 
-    // setProductFields((prev) => {
-    //   if (prev.productDisclosure === isComplete) return prev
-    //   return { ...prev, productDisclosure: isComplete }
-    // })
-  }, [noticeModes, noticeValues])
+    // Zustand 액션 호출: 함수형 업데이트가 아닌 객체 전달 방식
+    setProductFields({ productDisclosure: isComplete })
+  }, [noticeModes, noticeValues, setProductFields])
 
   return {
     control,

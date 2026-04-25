@@ -3,10 +3,11 @@ import { useFormContext } from 'react-hook-form'
 import { useNumberInput } from '../create-calculation'
 // import { useCreateFormSteps } from '../create-form'
 import { CreateProductForm } from '../create-form/product-create.types'
+import { useCreateHeaderSteps } from '../create-store'
 
 export function useProductInfoForm() {
   const form = useFormContext<CreateProductForm>()
-  // const { setProductPrice } = useCreateFormSteps()
+  const { setProductPrice } = useCreateHeaderSteps()
 
   // 실시간으로 가격/할인 최종 금액 계산
   const productName = form.watch('productName')
@@ -33,7 +34,7 @@ export function useProductInfoForm() {
     form.setValue('price', val, { shouldValidate: true })
     if (discountAmount !== null) form.trigger('discountAmount')
     //상품 옵션 정보의 가격에 사용될 값을 전역 상태에 업데이트
-    // setProductPrice(val || 0)
+    setProductPrice(val || 0)
   })
   const discountInput = useNumberInput(discountAmount, (val) => {
     form.setValue('discountAmount', val, { shouldValidate: true })

@@ -8,7 +8,7 @@ import { productionTimes } from '@/entity/products/create/create-info/production
 
 import { useProductInfoForm } from './use-product-info-form.hook'
 import { InfoTooltip, ProductFinalPrice } from '../create-form'
-// import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { useCreateHeaderSteps } from '../create-store'
 
 export const ProductInfoArea = () => {
   const {
@@ -29,11 +29,11 @@ export const ProductInfoArea = () => {
     formState: { errors },
   } = form
 
-  // const { setProductFields } = useCreateFormSteps()
+  const { setProductFields } = useCreateHeaderSteps()
 
-  // useEffect(() => {
-  //   setProductFields((prev) => ({ ...prev, productInfo: isFormField }))
-  // }, [isFormField, setProductFields])
+  useEffect(() => {
+    setProductFields({ productInfo: isFormField })
+  }, [isFormField, setProductFields])
 
   return (
     <>

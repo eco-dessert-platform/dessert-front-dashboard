@@ -11,6 +11,7 @@ import DaySelector from '@/shared/block/day-selector/day-selector'
 import { useProductOptionForm } from './use-product-options.form.hook'
 import { ProductFinalPrice } from '../create-form'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
+import { useCreateHeaderSteps } from '../create-store'
 
 interface ProductOptionFormProps {
   index: number
@@ -27,8 +28,8 @@ export const ProductOptionForm = ({
   onCopy,
   onAdd,
 }: ProductOptionFormProps) => {
-  // const { setProductFields, setNutritionData, productPrice } =
-  //   useCreateFormSteps()
+  const { productPrice, setProductFields, setNutritionData } =
+    useCreateHeaderSteps()
   const {
     form,
     mainCategory,
@@ -46,35 +47,38 @@ export const ProductOptionForm = ({
     stockInput,
     nutritionInputs,
     toggleShippingDay,
-  } = useProductOptionForm(index)
+  } = useProductOptionForm(index, productPrice)
 
   const { control, register } = form
 
-  // useEffect(() => {
-  //   setProductFields((prev) => ({ ...prev, productOptions: isFormField }))
-  // }, [isFormField, setProductFields])
+  useEffect(() => {
+    setProductFields({ productOptions: isFormField })
+  }, [isFormField, setProductFields])
 
   useEffect(() => {
-    const sugar =
-      nutritionInputs.sugar?.displayValue !== ''
-        ? Number(nutritionInputs.sugar?.displayValue)
-        : null
-    const protein =
-      nutritionInputs.protein?.displayValue !== ''
-        ? Number(nutritionInputs.protein?.displayValue)
-        : null
-    const fat =
-      nutritionInputs.fat?.displayValue !== ''
-        ? Number(nutritionInputs.fat?.displayValue)
-        : null
+    const sugar = nutritionInputs.sugar?.displayValue
+      ? Number(nutritionInputs.sugar.displayValue)
+      : null
+    const protein = nutritionInputs.protein?.displayValue
+      ? Number(nutritionInputs.protein.displayValue)
+      : null
+    const fat = nutritionInputs.fat?.displayValue
+      ? Number(nutritionInputs.fat.displayValue)
+      : null
 
-    //setNutritionData(index, { sugar, protein, fat, ingredientCategories })
+    setNutritionData(index, {
+      sugar,
+      protein,
+      fat,
+      ingredientCategories,
+    })
   }, [
+    index,
     nutritionInputs.sugar?.displayValue,
     nutritionInputs.protein?.displayValue,
     nutritionInputs.fat?.displayValue,
-    JSON.stringify(ingredientCategories),
-    // setNutritionData,
+    ingredientCategories, // Zustand 내부 비교 최적화 가능
+    setNutritionData,
   ])
 
   return (
@@ -170,7 +174,7 @@ export const ProductOptionForm = ({
               labelClassName="typo-title-16-r"
               placeholder="0~100,000"
               className="flex-1"
-              value={''}
+              value={productPrice ?? ''}
               disabled
             />
             <span className="relative top-11">원</span>
@@ -192,7 +196,7 @@ export const ProductOptionForm = ({
         {totalPrice !== null && (
           <ProductFinalPrice
             title={'최종 상품 옵션 금액'}
-            price={100}
+            price={productPrice}
             finalPrice={totalPrice}
           />
         )}

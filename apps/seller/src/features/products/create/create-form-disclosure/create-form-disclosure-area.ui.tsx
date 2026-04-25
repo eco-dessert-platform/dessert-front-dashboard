@@ -23,7 +23,6 @@ const DisclosureFieldItem = ({
   control: Control<CreateProductForm>
   errors: FieldErrors<CreateProductForm>
 }) => {
-  // 개별 모드 값만 감시하여 리렌더링 범위 최소화
   const modeValue = useWatch({
     control,
     name: `productInfoNoticeMode.${field.key}`,
@@ -43,9 +42,9 @@ const DisclosureFieldItem = ({
       <Controller
         control={control}
         name={`productInfoNoticeMode.${field.key}`}
-        render={({ field: { value, onChange } }) => (
+        render={({ field: { value, onChange, name } }) => (
           <Radio
-            name={`productInfoNoticeMode.${field.key}`}
+            name={name}
             options={RADIO_OPTIONS}
             value={value as string}
             onChange={onChange}
@@ -60,21 +59,19 @@ const DisclosureFieldItem = ({
         name={`productInfoNotice.${field.key}`}
         render={({ field: inputField }) => (
           <Input
+            {...inputField}
             placeholder={
-              modeValue === 'default' && field.key !== 'productName'
-                ? '해당항목 없음'
+              modeValue === 'default'
+                ? '해당항목 없음' // 기획 문구
                 : '3자 이상 50자 미만으로 입력해 주세요'
             }
             disabled={modeValue === 'default'}
             className="w-full"
             error={!!errors.productInfoNotice?.[field.key]}
             errorMessage={errors.productInfoNotice?.[field.key]?.message}
-            style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}
             maxLength={49}
-            value={inputField.value as string}
-            onChange={inputField.onChange}
-            onBlur={inputField.onBlur}
-            name={inputField.name}
+            // value가 null일 경우를 대비해 빈 문자열 처리
+            value={(inputField.value as string) ?? ''}
           />
         )}
       />
