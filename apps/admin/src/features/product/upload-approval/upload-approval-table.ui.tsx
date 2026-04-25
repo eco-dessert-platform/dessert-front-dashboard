@@ -7,6 +7,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { UploadApproval, productQueries } from '@/entity/product'
 
 import { UploadApprovalActionGroup } from './upload-approval-action-group.ui'
+import { UploadApprovalRejectDialog } from './upload-approval-reject-dialog.ui'
 import { useDecideUploadApprovalMutation } from './upload-approval.mutation'
 
 const PAGE_SIZE = 10
@@ -19,6 +20,7 @@ if (!CUSTOMER_URL) {
 
 export const UploadApprovalTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
+  const [rejectBoardId, setRejectBoardId] = useState<number | null>(null)
 
   const { data } = useQuery({
     ...productQueries.uploadApprovalList({
@@ -38,7 +40,11 @@ export const UploadApprovalTable = () => {
   )
 
   const handleReject = useCallback((boardId: number) => {
-    alert(`거절: ${boardId}`)
+    setRejectBoardId(boardId)
+  }, [])
+
+  const handleRejectDialogClose = useCallback(() => {
+    setRejectBoardId(null)
   }, [])
 
   const columns = useMemo<ColumnDef<UploadApproval>[]>(
@@ -106,17 +112,23 @@ export const UploadApprovalTable = () => {
   )
 
   return (
-    <Table
-      data={data?.content ?? []}
-      columns={columns}
-      tableClassName="w-full table-fixed"
-      topArea={
-        <UploadApprovalActionGroup
-          currentPage={currentPage}
-          totalPages={data?.totalPages || 0}
-          onPageChange={setCurrentPage}
-        />
-      }
-    />
+    <>
+      <Table
+        data={data?.content ?? []}
+        columns={columns}
+        tableClassName="w-full table-fixed"
+        topArea={
+          <UploadApprovalActionGroup
+            currentPage={currentPage}
+            totalPages={data?.totalPages || 0}
+            onPageChange={setCurrentPage}
+          />
+        }
+      />
+      <UploadApprovalRejectDialog
+        boardId={rejectBoardId}
+        onClose={handleRejectDialogClose}
+      />
+    </>
   )
 }
