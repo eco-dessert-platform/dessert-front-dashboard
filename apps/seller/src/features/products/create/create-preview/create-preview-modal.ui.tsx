@@ -68,21 +68,32 @@ export const ProductPreviewModal = ({
   const { productDetail } = useProductCreationStore()
   if (!isOpen) return null
 
-  const price = formData.price ?? 0
-  const discountAmount = formData.discountAmount ?? 0
+  // 1. 원본 데이터 추출 (null/undefined일 수 있음)
+  const rawPrice = formData.price
+  const rawDiscount = formData.discountAmount
   const discountType = formData.discountType
 
+  // 2. 계산을 위한 기본값 처리
+  const price = rawPrice ?? 0
+  const discountAmount = rawDiscount ?? 0
+
+  // 3. 할인율 계산
   const discountPercent =
     discountType === 'won'
       ? price > 0
         ? Math.round((discountAmount / price) * 100)
         : 0
-      : discountAmount // percentage면 그대로
+      : discountAmount
 
+  // 4. 최종 가격 계산
   const totalPrice =
     discountType === 'won'
       ? price - discountAmount
       : Math.round(price * (1 - discountAmount / 100))
+
+  // 5. [핵심] UI 노출 여부 판단
+  // 가격이 null이거나 0이면 아직 입력 전인 것으로 간주합니다.
+  const isPriceEntered = rawPrice !== null && rawPrice > 0
 
   // mainImage를 ObjectURL로 변환해서 미리보기
   const mainImageUrl = formData.mainImage
@@ -150,9 +161,11 @@ export const ProductPreviewModal = ({
                 <p className="typo-title-16-m">등록된 이미지가 없습니다.</p>
               </div>
             )}
-            <div className="absolute top-16 left-16 rounded-4 bg-[#F26565] px-8 py-4 typo-body-12-sb text-white">
-              묶음상품
-            </div>
+            {options.length > 1 && (
+              <div className="absolute top-16 left-16 rounded-4 bg-[#F26565] px-8 py-4 typo-body-12-sb text-white">
+                묶음상품
+              </div>
+            )}
             <div className="absolute right-10 bottom-10 rounded-full bg-black/50 px-10 py-4 typo-body-12-r text-white">
               1 / {allImageUrls.length || 1}
             </div>
@@ -174,17 +187,25 @@ export const ProductPreviewModal = ({
           </h2>
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-4">
+              {' '}
+              {/* gap-4 유지! */}
               <span className="typo-heading-18-r text-primary-500">
-                {discountPercent > 0 ? `${discountPercent}%` : ''}
+                {/* 0%일 때는 가이드 문구 노출 */}
+                {isPriceEntered && discountPercent > 0
+                  ? `${discountPercent}%`
+                  : '{{할인율}}'}
               </span>
               <span className="typo-heading-18-sb text-gray-900">
-                {totalPrice > 0
+                {/* 입력 전에는 가이드 문구 노출 */}
+                {isPriceEntered
                   ? `${totalPrice.toLocaleString()}원~`
                   : '{{상품가격}}'}
               </span>
-              <span className="typo-title-14-m text-gray-500">
-                맛별 가격 상이
-              </span>
+              {options.length > 1 && (
+                <span className="typo-title-14-m text-gray-500">
+                  맛별 가격 상이
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-2 typo-body-14-m text-gray-900">
               <Star className="fill-yellow-400 text-yellow-400" size={18} />
