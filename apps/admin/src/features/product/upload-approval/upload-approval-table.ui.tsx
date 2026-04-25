@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 
 import { Button, Table } from '@dessert/ui'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { UploadApproval, productQueries } from '@/entity/product'
@@ -12,15 +12,20 @@ const PAGE_SIZE = 10
 const HEADER_CLASS = 'border-b-[0.8px] border-b-gray-400'
 const CUSTOMER_URL = import.meta.env.VITE_PUBLIC_CUSTOMER_URL
 
+if (!CUSTOMER_URL) {
+  throw new Error('VITE_PUBLIC_CUSTOMER_URL 환경변수가 설정되지 않았습니다.')
+}
+
 export const UploadApprovalTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
-  const { data, isLoading } = useQuery(
-    productQueries.uploadApprovalList({
+  const { data } = useQuery({
+    ...productQueries.uploadApprovalList({
       page: currentPage - 1,
       size: PAGE_SIZE,
     }),
-  )
+    placeholderData: keepPreviousData,
+  })
 
   const handleApprove = (boardId: number) => {
     alert(`승인: ${boardId}`)
@@ -93,8 +98,6 @@ export const UploadApprovalTable = () => {
     ],
     [currentPage],
   )
-
-  if (isLoading) return null
 
   return (
     <Table
