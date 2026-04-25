@@ -2,7 +2,7 @@ import { Chip, Label, Tooltip } from '@dessert/ui'
 
 import { OptionTags } from '@/entity/products'
 
-import { useCreateHeaderSteps } from '../create-form/use-create-form-steps.hook'
+import { useCreateHeaderSteps } from '../create-store'
 
 interface TagsProps {
   title: string

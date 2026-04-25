@@ -14,8 +14,8 @@ import {
   ThumbnailUploadArea,
   useCreateProductForm,
 } from '@/features/products/create'
-import { useCreateHeaderSteps } from '@/features/products/create/create-form/use-create-form-steps.hook'
 import { ProductPreviewModal } from '@/features/products/create/create-preview/create-preview-modal.ui'
+import { useCreateHeaderSteps } from '@/features/products/create/create-store'
 
 function CreatePage() {
   const form = useCreateProductForm()
@@ -30,8 +30,6 @@ function CreatePageInner() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const { setCurrentStep, headerHeight, isScrollingToStep } =
     useCreateHeaderSteps()
-  // const { setCurrentStep, headerHeight, isScrollingToStep } =
-  //   useCreateFormSteps()
 
   const stepIds = [
     'productInfo',

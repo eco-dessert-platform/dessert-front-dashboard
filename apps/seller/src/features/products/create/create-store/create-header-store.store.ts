@@ -1,16 +1,15 @@
 import { create } from 'zustand'
 
 import { CategoryOptions, EssentialOptions } from '@/entity/products'
-
 import {
   ActiveTags,
-  FormStepStatus,
   NutritionData,
-} from '../create-form/create-form-steps.context'
+  ProductFileType,
+} from '@/entity/products/create/create-store'
 
 interface CreateFormStoreProps {
   // --- State ---
-  productFields: FormStepStatus
+  productFields: ProductFileType
   currentStep: number
   headerHeight: number
   nutritionDataList: NutritionData[]
@@ -18,7 +17,7 @@ interface CreateFormStoreProps {
   isScrolling: boolean // Ref 대신 State로 관리 (Zustand는 선택적 구독이 가능하므로)
 
   // --- Actions ---
-  setProductFields: (fields: Partial<FormStepStatus>) => void
+  setProductFields: (fields: Partial<ProductFileType>) => void
   setCurrentStep: (step: number) => void
   setHeaderHeight: (height: number) => void
   setProductPrice: (price: number | null) => void
@@ -49,14 +48,14 @@ export const useCreateHeaderStore = create<CreateFormStoreProps>(
     productPrice: null,
     isScrolling: false,
 
-    setProductFields: (fields: Partial<FormStepStatus>) =>
+    setProductFields: (fields: Partial<ProductFileType>) =>
       set(
         (state): Partial<CreateFormStoreProps> => ({
           // 1. 리턴 타입을 Partial로 명시
           productFields: {
             ...state.productFields,
             ...fields,
-          } as FormStepStatus, // 2. 결과물을 FormStepStatus로 단언(Assertion)
+          } as ProductFileType, // 결과물을 FormStepStatus로 단언(Assertion)
         }),
       ),
     setCurrentStep: (step) => set({ currentStep: step }),

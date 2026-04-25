@@ -11,8 +11,8 @@ import {
 import { CategoryOptions, EssentialOptions } from '@/entity/products'
 
 import { ProductHeaderTags } from './create-header-tags.ui'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
-import { useCreateHeaderSteps } from '../create-form/use-create-form-steps.hook'
+import { InfoTooltip } from '../create-form'
+import { useCreateHeaderSteps } from '../create-store'
 
 const stagestep = [
   '상품 정보',

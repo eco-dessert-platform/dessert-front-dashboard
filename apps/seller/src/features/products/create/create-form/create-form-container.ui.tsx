@@ -2,7 +2,7 @@ import React from 'react'
 
 import { cn } from '@/shared/libs/utils'
 
-import { useCreateHeaderSteps } from './use-create-form-steps.hook'
+import { useCreateHeaderSteps } from '../create-store'
 
 interface CreateFormContainerProps {
   className?: string

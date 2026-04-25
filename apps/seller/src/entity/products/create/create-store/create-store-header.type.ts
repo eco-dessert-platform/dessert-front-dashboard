@@ -1,6 +1,4 @@
-import React, { createContext } from 'react'
-
-export type FormStepStatus = Record<string, boolean>
+export type ProductFileType = Record<string, boolean>
 
 export interface NutritionData {
   sugar: number | null
@@ -13,12 +11,12 @@ export interface ActiveTags {
   [key: string]: boolean
 }
 
-export interface FormStepsContextType {
-  productFields: FormStepStatus
+export interface CreateFormHeaderType {
+  productFields: ProductFileType
   currentStep: number
   headerHeight: number
 
-  setProductFields: React.Dispatch<React.SetStateAction<FormStepStatus>>
+  setProductFields: React.Dispatch<React.SetStateAction<ProductFileType>>
   setCurrentStep: React.Dispatch<React.SetStateAction<number>>
   setHeaderHeight: React.Dispatch<React.SetStateAction<number>>
   scrollToStep: (index: number) => void
@@ -32,5 +30,3 @@ export interface FormStepsContextType {
   productPrice: number | null
   setProductPrice: React.Dispatch<React.SetStateAction<number | null>>
 }
-
-export const FormStepsContext = createContext<FormStepsContextType | null>(null)

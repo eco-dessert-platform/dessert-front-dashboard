@@ -1,4 +1,4 @@
-import { useCreateHeaderStore } from '../create-store/create-form-store.store'
+import { useCreateHeaderStore } from './create-header-store.store'
 
 export const useCreateHeaderSteps = () => {
   const store = useCreateHeaderStore()
