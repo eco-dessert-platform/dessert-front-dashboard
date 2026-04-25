@@ -342,7 +342,10 @@ export const ProductPreviewModal = ({
         <div className="mb-10 bg-white px-20 py-24 text-left">
           {productDetail ? (
             <div
-              className={cn('ql-editor leading-relaxed text-gray-700')}
+              className={cn(
+                // eslint-disable-next-line better-tailwindcss/no-unknown-classes
+                'ql-editor leading-relaxed text-gray-700',
+              )}
               dangerouslySetInnerHTML={{ __html: productDetail }}
             />
           ) : (
