@@ -11,9 +11,11 @@ import {
   ProductOptionFormInput,
   SHIPPING_DAYS,
 } from '@/entity/products'
+import { cn } from '@/shared/libs/utils'
 
 import { useCreateFormSteps } from '../create-form'
 import { CreateProductForm } from '../create-form/product-create.types'
+import { useProductCreationStore } from '../create-form/product-creation.store'
 
 const DaySelector = ({ selectedDays }: { selectedDays: string[] }) => {
   const days = SHIPPING_DAYS
@@ -62,7 +64,7 @@ export const ProductPreviewModal = ({
   const { watch } = useFormContext<CreateProductForm>()
   const formData = watch()
   const { productPrice } = useCreateFormSteps()
-
+  const { productDetail } = useProductCreationStore()
   if (!isOpen) return null
 
   const price = formData.price ?? 0
@@ -338,9 +340,16 @@ export const ProductPreviewModal = ({
 
         {/* 7. 상세 설명 */}
         <div className="mb-10 bg-white px-20 py-24 text-left">
-          <div className="leading-relaxed text-gray-700">
-            상품 상세 설명이 들어가는 자리입니다.
-          </div>
+          {productDetail ? (
+            <div
+              className={cn('ql-editor leading-relaxed text-gray-700')}
+              dangerouslySetInnerHTML={{ __html: productDetail }}
+            />
+          ) : (
+            <p className="typo-body-14-r text-gray-400">
+              상세 설명을 등록해주세요
+            </p>
+          )}
         </div>
 
         {/* 하단 고정 바 */}
