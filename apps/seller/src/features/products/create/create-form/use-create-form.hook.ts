@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Resolver, useForm } from 'react-hook-form'
 
+import { DISCLOSURE_FIELDS } from '@/entity/products/create/create-disclosure'
 import {
-  DISCLOSURE_FIELDS,
+  CreateFormType,
   ProductOptionFormInput,
-} from '@/entity/products/create/create-disclosure'
-import { CreateFormType } from '@/entity/products/create/create-form'
+} from '@/entity/products/create/create-form'
 
 import { CreateFormSchema } from './create-form.schema'
 
