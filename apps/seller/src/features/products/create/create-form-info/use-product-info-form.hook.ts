@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form'
 
 import { useNumberInput } from '../create-calculation'
 // import { useCreateFormSteps } from '../create-form'
-import { CreateProductForm } from '../create-form/product-create.types'
+import { CreateProductForm } from '../../../../entity/products/create/create-form/product-create.types'
 import { useCreateHeaderSteps } from '../create-store'
 
 export function useProductInfoForm() {

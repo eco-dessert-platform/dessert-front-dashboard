@@ -14,8 +14,8 @@ import {
 import { cn } from '@/shared/libs/utils'
 
 // import { useCreateFormSteps } from '../create-form'
-import { CreateProductForm } from '../create-form/product-create.types'
-import { useProductCreationStore } from '../create-form/product-creation.store'
+import { CreateProductForm } from '../../../../entity/products/create/create-form/product-create.types'
+import { useProductCreationStore } from '../create-store/product-creation.store'
 
 const DaySelector = ({ selectedDays }: { selectedDays: string[] }) => {
   const days = SHIPPING_DAYS

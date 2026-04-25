@@ -1,5 +1,6 @@
 export { CreateFormContainer } from './create-form-container.ui'
 export { InfoTooltip } from './info-tooltip.ui'
 // export { useCreateFormSteps } from './use-create-form-steps.hook'
-export { useCreateProductForm } from './use-create-product-form.hook'
+export { useCreateForm } from './use-create-form.hook'
 export { ProductFinalPrice } from './product-final-price.ui'
+export { CreateFormSchema } from './create-form.schema'

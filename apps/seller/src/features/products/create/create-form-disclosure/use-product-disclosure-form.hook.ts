@@ -2,12 +2,12 @@ import { useEffect } from 'react'
 
 import { useFormContext, useWatch } from 'react-hook-form'
 
-import { DISCLOSURE_FIELDS } from '@/entity/products'
+import { DISCLOSURE_FIELDS } from '@/entity/products/create/create-disclosure'
+import { CreateFormType } from '@/entity/products/create/create-form'
 
-import { CreateProductForm } from '../create-form/product-create.types'
 import { useCreateHeaderSteps } from '../create-store'
 
-type NoticeFieldKey = keyof CreateProductForm['productInfoNotice']
+type NoticeFieldKey = keyof CreateFormType['productInfoNotice']
 
 export const useProductDisclosureForm = () => {
   const {
@@ -15,7 +15,7 @@ export const useProductDisclosureForm = () => {
     watch,
     setValue,
     formState: { errors },
-  } = useFormContext<CreateProductForm>()
+  } = useFormContext<CreateFormType>()
 
   // Zustand 스토어 액션 가져오기
   const { setProductFields } = useCreateHeaderSteps()

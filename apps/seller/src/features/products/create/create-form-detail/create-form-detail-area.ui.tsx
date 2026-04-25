@@ -6,9 +6,9 @@ import { Button, Label } from '@dessert/ui'
 import AppLogoImage from '@/assets/images/apple-120x120.png'
 
 import { ProductEditorModal } from './create-detail-editor-modal.ui'
-import { useProductCreationStore } from '../create-form/product-creation.store'
-// import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 import { useCreateHeaderSteps } from '../create-store'
+import { useProductCreationStore } from '../create-store/product-creation.store'
+// import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 export const ProductDetailArea = () => {
   const [isEditorOpen, setIsEditorOpen] = useState(false)

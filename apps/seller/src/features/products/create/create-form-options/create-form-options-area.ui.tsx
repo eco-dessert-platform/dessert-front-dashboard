@@ -13,7 +13,7 @@ import { useProductOptionForm } from './use-product-options.form.hook'
 import { CreateProductForm } from '../create-form'
 import { ProductOptionForm } from './create-form-options-form.ui'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
-import { DEFAULT_PRODUCT_OPTION } from '../create-form/use-create-product-form.hook'
+import { DEFAULT_PRODUCT_OPTION } from '../create-form/use-create-form.hook'
 
 export const ProductOptionsArea = () => {
   const form = useFormContext<CreateProductForm>()

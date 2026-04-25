@@ -1,11 +1,14 @@
 import { Input, Label, Radio } from '@dessert/ui'
 import { Control, Controller, FieldErrors, useWatch } from 'react-hook-form'
 
-import { DISCLOSURE_FIELDS, RADIO_OPTIONS } from '@/entity/products'
+import {
+  DISCLOSURE_FIELDS,
+  RADIO_OPTIONS,
+} from '@/entity/products/create/create-disclosure'
+import { CreateFormType } from '@/entity/products/create/create-form'
 import { cn } from '@/shared/libs/utils'
 
 import { useProductDisclosureForm } from './use-product-disclosure-form.hook'
-import { CreateProductForm } from '../create-form/product-create.types'
 
 /**
  * [Refactoring] DisclosureFieldItem
@@ -20,8 +23,8 @@ const DisclosureFieldItem = ({
 }: {
   field: (typeof DISCLOSURE_FIELDS)[number]
   index: number
-  control: Control<CreateProductForm>
-  errors: FieldErrors<CreateProductForm>
+  control: Control<CreateFormType>
+  errors: FieldErrors<CreateFormType>
 }) => {
   const modeValue = useWatch({
     control,

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { BbanggreuiOvenLogo } from '@dessert/icons'
 import { Button, Editor } from '@dessert/ui'
 
-import { useProductCreationStore } from '../create-form/product-creation.store'
+import { useProductCreationStore } from '../create-store/product-creation.store'
 
 interface ProductEditorModalProps {
   isOpen: boolean

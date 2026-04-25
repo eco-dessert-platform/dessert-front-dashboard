@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { useFormContext } from 'react-hook-form'
 
-import type { CreateProductForm } from '../create-form/product-create.types'
+import type { CreateProductForm } from '../../../../entity/products/create/create-form/product-create.types'
 
 export function useProductThumbnailForm() {
   const form = useFormContext<CreateProductForm>()

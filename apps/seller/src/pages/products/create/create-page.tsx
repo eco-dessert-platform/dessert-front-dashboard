@@ -12,13 +12,13 @@ import {
   ProductInfoArea,
   ProductOptionsArea,
   ThumbnailUploadArea,
-  useCreateProductForm,
+  useCreateForm,
 } from '@/features/products/create'
 import { ProductPreviewModal } from '@/features/products/create/create-preview/create-preview-modal.ui'
 import { useCreateHeaderSteps } from '@/features/products/create/create-store'
 
 function CreatePage() {
-  const form = useCreateProductForm()
+  const form = useCreateForm()
   return (
     <FormProvider {...form}>
       <CreatePageInner />

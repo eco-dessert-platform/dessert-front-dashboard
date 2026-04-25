@@ -1,6 +1,9 @@
 import { create } from 'zustand'
 
-import { CategoryOptions, EssentialOptions } from '@/entity/products'
+import {
+  CategoryOptions,
+  EssentialOptions,
+} from '@/entity/products/create/create-header'
 import {
   ActiveTags,
   NutritionData,

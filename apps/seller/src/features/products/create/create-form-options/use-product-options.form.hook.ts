@@ -6,7 +6,7 @@ import { SUB_CATEGORY_MAP } from '@/entity/products/create/create-options/produc
 import { productOptionSchema } from './create-options.schema'
 import { useFloatInput } from '../create-calculation/create-form-float-input.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
-import { CreateProductForm } from '../create-form/product-create.types'
+import { CreateProductForm } from '../../../../entity/products/create/create-form/product-create.types'
 
 export function useProductOptionForm(
   index: number,
