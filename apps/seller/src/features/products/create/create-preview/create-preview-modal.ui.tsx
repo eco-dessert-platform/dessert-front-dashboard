@@ -3,6 +3,9 @@ import { Button } from '@dessert/ui'
 import { ChevronDown, ChevronUp, Heart, Star } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
+import Icon1 from '@/assets/icons/preview/preview-icon1.png'
+import Icon2 from '@/assets/icons/preview/preview-icon2.png'
+import Icon3 from '@/assets/icons/preview/preview-icon3.png'
 import {
   EssentialOptions,
   ProductOptionFormInput,
@@ -88,6 +91,13 @@ export const ProductPreviewModal = ({
   const allImageUrls = mainImageUrl ? [mainImageUrl, ...extraImageUrls] : []
 
   const options = formData.options ?? []
+
+  //뱃지 매핑
+  const BADGES = [
+    { label: '맛있어요', icon: Icon1 },
+    { label: '담백해요', icon: Icon2 },
+    { label: '부드러워요', icon: Icon3 },
+  ]
 
   return (
     <div
@@ -203,12 +213,17 @@ export const ProductPreviewModal = ({
             리뷰 대표 배지
           </h3>
           <div className="flex gap-10 border-t border-gray-100 p-16">
-            {['맛있어요', '담백해요', '부드러워요'].map((badge) => (
+            {BADGES.map(({ label, icon }) => (
               <div
-                key={badge}
-                className="flex flex-1 flex-col items-center gap-4 rounded-10 border border-gray-100 text-center"
+                key={label}
+                className="flex flex-1 flex-col items-center gap-4 rounded-10 border-2 border-gray-300 p-8 text-center"
               >
-                <span className="typo-body-14-m text-gray-600">{badge}</span>
+                <img
+                  src={icon}
+                  alt={label}
+                  className="size-40 object-contain"
+                />
+                <span className="typo-body-14-m text-gray-600">{label}</span>
               </div>
             ))}
           </div>
