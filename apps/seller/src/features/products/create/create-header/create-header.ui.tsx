@@ -8,7 +8,10 @@ import {
   StageTab,
 } from '@dessert/ui'
 
-import { CategoryOptions, EssentialOptions } from '@/entity/products'
+import {
+  CategoryOptions,
+  EssentialOptions,
+} from '@/entity/products/create/create-header'
 
 import { ProductHeaderTags } from './create-header-tags.ui'
 import { InfoTooltip } from '../create-form'

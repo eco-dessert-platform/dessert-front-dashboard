@@ -7,14 +7,14 @@ import Icon1 from '@/assets/icons/preview/preview-icon1.png'
 import Icon2 from '@/assets/icons/preview/preview-icon2.png'
 import Icon3 from '@/assets/icons/preview/preview-icon3.png'
 import {
-  EssentialOptions,
+  CreateFormType,
   ProductOptionFormInput,
-  SHIPPING_DAYS,
-} from '@/entity/products'
+} from '@/entity/products/create/create-form'
+import { EssentialOptions } from '@/entity/products/create/create-header'
+import { SHIPPING_DAYS } from '@/entity/products/create/create-options'
 import { cn } from '@/shared/libs/utils'
 
-// import { useCreateFormSteps } from '../create-form'
-import { CreateProductForm } from '../../../../entity/products/create/create-form/product-create.types'
+import { useCreateHeaderSteps } from '../create-store'
 import { useProductCreationStore } from '../create-store/product-creation.store'
 
 const DaySelector = ({ selectedDays }: { selectedDays: string[] }) => {
@@ -61,9 +61,9 @@ export const ProductPreviewModal = ({
   isOpen,
   onClose,
 }: ProductPreviewModalProps) => {
-  const { watch } = useFormContext<CreateProductForm>()
+  const { watch } = useFormContext<CreateFormType>()
   const formData = watch()
-  // const { productPrice } = useCreateFormSteps()
+  const { productPrice } = useCreateHeaderSteps()
   const { productDetail } = useProductCreationStore()
   if (!isOpen) return null
 
@@ -251,9 +251,9 @@ export const ProductPreviewModal = ({
                       10%
                     </span>
                     <span className="typo-title-14-sb text-gray-900">
-                      {/* {(
+                      {(
                         (productPrice ?? 0) + (option.additionalPrice ?? 0)
-                      ).toLocaleString()} */}
+                      ).toLocaleString()}
                       원
                     </span>
                     <ChevronUp className="ml-8 text-gray-900" size={20} />
