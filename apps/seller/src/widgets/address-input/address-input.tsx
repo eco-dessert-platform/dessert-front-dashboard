@@ -1,22 +1,49 @@
 import { Input, Label } from '@dessert/ui'
+import { useKakaoPostcodePopup } from 'react-daum-postcode'
+
+import { formatDaumAddress } from '@/shared/utils/format-daum-address'
+
+interface AddressSearchResult {
+  postalCode: string
+  address: string
+}
 
 interface AddressInputProps {
   postalCode?: string
   address?: string
   detailAddress?: string
-  onPostalCodeSearch?: () => void
-  onDetailAddressChange?: (value: string) => void
+  onAddressSearch: (result: AddressSearchResult) => void
+  onDetailAddressChange: (value: string) => void
+  errors?: {
+    postalCode?: string
+    address?: string
+    detailAddress?: string
+  }
   disabled?: boolean
 }
 
-export function AddressInput({
+export const AddressInput = ({
   postalCode,
   address,
   detailAddress,
-  onPostalCodeSearch,
+  onAddressSearch,
   onDetailAddressChange,
+  errors,
   disabled = false,
-}: AddressInputProps) {
+}: AddressInputProps) => {
+  const open = useKakaoPostcodePopup()
+
+  const handleSearchClick = () => {
+    open({
+      onComplete: (data) => {
+        onAddressSearch({
+          postalCode: data.zonecode,
+          address: formatDaumAddress(data),
+        })
+      },
+    })
+  }
+
   return (
     <>
       <div className="flex items-start gap-16 self-stretch px-20 py-10">
@@ -30,10 +57,12 @@ export function AddressInput({
               value={postalCode}
               readOnly
               disabled={disabled}
+              error={!!errors?.postalCode}
+              errorMessage={errors?.postalCode}
             />
             <button
               className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 bg-primary-500 px-16 py-8 disabled:cursor-not-allowed"
-              onClick={onPostalCodeSearch}
+              onClick={handleSearchClick}
               disabled={disabled}
             >
               <p className="typo-title-16-m text-white">우편번호 검색</p>
@@ -50,6 +79,8 @@ export function AddressInput({
               value={address}
               readOnly
               disabled={disabled}
+              error={!!errors?.address}
+              errorMessage={errors?.address}
             />
           </div>
         </div>
@@ -63,8 +94,10 @@ export function AddressInput({
             className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-12 py-8 typo-title-16-r text-gray-400 placeholder:text-gray-400"
             placeholder="상세주소를 입력해주세요(동/호수 포함)"
             value={detailAddress}
-            onChange={(e) => onDetailAddressChange?.(e.target.value)}
+            onChange={(e) => onDetailAddressChange(e.target.value)}
             disabled={disabled}
+            error={!!errors?.detailAddress}
+            errorMessage={errors?.detailAddress}
           />
         </div>
       </div>
