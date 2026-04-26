@@ -10,12 +10,13 @@ import {
 } from '@dessert/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 import { RejectBodySchema, RejectCategorySchema } from '@/entity/product'
 import type { RejectCategory } from '@/entity/product'
 
 import { useDecideUploadApprovalMutation } from './upload-approval.mutation'
+
+import type { z } from 'zod'
 
 const REJECT_CATEGORY_LABELS: Record<RejectCategory, string> = {
   ADMIN_JUDGMENT: '관리자 판단',
@@ -34,15 +35,7 @@ const rejectCategoryOptions = RejectCategorySchema.options.map((value) => ({
   label: REJECT_CATEGORY_LABELS[value],
 }))
 
-const RejectFormSchema = RejectBodySchema.extend({
-  rejectReason: z
-    .string()
-    .trim()
-    .min(1, '거절 사유를 입력해주세요.')
-    .max(500, '거절 사유는 500자 이하로 입력해주세요.'),
-})
-
-type RejectFormValues = z.infer<typeof RejectFormSchema>
+type RejectFormValues = z.infer<typeof RejectBodySchema>
 
 interface UploadApprovalRejectDialogProps {
   boardId: number | null
@@ -62,14 +55,13 @@ export const UploadApprovalRejectDialog = ({
     reset,
     formState: { errors },
   } = useForm<RejectFormValues>({
-    resolver: zodResolver(RejectFormSchema),
+    resolver: zodResolver(RejectBodySchema),
     defaultValues: { rejectReason: '' },
     reValidateMode: 'onSubmit',
   })
 
   const handleClose = () => {
     if (isPending) return
-
     reset()
     onClose()
   }

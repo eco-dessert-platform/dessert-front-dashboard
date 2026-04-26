@@ -35,7 +35,12 @@ export const UploadApprovalConfirmDialog = ({
   }
 
   return (
-    <Dialog open={boardId !== null} onOpenChange={handleClose}>
+    <Dialog
+      open={boardId !== null}
+      onOpenChange={(open) => {
+        if (!open) handleClose()
+      }}
+    >
       <DialogContent
         className="w-83.5 gap-0 sm:max-w-83.5"
         showCloseButton={false}

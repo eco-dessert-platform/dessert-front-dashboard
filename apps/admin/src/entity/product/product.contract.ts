@@ -56,7 +56,11 @@ export const RejectCategorySchema = z.enum([
 
 export const RejectBodySchema = z.object({
   rejectCategory: RejectCategorySchema,
-  rejectReason: z.string().trim().min(1).max(500),
+  rejectReason: z
+    .string()
+    .trim()
+    .min(1, '거절 사유를 입력해주세요.')
+    .max(500, '거절 사유는 500자 이하로 입력해주세요.'),
 })
 
 export const DecideUploadApprovalRequestSchema = z.discriminatedUnion(
