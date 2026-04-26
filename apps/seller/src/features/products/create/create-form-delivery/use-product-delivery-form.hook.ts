@@ -1,10 +1,11 @@
 import { useFormContext } from 'react-hook-form'
 
+import { CreateFormType } from '@/entity/products/create/create-form'
+
 import { useNumberInput } from '../create-calculation'
-import { CreateProductForm } from '../../../../entity/products/create/create-form/create-form.types'
 
 export function useProductDeliveryForm() {
-  const form = useFormContext<CreateProductForm>()
+  const form = useFormContext<CreateFormType>()
 
   const deliveryTerms = form.watch('deliveryTerms')
   const deliveryCompany = form.watch('deliveryCompany')

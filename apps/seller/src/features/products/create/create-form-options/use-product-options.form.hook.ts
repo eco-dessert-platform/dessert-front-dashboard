@@ -1,18 +1,17 @@
 import { useFormContext } from 'react-hook-form'
 
+import { CreateFormType } from '@/entity/products/create/create-form'
 import { ProductOptionFormInput } from '@/entity/products/create/create-form/create-indivisual-form.type'
 import { SUB_CATEGORY_MAP } from '@/entity/products/create/create-options/product-options.constant'
 
 import { productOptionSchema } from './create-options.schema'
 import { useFloatInput } from '../create-calculation/create-form-float-input.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
-import { CreateProductForm } from '../../../../entity/products/create/create-form/create-form.types'
-
 export function useProductOptionForm(
   index: number,
   basePrice: number | null = null,
 ) {
-  const form = useFormContext<CreateProductForm>()
+  const form = useFormContext<CreateFormType>()
   const p = `options.${index}` as const
   const mainCategory = form.watch(`${p}.mainCategory`)
   const subCategory = form.watch(`${p}.subCategory`)
