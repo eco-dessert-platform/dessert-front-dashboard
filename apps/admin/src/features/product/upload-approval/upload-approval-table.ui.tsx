@@ -7,8 +7,8 @@ import { ColumnDef } from '@tanstack/react-table'
 import { UploadApproval, productQueries } from '@/entity/product'
 
 import { UploadApprovalActionGroup } from './upload-approval-action-group.ui'
+import { UploadApprovalConfirmDialog } from './upload-approval-confirm-dialog.ui'
 import { UploadApprovalRejectDialog } from './upload-approval-reject-dialog.ui'
-import { useDecideUploadApprovalMutation } from './upload-approval.mutation'
 
 const PAGE_SIZE = 10
 const HEADER_CLASS = 'border-b-[0.8px] border-b-gray-400'
@@ -20,6 +20,7 @@ if (!CUSTOMER_URL) {
 
 export const UploadApprovalTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
+  const [approveBoardId, setApproveBoardId] = useState<number | null>(null)
   const [rejectBoardId, setRejectBoardId] = useState<number | null>(null)
 
   const { data } = useQuery({
@@ -30,20 +31,13 @@ export const UploadApprovalTable = () => {
     placeholderData: keepPreviousData,
   })
 
-  const [pendingBoardId, setPendingBoardId] = useState<number | null>(null)
-  const { mutate: decideUploadApproval } =
-    useDecideUploadApprovalMutation()
+  const handleApprove = useCallback((boardId: number) => {
+    setApproveBoardId(boardId)
+  }, [])
 
-  const handleApprove = useCallback(
-    (boardId: number) => {
-      setPendingBoardId(boardId)
-      decideUploadApproval(
-        { boardId, body: { decisionType: 'APPROVE' } },
-        { onSettled: () => setPendingBoardId(null) },
-      )
-    },
-    [decideUploadApproval],
-  )
+  const handleApproveDialogClose = useCallback(() => {
+    setApproveBoardId(null)
+  }, [])
 
   const handleReject = useCallback((boardId: number) => {
     setRejectBoardId(boardId)
@@ -102,21 +96,19 @@ export const UploadApprovalTable = () => {
               size="sm"
               variant="primary-outlined"
               onClick={() => handleApprove(row.original.boardId)}
-              disabled={pendingBoardId === row.original.boardId}
             />
             <Button
               title="거절"
               size="sm"
               variant="secondary-outlined"
               onClick={() => handleReject(row.original.boardId)}
-              disabled={pendingBoardId === row.original.boardId}
             />
           </div>
         ),
         size: 130,
       },
     ],
-    [currentPage, handleApprove, handleReject, pendingBoardId],
+    [currentPage, handleApprove, handleReject],
   )
 
   return (
@@ -132,6 +124,10 @@ export const UploadApprovalTable = () => {
             onPageChange={setCurrentPage}
           />
         }
+      />
+      <UploadApprovalConfirmDialog
+        boardId={approveBoardId}
+        onClose={handleApproveDialogClose}
       />
       <UploadApprovalRejectDialog
         boardId={rejectBoardId}
