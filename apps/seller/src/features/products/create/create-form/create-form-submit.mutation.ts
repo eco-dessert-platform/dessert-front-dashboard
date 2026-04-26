@@ -19,7 +19,12 @@ export const useSubmitCreateForm = () => {
 
   const editorImageFiles = useRef<Map<string, File>>(new Map())
 
-  const { data: store } = useQuery(productQueries.myStore())
+  //   const { data: store } = useQuery(productQueries.myStore())
+
+  const { data: store } = useQuery({
+    ...productQueries.myStore(),
+    enabled: false, // ← 쿼리 비활성화
+  })
 
   const { mutate, isPending } = useMutation({
     mutationFn: createProduct,
@@ -33,18 +38,20 @@ export const useSubmitCreateForm = () => {
 
   const handleSubmit = form.handleSubmit(
     (data) => {
-      if (!store?.storeId) {
-        toast.error(
-          '스토어 정보를 불러오지 못했어요',
-          '다시 한 번 시도해주세요',
-        )
-        return
-      }
+      const storeId = store?.storeId ?? 1
+      console.log('mainImage:', data.mainImage)
+      //   if (!store?.storeId) {
+      //     toast.error(
+      //       '스토어 정보를 불러오지 못했어요',
+      //       '다시 한 번 시도해주세요',
+      //     )
+      //     return
+      //   }
       const formData = buildProductFormData(
         data,
         productDetail,
         editorImageFiles.current,
-        store.storeId,
+        storeId,
       )
       mutate(formData)
     },

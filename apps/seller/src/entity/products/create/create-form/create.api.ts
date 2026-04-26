@@ -12,6 +12,10 @@ export const getMyStore = async () => {
 
 // 상품 등록
 export const createProduct = async (formData: FormData) => {
-  const response = await client.post('/api/v1/seller/boards', formData)
+  const response = await client.post('/api/v1/seller/boards', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
   return response.data
 }

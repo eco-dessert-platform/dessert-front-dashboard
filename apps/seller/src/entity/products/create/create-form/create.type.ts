@@ -5,7 +5,7 @@ export interface CreateProductRequest {
   isFresh: boolean
   productionStartAt: string
   price: number
-  discountType: 'amount' | 'percent'
+  discountType: 'AMOUNT' | 'PERCENT'
   discountValue: number
   deliveryCondition: string
   deliveryCompany: string

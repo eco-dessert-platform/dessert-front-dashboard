@@ -63,6 +63,14 @@ const mapOption = (option: ProductOptionFormInput, index: number) => ({
     : {}),
 })
 
+const toProductionTimeFormat = (time: string): string => {
+  // "06:00~07:00" or "06:00" 둘 다 처리
+  const start = time.split('~')[0].trim() // "06:00"
+  const [hour] = start.split(':') // "06"
+  const nextHour = String(Number(hour) + 1).padStart(2, '0') // "07"
+  return `T_${hour}_${nextHour}` // "T_06_07"
+}
+
 // 에디터 이미지 추출 — src에서 파일명만 추출
 const extractEditorImages = (
   content: string,
@@ -114,11 +122,15 @@ export const buildProductFormData = (
   multipartData.append('storeId', String(storeId))
   multipartData.append('title', form.productName)
   multipartData.append('isFresh', String(form.isFresh))
-  multipartData.append('productionStartAt', form.productionTime)
+  // 필드명도 productionStartTime으로 변경
+  multipartData.append(
+    'productionStartTime',
+    toProductionTimeFormat(form.productionTime),
+  )
   multipartData.append('price', String(form.price ?? 0))
   multipartData.append(
     'discountType',
-    form.discountType === 'AMOUNT' ? 'amount' : 'percent',
+    form.discountType === 'AMOUNT' ? 'AMOUNT' : 'PERCENT',
   )
   multipartData.append('discountValue', String(form.discountAmount ?? 0))
   multipartData.append('deliveryCondition', form.deliveryTerms)
