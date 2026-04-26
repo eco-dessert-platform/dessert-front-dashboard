@@ -18,7 +18,7 @@ export const productSchema = z
         .min(0, '올바른 가격을 입력해주세요'),
       z.null(),
     ]),
-    discountType: z.enum(['AMOUNT', 'PERCENT']),
+    discountType: z.enum(['AMOUNT', 'RATE']),
   })
 
   .refine(
@@ -45,7 +45,7 @@ export const productSchema = z
   .refine(
     (data) => {
       if (data.discountAmount === null) return true
-      return data.discountType === 'PERCENT' ? data.discountAmount <= 100 : true
+      return data.discountType === 'RATE' ? data.discountAmount <= 100 : true
     },
     { message: '올바른 할인율을 입력해주세요', path: ['discountAmount'] },
   )

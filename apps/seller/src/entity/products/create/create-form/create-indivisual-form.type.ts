@@ -6,7 +6,7 @@ export type ProductFormInput = {
   productionTime: string
   price: number | null
   discountAmount: number | null
-  discountType: 'AMOUNT' | 'PERCENT'
+  discountType: 'AMOUNT' | 'RATE'
 }
 
 export type DeliveryFormInput = {

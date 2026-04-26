@@ -5,6 +5,6 @@ export const ProductDiscountType = [
   },
   {
     label: '%',
-    value: 'PERCENT',
+    value: 'RATE',
   },
 ]

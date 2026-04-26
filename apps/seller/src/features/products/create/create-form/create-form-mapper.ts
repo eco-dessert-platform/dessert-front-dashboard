@@ -130,7 +130,7 @@ export const buildProductFormData = (
   multipartData.append('price', String(form.price ?? 0))
   multipartData.append(
     'discountType',
-    form.discountType === 'AMOUNT' ? 'AMOUNT' : 'PERCENT',
+    form.discountType === 'AMOUNT' ? 'AMOUNT' : 'RATE',
   )
   multipartData.append('discountValue', String(form.discountAmount ?? 0))
   multipartData.append('deliveryCondition', form.deliveryTerms)
