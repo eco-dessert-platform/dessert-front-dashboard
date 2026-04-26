@@ -12,8 +12,8 @@ interface AddressInputProps {
   postalCode?: string
   address?: string
   detailAddress?: string
-  onAddressSearch?: (result: AddressSearchResult) => void
-  onDetailAddressChange?: (value: string) => void
+  onAddressSearch: (result: AddressSearchResult) => void
+  onDetailAddressChange: (value: string) => void
   errors?: {
     postalCode?: string
     address?: string
