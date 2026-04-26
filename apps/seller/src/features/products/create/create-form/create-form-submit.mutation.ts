@@ -41,7 +41,6 @@ export const useSubmitCreateForm = () => {
   const handleSubmit = form.handleSubmit(
     (data) => {
       const storeId = store?.storeId ?? 1
-      console.log('mainImage:', data.mainImage)
       //   if (!store?.storeId) {
       //     toast.error(
       //       '스토어 정보를 불러오지 못했어요',
