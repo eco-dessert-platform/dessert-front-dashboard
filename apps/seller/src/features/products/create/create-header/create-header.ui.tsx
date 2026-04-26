@@ -48,7 +48,7 @@ export const ProductHeader = () => {
   return (
     <div
       ref={headerRef}
-      className="sticky top-0 left-0 z-9999 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16"
+      className="sticky top-0 left-0 z-50 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16"
     >
       <div className="flex w-full items-center justify-between">
         <div className="relative">

@@ -1,5 +1,4 @@
-import { BbanggreuiOvenLogo } from '@dessert/icons'
-import { Button } from '@dessert/ui'
+import { Button, LogoHeader } from '@dessert/ui'
 import { ChevronDown, Heart, Star } from 'lucide-react'
 
 import NoThumb from '@/assets/icons/preview/noimage.svg'
@@ -45,11 +44,8 @@ export const ProductPreviewModal = ({
       className="fixed inset-0 z-9999 flex flex-col items-center bg-gray-100"
       onClick={onClose}
     >
-      <div
-        className="h-header w-screen border-b border-gray-200 bg-white px-24 py-20"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <BbanggreuiOvenLogo />
+      <div className="h-header w-screen" onClick={(e) => e.stopPropagation()}>
+        <LogoHeader />
       </div>
 
       <div

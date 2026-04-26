@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { BbanggreuiOvenLogo } from '@dessert/icons'
-import { Button, Editor } from '@dessert/ui'
+import { Button, Editor, LogoHeader } from '@dessert/ui'
 
 import { useProductCreationStore } from '../create-store/product-creation.store'
 
@@ -28,11 +28,8 @@ export const ProductEditorModal = ({
       onClick={onClose}
     >
       {/* Header */}
-      <div
-        className="h-header w-screen border-b border-gray-200 bg-white px-24 py-20"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <BbanggreuiOvenLogo />
+      <div className="h-header w-screen" onClick={(e) => e.stopPropagation()}>
+        <LogoHeader />
       </div>
 
       {/* Content Body */}
