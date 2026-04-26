@@ -4,7 +4,7 @@ import {
   ProductFormInput,
   ProductOptionFormInput,
   ThumbnailFormInput,
-} from './product-form.type'
+} from './create-indivisual-form.type'
 
 export type CreateFormType = ProductFormInput &
   DeliveryFormInput & {

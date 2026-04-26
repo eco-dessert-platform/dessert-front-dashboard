@@ -1,22 +1,13 @@
-import { useEffect } from 'react'
+import { Label } from '@dessert/ui'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 
-import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
-import { Copy, Trash2 } from 'lucide-react'
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
+import { CreateFormType } from '@/entity/products/create/create-form'
 
-import { ProductOptionFormInput } from '@/entity/products'
-import { NUTRITION_FIELDS } from '@/entity/products/create/create-options/product-nutritions.constant'
-import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/product-options.constant'
-import DaySelector from '@/shared/block/day-selector/day-selector'
-
-import { useProductOptionForm } from './use-product-options.form.hook'
-import { CreateProductForm } from '../create-form'
 import { ProductOptionForm } from './create-form-options-form.ui'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
-import { DEFAULT_PRODUCT_OPTION } from '../create-form/use-create-form.hook'
+import { DEFAULT_PRODUCT_OPTION } from '../create-form'
 
 export const ProductOptionsArea = () => {
-  const form = useFormContext<CreateProductForm>()
+  const form = useFormContext<CreateFormType>()
   const { fields, append, remove, insert } = useFieldArray({
     control: form.control,
     name: 'options',

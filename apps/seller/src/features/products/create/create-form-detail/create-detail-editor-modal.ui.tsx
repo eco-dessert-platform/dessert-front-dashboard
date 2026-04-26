@@ -8,11 +8,13 @@ import { useProductCreationStore } from '../create-store/product-creation.store'
 interface ProductEditorModalProps {
   isOpen: boolean
   onClose: () => void
+  onImageUpload: (file: File) => Promise<string>
 }
 
 export const ProductEditorModal = ({
   isOpen,
   onClose,
+  onImageUpload,
 }: ProductEditorModalProps) => {
   const { productDetail, setProductDetail } = useProductCreationStore()
 
@@ -44,6 +46,7 @@ export const ProductEditorModal = ({
             value={localDetail}
             onChange={setLocalDetail}
             image={true}
+            onImageUpload={onImageUpload}
             placeholder="자유롭게 상세페이지를 작성해보세요 (권장크기 : 가로 860px)"
             className="block! size-full rounded-none! border-none!"
           />

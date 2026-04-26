@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 import { useFormContext } from 'react-hook-form'
 
-import type { CreateProductForm } from '../../../../entity/products/create/create-form/product-create.types'
+import { CreateFormType } from '@/entity/products/create/create-form'
 
 export function useProductThumbnailForm() {
-  const form = useFormContext<CreateProductForm>()
+  const form = useFormContext<CreateFormType>()
 
   const mainImage = form.watch('mainImage')
   const extraImages = form.watch('extraImages') || []

@@ -6,14 +6,15 @@ import { Button, Label } from '@dessert/ui'
 import AppLogoImage from '@/assets/images/apple-120x120.png'
 
 import { ProductEditorModal } from './create-detail-editor-modal.ui'
+import { useSubmitCreateForm } from '../create-form'
 import { useCreateHeaderSteps } from '../create-store'
 import { useProductCreationStore } from '../create-store/product-creation.store'
-// import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 export const ProductDetailArea = () => {
   const [isEditorOpen, setIsEditorOpen] = useState(false)
   const { productDetail } = useProductCreationStore()
   const { setProductFields } = useCreateHeaderSteps()
+  const { handleSubmit, isPending, editorImageFiles } = useSubmitCreateForm()
 
   // Quill 에디터의 빈 콘텐츠 체크 로직 (Zustand 상태 기반)
   const hasContent =
@@ -73,6 +74,11 @@ export const ProductDetailArea = () => {
       <ProductEditorModal
         isOpen={isEditorOpen}
         onClose={() => setIsEditorOpen(false)}
+        onImageUpload={async (file) => {
+          const blobUrl = URL.createObjectURL(file)
+          editorImageFiles.current.set(blobUrl, file)
+          return blobUrl // 에디터엔 blob URL로 표시
+        }}
       />
     </>
   )
