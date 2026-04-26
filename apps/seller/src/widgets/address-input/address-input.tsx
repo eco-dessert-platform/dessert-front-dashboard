@@ -36,7 +36,7 @@ export const AddressInput = ({
   const handleSearchClick = () => {
     open({
       onComplete: (data) => {
-        onAddressSearch?.({
+        onAddressSearch({
           postalCode: data.zonecode,
           address: formatDaumAddress(data),
         })
@@ -94,7 +94,7 @@ export const AddressInput = ({
             className="flex flex-1/2 items-center gap-1.5 rounded-10 border border-gray-300 bg-gray-100 px-12 py-8 typo-title-16-r text-gray-400 placeholder:text-gray-400"
             placeholder="상세주소를 입력해주세요(동/호수 포함)"
             value={detailAddress}
-            onChange={(e) => onDetailAddressChange?.(e.target.value)}
+            onChange={(e) => onDetailAddressChange(e.target.value)}
             disabled={disabled}
             error={!!errors?.detailAddress}
             errorMessage={errors?.detailAddress}
