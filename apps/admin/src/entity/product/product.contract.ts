@@ -54,16 +54,29 @@ export const RejectCategorySchema = z.enum([
   'DIRECT_INPUT',
 ])
 
-export const DecideUploadApprovalRequestSchema = z.discriminatedUnion('decisionType', [
-  z.object({ decisionType: z.literal('APPROVE') }),
-  z.object({
-    decisionType: z.literal('REJECT'),
-    rejectCategory: RejectCategorySchema,
-    rejectReason: z.string().max(500),
-  }),
-])
+export const RejectBodySchema = z.object({
+  rejectCategory: RejectCategorySchema,
+  rejectReason: z.string().trim().min(1).max(500),
+})
 
-export const DecideUploadApprovalResponseSchema = z.discriminatedUnion('success', [
-  BaseResponseSchema.extend({ success: z.literal(true), result: z.null().optional() }),
-  BaseResponseSchema.extend({ success: z.literal(false), result: z.null().optional() }),
-])
+export const DecideUploadApprovalRequestSchema = z.discriminatedUnion(
+  'decisionType',
+  [
+    z.object({ decisionType: z.literal('APPROVE') }),
+    RejectBodySchema.extend({ decisionType: z.literal('REJECT') }),
+  ],
+)
+
+export const DecideUploadApprovalResponseSchema = z.discriminatedUnion(
+  'success',
+  [
+    BaseResponseSchema.extend({
+      success: z.literal(true),
+      result: z.null().optional(),
+    }),
+    BaseResponseSchema.extend({
+      success: z.literal(false),
+      result: z.null().optional(),
+    }),
+  ],
+)

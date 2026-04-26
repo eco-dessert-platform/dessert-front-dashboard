@@ -13,6 +13,7 @@ export {
   UploadApprovalListResponseSchema,
   GetUploadApprovalsRequestParamsSchema,
   RejectCategorySchema,
+  RejectBodySchema,
   DecideUploadApprovalRequestSchema,
   DecideUploadApprovalResponseSchema,
 } from './product.contract'
