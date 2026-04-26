@@ -1,3 +1,5 @@
+import { UploadApprovalTable } from '@/features/product/upload-approval'
+
 export function UploadApprovalPage() {
-  return <div>UploadApprovalPage</div>
+  return <UploadApprovalTable />
 }
