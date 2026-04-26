@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import {
   Button,
   Dialog,
@@ -10,8 +8,11 @@ import {
   Dropdown,
   Textarea,
 } from '@dessert/ui'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import { RejectCategorySchema } from '@/entity/product'
+import { RejectBodySchema, RejectCategorySchema } from '@/entity/product'
 import type { RejectCategory } from '@/entity/product'
 
 import { useDecideUploadApprovalMutation } from './upload-approval.mutation'
@@ -33,6 +34,12 @@ const rejectCategoryOptions = RejectCategorySchema.options.map((value) => ({
   label: REJECT_CATEGORY_LABELS[value],
 }))
 
+const RejectFormSchema = RejectBodySchema.extend({
+  rejectReason: z.string().trim().min(1, '거절 사유를 입력해주세요.').max(500, '거절 사유는 500자 이하로 입력해주세요.'),
+})
+
+type RejectFormValues = z.infer<typeof RejectFormSchema>
+
 interface UploadApprovalRejectDialogProps {
   boardId: number | null
   onClose: () => void
@@ -42,25 +49,29 @@ export const UploadApprovalRejectDialog = ({
   boardId,
   onClose,
 }: UploadApprovalRejectDialogProps) => {
-  const [rejectCategory, setRejectCategory] = useState<RejectCategory | ''>('')
-  const [rejectReason, setRejectReason] = useState('')
   const { mutate } = useDecideUploadApprovalMutation()
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<RejectFormValues>({
+    resolver: zodResolver(RejectFormSchema),
+    defaultValues: { rejectReason: '' },
+    reValidateMode: 'onSubmit',
+  })
 
   const handleClose = () => {
-    setRejectCategory('')
-    setRejectReason('')
+    reset()
     onClose()
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!boardId || !rejectCategory) return
-
+  const onSubmit = (data: RejectFormValues) => {
+    if (!boardId) return
     mutate(
-      {
-        boardId,
-        body: { decisionType: 'REJECT', rejectCategory, rejectReason },
-      },
+      { boardId, body: { decisionType: 'REJECT', ...data } },
       { onSuccess: handleClose },
     )
   }
@@ -80,28 +91,41 @@ export const UploadApprovalRejectDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-16">
-          <Dropdown
-            options={rejectCategoryOptions}
-            value={rejectCategory}
-            placeholder="거절 카테고리를 선택하세요"
-            listClassName="max-h-none overflow-y-visible"
-            onSelect={(value) => setRejectCategory(value as RejectCategory)}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-16"
+        >
+          <Controller
+            name="rejectCategory"
+            control={control}
+            render={({ field }) => (
+              <Dropdown
+                options={rejectCategoryOptions}
+                value={field.value ?? ''}
+                placeholder="거절 카테고리를 선택하세요"
+                listClassName="max-h-none overflow-y-visible"
+                onSelect={(value) => field.onChange(value as RejectCategory)}
+              />
+            )}
           />
-          <Textarea
-            placeholder="사유"
-            value={rejectReason}
-            onChange={(e) => setRejectReason(e.target.value)}
-            maxLength={500}
-            showCount
-            textareaClassName="h-72 min-h-72"
-          />
+          <div className="flex flex-col gap-2">
+            <Textarea
+              {...register('rejectReason')}
+              placeholder="사유"
+              maxLength={500}
+              showCount
+              textareaClassName="h-72 min-h-72"
+            />
+            <p className="min-h-5 text-sm text-red-500">
+              {errors.rejectReason?.message}
+            </p>
+          </div>
           <div className="flex justify-start">
             <Button
               title="전송"
               size="md"
               type="submit"
-              disabled={!rejectCategory}
+              disabled={!watch('rejectCategory')}
             />
           </div>
         </form>
