@@ -6,10 +6,12 @@ import {
   CompletedOrderStatusCount,
   CompletedOrderTab,
 } from '@/entity/order/order.type'
-import { CompletedOrderActionBar } from '@/features/order/completed-order-action-bar/completed-order-action-bar.ui'
-import { useCompletedOrderFilter } from '@/features/order/completed-order-filters/completed-order-filters.hook'
-import { CompletedOrderFilters } from '@/features/order/completed-order-filters/completed-order-filters.ui'
-import { CompletedOrderTabs } from '@/features/order/completed-order-tabs/completed-order-tabs.ui'
+import { CompletedOrderActionBar } from '@/features/order/completed-order-action-bar'
+import {
+  CompletedOrderFilters,
+  useCompletedOrderFilter,
+} from '@/features/order/completed-order-filters'
+import { CompletedOrderTabs } from '@/features/order/completed-order-tabs'
 import { OrderTable, useOrderSelection } from '@/features/order/order-table'
 
 const VALID_TABS: CompletedOrderTab[] = [
