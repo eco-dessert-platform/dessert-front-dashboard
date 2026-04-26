@@ -1,6 +1,6 @@
 export * from './create-form.types'
 export * from './create-indivisual-form.type'
-export { getMyStore, createProduct, uploadImage } from './create.api'
+export { getMyStore, createProduct } from './create.api'
 export { productQueries, productKeys } from './create.query'
 export type {
   CreateProductRequest,
