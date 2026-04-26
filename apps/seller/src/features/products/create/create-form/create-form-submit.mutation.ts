@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 
+import { toast } from '@dessert/ui'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useFormContext } from 'react-hook-form'
 
@@ -16,8 +17,6 @@ export const useSubmitCreateForm = () => {
   const form = useFormContext<CreateFormType>()
   const { productDetail } = useProductCreationStore()
 
-  // blob URL → File 매핑 (에디터 이미지)
-  // ProductEditorModal에서 이미지 삽입 시 여기에 저장
   const editorImageFiles = useRef<Map<string, File>>(new Map())
 
   const { data: store } = useQuery(productQueries.myStore())
@@ -25,27 +24,34 @@ export const useSubmitCreateForm = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: createProduct,
     onSuccess: () => {
-      alert('상품이 등록되었습니다.') // 토스트로 교체 예정
+      toast.success('상품 등록을 완료했어요')
     },
-    onError: (error) => {
-      console.error(error)
-      alert('상품 등록에 실패했습니다.')
+    onError: () => {
+      toast.error('저장이 완료되지 않았어요', '다시 한 번 시도해주세요')
     },
   })
 
-  const handleSubmit = form.handleSubmit((data) => {
-    if (!store?.storeId) {
-      alert('스토어 정보를 불러오지 못했습니다.')
-      return
-    }
-    const formData = buildProductFormData(
-      data,
-      productDetail,
-      editorImageFiles.current,
-      store.storeId,
-    )
-    mutate(formData)
-  })
+  const handleSubmit = form.handleSubmit(
+    (data) => {
+      if (!store?.storeId) {
+        toast.error(
+          '스토어 정보를 불러오지 못했어요',
+          '다시 한 번 시도해주세요',
+        )
+        return
+      }
+      const formData = buildProductFormData(
+        data,
+        productDetail,
+        editorImageFiles.current,
+        store.storeId,
+      )
+      mutate(formData)
+    },
+    () => {
+      toast.error('필수 입력사항을 확인해 주세요')
+    },
+  )
 
   return { handleSubmit, isPending, editorImageFiles }
 }

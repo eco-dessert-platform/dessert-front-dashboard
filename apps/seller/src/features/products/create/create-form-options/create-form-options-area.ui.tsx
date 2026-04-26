@@ -22,22 +22,20 @@ export const ProductOptionsArea = () => {
         />
       </div>
       {fields.map((field, index) => (
-        <>
-          <ProductOptionForm
-            key={field.id}
-            index={index}
-            isLast={index === fields.length - 1}
-            onDelete={() => fields.length > 1 && remove(index)}
-            onCopy={() => {
-              const current = form.getValues(`options.${index}`)
-              insert(index + 1, {
-                ...current,
-                optionName: `${current.optionName} (복사본)`,
-              })
-            }}
-            onAdd={() => insert(index + 1, DEFAULT_PRODUCT_OPTION)}
-          />
-        </>
+        <ProductOptionForm
+          key={field.id}
+          index={index}
+          isLast={index === fields.length - 1}
+          onDelete={() => fields.length > 1 && remove(index)}
+          onCopy={() => {
+            const current = form.getValues(`options.${index}`)
+            insert(index + 1, {
+              ...current,
+              optionName: `${current.optionName} (복사본)`,
+            })
+          }}
+          onAdd={() => insert(index + 1, DEFAULT_PRODUCT_OPTION)}
+        />
       ))}
     </>
   )
