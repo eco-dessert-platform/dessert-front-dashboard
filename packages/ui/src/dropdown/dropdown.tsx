@@ -104,7 +104,7 @@ const Dropdown = ({
             'animate-in duration-200 zoom-in-95 fade-in',
           )}
         >
-          <ul className={cn("max-h-[178px] overflow-y-auto", listClassName)}>
+          <ul className={cn('max-h-[178px] overflow-y-auto', listClassName)}>
             {options.map((option) => {
               const isSelected = option.value === value
               return (

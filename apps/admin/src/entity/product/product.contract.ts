@@ -67,16 +67,7 @@ export const DecideUploadApprovalRequestSchema = z.discriminatedUnion(
   ],
 )
 
-export const DecideUploadApprovalResponseSchema = z.discriminatedUnion(
-  'success',
-  [
-    BaseResponseSchema.extend({
-      success: z.literal(true),
-      result: z.null().optional(),
-    }),
-    BaseResponseSchema.extend({
-      success: z.literal(false),
-      result: z.null().optional(),
-    }),
-  ],
-)
+export const DecideUploadApprovalResponseSchema = BaseResponseSchema.extend({
+  success: z.boolean(),
+  result: z.null().optional(),
+})

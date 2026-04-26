@@ -30,11 +30,17 @@ export const UploadApprovalTable = () => {
     placeholderData: keepPreviousData,
   })
 
-  const { mutate: decideUploadApproval } = useDecideUploadApprovalMutation()
+  const [pendingBoardId, setPendingBoardId] = useState<number | null>(null)
+  const { mutate: decideUploadApproval } =
+    useDecideUploadApprovalMutation()
 
   const handleApprove = useCallback(
     (boardId: number) => {
-      decideUploadApproval({ boardId, body: { decisionType: 'APPROVE' } })
+      setPendingBoardId(boardId)
+      decideUploadApproval(
+        { boardId, body: { decisionType: 'APPROVE' } },
+        { onSettled: () => setPendingBoardId(null) },
+      )
     },
     [decideUploadApproval],
   )
@@ -96,19 +102,21 @@ export const UploadApprovalTable = () => {
               size="sm"
               variant="primary-outlined"
               onClick={() => handleApprove(row.original.boardId)}
+              disabled={pendingBoardId === row.original.boardId}
             />
             <Button
               title="거절"
               size="sm"
               variant="secondary-outlined"
               onClick={() => handleReject(row.original.boardId)}
+              disabled={pendingBoardId === row.original.boardId}
             />
           </div>
         ),
         size: 130,
       },
     ],
-    [currentPage, handleApprove, handleReject],
+    [currentPage, handleApprove, handleReject, pendingBoardId],
   )
 
   return (

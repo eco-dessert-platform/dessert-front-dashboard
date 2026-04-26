@@ -35,7 +35,11 @@ const rejectCategoryOptions = RejectCategorySchema.options.map((value) => ({
 }))
 
 const RejectFormSchema = RejectBodySchema.extend({
-  rejectReason: z.string().trim().min(1, '거절 사유를 입력해주세요.').max(500, '거절 사유는 500자 이하로 입력해주세요.'),
+  rejectReason: z
+    .string()
+    .trim()
+    .min(1, '거절 사유를 입력해주세요.')
+    .max(500, '거절 사유는 500자 이하로 입력해주세요.'),
 })
 
 type RejectFormValues = z.infer<typeof RejectFormSchema>
@@ -49,7 +53,7 @@ export const UploadApprovalRejectDialog = ({
   boardId,
   onClose,
 }: UploadApprovalRejectDialogProps) => {
-  const { mutate } = useDecideUploadApprovalMutation()
+  const { mutate, isPending } = useDecideUploadApprovalMutation()
   const {
     register,
     control,
@@ -64,6 +68,8 @@ export const UploadApprovalRejectDialog = ({
   })
 
   const handleClose = () => {
+    if (isPending) return
+
     reset()
     onClose()
   }
@@ -125,7 +131,7 @@ export const UploadApprovalRejectDialog = ({
               title="전송"
               size="md"
               type="submit"
-              disabled={!watch('rejectCategory')}
+              disabled={!watch('rejectCategory') || isPending}
             />
           </div>
         </form>
