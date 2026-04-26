@@ -44,6 +44,28 @@ import 'react-quill-new/dist/quill.snow.css'
 import { cn } from '../lib/utils'
 import './editor.css'
 
+//추가 부분
+const Quill = ReactQuill.Quill
+
+// 2. Quill 내부 포맷 객체의 타입을 정의합니다.
+interface QuillFormat {
+  sanitize: (url: string) => string
+}
+
+// 'as QuillFormat'을 사용하여 unknown 타입을 강제로 지정
+const Link = Quill.import('formats/link') as QuillFormat
+const Image = Quill.import('formats/image') as QuillFormat
+
+// 커스텀 함수를 할당
+const customSanitize = (url: string) => {
+  const allowedProtocols = ['http', 'https', 'data', 'blob']
+  const protocol = url.split(':')[0]
+  return allowedProtocols.includes(protocol) ? url : '//:0'
+}
+
+Link.sanitize = customSanitize
+Image.sanitize = customSanitize
+
 export interface EditorProps {
   value?: string
   onChange?: (value: string) => void
@@ -106,6 +128,7 @@ const Editor = ({
   const isReadOnly = disabled || !onChange
   const quillRef = useRef<ReactQuill>(null)
 
+  // 1. imageHandler를 useCallback으로 감싸고 의존성에 quillRef 포함
   const imageHandler = useCallback(() => {
     if (!onImageUpload) {
       alert('이미지 업로드 기능이 설정되지 않았습니다.')
@@ -118,30 +141,37 @@ const Editor = ({
     input.click()
 
     input.onchange = async () => {
-      const file = input.files ? input.files[0] : null
+      const file = input.files?.[0]
       if (!file) return
 
       try {
         const url = await onImageUpload(file)
+        console.log('Upload success, URL:', url) // URL이 제대로 오는지 확인용
+
         const quill = quillRef.current?.getEditor()
         if (quill) {
-          const range = quill.getSelection(true) || { index: quill.getLength() }
-          quill.insertEmbed(range.index, 'image', url)
-          quill.setSelection(range.index + 1, 0)
+          const range = quill.getSelection(true)
+          // 0번 인덱스일 경우를 위해 length 체크
+          const index = range ? range.index : quill.getLength()
+
+          // 이미지 삽입
+          quill.insertEmbed(index, 'image', url)
+          // 커서를 이미지 뒤로 이동
+          quill.setSelection(index + 1, 0)
         }
       } catch (error) {
         console.error('Image upload failed:', error)
       }
     }
-  }, [onImageUpload])
+  }, [onImageUpload]) // quillRef는 ref객체이므로 의존성에 넣지 않아도 됨
 
+  // 2. modules 설정 최적화
   const modules = useMemo(() => {
     if (!toolbar) return { toolbar: MINIMAL_TOOLBAR }
 
     const toolbarConfig = image
       ? BASE_TOOLBAR.map((group) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          if ((group as any[]).includes('link')) {
+          if ((group as string[]).includes('link')) {
             return [...group, 'image']
           }
           return group
@@ -151,10 +181,11 @@ const Editor = ({
     return {
       toolbar: {
         container: toolbarConfig,
+        // 익명함수 호출 대신 imageHandler 직접 연결
         handlers: image ? { image: imageHandler } : undefined,
       },
     }
-  }, [toolbar, image, imageHandler])
+  }, [toolbar, image, imageHandler]) // imageHandler를 의존성에 반드시 추가
 
   const formats = useMemo(
     () => (image ? [...BASE_FORMATS, 'image'] : BASE_FORMATS),
