@@ -1,5 +1,7 @@
 import { Product } from './product.type'
 
+import type { UploadApproval } from './product.type'
+
 const STORES = [
   '그린베이커리',
   '달빛빵집',
@@ -72,5 +74,96 @@ export const getProductMockData = (page: number, size: number) => {
   return {
     data: ALL_MOCK_DATA.slice(start, end),
     totalCount: ALL_MOCK_DATA.length,
+  }
+}
+
+const UPLOAD_APPROVAL_MOCK_DATA: UploadApproval[] = [
+  { boardId: 1, storeName: '그린베이커리', boardTitle: '비건 통밀 식빵' },
+  { boardId: 2, storeName: '달빛빵집', boardTitle: '저당 스콘 세트' },
+  { boardId: 3, storeName: '디저트팩토리', boardTitle: '글루텐프리 쿠키' },
+  { boardId: 4, storeName: '오븐브라더스', boardTitle: '고단백 케이크' },
+  { boardId: 5, storeName: '슈가플래닛', boardTitle: '저지방 타르트' },
+  { boardId: 6, storeName: '그린베이커리', boardTitle: '비건 휘낭시에' },
+  { boardId: 7, storeName: '달빛빵집', boardTitle: '저당 마들렌' },
+  { boardId: 8, storeName: '디저트팩토리', boardTitle: '글루텐프리 까눌레' },
+  { boardId: 9, storeName: '오븐브라더스', boardTitle: '고단백 파운드케이크' },
+  { boardId: 10, storeName: '슈가플래닛', boardTitle: '저지방 스콘 모둠' },
+  { boardId: 11, storeName: '그린베이커리', boardTitle: '비건 쿠키 박스' },
+  { boardId: 12, storeName: '달빛빵집', boardTitle: '저당 케이크 조각' },
+  { boardId: 13, storeName: '디저트팩토리', boardTitle: '글루텐프리 타르트' },
+  { boardId: 14, storeName: '오븐브라더스', boardTitle: '고단백 식빵 2종' },
+  { boardId: 15, storeName: '슈가플래닛', boardTitle: '저지방 마들렌 세트' },
+  { boardId: 16, storeName: '그린베이커리', boardTitle: '비건 까눌레 6개입' },
+  { boardId: 17, storeName: '달빛빵집', boardTitle: '저당 파운드케이크' },
+  { boardId: 18, storeName: '디저트팩토리', boardTitle: '글루텐프리 휘낭시에' },
+  { boardId: 19, storeName: '오븐브라더스', boardTitle: '고단백 쿠키 모둠' },
+  { boardId: 20, storeName: '슈가플래닛', boardTitle: '저지방 케이크 롤' },
+  { boardId: 21, storeName: '그린베이커리', boardTitle: '비건 단팥빵' },
+  { boardId: 22, storeName: '달빛빵집', boardTitle: '저당 크로와상' },
+  { boardId: 23, storeName: '디저트팩토리', boardTitle: '글루텐프리 베이글' },
+  { boardId: 24, storeName: '오븐브라더스', boardTitle: '고단백 브라우니' },
+  { boardId: 25, storeName: '슈가플래닛', boardTitle: '저지방 머핀 세트' },
+  { boardId: 26, storeName: '그린베이커리', boardTitle: '비건 바나나 브레드' },
+  { boardId: 27, storeName: '달빛빵집', boardTitle: '저당 레몬 타르트' },
+  {
+    boardId: 28,
+    storeName: '디저트팩토리',
+    boardTitle: '글루텐프리 초코 쿠키',
+  },
+  { boardId: 29, storeName: '오븐브라더스', boardTitle: '고단백 그래놀라 바' },
+  { boardId: 30, storeName: '슈가플래닛', boardTitle: '저지방 딸기 케이크' },
+  { boardId: 31, storeName: '그린베이커리', boardTitle: '비건 호두 파운드' },
+  { boardId: 32, storeName: '달빛빵집', boardTitle: '저당 말차 휘낭시에' },
+  {
+    boardId: 33,
+    storeName: '디저트팩토리',
+    boardTitle: '글루텐프리 아몬드 스콘',
+  },
+  { boardId: 34, storeName: '오븐브라더스', boardTitle: '고단백 단호박 식빵' },
+  { boardId: 35, storeName: '슈가플래닛', boardTitle: '저지방 블루베리 머핀' },
+  { boardId: 36, storeName: '그린베이커리', boardTitle: '비건 코코넛 마카롱' },
+  { boardId: 37, storeName: '달빛빵집', boardTitle: '저당 얼그레이 케이크' },
+  {
+    boardId: 38,
+    storeName: '디저트팩토리',
+    boardTitle: '글루텐프리 오트밀 쿠키',
+  },
+  { boardId: 39, storeName: '오븐브라더스', boardTitle: '고단백 치즈 베이글' },
+  { boardId: 40, storeName: '슈가플래닛', boardTitle: '저지방 복숭아 타르트' },
+  { boardId: 41, storeName: '그린베이커리', boardTitle: '비건 흑임자 마들렌' },
+  { boardId: 42, storeName: '달빛빵집', boardTitle: '저당 팥 도넛' },
+  { boardId: 43, storeName: '디저트팩토리', boardTitle: '글루텐프리 카스텔라' },
+  {
+    boardId: 44,
+    storeName: '오븐브라더스',
+    boardTitle: '고단백 두부 브라우니',
+  },
+  { boardId: 45, storeName: '슈가플래닛', boardTitle: '저지방 요거트 케이크' },
+  { boardId: 46, storeName: '그린베이커리', boardTitle: '비건 쑥 인절미 롤' },
+  { boardId: 47, storeName: '달빛빵집', boardTitle: '저당 자몽 치즈케이크' },
+  {
+    boardId: 48,
+    storeName: '디저트팩토리',
+    boardTitle: '글루텐프리 퀴노아 크래커',
+  },
+  { boardId: 49, storeName: '오븐브라더스', boardTitle: '고단백 에그 타르트' },
+  {
+    boardId: 50,
+    storeName: '슈가플래닛',
+    boardTitle: '저지방 망고 무스케이크',
+  },
+]
+
+export const getUploadApprovalMockData = (page: number, size: number) => {
+  const safePage = Math.max(0, page)
+  const safeSize = Math.max(1, size)
+  const start = safePage * safeSize
+  const end = start + safeSize
+  return {
+    content: UPLOAD_APPROVAL_MOCK_DATA.slice(start, end),
+    page: safePage,
+    size: safeSize,
+    totalElements: UPLOAD_APPROVAL_MOCK_DATA.length,
+    totalPages: Math.ceil(UPLOAD_APPROVAL_MOCK_DATA.length / safeSize),
   }
 }

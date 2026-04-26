@@ -144,6 +144,7 @@ jobs:
         run: yarn run build:admin
         env:
           VITE_PUBLIC_SERVER_URL: ${{secrets.VITE_PUBLIC_SERVER_URL}}
+          VITE_PUBLIC_CUSTOMER_URL: ${{secrets.VITE_PUBLIC_CUSTOMER_URL}}
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
