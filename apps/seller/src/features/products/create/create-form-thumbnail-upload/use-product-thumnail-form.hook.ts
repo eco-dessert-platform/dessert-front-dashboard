@@ -1,8 +1,48 @@
 import { useState } from 'react'
 
+import { toast } from '@dessert/ui'
 import { useFormContext } from 'react-hook-form'
 
 import { CreateFormType } from '@/entity/products/create/create-form'
+
+const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
+const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png']
+const MIN_SIZE = 160
+
+const validateImage = (
+  file: File,
+): Promise<{ error: string | null; warning: string | null }> => {
+  return new Promise((resolve) => {
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      resolve({
+        error: 'jpg, jpeg, png 형식의 이미지만 업로드 가능해요',
+        warning: null,
+      })
+      return
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      resolve({ error: '10MB 이하의 이미지만 업로드 가능해요', warning: null })
+      return
+    }
+
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      let warning = null
+      if (
+        img.width < MIN_SIZE ||
+        img.height < MIN_SIZE ||
+        img.width !== img.height
+      ) {
+        warning = '권장 크기는 1000×1000 (1:1 비율)이에요'
+      }
+      resolve({ error: null, warning })
+    }
+    img.src = url
+  })
+}
 
 export function useProductThumbnailForm() {
   const form = useFormContext<CreateFormType>()
@@ -12,7 +52,6 @@ export function useProductThumbnailForm() {
 
   const [deleteTarget, setDeleteTarget] = useState<number | 'main' | null>(null)
 
-  // 필수 입력 사항 판별: 대표 이미지가 있으면 true
   const isFormField = mainImage !== null
 
   const handleMainImageChange = (file: File | null) => {
@@ -23,7 +62,7 @@ export function useProductThumbnailForm() {
     form.setValue('extraImages', files, { shouldValidate: true })
   }
 
-  const handleFileChange = (
+  const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
     type: 'main' | 'extra',
   ) => {
@@ -31,11 +70,33 @@ export function useProductThumbnailForm() {
     if (!files) return
 
     if (type === 'main') {
-      handleMainImageChange(files[0])
+      const file = files[0]
+      const { error, warning } = await validateImage(file)
+      if (error) {
+        toast.error(error)
+        e.target.value = ''
+        return
+      }
+      if (warning) toast.info(warning)
+      handleMainImageChange(file)
     } else {
       const remainingSlots = 9 - extraImages.length
-      const newFiles = Array.from(files).slice(0, remainingSlots)
-      handleExtraImagesChange([...extraImages, ...newFiles])
+      const selectedFiles = Array.from(files).slice(0, remainingSlots)
+      const validFiles: File[] = []
+
+      for (const file of selectedFiles) {
+        const { error, warning } = await validateImage(file)
+        if (error) {
+          toast.error(`${file.name}: ${error}`)
+        } else {
+          if (warning) toast.info(`${file.name}: ${warning}`)
+          validFiles.push(file)
+        }
+      }
+
+      if (validFiles.length > 0) {
+        handleExtraImagesChange([...extraImages, ...validFiles])
+      }
     }
     e.target.value = ''
   }
