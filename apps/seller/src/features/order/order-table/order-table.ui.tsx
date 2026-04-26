@@ -23,6 +23,8 @@ import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
 
 import { OrderTableLoading } from './order-table-loading.ui'
 
+import type { OrderTableLoadingMode } from './order-table-loading.hook'
+
 type FlatOrderRow = Omit<OrderItem, 'products'> &
   OrderProduct & {
     productKey: string
@@ -56,7 +58,7 @@ interface OrderTableProps {
     courier?: CourierName | null,
     trackingNumber?: string | null,
   ) => void
-  loadingMode?: 'list' | 'mutation' | null
+  loadingMode?: OrderTableLoadingMode
   onCancelLoading?: () => void
 }
 

@@ -10,8 +10,7 @@ import { CompletedOrderActionBar } from '@/features/order/completed-order-action
 import { useCompletedOrderFilter } from '@/features/order/completed-order-filters/completed-order-filters.hook'
 import { CompletedOrderFilters } from '@/features/order/completed-order-filters/completed-order-filters.ui'
 import { CompletedOrderTabs } from '@/features/order/completed-order-tabs/completed-order-tabs.ui'
-import { useOrderSelection } from '@/features/order/order-table/order-selection.hook'
-import { OrderTable } from '@/features/order/order-table/order-table.ui'
+import { OrderTable, useOrderSelection } from '@/features/order/order-table'
 
 const VALID_TABS: CompletedOrderTab[] = [
   'completed',
@@ -129,7 +128,7 @@ function CompletedOrdersPage() {
           onToggleAll={toggleAll}
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
-          loadingMode={isLoading ? 'list' : null}
+          loadingMode={isLoading ? 'list' : undefined}
         />
       </section>
     </div>

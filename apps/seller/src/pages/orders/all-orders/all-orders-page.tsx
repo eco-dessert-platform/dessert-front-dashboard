@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import {
   keepPreviousData,
@@ -38,8 +38,11 @@ import {
 } from '@/features/order/reason-input-modal'
 import { OrderSelectAlertModal } from '@/features/order/order-select-alert-modal/order-select-alert-modal.ui'
 import { OrderStatusTabs } from '@/features/order/order-status-tabs/order-status-tabs.ui'
-import { useOrderSelection } from '@/features/order/order-table/order-selection.hook'
-import { OrderTable } from '@/features/order/order-table/order-table.ui'
+import {
+  OrderTable,
+  useOrderSelection,
+  useOrderTableLoading,
+} from '@/features/order/order-table'
 import {
   TrackingNumberModal,
   useCreateShipmentMutation,
@@ -517,17 +520,10 @@ function AllOrdersPage() {
     decideReturnMutation.isPending ||
     decideCancelMutation.isPending
 
-  const [mutationLoadingDismissed, setMutationLoadingDismissed] = useState(false)
-
-  useEffect(() => {
-    if (!isMutationPending) setMutationLoadingDismissed(false)
-  }, [isMutationPending])
-
-  const loadingMode: 'list' | 'mutation' | null = isLoading
-    ? 'list'
-    : isMutationPending && !mutationLoadingDismissed
-      ? 'mutation'
-      : null
+  const { loadingMode, dismissMutationLoading } = useOrderTableLoading({
+    isListLoading: isLoading,
+    isMutationPending,
+  })
 
   return (
     <div className="flex flex-col gap-6 p-4">
@@ -567,7 +563,7 @@ function AllOrdersPage() {
           onToggleProduct={toggleProduct}
           onTrackingOpen={handleTrackingOpen}
           loadingMode={loadingMode}
-          onCancelLoading={() => setMutationLoadingDismissed(true)}
+          onCancelLoading={dismissMutationLoading}
         />
       </section>
 

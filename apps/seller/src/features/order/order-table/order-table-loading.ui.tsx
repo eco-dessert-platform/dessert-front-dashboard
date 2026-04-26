@@ -1,6 +1,6 @@
 import { Button } from '@dessert/ui'
 
-type OrderTableLoadingMode = 'list' | 'mutation'
+import type { OrderTableLoadingMode } from './order-table-loading.hook'
 
 const COPY: Record<OrderTableLoadingMode, { title: string; subtitle: string }> = {
   list: {
