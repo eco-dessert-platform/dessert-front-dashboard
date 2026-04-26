@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { FormProvider } from 'react-hook-form'
 
@@ -35,6 +35,7 @@ function CreatePageInner() {
   const { draft } = useCreateDraftStore()
   const [isPreviewOpen, setIsPreviewOpen] = useState(false) //미리보기
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false) //임시저장
+  const isInitialMount = useRef(true)
   const { setCurrentStep, headerHeight, isScrollingToStep } =
     useCreateHeaderSteps()
   const { handleRestoreDraft, clearDraft } = useCreateDraft()
@@ -48,10 +49,12 @@ function CreatePageInner() {
     'productDisclosure',
   ]
   useEffect(() => {
-    if (draft) {
-      setIsDraftModalOpen(true)
-    }
-    console.log('draft:', draft)
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      if (draft) {
+        setIsDraftModalOpen(true)
+      }
+    } //최초 컴포넌트 마운트 시 modal이 생성되도록 합니다
   }, [draft])
 
   useEffect(() => {
