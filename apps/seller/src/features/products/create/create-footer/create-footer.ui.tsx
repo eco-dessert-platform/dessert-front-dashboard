@@ -4,11 +4,14 @@ import { useFormContext } from 'react-hook-form'
 import { CreateFormType } from '@/entity/products/create/create-form'
 import { useSubmitCreateForm } from '@/features/products/create/create-form'
 
+import { useCreateDraft } from '../create-draft'
+
 interface ProductFooterProps {
   onPreview: () => void
 }
 
 export const ProductFooter = ({ onPreview }: ProductFooterProps) => {
+  const { handleSaveDraft } = useCreateDraft()
   const { handleSubmit, isPending } = useSubmitCreateForm()
   const {
     formState: { isDirty },
@@ -28,6 +31,7 @@ export const ProductFooter = ({ onPreview }: ProductFooterProps) => {
         variant="primary-outlined"
         size="lg"
         disabled={!hasAnyInput}
+        onClick={handleSaveDraft}
       />
       <Button
         title="저장하기"

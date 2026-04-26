@@ -11,12 +11,13 @@ import {
 } from '@/entity/products/create/create-form'
 
 import { buildProductFormData } from './create-form-mapper'
+import { useCreateDraftStore } from '../create-draft'
 import { useProductCreationStore } from '../create-store/product-creation.store'
 
 export const useSubmitCreateForm = () => {
   const form = useFormContext<CreateFormType>()
   const { productDetail } = useProductCreationStore()
-
+  const { clearDraft } = useCreateDraftStore()
   const editorImageFiles = useRef<Map<string, File>>(new Map())
 
   //   const { data: store } = useQuery(productQueries.myStore())
@@ -29,6 +30,7 @@ export const useSubmitCreateForm = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: createProduct,
     onSuccess: () => {
+      clearDraft() //상품 등록 성공 시 임시 저장 내용 삭제
       toast.success('상품 등록을 완료했어요')
     },
     onError: () => {

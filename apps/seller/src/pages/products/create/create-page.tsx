@@ -14,6 +14,11 @@ import {
   ThumbnailUploadArea,
   useCreateForm,
 } from '@/features/products/create'
+import {
+  CreateDraftDialog,
+  useCreateDraft,
+  useCreateDraftStore,
+} from '@/features/products/create/create-draft'
 import { ProductPreviewModal } from '@/features/products/create/create-preview/create-preview-modal.ui'
 import { useCreateHeaderSteps } from '@/features/products/create/create-store'
 
@@ -27,9 +32,12 @@ function CreatePage() {
 }
 
 function CreatePageInner() {
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+  const { draft } = useCreateDraftStore()
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false) //미리보기
+  const [isDraftModalOpen, setIsDraftModalOpen] = useState(false) //임시저장
   const { setCurrentStep, headerHeight, isScrollingToStep } =
     useCreateHeaderSteps()
+  const { handleRestoreDraft, clearDraft } = useCreateDraft()
 
   const stepIds = [
     'productInfo',
@@ -39,6 +47,12 @@ function CreatePageInner() {
     'productDetail',
     'productDisclosure',
   ]
+  useEffect(() => {
+    if (draft) {
+      setIsDraftModalOpen(true)
+    }
+    console.log('draft:', draft)
+  }, [draft])
 
   useEffect(() => {
     const elements = stepIds.map((id) => document.getElementById(id))
@@ -107,6 +121,19 @@ function CreatePageInner() {
         isOpen={isPreviewOpen}
         onClose={() => setIsPreviewOpen(false)}
       />
+      {isDraftModalOpen && (
+        <CreateDraftDialog
+          isOpen={isDraftModalOpen}
+          onConfirm={() => {
+            handleRestoreDraft()
+            setIsDraftModalOpen(false)
+          }}
+          onClose={() => {
+            clearDraft()
+            setIsDraftModalOpen(false)
+          }}
+        />
+      )}
     </>
   )
 }
