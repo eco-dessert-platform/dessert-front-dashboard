@@ -45,7 +45,7 @@ function CompletedOrdersPage() {
     reset: filtersReset,
   } = useCompletedOrderFilter(selectedTab)
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     ...completedOrderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
@@ -129,6 +129,7 @@ function CompletedOrdersPage() {
           onToggleAll={toggleAll}
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
+          loadingMode={isLoading ? 'list' : null}
         />
       </section>
     </div>

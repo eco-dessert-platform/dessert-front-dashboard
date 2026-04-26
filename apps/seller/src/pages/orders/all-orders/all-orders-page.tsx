@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   keepPreviousData,
@@ -98,7 +98,7 @@ function AllOrdersPage() {
     reset: filtersReset,
   } = useOrderFilter(selectedTab)
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     ...orderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
@@ -507,6 +507,28 @@ function AllOrdersPage() {
   const totalPages = data?.totalPages ?? 1
   const totalCount = data?.totalElements ?? 0
 
+  const isMutationPending =
+    confirmOrderMutation.isPending ||
+    createReturnMutation.isPending ||
+    createExchangeMutation.isPending ||
+    updateStatusMutation.isPending ||
+    completeReturnMutation.isPending ||
+    completeExchangeMutation.isPending ||
+    decideReturnMutation.isPending ||
+    decideCancelMutation.isPending
+
+  const [mutationLoadingDismissed, setMutationLoadingDismissed] = useState(false)
+
+  useEffect(() => {
+    if (!isMutationPending) setMutationLoadingDismissed(false)
+  }, [isMutationPending])
+
+  const loadingMode: 'list' | 'mutation' | null = isLoading
+    ? 'list'
+    : isMutationPending && !mutationLoadingDismissed
+      ? 'mutation'
+      : null
+
   return (
     <div className="flex flex-col gap-6 p-4">
       <OrderStatusTabs
@@ -544,6 +566,8 @@ function AllOrdersPage() {
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
           onTrackingOpen={handleTrackingOpen}
+          loadingMode={loadingMode}
+          onCancelLoading={() => setMutationLoadingDismissed(true)}
         />
       </section>
 

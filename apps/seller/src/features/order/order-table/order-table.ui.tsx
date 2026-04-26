@@ -21,6 +21,8 @@ import {
 import Table from '@/shared/components/ui/table/table'
 import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
 
+import { OrderTableLoading } from './order-table-loading.ui'
+
 type FlatOrderRow = Omit<OrderItem, 'products'> &
   OrderProduct & {
     productKey: string
@@ -54,6 +56,8 @@ interface OrderTableProps {
     courier?: CourierName | null,
     trackingNumber?: string | null,
   ) => void
+  loadingMode?: 'list' | 'mutation' | null
+  onCancelLoading?: () => void
 }
 
 export function OrderTable({
@@ -67,6 +71,8 @@ export function OrderTable({
   onToggleOne,
   onToggleProduct,
   onTrackingOpen,
+  loadingMode,
+  onCancelLoading,
 }: OrderTableProps) {
   const flatRows = useMemo(() => flattenOrders(orders), [orders])
   const getRowSpanForOrder = useCallback(
@@ -318,12 +324,17 @@ export function OrderTable({
   )
 
   return (
-    <Table
-      data={flatRows}
-      columns={columns}
-      scrollHeight={498}
-      getRowClassName={getRowClassName}
-    />
+    <div className="relative">
+      <Table
+        data={flatRows}
+        columns={columns}
+        scrollHeight={498}
+        getRowClassName={getRowClassName}
+      />
+      {loadingMode && (
+        <OrderTableLoading mode={loadingMode} onCancel={onCancelLoading} />
+      )}
+    </div>
   )
 }
 
