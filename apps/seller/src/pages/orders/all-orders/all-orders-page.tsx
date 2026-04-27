@@ -196,8 +196,6 @@ function AllOrdersPage() {
       <OrderDetailModal
         open={detailOpen}
         onOpenChange={setDetailOpen}
-        // TODO: 백엔드가 목록 응답에 orderItemId를 노출하면 selection에서 직접 수집
-        // 임시: 선택된 orderNumber를 숫자 캐스팅 (mock 매칭용, 실서버는 ID 매칭 안 됨)
         orderItemIds={selectedIds
           .map((id) => Number(id))
           .filter((n) => !Number.isNaN(n))}

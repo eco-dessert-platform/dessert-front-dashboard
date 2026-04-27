@@ -29,14 +29,14 @@ export function useOrderActionBar({
     completeExchangeMutation.isPending
 
   const submitConfirmOrders = async () => {
+    const targetOrderIds = selectedIds
+      .map((orderNumber) => Number(orderNumber))
+      .filter((id) => Number.isFinite(id))
+
     const results = await Promise.allSettled(
-      selectedIds.map((orderNumber) => {
-        const id = Number(orderNumber)
-        return confirmOrderMutation.mutateAsync({
-          orderId: id,
-          orderItemIds: [id],
-        })
-      }),
+      targetOrderIds.map((id) =>
+        confirmOrderMutation.mutateAsync({ orderId: id, orderItemIds: [id] }),
+      ),
     )
 
     const successCount = results.filter(
@@ -53,6 +53,26 @@ export function useOrderActionBar({
     } else {
       toast.error('발주 확인에 실패했습니다.')
     }
+  }
+
+  const bulkCompleteActions: Record<
+    string,
+    {
+      mutation: typeof completeReturnMutation
+      successMessage: string
+      errorMessage: string
+    }
+  > = {
+    completeReturn: {
+      mutation: completeReturnMutation,
+      successMessage: '반품이 완료 처리되었습니다.',
+      errorMessage: '반품 완료 처리에 실패했습니다.',
+    },
+    completeExchange: {
+      mutation: completeExchangeMutation,
+      successMessage: '교환이 완료 처리되었습니다.',
+      errorMessage: '교환 완료 처리에 실패했습니다.',
+    },
   }
 
   const handleAction = (action: string) => {
@@ -72,31 +92,17 @@ export function useOrderActionBar({
       return
     }
 
-    if (action === 'completeReturn') {
-      if (completeReturnMutation.isPending) return
-      completeReturnMutation.mutate(
+    const meta = bulkCompleteActions[action]
+    if (meta) {
+      if (meta.mutation.isPending) return
+      meta.mutation.mutate(
         { orderNumbers: selectedIds },
         {
           onSuccess: () => {
-            toast.success('반품이 완료 처리되었습니다.')
+            toast.success(meta.successMessage)
             onClearSelection()
           },
-          onError: () => toast.error('반품 완료 처리에 실패했습니다.'),
-        },
-      )
-      return
-    }
-
-    if (action === 'completeExchange') {
-      if (completeExchangeMutation.isPending) return
-      completeExchangeMutation.mutate(
-        { orderNumbers: selectedIds },
-        {
-          onSuccess: () => {
-            toast.success('교환이 완료 처리되었습니다.')
-            onClearSelection()
-          },
-          onError: () => toast.error('교환 완료 처리에 실패했습니다.'),
+          onError: () => toast.error(meta.errorMessage),
         },
       )
       return
