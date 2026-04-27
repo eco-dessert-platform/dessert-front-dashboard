@@ -53,15 +53,17 @@ export function useReasonAction({
     setIsOpen(false)
   }
 
-  // 반품 요청 생성: 스펙 API는 1주문 당 1콜, 선택된 주문 수만큼 병렬 호출
-  const submitCreateReturns = async (
+  // 반품/교환 요청 생성: 스펙 API는 1주문 당 1콜, 선택된 주문 수만큼 병렬 호출
+  const submitCreateRequest = async (
+    mutation: typeof createReturnMutation,
+    label: string,
     reason: string | null,
     sellerComment: string | null,
   ) => {
     const results = await Promise.allSettled(
       selectedIds.map((orderNumber) => {
         const id = Number(orderNumber)
-        return createReturnMutation.mutateAsync({
+        return mutation.mutateAsync({
           orderId: id,
           orderItemIds: [id],
           reason,
@@ -78,44 +80,11 @@ export function useReasonAction({
     if (successCount > 0) finishWithCleanup()
 
     if (failCount === 0) {
-      toast.success(`${successCount}건 반품 요청 완료`)
+      toast.success(`${successCount}건 ${label} 요청 완료`)
     } else if (successCount > 0) {
       toast.success(`${successCount}건 성공, ${failCount}건 실패`)
     } else {
-      toast.error('반품 요청에 실패했습니다.')
-    }
-  }
-
-  // 교환 요청 생성: 스펙 API는 1주문 당 1콜, 선택된 주문 수만큼 병렬 호출
-  const submitCreateExchanges = async (
-    reason: string | null,
-    sellerComment: string | null,
-  ) => {
-    const results = await Promise.allSettled(
-      selectedIds.map((orderNumber) => {
-        const id = Number(orderNumber)
-        return createExchangeMutation.mutateAsync({
-          orderId: id,
-          orderItemIds: [id],
-          reason,
-          sellerComment,
-        })
-      }),
-    )
-
-    const successCount = results.filter(
-      (r) => r.status === 'fulfilled' && r.value.summary.successCount > 0,
-    ).length
-    const failCount = results.length - successCount
-
-    if (successCount > 0) finishWithCleanup()
-
-    if (failCount === 0) {
-      toast.success(`${successCount}건 교환 요청 완료`)
-    } else if (successCount > 0) {
-      toast.success(`${successCount}건 성공, ${failCount}건 실패`)
-    } else {
-      toast.error('교환 요청에 실패했습니다.')
+      toast.error(`${label} 요청에 실패했습니다.`)
     }
   }
 
@@ -187,12 +156,16 @@ export function useReasonAction({
   const handleConfirm = (data: ReasonInputData) => {
     switch (action) {
       case 'requestReturn':
-        return void submitCreateReturns(
+        return void submitCreateRequest(
+          createReturnMutation,
+          '반품',
           data.reasonType || null,
           data.reasonDetail || null,
         )
       case 'requestExchange':
-        return void submitCreateExchanges(
+        return void submitCreateRequest(
+          createExchangeMutation,
+          '교환',
           data.reasonType || null,
           data.reasonDetail || null,
         )
