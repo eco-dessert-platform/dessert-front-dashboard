@@ -39,9 +39,13 @@ export function useTrackingFlow() {
 
   const handleConfirm = (courier: CourierName, trackingNumber: string) => {
     if (!target?.orderNumber) return
-    // TODO: 백엔드가 목록 응답에 orderId/orderItemId 노출 시 selection에서 정확한 ID 수집
-    // 임시: orderNumber 숫자 캐스팅을 orderId/orderItemId 양쪽에 사용
     const id = Number(target.orderNumber)
+
+    if (Number.isNaN(id)) {
+      toast.error('유효하지 않은 주문번호입니다.')
+      return
+    }
+
     const payload = {
       orderId: id,
       orderItemIds: [id],
