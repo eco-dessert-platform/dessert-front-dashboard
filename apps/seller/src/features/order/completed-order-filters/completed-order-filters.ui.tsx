@@ -13,7 +13,8 @@ import type {
 import { cn } from '@/shared/libs/utils'
 import { DatePicker } from '@/widgets/date-picker'
 import { InputField } from '@/widgets/input-field'
-import { ResetButton } from '@/widgets/reset-button'
+
+import { ResetButton } from '../reset-button'
 
 interface CompletedOrderFiltersProps {
   filters: CompletedOrderFilters
