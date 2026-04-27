@@ -45,6 +45,8 @@ export interface CompleteOrderRequest {
   orderNumbers: string[]
 }
 
+// VITE_USE_MOCK=true 일 때 mock 응답 사용
+// 미설정(false) 기타 값이면 실서버호출
 const useMock = import.meta.env.VITE_USE_MOCK === 'false'
 
 export async function getOrders(
@@ -102,9 +104,6 @@ export async function getOrders(
 
   return transformOrderListResult(data.result)
 }
-
-// ─── 스펙 응답 → 기존 UI 타입 변환 ────────────────────
-// TODO: UI가 OrderListContent 구조에 맞게 리팩터되면 이 변환 제거
 
 const DELIVERY_STATUS_MAP: Record<OrderDeliveryStatusSpec, DeliveryStatus> = {
   PREPARING: 'PRODUCT_PREPARING',

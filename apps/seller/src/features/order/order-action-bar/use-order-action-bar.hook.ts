@@ -28,9 +28,6 @@ export function useOrderActionBar({
     completeReturnMutation.isPending ||
     completeExchangeMutation.isPending
 
-  // 발주확인: 스펙 API는 1주문 당 1콜이라 선택된 주문 수만큼 병렬 호출 후 결과 집계
-  // TODO: 백엔드가 목록 응답에 orderId/orderItemId 노출 시 selection에서 정확한 ID 수집
-  // 임시: orderNumber 숫자 캐스팅을 orderId/orderItemId 양쪽에 사용
   const submitConfirmOrders = async () => {
     const results = await Promise.allSettled(
       selectedIds.map((orderNumber) => {

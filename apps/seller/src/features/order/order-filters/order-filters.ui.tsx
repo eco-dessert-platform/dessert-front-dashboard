@@ -1,7 +1,6 @@
-import { Button, Select } from '@dessert/ui'
+import { Select } from '@dessert/ui'
 import { format, parseISO } from 'date-fns'
 
-import ResetIcon from '@/assets/icons/reset.svg?react'
 import {
   DELIVERY_STATUS_OPTIONS,
   SEARCH_TYPE_OPTIONS,
@@ -14,6 +13,7 @@ import type {
 import { cn } from '@/shared/libs/utils'
 import { DatePicker } from '@/widgets/date-picker'
 import { InputField } from '@/widgets/input-field'
+import { ResetButton } from '@/widgets/reset-button'
 
 interface OrderFiltersProps {
   filters: OrderFilters // draftFilters (UI 표시용)
@@ -100,22 +100,5 @@ export function OrderFilters({
         <ResetButton onClick={onReset} />
       </div>
     </div>
-  )
-}
-
-interface ResetButtonProps {
-  onClick: () => void
-}
-
-function ResetButton({ onClick }: ResetButtonProps) {
-  return (
-    <Button
-      title="초기화"
-      variant="secondary-outlined"
-      size="sm"
-      rightIcon={<ResetIcon className="text-gray-800" />}
-      onClick={onClick}
-      className="h-auto min-w-0 gap-0 rounded-none border-0 bg-transparent px-0 py-0 text-gray-800 hover:bg-transparent hover:border-transparent active:bg-transparent active:border-transparent focus-visible:bg-transparent focus-visible:border-transparent"
-    />
   )
 }
