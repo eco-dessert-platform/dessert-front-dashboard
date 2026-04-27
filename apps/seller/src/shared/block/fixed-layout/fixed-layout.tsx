@@ -1,5 +1,4 @@
 import { LogoHeader } from '@dessert/ui'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { Outlet } from 'react-router-dom'
 
 import Lnb from '@/shared/block/lnb/lnb'
@@ -10,8 +9,8 @@ const FixedLayout = () => {
       <LogoHeader />
       <div className="flex h-[calc(100vh-80px)] w-full flex-row overflow-y-auto">
         <Lnb />
-        <main className="size-full max-w-[calc(100vw-240px)] overflow-y-auto bg-gray-50">
-          <div className="relative px-[90px] pt-40 pb-36">
+        <main className="flex-1 overflow-y-auto bg-gray-50">
+          <div className="relative px-[90px] pt-40">
             <Outlet />
           </div>
         </main>
