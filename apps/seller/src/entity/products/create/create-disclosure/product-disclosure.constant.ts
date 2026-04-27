@@ -5,7 +5,6 @@ export const DISCLOSURE_FIELDS = [
   { label: '4. 소재지', key: 'originLocation' },
   { label: '5. 제조년월일', key: 'manufactureDate' },
   { label: '6. 소비기한 또는 품질 유지기한', key: 'expirationDate' },
-  // { label: '7. 보관방법', key: 'storageGuide' },
   { label: '7. 포장 단위 별 내용물 용량(중량) 수량', key: 'packagingContents' },
   { label: '8. 포장 단위별 수량', key: 'packagingQuantityUnit' },
   {
