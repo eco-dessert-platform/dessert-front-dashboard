@@ -75,7 +75,6 @@ function OrderActionButton({ buttons, onAction }: OrderActionButtonProps) {
           )
         }
 
-        // todo: type === 'group' -> ButtonGroup 공통 컴포넌트로 추출 예정
         return (
           <div
             key={index}

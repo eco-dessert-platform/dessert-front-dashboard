@@ -69,7 +69,6 @@ function CompletedOrdersPage() {
     setSearchParams({ status: tab })
   }
 
-  // TODO: handleSearch, handleReset, handlePageChange, handleAction 중복로직(추후 수정 필요)
   const handleSearch = () => {
     selectionReset()
     apply()
@@ -85,9 +84,7 @@ function CompletedOrdersPage() {
     setAppliedFilters((prev) => ({ ...prev, page: String(page - 1) }))
   }
 
-  const handleAction = () => {
-    // TODO: Modal feature 컴포넌트 구현 과정에서 연결
-  }
+  const handleAction = () => {}
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
   const currentTab = appliedFilters.tab ?? 'completed'
