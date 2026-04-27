@@ -1,1 +1,5 @@
-export * from './create-store-header.type'
+export type {
+  NutritionData,
+  ActiveTags,
+  CreateFormHeaderType,
+} from './create-store-header.type'
