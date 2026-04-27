@@ -19,6 +19,7 @@ import { OrderStatusTabs } from '@/features/order/order-status-tabs'
 import {
   OrderTable,
   useOrderSelection,
+  useOrderTableLoading,
 } from '@/features/order/order-table'
 import {
   REASON_REQUIRED_ACTIONS,
@@ -73,7 +74,7 @@ function AllOrdersPage() {
     reset: filtersReset,
   } = useOrderFilter(selectedTab)
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     ...orderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
@@ -96,6 +97,7 @@ function AllOrdersPage() {
     action: reasonAction,
     open: openReason,
     handleConfirm: handleReasonConfirm,
+    isPending: isReasonPending,
   } = useReasonAction({
     selectedIds,
     onClearSelection: selectionReset,
@@ -103,7 +105,8 @@ function AllOrdersPage() {
 
   const tracking = useTrackingFlow()
 
-  const { handleAction: handleActionBar } = useOrderActionBar({
+  const { handleAction: handleActionBar, isPending: isActionBarPending } =
+    useOrderActionBar({
       selectedIds,
       onClearSelection: selectionReset,
       onShowDetail: () => setDetailOpen(true),
@@ -140,6 +143,13 @@ function AllOrdersPage() {
   const currentTab = appliedFilters.tab ?? 'all'
   const totalPages = data?.totalPages ?? 1
   const totalCount = data?.totalElements ?? 0
+
+  const isMutationPending = isActionBarPending || isReasonPending
+
+  const { loadingMode, dismissMutationLoading } = useOrderTableLoading({
+    isListLoading: isLoading,
+    isMutationPending,
+  })
 
   return (
     <div className="flex flex-col gap-6 p-4">
@@ -178,13 +188,17 @@ function AllOrdersPage() {
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
           onTrackingOpen={tracking.open}
+          loadingMode={loadingMode}
+          onCancelLoading={dismissMutationLoading}
         />
       </section>
 
       <OrderDetailModal
         open={detailOpen}
         onOpenChange={setDetailOpen}
-        orderNumbers={selectedIds}
+        orderItemIds={selectedIds
+          .map((id) => Number(id))
+          .filter((n) => !Number.isNaN(n))}
       />
       <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
       <ReasonInputModal

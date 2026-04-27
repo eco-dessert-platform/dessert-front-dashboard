@@ -6,12 +6,13 @@ import {
   CompletedOrderStatusCount,
   CompletedOrderTab,
 } from '@/entity/order/order.type'
-import { CompletedOrderActionBar } from '@/features/order/completed-order-action-bar/completed-order-action-bar.ui'
-import { useCompletedOrderFilter } from '@/features/order/completed-order-filters/completed-order-filters.hook'
-import { CompletedOrderFilters } from '@/features/order/completed-order-filters/completed-order-filters.ui'
-import { CompletedOrderTabs } from '@/features/order/completed-order-tabs/completed-order-tabs.ui'
-import { useOrderSelection } from '@/features/order/order-table/order-selection.hook'
-import { OrderTable } from '@/features/order/order-table/order-table.ui'
+import { CompletedOrderActionBar } from '@/features/order/completed-order-action-bar'
+import {
+  CompletedOrderFilters,
+  useCompletedOrderFilter,
+} from '@/features/order/completed-order-filters'
+import { CompletedOrderTabs } from '@/features/order/completed-order-tabs'
+import { OrderTable, useOrderSelection } from '@/features/order/order-table'
 
 const VALID_TABS: CompletedOrderTab[] = [
   'completed',
@@ -45,7 +46,7 @@ function CompletedOrdersPage() {
     reset: filtersReset,
   } = useCompletedOrderFilter(selectedTab)
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     ...completedOrderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
@@ -68,7 +69,6 @@ function CompletedOrdersPage() {
     setSearchParams({ status: tab })
   }
 
-  // TODO: handleSearch, handleReset, handlePageChange, handleAction 중복로직(추후 수정 필요)
   const handleSearch = () => {
     selectionReset()
     apply()
@@ -84,9 +84,7 @@ function CompletedOrdersPage() {
     setAppliedFilters((prev) => ({ ...prev, page: String(page - 1) }))
   }
 
-  const handleAction = () => {
-    // TODO: Modal feature 컴포넌트 구현 과정에서 연결
-  }
+  const handleAction = () => {}
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
   const currentTab = appliedFilters.tab ?? 'completed'
@@ -129,6 +127,7 @@ function CompletedOrdersPage() {
           onToggleAll={toggleAll}
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
+          loadingMode={isLoading ? 'list' : undefined}
         />
       </section>
     </div>
