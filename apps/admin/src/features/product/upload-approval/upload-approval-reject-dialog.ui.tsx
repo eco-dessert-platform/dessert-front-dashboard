@@ -19,15 +19,15 @@ import { useDecideUploadApprovalMutation } from './upload-approval.mutation'
 import type { z } from 'zod'
 
 const REJECT_CATEGORY_LABELS: Record<RejectCategory, string> = {
-  ADMIN_JUDGMENT: '관리자 판단',
-  INAPPROPRIATE_BRAND_NAME: '부적절한 브랜드명',
-  INVALID_PRICE_CONDITION: '유효하지 않은 가격 조건',
-  INAPPROPRIATE_VEGAN_EXPRESSION: '부적절한 비건 표현',
-  PROHIBITED_STORE_EXPRESSION: '금지된 스토어 표현',
-  PROHIBITED_LOGO_TEXT: '금지된 로고/텍스트',
-  CONTAINS_CONTACT_INFO: '연락처 정보 포함',
-  CONTAINS_COMPETITOR_NAME: '경쟁사명 포함',
-  DIRECT_INPUT: '직접 입력',
+  ADMIN_JUDGMENT: '관리자 판단 부적합',
+  INAPPROPRIATE_BRAND_NAME: '브랜드명 무단사용',
+  OFFICIAL_MATERIAL_CONFUSION: '공식물 오인 가능',
+  INAPPROPRIATE_EXPRESSION: '비속어/부적절한 표현',
+  PROHIBITED_STORE_EXPRESSION: '상품명/카테고리명 포함',
+  CONTAINS_ADVERTISING: '광고성 문구 포함',
+  CONTAINS_CONTACT_INFO: '연락처/URL 포함',
+  CONTAINS_COMPETITOR_NAME: '타 판매자명 유사',
+  DIRECT_INPUT: '직접입력',
 }
 
 const rejectCategoryOptions = RejectCategorySchema.options.map((value) => ({
@@ -128,12 +128,7 @@ export const UploadApprovalRejectDialog = ({
             </p>
           </div>
           <div className="flex justify-start">
-            <Button
-              title="전송"
-              size="md"
-              type="submit"
-              disabled={isPending}
-            />
+            <Button title="전송" size="md" type="submit" disabled={isPending} />
           </div>
         </form>
       </DialogContent>
