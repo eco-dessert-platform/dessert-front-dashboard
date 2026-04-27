@@ -21,6 +21,7 @@ import {
 import Table from '@/shared/components/ui/table/table'
 import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
 
+import { OrderTableEmpty } from './order-table-empty.ui'
 import { OrderTableLoading } from './order-table-loading.ui'
 
 import type { OrderTableLoadingMode } from './order-table-loading.hook'
@@ -325,6 +326,8 @@ export function OrderTable({
     ],
   )
 
+  const showEmpty = !loadingMode && orders.length === 0
+
   return (
     <div className="relative">
       <Table
@@ -336,6 +339,7 @@ export function OrderTable({
       {loadingMode && (
         <OrderTableLoading mode={loadingMode} onCancel={onCancelLoading} />
       )}
+      {showEmpty && <OrderTableEmpty />}
     </div>
   )
 }
