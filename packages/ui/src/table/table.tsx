@@ -14,6 +14,7 @@ declare module '@tanstack/react-table' {
     getColSpan?: (cell: Cell<TData, TValue>) => number
     className?: string
     headerClassName?: string
+    flexible?: boolean
   }
 }
 
@@ -22,6 +23,7 @@ interface TableProps<T> {
   columns: ColumnDef<T>[]
   topArea?: React.ReactNode
   maxHeight?: string | number
+  tableClassName?: string
   getRowClassName?: (row: T) => string
   renderSubRow?: (row: T) => React.ReactNode
 }
@@ -31,6 +33,7 @@ function Table<T>({
   columns,
   topArea,
   maxHeight = '600px',
+  tableClassName,
   getRowClassName,
   renderSubRow,
 }: TableProps<T>) {
@@ -49,7 +52,7 @@ function Table<T>({
         </div>
       )}
       <div className="overflow-auto" style={{ maxHeight: maxHeight }}>
-        <table className="min-w-max border-collapse">
+        <table className={cn('border-collapse', tableClassName ?? 'min-w-max')}>
           <thead className="sticky top-0 z-10 bg-gray-200">
             {getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id} className="h-40">
@@ -61,14 +64,18 @@ function Table<T>({
                       'text-center align-middle typo-body-12-m text-gray-800',
                       header.column.columnDef.meta?.headerClassName,
                     )}
-                    style={{ width: header.getSize() }}
+                    style={
+                      header.column.columnDef.meta?.flexible
+                        ? undefined
+                        : { width: header.getSize() }
+                    }
                   >
                     {header.isPlaceholder ? null : (
                       <>
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext(),
-                        ) || '\u00A0'}
+                        ) || ' '}
                       </>
                     )}
                   </th>
@@ -105,7 +112,11 @@ function Table<T>({
                           'border-r border-r-gray-300 text-center align-middle last:border-r-0',
                           cell.column.columnDef.meta?.className,
                         )}
-                        style={{ width: cell.column.getSize() }}
+                        style={
+                          cell.column.columnDef.meta?.flexible
+                            ? undefined
+                            : { width: cell.column.getSize() }
+                        }
                       >
                         <div className="p-10">
                           {flexRender(
