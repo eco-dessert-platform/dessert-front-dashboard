@@ -76,8 +76,7 @@ export function OrderAccordionItem({
             </div>
           </div>
         </AccordionTrigger>
-        <AccordionContent>
-          <div className="flex flex-col gap-12 bg-gray-100 p-12">
+        <AccordionContent className="flex h-auto flex-col gap-12 bg-gray-100 p-12">
           {/* 주문 정보 */}
           <div className="rounded-10 border border-gray-200 bg-white px-20 pb-24 pt-20">
             <h3 className="mb-24 typo-heading-18-b text-gray-900">주문 정보</h3>
@@ -176,7 +175,6 @@ export function OrderAccordionItem({
                 />
               </div>
             </div>
-          </div>
           </div>
         </AccordionContent>
       </AccordionItem>

@@ -11,9 +11,9 @@ import type {
   CompletedOrderStatus,
   SearchType,
 } from '@/entity/order/order.type'
-import { DatePicker } from '@/shared/block/date-picker/date-picker'
-import InputField from '@/shared/block/input-field/input-field'
 import { cn } from '@/shared/libs/utils'
+import { DatePicker } from '@/widgets/date-picker'
+import { InputField } from '@/widgets/input-field'
 
 interface CompletedOrderFiltersProps {
   filters: CompletedOrderFilters
@@ -114,7 +114,7 @@ function ResetButton({ onClick }: ResetButtonProps) {
       size="sm"
       rightIcon={<ResetIcon className="text-gray-800" />}
       onClick={onClick}
-      className="h-auto min-w-0 gap-0 rounded-none border-0 bg-transparent px-0 py-0 text-gray-800 hover:bg-transparent hover:border-transparent active:bg-transparent active:border-transparent focus-visible:bg-transparent focus-visible:border-transparent"
+      className="h-auto min-w-0 gap-0 rounded-none border-0 bg-transparent p-0 text-gray-800 hover:border-transparent hover:bg-transparent focus-visible:border-transparent focus-visible:bg-transparent active:border-transparent active:bg-transparent"
     />
   )
 }

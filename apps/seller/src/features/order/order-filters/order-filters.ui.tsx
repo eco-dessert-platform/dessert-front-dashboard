@@ -11,9 +11,9 @@ import type {
   OrderFilters,
   SearchType,
 } from '@/entity/order/order.type'
-import { DatePicker } from '@/shared/block/date-picker/date-picker'
-import InputField from '@/shared/block/input-field/input-field'
 import { cn } from '@/shared/libs/utils'
+import { DatePicker } from '@/widgets/date-picker'
+import { InputField } from '@/widgets/input-field'
 
 interface OrderFiltersProps {
   filters: OrderFilters // draftFilters (UI 표시용)
