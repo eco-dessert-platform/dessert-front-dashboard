@@ -888,10 +888,14 @@ export function filterOrders(
 
   // 날짜 필터
   if (filters.startDate) {
-    result = result.filter((o) => o.paymentDate >= filters.startDate!)
+    result = result.filter(
+      (o) => o.paymentDate !== null && o.paymentDate >= filters.startDate!,
+    )
   }
   if (filters.endDate) {
-    result = result.filter((o) => o.paymentDate <= filters.endDate!)
+    result = result.filter(
+      (o) => o.paymentDate !== null && o.paymentDate <= filters.endDate!,
+    )
   }
 
   // 배송상태 필터
@@ -922,12 +926,12 @@ export function filterOrders(
 
   // 정렬
   if (filters.sort === 'ASC') {
-    result = [...result].sort(
-      (a, b) => a.paymentDate.localeCompare(b.paymentDate),
+    result = [...result].sort((a, b) =>
+      (a.paymentDate ?? '').localeCompare(b.paymentDate ?? ''),
     )
   } else {
-    result = [...result].sort(
-      (a, b) => b.paymentDate.localeCompare(a.paymentDate),
+    result = [...result].sort((a, b) =>
+      (b.paymentDate ?? '').localeCompare(a.paymentDate ?? ''),
     )
   }
 
@@ -960,7 +964,7 @@ function buildMockOrderDetails(order: OrderItem): OrderDetail[] {
   return order.products.map((product) => ({
     orderNumber: order.orderNumber,
     orderInfo: {
-      orderDate: order.paymentDate,
+      orderDate: order.paymentDate ?? '',
       orderStatusLabel:
         {
           PAYMENT_COMPLETED: '결제완료',

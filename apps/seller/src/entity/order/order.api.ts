@@ -154,7 +154,7 @@ function toOrderItem(item: OrderListContent): OrderItem {
     })),
     orderStatus: first?.orderStatus ?? 'PAYMENT_COMPLETED',
     paymentMethod: item.paymentInfo.paymentMethod,
-    paymentDate: '',
+    paymentDate: null,
     totalOrderAmount: Number(item.totalOrderPrice) || 0,
     deliveryStatus: first?.orderDeliveryStatus
       ? (DELIVERY_STATUS_MAP[first.orderDeliveryStatus] ?? null)

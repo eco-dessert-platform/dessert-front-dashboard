@@ -80,7 +80,7 @@ export interface OrderItem {
   products: OrderProduct[]
   orderStatus: OrderStatus
   paymentMethod: PaymentMethod
-  paymentDate: string
+  paymentDate: string | null
   totalOrderAmount: number
   deliveryStatus: DeliveryStatus | null
   courierName: CourierName | null

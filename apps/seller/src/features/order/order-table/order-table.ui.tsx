@@ -243,7 +243,7 @@ export function OrderTable({
               {row.original.paymentMethod}
             </p>
             <p className="typo-body-12-r text-gray-800">
-              {row.original.paymentDate}
+              {row.original.paymentDate ?? '-'}
             </p>
           </div>
         ),
