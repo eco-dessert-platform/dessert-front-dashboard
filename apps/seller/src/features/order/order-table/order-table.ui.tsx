@@ -21,6 +21,11 @@ import {
 import Table from '@/shared/components/ui/table/table'
 import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
 
+import { OrderTableEmpty } from './order-table-empty.ui'
+import { OrderTableLoading } from './order-table-loading.ui'
+
+import type { OrderTableLoadingMode } from './order-table-loading.hook'
+
 type FlatOrderRow = Omit<OrderItem, 'products'> &
   OrderProduct & {
     productKey: string
@@ -54,6 +59,8 @@ interface OrderTableProps {
     courier?: CourierName | null,
     trackingNumber?: string | null,
   ) => void
+  loadingMode?: OrderTableLoadingMode
+  onCancelLoading?: () => void
 }
 
 export function OrderTable({
@@ -67,6 +74,8 @@ export function OrderTable({
   onToggleOne,
   onToggleProduct,
   onTrackingOpen,
+  loadingMode,
+  onCancelLoading,
 }: OrderTableProps) {
   const flatRows = useMemo(() => flattenOrders(orders), [orders])
   const getRowSpanForOrder = useCallback(
@@ -234,7 +243,7 @@ export function OrderTable({
               {row.original.paymentMethod}
             </p>
             <p className="typo-body-12-r text-gray-800">
-              {row.original.paymentDate}
+              {row.original.paymentDate ?? '-'}
             </p>
           </div>
         ),
@@ -317,13 +326,21 @@ export function OrderTable({
     ],
   )
 
+  const showEmpty = !loadingMode && orders.length === 0
+
   return (
-    <Table
-      data={flatRows}
-      columns={columns}
-      scrollHeight={498}
-      getRowClassName={getRowClassName}
-    />
+    <div className="relative">
+      <Table
+        data={flatRows}
+        columns={columns}
+        scrollHeight={498}
+        getRowClassName={getRowClassName}
+      />
+      {loadingMode && (
+        <OrderTableLoading mode={loadingMode} onCancel={onCancelLoading} />
+      )}
+      {showEmpty && <OrderTableEmpty />}
+    </div>
   )
 }
 
