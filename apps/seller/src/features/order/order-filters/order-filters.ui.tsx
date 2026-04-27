@@ -1,4 +1,4 @@
-import { Select } from '@dessert/ui'
+import { Button, Select } from '@dessert/ui'
 import { format, parseISO } from 'date-fns'
 
 import ResetIcon from '@/assets/icons/reset.svg?react'
@@ -109,13 +109,13 @@ interface ResetButtonProps {
 
 function ResetButton({ onClick }: ResetButtonProps) {
   return (
-    <button
-      type="button"
-      className="flex cursor-pointer items-center"
+    <Button
+      title="초기화"
+      variant="secondary-outlined"
+      size="sm"
+      rightIcon={<ResetIcon className="text-gray-800" />}
       onClick={onClick}
-    >
-      <span className="typo-body-12-m text-gray-800">초기화</span>
-      <ResetIcon className="text-gray-800" />
-    </button>
+      className="h-auto min-w-0 gap-0 rounded-none border-0 bg-transparent px-0 py-0 text-gray-800 hover:bg-transparent hover:border-transparent active:bg-transparent active:border-transparent focus-visible:bg-transparent focus-visible:border-transparent"
+    />
   )
 }
