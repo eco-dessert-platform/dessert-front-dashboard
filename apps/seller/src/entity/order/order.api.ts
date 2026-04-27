@@ -208,6 +208,9 @@ export async function updateOrderStatus(
   })
 }
 
+// NOTE: 운송장 API의 응답 envelope 키가 백엔드 스펙상
+// POST(등록) = result.content (단수), PUT(수정) = result.contents (복수)로 갈림.
+// 오타가 아니라 의도된 차이.
 export async function createShipment(
   request: ShipmentRequest,
 ): Promise<CreateShipmentResult> {
