@@ -51,7 +51,6 @@ export const UploadApprovalRejectDialog = ({
     register,
     control,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm<RejectFormValues>({
@@ -75,7 +74,12 @@ export const UploadApprovalRejectDialog = ({
   }
 
   return (
-    <Dialog open={boardId !== null} onOpenChange={handleClose}>
+    <Dialog
+      open={boardId !== null}
+      onOpenChange={(open) => {
+        if (!open) handleClose()
+      }}
+    >
       <DialogContent className="w-225 gap-5.5 sm:max-w-225">
         <DialogHeader className="gap-0">
           <DialogTitle
@@ -93,19 +97,24 @@ export const UploadApprovalRejectDialog = ({
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-16"
         >
-          <Controller
-            name="rejectCategory"
-            control={control}
-            render={({ field }) => (
-              <Dropdown
-                options={rejectCategoryOptions}
-                value={field.value ?? ''}
-                placeholder="거절 카테고리를 선택하세요"
-                listClassName="max-h-none overflow-y-visible"
-                onSelect={(value) => field.onChange(value as RejectCategory)}
-              />
-            )}
-          />
+          <div className="flex flex-col gap-2">
+            <Controller
+              name="rejectCategory"
+              control={control}
+              render={({ field }) => (
+                <Dropdown
+                  options={rejectCategoryOptions}
+                  value={field.value ?? ''}
+                  placeholder="거절 카테고리를 선택하세요"
+                  listClassName="max-h-none overflow-y-visible"
+                  onSelect={(value) => field.onChange(value as RejectCategory)}
+                />
+              )}
+            />
+            <p className="min-h-5 text-sm text-red-500">
+              {errors.rejectCategory?.message}
+            </p>
+          </div>
           <div className="flex flex-col gap-2">
             <Textarea
               {...register('rejectReason')}
@@ -123,7 +132,7 @@ export const UploadApprovalRejectDialog = ({
               title="전송"
               size="md"
               type="submit"
-              disabled={!watch('rejectCategory') || isPending}
+              disabled={isPending}
             />
           </div>
         </form>

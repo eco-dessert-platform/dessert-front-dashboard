@@ -42,17 +42,20 @@ export const GetUploadApprovalsRequestParamsSchema = z.object({
   sort: z.array(z.string()).optional(),
 })
 
-export const RejectCategorySchema = z.enum([
-  'ADMIN_JUDGMENT',
-  'INAPPROPRIATE_BRAND_NAME',
-  'INVALID_PRICE_CONDITION',
-  'INAPPROPRIATE_VEGAN_EXPRESSION',
-  'PROHIBITED_STORE_EXPRESSION',
-  'PROHIBITED_LOGO_TEXT',
-  'CONTAINS_CONTACT_INFO',
-  'CONTAINS_COMPETITOR_NAME',
-  'DIRECT_INPUT',
-])
+export const RejectCategorySchema = z.enum(
+  [
+    'ADMIN_JUDGMENT',
+    'INAPPROPRIATE_BRAND_NAME',
+    'INVALID_PRICE_CONDITION',
+    'INAPPROPRIATE_VEGAN_EXPRESSION',
+    'PROHIBITED_STORE_EXPRESSION',
+    'PROHIBITED_LOGO_TEXT',
+    'CONTAINS_CONTACT_INFO',
+    'CONTAINS_COMPETITOR_NAME',
+    'DIRECT_INPUT',
+  ],
+  { error: '거절 카테고리를 선택해주세요.' },
+)
 
 export const RejectBodySchema = z.object({
   rejectCategory: RejectCategorySchema,
