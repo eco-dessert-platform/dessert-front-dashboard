@@ -3,3 +3,4 @@ export {
   REASON_REQUIRED_ACTIONS,
   type ReasonAction,
 } from './reason-input-modal.constant'
+export { useReasonAction } from './use-reason-action.hook'

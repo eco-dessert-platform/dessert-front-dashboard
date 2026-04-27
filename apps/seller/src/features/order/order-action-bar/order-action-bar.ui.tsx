@@ -75,20 +75,20 @@ function OrderActionButton({ buttons, onAction }: OrderActionButtonProps) {
           )
         }
 
-        // todo: type === 'group' -> ButtonGroup 공통 컴포넌트로 추출 예정
         return (
           <div
             key={index}
             className="flex overflow-clip rounded-6 border border-gray-200"
           >
             {button.items.map((item) => (
-              <button
+              <Button
                 key={item.action}
-                className="cursor-pointer border-r border-gray-200 px-10 py-6 typo-body-12-m text-gray-800 last:border-r-0"
+                title={item.label}
+                variant="secondary-outlined"
+                size="sm"
                 onClick={() => onAction(item.action)}
-              >
-                {item.label}
-              </button>
+                className="h-auto min-w-0 rounded-none border-0 border-r border-gray-200 px-10 py-6 text-gray-800 last:border-r-0"
+              />
             ))}
           </div>
         )
