@@ -30,8 +30,8 @@ const Chip = ({
   }
 
   const sizeClasses = {
-    sm: 'px-2 py-1 typo-body-10-r rounded-full',
-    md: 'px-3 py-1.5 typo-body-12-r rounded-full',
+    sm: 'px-2.25 py-4 typo-body-10-r rounded-full',
+    md: 'px-12 py-6 typo-body-12-r rounded-full',
     lg: 'px-12 py-6 typo-body-14-r rounded-full',
   }
 
