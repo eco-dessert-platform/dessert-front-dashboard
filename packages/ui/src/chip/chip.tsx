@@ -3,7 +3,7 @@ import { clsx } from 'clsx'
 
 interface ChipProps {
   children: React.ReactNode
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
   closable?: boolean
   selected?: boolean
   onClose?: () => void

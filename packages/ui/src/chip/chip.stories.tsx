@@ -17,7 +17,7 @@ const meta = {
     },
     size: {
       control: 'select',
-      options: ['sm', 'md'],
+      options: ['sm', 'md', 'lg'],
     },
     closable: {
       control: 'boolean',
@@ -61,6 +61,14 @@ export const Small: Story = {
   args: {
     children: 'Small Chip',
     size: 'sm',
+    closable: false,
+  },
+}
+
+export const Large: Story = {
+  args: {
+    children: 'Large Chip',
+    size: 'lg',
     closable: false,
   },
 }
