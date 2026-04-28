@@ -12,7 +12,11 @@ import {
   useCompletedOrderFilter,
 } from '@/features/order/completed-order-filters'
 import { CompletedOrderTabs } from '@/features/order/completed-order-tabs'
-import { OrderTable, useOrderSelection } from '@/features/order/order-table'
+import {
+  OrderTable,
+  useOrderSelection,
+  useOrderTableLoading,
+} from '@/features/order/order-table'
 
 const VALID_TABS: CompletedOrderTab[] = [
   'completed',
@@ -51,6 +55,11 @@ function CompletedOrdersPage() {
     placeholderData: keepPreviousData,
   })
   const orders = data?.content ?? []
+
+  const { loadingMode, dismissMutationLoading } = useOrderTableLoading({
+    isListLoading: isLoading,
+    isMutationPending: false,
+  })
 
   const {
     selectedIds,
@@ -127,7 +136,8 @@ function CompletedOrdersPage() {
           onToggleAll={toggleAll}
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
-          loadingMode={isLoading ? 'list' : undefined}
+          loadingMode={loadingMode}
+          onCancelLoading={dismissMutationLoading}
         />
       </section>
     </div>
