@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const thumbnailSchema = z.object({
-  mainImage: z.custom<File | null>().refine((file) => file !== null, {
+  mainImage: z.instanceof(File, {
     message: '대표 이미지는 필수 입력사항입니다.',
   }),
   extraImages: z
