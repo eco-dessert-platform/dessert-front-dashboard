@@ -1098,13 +1098,12 @@ export function getMockOrderDetailResponse(
   const matched = MOCK_ORDERS.filter((o) =>
     orderItemIds.includes(Number(o.orderNumber)),
   )
-  const result = matched.length > 0 ? matched : MOCK_ORDERS.slice(0, orderItemIds.length)
 
   if (matched.length === 0) {
     console.warn("[mock] 일치하는 주문이 없습니다.", orderItemIds)
   }
 
-  return result.flatMap(buildMockOrderDetails)
+  return matched.flatMap(buildMockOrderDetails)
 }
 
 // Mock API 응답 생성
