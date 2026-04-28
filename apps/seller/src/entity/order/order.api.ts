@@ -50,6 +50,19 @@ export interface CompleteOrderRequest {
 // 미설정(false) 기타 값이면 실서버호출
 const useMock = import.meta.env.VITE_USE_MOCK === 'false'
 
+function ensureSuccess(data: ApiResponse<unknown>, fallback: string): void {
+  if (!data.success) {
+    throw new Error(data.message ?? fallback)
+  }
+}
+
+function unwrap<T>(data: ApiResponse<T>, fallback: string): T {
+  if (!data.success || data.result === undefined) {
+    throw new Error(data.message ?? fallback)
+  }
+  return data.result
+}
+
 export async function getOrders(
   filters: OrderFilters,
 ): Promise<OrderListResponse> {
@@ -99,11 +112,9 @@ export async function getOrders(
     },
   )
 
-  if (!data.result) {
-    throw new Error(data.message ?? '주문 목록 조회에 실패했습니다.')
-  }
-
-  return transformOrderListResult(data.result)
+  return transformOrderListResult(
+    unwrap(data, '주문 목록 조회에 실패했습니다.'),
+  )
 }
 
 function transformOrderListResult(result: OrderListResult): OrderListResponse {
@@ -174,11 +185,7 @@ export async function getOrderDetails(
     orderItemIds,
   )
 
-  if (!data.result) {
-    throw new Error(data.message ?? '주문 상세 조회에 실패했습니다.')
-  }
-
-  return data.result
+  return unwrap(data, '주문 상세 조회에 실패했습니다.')
 }
 
 export async function updateOrderStatus(
@@ -196,9 +203,12 @@ export async function updateOrderStatus(
     formData.append('images', image)
   })
 
-  await client.post('/api/v1/seller/orders/status', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
+  const { data } = await client.post<ApiResponse<never>>(
+    '/api/v1/seller/orders/status',
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } },
+  )
+  ensureSuccess(data, '주문 상태 변경에 실패했습니다.')
 }
 
 // NOTE: 운송장 API의 응답 envelope 키가 백엔드 스펙상
@@ -220,11 +230,7 @@ export async function createShipment(
     trackingNumber,
   })
 
-  if (!data.result?.content) {
-    throw new Error(data.message ?? '운송장 등록에 실패했습니다.')
-  }
-
-  return data.result.content
+  return unwrap(data, '운송장 등록에 실패했습니다.').content
 }
 
 export async function updateShipment(
@@ -243,11 +249,7 @@ export async function updateShipment(
     trackingNumber,
   })
 
-  if (!data.result?.contents) {
-    throw new Error(data.message ?? '운송장 수정에 실패했습니다.')
-  }
-
-  return data.result.contents
+  return unwrap(data, '운송장 수정에 실패했습니다.').contents
 }
 
 export async function completeReturn(
@@ -257,7 +259,11 @@ export async function completeReturn(
     return Promise.resolve()
   }
 
-  await client.post('/api/v1/seller/orders/return/complete', request)
+  const { data } = await client.post<ApiResponse<never>>(
+    '/api/v1/seller/orders/return/complete',
+    request,
+  )
+  ensureSuccess(data, '반품 완료 처리에 실패했습니다.')
 }
 
 export async function completeExchange(
@@ -267,7 +273,11 @@ export async function completeExchange(
     return Promise.resolve()
   }
 
-  await client.post('/api/v1/seller/orders/exchange/complete', request)
+  const { data } = await client.post<ApiResponse<never>>(
+    '/api/v1/seller/orders/exchange/complete',
+    request,
+  )
+  ensureSuccess(data, '교환 완료 처리에 실패했습니다.')
 }
 
 export async function createReturn(
@@ -286,11 +296,7 @@ export async function createReturn(
     sellerComment,
   })
 
-  if (!data.result?.content) {
-    throw new Error(data.message ?? '반품 요청에 실패했습니다.')
-  }
-
-  return data.result.content
+  return unwrap(data, '반품 요청에 실패했습니다.').content
 }
 
 export async function createExchange(
@@ -309,11 +315,7 @@ export async function createExchange(
     sellerComment,
   })
 
-  if (!data.result?.content) {
-    throw new Error(data.message ?? '교환 요청에 실패했습니다.')
-  }
-
-  return data.result.content
+  return unwrap(data, '교환 요청에 실패했습니다.').content
 }
 
 export async function decideCancel(
@@ -327,10 +329,7 @@ export async function decideCancel(
     '/api/v1/seller/cancels/decision',
     request,
   )
-
-  if (!data.success) {
-    throw new Error(data.message ?? '주문 취소 처리에 실패했습니다.')
-  }
+  ensureSuccess(data, '주문 취소 처리에 실패했습니다.')
 }
 
 export async function decideReturn(
@@ -344,10 +343,7 @@ export async function decideReturn(
     '/api/v1/seller/returns/decision',
     request,
   )
-
-  if (!data.success) {
-    throw new Error(data.message ?? '반품 처리에 실패했습니다.')
-  }
+  ensureSuccess(data, '반품 처리에 실패했습니다.')
 }
 
 export async function confirmOrder(
@@ -365,9 +361,5 @@ export async function confirmOrder(
     { orderItemIds },
   )
 
-  if (!data.result?.content) {
-    throw new Error(data.message ?? '발주 확인에 실패했습니다.')
-  }
-
-  return data.result.content
+  return unwrap(data, '발주 확인에 실패했습니다.').content
 }
