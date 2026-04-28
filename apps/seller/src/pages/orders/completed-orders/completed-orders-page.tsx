@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
@@ -12,6 +14,8 @@ import {
   useCompletedOrderFilter,
 } from '@/features/order/completed-order-filters'
 import { CompletedOrderTabs } from '@/features/order/completed-order-tabs'
+import { OrderDetailModal } from '@/features/order/order-detail-modal'
+import { OrderSelectAlertModal } from '@/features/order/order-select-alert-modal'
 import {
   OrderTable,
   useOrderSelection,
@@ -33,6 +37,8 @@ const DEFAULT_STATUS_COUNT: CompletedOrderStatusCount = {
 }
 
 function CompletedOrdersPage() {
+  const [detailOpen, setDetailOpen] = useState(false)
+  const [alertOpen, setAlertOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const statusParam = searchParams.get('status')
   const selectedTab: CompletedOrderTab = VALID_TABS.includes(
@@ -93,7 +99,16 @@ function CompletedOrdersPage() {
     setAppliedFilters((prev) => ({ ...prev, page: String(page - 1) }))
   }
 
-  const handleAction = () => {}
+  const handleAction = (action: string) => {
+    if (selectedIds.length === 0) {
+      setAlertOpen(true)
+      return
+    }
+
+    if (action === 'detailView') {
+      setDetailOpen(true)
+    }
+  }
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
   const currentTab = appliedFilters.tab ?? 'completed'
@@ -140,6 +155,15 @@ function CompletedOrdersPage() {
           onCancelLoading={dismissMutationLoading}
         />
       </section>
+
+      <OrderDetailModal
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
+        orderItemIds={orders
+          .filter((o) => selectedIds.includes(o.orderNumber))
+          .flatMap((o) => o.products.map((p) => p.orderItemId))}
+      />
+      <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
     </div>
   )
 }
