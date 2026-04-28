@@ -12,7 +12,7 @@ import {
 } from '@dessert/ui'
 import { Camera, XIcon } from 'lucide-react'
 
-import { useProductThumbnailForm } from './use-product-thumnail.hook'
+import { useProductThumbnailForm } from './use-product-thumbnail.hook'
 // import { useCreateHeaderSteps } from '../create-store'
 
 export const ThumbnailUploadArea = () => {
