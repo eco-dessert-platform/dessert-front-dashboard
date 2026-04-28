@@ -3,6 +3,7 @@ import {
   ProductDisclosureFormInput,
   ProductFormInput,
   ProductOptionFormInput,
+  ThumbnailFormInput,
 } from '@/entity/products'
 
 import { deliverySchema } from '../create-form-delivery/create-delivery.schema'
@@ -13,7 +14,8 @@ import { productOptionSchema } from '../create-form-options/create-options.schem
 export type CreateProductForm = ProductFormInput &
   DeliveryFormInput &
   ProductOptionFormInput &
-  ProductDisclosureFormInput
+  ProductDisclosureFormInput &
+  ThumbnailFormInput
 
 export const createProductSchema = productSchema
   .and(deliverySchema)
