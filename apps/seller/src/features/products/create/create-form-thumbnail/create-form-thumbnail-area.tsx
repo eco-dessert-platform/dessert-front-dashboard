@@ -55,7 +55,7 @@ export const ThumbnailUploadArea = () => {
         <div className="flex flex-col gap-8">
           {mainImage ? (
             <ImagePreviewItem
-              src={URL.createObjectURL(mainImage)}
+              file={mainImage}
               onDelete={() => setDeleteTarget('main')}
             />
           ) : (
@@ -92,7 +92,7 @@ export const ThumbnailUploadArea = () => {
           {extraImages.map((file: File, idx: number) => (
             <ImagePreviewItem
               key={`${file.name}-${idx}`}
-              src={URL.createObjectURL(file)}
+              file={file}
               onDelete={() => setDeleteTarget(idx)}
             />
           ))}
@@ -146,15 +146,33 @@ function UploadButton({
 }
 
 function ImagePreviewItem({
-  src,
+  file,
   onDelete,
 }: {
-  src: string
+  file: File
   onDelete: () => void
 }) {
+  const [previewUrl, setPreviewUrl] = React.useState<string>('')
+
+  useEffect(() => {
+    // URL 생성
+    const url = URL.createObjectURL(file)
+    setPreviewUrl(url)
+
+    // 클린업 함수: 컴포넌트가 언마운트되거나 file이 바뀔 때 메모리를 해제합니다.
+    return () => {
+      URL.revokeObjectURL(url)
+    }
+  }, [file])
   return (
     <div className="relative h-[120px] w-[120px] overflow-hidden rounded-16 border border-gray-100 bg-gray-50">
-      <img src={src} alt="preview" className="size-full object-cover" />
+      {previewUrl && (
+        <img
+          src={previewUrl}
+          alt="preview"
+          className="size-full object-cover"
+        />
+      )}
       <button
         type="button"
         onClick={onDelete}
