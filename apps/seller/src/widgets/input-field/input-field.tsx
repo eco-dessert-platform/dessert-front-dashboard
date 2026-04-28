@@ -28,6 +28,7 @@ export function InputField({
   onChange,
   layout = 'vertical',
   disabled,
+  readOnly,
   className,
   ...restProps
 }: InputFieldProps) {
@@ -56,13 +57,14 @@ export function InputField({
             value={value}
             onChange={onChange}
             disabled={disabled}
+            readOnly={readOnly}
             {...restProps}
           />
           <Button
             title={buttonText}
             size="md"
             onClick={onButtonClick}
-            disabled={disabled || !value?.toString().trim()}
+            disabled={disabled || (!readOnly && !value?.toString().trim())}
             className="whitespace-nowrap"
           />
         </div>
