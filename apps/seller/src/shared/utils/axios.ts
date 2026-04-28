@@ -71,8 +71,7 @@ client.interceptors.response.use(
         return client(originalRequest)
       }
     } catch {
-      // TODO: API 연결 검증 후 복구 - 401 시 /auth 리다이렉트 임시 비활성화
-      // window.location.href = '/auth'
+      window.location.href = '/auth'
     } finally {
       isRefreshing = false
     }
