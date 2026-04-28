@@ -32,6 +32,8 @@ export const ThumbnailUploadArea = () => {
   //     setProductFields({ productThumbnail: isFormField })
   //   }, [isFormField, setProductFields])
 
+  // 16,29~33line : 추후 header 관련 기능을 ContextAPI -> zustand로 마이그레이션 하면서 롤백 할 예정입니다.
+
   return (
     <>
       <div className="mb-24 flex items-center gap-2">
