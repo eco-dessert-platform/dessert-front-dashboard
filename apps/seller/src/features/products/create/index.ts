@@ -1,5 +1,6 @@
 export * from './create-form'
 export * from './create-form-delivery'
+export * from './create-form-thumbnail'
 export * from './create-form-detail'
 export * from './create-form-disclosure'
 export * from './create-form-info'
