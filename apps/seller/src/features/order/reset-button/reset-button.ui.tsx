@@ -9,6 +9,7 @@ interface ResetButtonProps {
 export function ResetButton({ onClick }: ResetButtonProps) {
   return (
     <Button
+      type="button"
       title="초기화"
       variant="secondary-outlined"
       size="sm"
