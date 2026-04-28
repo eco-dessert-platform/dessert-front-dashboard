@@ -1,13 +1,10 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
 import { orderQueries } from '@/entity/order/order.query'
-import {
-  OrderStatusCount,
-  OrderStatusTab,
-} from '@/entity/order/order.type'
+import { OrderStatusCount, OrderStatusTab } from '@/entity/order/order.type'
 import {
   OrderActionBar,
   useOrderActionBar,
@@ -105,6 +102,10 @@ function AllOrdersPage() {
 
   const tracking = useTrackingFlow()
 
+  const detailOrderItemIds = useMemo(() => {
+    return selectedIds.map((id) => Number(id)).filter((n) => !Number.isNaN(n))
+  }, [selectedIds])
+
   const { handleAction: handleActionBar, isPending: isActionBarPending } =
     useOrderActionBar({
       selectedIds,
@@ -196,9 +197,7 @@ function AllOrdersPage() {
       <OrderDetailModal
         open={detailOpen}
         onOpenChange={setDetailOpen}
-        orderItemIds={selectedIds
-          .map((id) => Number(id))
-          .filter((n) => !Number.isNaN(n))}
+        orderItemIds={detailOrderItemIds}
       />
       <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
       <ReasonInputModal
