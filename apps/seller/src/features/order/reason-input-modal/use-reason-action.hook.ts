@@ -80,9 +80,8 @@ export function useReasonAction({
     ).length
     const failCount = results.length - successCount
 
-    if (successCount > 0) finishWithCleanup()
-
     if (failCount === 0) {
+      finishWithCleanup()
       toast.success(`${successCount}건 ${label} 요청 완료`)
     } else if (successCount > 0) {
       toast.success(`${successCount}건 성공, ${failCount}건 실패`)

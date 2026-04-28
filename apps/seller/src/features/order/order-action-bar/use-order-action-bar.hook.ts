@@ -47,9 +47,8 @@ export function useOrderActionBar({
     ).length
     const failCount = results.length - successCount
 
-    if (successCount > 0) onClearSelection()
-
     if (failCount === 0) {
+      onClearSelection()
       toast.success(`${successCount}건 발주 확인 완료`)
     } else if (successCount > 0) {
       toast.success(`${successCount}건 성공, ${failCount}건 실패`)
