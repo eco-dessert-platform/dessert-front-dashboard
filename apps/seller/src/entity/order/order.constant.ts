@@ -7,6 +7,7 @@ import {
   CompletedOrderTab,
   DeliveryStatus,
   ExchangeStatus,
+  OrderDeliveryStatusSpec,
   OrderStatus,
   OrderStatusTab,
   ReturnStatus,
@@ -350,4 +351,12 @@ export const COMPLETED_ORDER_ACTION_BAR_CONFIG: Record<
       action: 'detailView',
     },
   ],
+}
+
+export const DELIVERY_STATUS_MAP: Record<OrderDeliveryStatusSpec, DeliveryStatus> = {
+  PREPARING: 'PRODUCT_PREPARING',
+  COLLECTING: 'COLLECTING',
+  COLLECT_COMPLETED: 'COLLECT_COMPLETED',
+  DELIVERING: 'DELIVERING',
+  DELIVERY_COMPLETED: 'DELIVERY_COMPLETED',
 }
