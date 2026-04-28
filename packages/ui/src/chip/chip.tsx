@@ -61,7 +61,7 @@ const Chip = ({
           className="flex items-center justify-center transition-opacity hover:opacity-70"
           aria-label="닫기"
         >
-          <XIcon className={cn(closeClasses[size])} />
+          <XIcon className={closeClasses[size]} />
         </button>
       )}
     </span>
