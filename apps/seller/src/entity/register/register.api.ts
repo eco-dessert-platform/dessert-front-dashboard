@@ -117,9 +117,6 @@ export async function registerDocuments({
   const { data } = await client.post<ListApiResponse<RegisterDocumentsResult>>(
     '/api/v1/seller/sellers/documents',
     formData,
-    {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    },
   )
 
   if (!data.list) {
@@ -149,9 +146,6 @@ export async function submitStoreApplication({
   const { data } = await client.post<ApiResponse<StoreApplicationResult>>(
     '/api/v1/seller/stores/applications',
     formData,
-    {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    },
   )
 
   if (!data.result) {
