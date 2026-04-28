@@ -33,6 +33,7 @@ import {
   ShipmentRequest,
   UpdateShipmentResult,
 } from './order.type'
+import { DELIVERY_STATUS_MAP } from '@/entity/order/order.constant.ts'
 
 export interface UpdateOrderStatusRequest {
   orderNumbers: string[]
@@ -103,14 +104,6 @@ export async function getOrders(
   }
 
   return transformOrderListResult(data.result)
-}
-
-const DELIVERY_STATUS_MAP: Record<OrderDeliveryStatusSpec, DeliveryStatus> = {
-  PREPARING: 'PRODUCT_PREPARING',
-  COLLECTING: 'COLLECTING',
-  COLLECT_COMPLETED: 'COLLECT_COMPLETED',
-  DELIVERING: 'DELIVERING',
-  DELIVERY_COMPLETED: 'DELIVERY_COMPLETED',
 }
 
 function transformOrderListResult(result: OrderListResult): OrderListResponse {
