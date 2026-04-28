@@ -55,7 +55,7 @@ interface OrderTableProps {
   onToggleProduct: (productKey: string, orderNumber: string) => void
   onTrackingOpen?: (
     mode: 'create' | 'edit',
-    orderNumber: string,
+    orderId: number,
     courier?: CourierName | null,
     trackingNumber?: string | null,
   ) => void
@@ -349,14 +349,14 @@ interface TrackingNumberCellProps {
   tab: OrderStatusTab
   onTrackingOpen?: (
     mode: 'create' | 'edit',
-    orderNumber: string,
+    orderId: number,
     courier?: CourierName | null,
     trackingNumber?: string | null,
   ) => void
 }
 
 function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProps) {
-  const { orderNumber, trackingNumber, courierName, returnStatus, exchangeStatus } = row.original
+  const { orderId, trackingNumber, courierName, returnStatus, exchangeStatus } = row.original
 
   // 반품 탭: returnStatus에 따라 운송장 셀 렌더링
   if (tab === 'returned') {
@@ -370,7 +370,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
           variant="secondary-outlined"
           size="sm"
           title="입력"
-          onClick={() => onTrackingOpen?.('create', orderNumber)}
+          onClick={() => onTrackingOpen?.('create', orderId)}
         />
       )
     }
@@ -387,7 +387,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
             title="수정"
             className="w-56"
             onClick={() =>
-              onTrackingOpen?.('edit', orderNumber, courierName, trackingNumber)
+              onTrackingOpen?.('edit', orderId, courierName, trackingNumber)
             }
           />
         </div>
@@ -411,7 +411,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
           variant="secondary-outlined"
           size="sm"
           title="입력"
-          onClick={() => onTrackingOpen?.('create', orderNumber)}
+          onClick={() => onTrackingOpen?.('create', orderId)}
         />
       )
     }
@@ -428,7 +428,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
             title="수정"
             className="w-56"
             onClick={() =>
-              onTrackingOpen?.('edit', orderNumber, courierName, trackingNumber)
+              onTrackingOpen?.('edit', orderId, courierName, trackingNumber)
             }
           />
         </div>
@@ -442,7 +442,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
         variant="secondary-outlined"
         size="sm"
         title="입력"
-        onClick={() => onTrackingOpen?.('create', orderNumber)}
+        onClick={() => onTrackingOpen?.('create', orderId)}
       />
     )
   }
@@ -461,7 +461,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
             title="수정"
             className="w-56"
             onClick={() =>
-              onTrackingOpen?.('edit', orderNumber, courierName, trackingNumber)
+              onTrackingOpen?.('edit', orderId, courierName, trackingNumber)
             }
           />
         </div>

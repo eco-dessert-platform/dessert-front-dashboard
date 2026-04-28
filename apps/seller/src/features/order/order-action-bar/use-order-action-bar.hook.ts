@@ -1,11 +1,14 @@
 import { toast } from '@dessert/ui'
 
+import type { OrderItem } from '@/entity/order/order.type'
+
 import { useCompleteExchangeMutation } from './complete-exchange.mutation'
 import { useCompleteReturnMutation } from './complete-return.mutation'
 import { useConfirmOrderMutation } from './confirm-order.mutation'
 
 interface UseOrderActionBarParams {
   selectedIds: string[]
+  selectedOrders: OrderItem[]
   onClearSelection: () => void
   onShowDetail: () => void
   onSelectionEmpty: () => void
@@ -14,6 +17,7 @@ interface UseOrderActionBarParams {
 
 export function useOrderActionBar({
   selectedIds,
+  selectedOrders,
   onClearSelection,
   onShowDetail,
   onSelectionEmpty,
@@ -29,13 +33,12 @@ export function useOrderActionBar({
     completeExchangeMutation.isPending
 
   const submitConfirmOrders = async () => {
-    const targetOrderIds = selectedIds
-      .map((orderNumber) => Number(orderNumber))
-      .filter((id) => Number.isFinite(id))
-
     const results = await Promise.allSettled(
-      targetOrderIds.map((id) =>
-        confirmOrderMutation.mutateAsync({ orderId: id, orderItemIds: [id] }),
+      selectedOrders.map((order) =>
+        confirmOrderMutation.mutateAsync({
+          orderId: order.orderId,
+          orderItemIds: order.products.map((p) => p.orderItemId),
+        }),
       ),
     )
 

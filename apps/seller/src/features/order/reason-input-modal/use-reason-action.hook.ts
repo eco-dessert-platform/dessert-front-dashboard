@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import { toast } from '@dessert/ui'
 
+import type { OrderItem } from '@/entity/order/order.type'
+
 import { useCreateExchangeMutation } from './create-exchange.mutation'
 import { useCreateReturnMutation } from './create-return.mutation'
 import { useDecideCancelMutation } from './decide-cancel.mutation'
@@ -20,11 +22,13 @@ interface ReasonInputData {
 
 interface UseReasonActionParams {
   selectedIds: string[]
+  selectedOrders: OrderItem[]
   onClearSelection: () => void
 }
 
 export function useReasonAction({
   selectedIds,
+  selectedOrders,
   onClearSelection,
 }: UseReasonActionParams) {
   const [isOpen, setIsOpen] = useState(false)
@@ -61,15 +65,14 @@ export function useReasonAction({
     sellerComment: string | null,
   ) => {
     const results = await Promise.allSettled(
-      selectedIds.map((orderNumber) => {
-        const id = Number(orderNumber)
-        return mutation.mutateAsync({
-          orderId: id,
-          orderItemIds: [id],
+      selectedOrders.map((order) =>
+        mutation.mutateAsync({
+          orderId: order.orderId,
+          orderItemIds: order.products.map((p) => p.orderItemId),
           reason,
           sellerComment,
-        })
-      }),
+        }),
+      ),
     )
 
     const successCount = results.filter(

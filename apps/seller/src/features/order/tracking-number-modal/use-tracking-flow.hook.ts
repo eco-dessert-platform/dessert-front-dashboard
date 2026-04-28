@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { toast } from '@dessert/ui'
 
-import type { CourierName } from '@/entity/order/order.type'
+import type { CourierName, OrderItem } from '@/entity/order/order.type'
 
 import { useCreateShipmentMutation } from './create-shipment.mutation'
 import { useUpdateShipmentMutation } from './update-shipment.mutation'
@@ -10,12 +10,14 @@ import { useUpdateShipmentMutation } from './update-shipment.mutation'
 type TrackingMode = 'create' | 'edit'
 
 interface TrackingTarget {
+  orderId: number
+  orderItemIds: number[]
   orderNumber: string
   courier?: CourierName | null
   trackingNumber?: string | null
 }
 
-export function useTrackingFlow() {
+export function useTrackingFlow(orders: OrderItem[]) {
   const [isOpen, setIsOpen] = useState(false)
   const [mode, setMode] = useState<TrackingMode>('create')
   const [target, setTarget] = useState<TrackingTarget | null>(null)
@@ -28,27 +30,33 @@ export function useTrackingFlow() {
 
   const open = (
     nextMode: TrackingMode,
-    orderNumber: string,
+    orderId: number,
     courier?: CourierName | null,
     trackingNumber?: string | null,
   ) => {
+    const order = orders.find((o) => o.orderId === orderId)
+    if (!order) {
+      toast.error('주문 정보를 찾을 수 없습니다.')
+      return
+    }
+
     setMode(nextMode)
-    setTarget({ orderNumber, courier, trackingNumber })
+    setTarget({
+      orderId,
+      orderItemIds: order.products.map((p) => p.orderItemId),
+      orderNumber: order.orderNumber,
+      courier,
+      trackingNumber,
+    })
     setIsOpen(true)
   }
 
   const handleConfirm = (courier: CourierName, trackingNumber: string) => {
-    if (!target?.orderNumber) return
-    const id = Number(target.orderNumber)
-
-    if (Number.isNaN(id)) {
-      toast.error('유효하지 않은 주문번호입니다.')
-      return
-    }
+    if (!target) return
 
     const payload = {
-      orderId: id,
-      orderItemIds: [id],
+      orderId: target.orderId,
+      orderItemIds: target.orderItemIds,
       courierName: courier,
       trackingNumber,
     }

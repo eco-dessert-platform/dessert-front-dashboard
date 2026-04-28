@@ -88,6 +88,10 @@ function AllOrdersPage() {
     reset: selectionReset,
   } = useOrderSelection(orders)
 
+  const selectedOrders = orders.filter((o) =>
+    selectedIds.includes(o.orderNumber),
+  )
+
   const {
     isOpen: isReasonOpen,
     setIsOpen: setReasonOpen,
@@ -97,18 +101,21 @@ function AllOrdersPage() {
     isPending: isReasonPending,
   } = useReasonAction({
     selectedIds,
+    selectedOrders,
     onClearSelection: selectionReset,
   })
 
-  const tracking = useTrackingFlow()
+  const tracking = useTrackingFlow(orders)
 
-  const detailOrderItemIds = useMemo(() => {
-    return selectedIds.map((id) => Number(id)).filter((n) => !Number.isNaN(n))
-  }, [selectedIds])
+  const detailOrderItemIds = useMemo(
+    () => selectedOrders.flatMap((o) => o.products.map((p) => p.orderItemId)),
+    [selectedOrders],
+  )
 
   const { handleAction: handleActionBar, isPending: isActionBarPending } =
     useOrderActionBar({
       selectedIds,
+      selectedOrders,
       onClearSelection: selectionReset,
       onShowDetail: () => setDetailOpen(true),
       onSelectionEmpty: () => setAlertOpen(true),

@@ -48,7 +48,7 @@ export interface CompleteOrderRequest {
 
 // VITE_USE_MOCK=true 일 때 mock 응답 사용
 // 미설정(false) 기타 값이면 실서버호출
-const useMock = import.meta.env.VITE_USE_MOCK === 'false'
+const useMock = import.meta.env.VITE_USE_MOCK === 'true'
 
 function ensureSuccess(data: ApiResponse<unknown>, fallback: string): void {
   if (!data.success) {
@@ -148,9 +148,11 @@ function toOrderItem(item: OrderListContent): OrderItem {
     courier && courier !== 'NONE' ? (courier as CourierName) : null
 
   return {
+    orderId: item.orderId,
     recipientName: item.recipientName,
     orderNumber: item.orderNumber,
     products: item.orderItems.map((i) => ({
+      orderItemId: i.orderItemId,
       productName: i.orderItemInfo.itemName,
       optionName: null,
       quantity: i.orderItemInfo.quantity,
