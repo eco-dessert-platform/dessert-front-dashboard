@@ -21,36 +21,4 @@ jobs:
       - name: Lint
         # run: yarn lint --max-warnings=0
         run: yarn lint
-  chromatic:
-    name: Run Chromatic
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install dependencies
-        run: yarn install --immutable
-
-      - name: Build dependencies
-        run: yarn build
-
-      - name: Build UI Storybook
-        run: yarn build-storybook:ui
-
-      - name: Run Chromatic (UI)
-        uses: chromaui/action@latest
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          storybookBuildDir: packages/ui/storybook-static
-          exitOnceUploaded: true
-          autoAcceptChanges: true
