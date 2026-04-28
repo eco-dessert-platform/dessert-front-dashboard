@@ -42,6 +42,10 @@ const validateImage = (
       }
       resolve({ error: null, warning })
     }
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      resolve({ error: '이미지를 읽을 수 없어요', warning: null })
+    }
     img.src = url
   })
 }
