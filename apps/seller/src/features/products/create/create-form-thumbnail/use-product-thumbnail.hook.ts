@@ -73,7 +73,7 @@ export function useProductThumbnailForm() {
     type: 'main' | 'extra',
   ) => {
     const files = e.target.files
-    if (!files) return
+    if (!files || files.length === 0) return
 
     if (type === 'main') {
       const file = files[0]
