@@ -1,12 +1,21 @@
 import {
+  ConfirmOrderRequest,
+  ConfirmOrderResult,
+  CreateExchangeRequest,
+  CreateExchangeResult,
+  CreateReturnRequest,
+  CreateReturnResult,
+  CreateShipmentResult,
   OrderDetail,
-  OrderDetailResponse,
   OrderFilters,
   OrderItem,
   OrderListResponse,
   OrderStatus,
   OrderStatusTab,
+  ShipmentRequest,
+  UpdateShipmentResult,
 } from './order.type'
+import { TAB_TO_STATUS } from '@/entity/order/order.constant.ts'
 
 // 20개 Mock 주문 데이터
 export const MOCK_ORDERS: OrderItem[] = [
@@ -854,17 +863,6 @@ export const MOCK_ORDERS: OrderItem[] = [
   },
 ]
 
-// 탭 → API 상태 매핑
-const TAB_TO_STATUS: Partial<Record<OrderStatusTab, OrderStatus>> = {
-  paymentCompleted: 'PAYMENT_COMPLETED',
-  orderConfirmed: 'ORDER_CONFIRMED',
-  productShipped: 'PRODUCT_SHIPPED',
-  deliveryCompleted: 'DELIVERY_COMPLETED',
-  canceled: 'CANCELED',
-  returned: 'RETURNED',
-  exchanged: 'EXCHANGED',
-}
-
 // Mock API 필터 함수
 export function filterOrders(
   orders: OrderItem[],
@@ -880,10 +878,14 @@ export function filterOrders(
 
   // 날짜 필터
   if (filters.startDate) {
-    result = result.filter((o) => o.paymentDate >= filters.startDate!)
+    result = result.filter(
+      (o) => o.paymentDate !== null && o.paymentDate >= filters.startDate!,
+    )
   }
   if (filters.endDate) {
-    result = result.filter((o) => o.paymentDate <= filters.endDate!)
+    result = result.filter(
+      (o) => o.paymentDate !== null && o.paymentDate <= filters.endDate!,
+    )
   }
 
   // 배송상태 필터
@@ -914,12 +916,12 @@ export function filterOrders(
 
   // 정렬
   if (filters.sort === 'ASC') {
-    result = [...result].sort(
-      (a, b) => a.paymentDate.localeCompare(b.paymentDate),
+    result = [...result].sort((a, b) =>
+      (a.paymentDate ?? '').localeCompare(b.paymentDate ?? ''),
     )
   } else {
-    result = [...result].sort(
-      (a, b) => b.paymentDate.localeCompare(a.paymentDate),
+    result = [...result].sort((a, b) =>
+      (b.paymentDate ?? '').localeCompare(a.paymentDate ?? ''),
     )
   }
 
@@ -952,7 +954,7 @@ function buildMockOrderDetails(order: OrderItem): OrderDetail[] {
   return order.products.map((product) => ({
     orderNumber: order.orderNumber,
     orderInfo: {
-      orderDate: order.paymentDate,
+      orderDate: order.paymentDate ?? '',
       orderStatusLabel:
         {
           PAYMENT_COMPLETED: '결제완료',
@@ -996,19 +998,99 @@ function buildMockOrderDetails(order: OrderItem): OrderDetail[] {
   }))
 }
 
+// 운송장 입력(POST) mock — 요청한 itemIds 전부 성공 처리
+export function getMockCreateShipmentResponse(
+  request: ShipmentRequest,
+): CreateShipmentResult {
+  return {
+    orderId: request.orderId,
+    summary: {
+      requestedCount: request.orderItemIds.length,
+      successCount: request.orderItemIds.length,
+      failCount: 0,
+    },
+    successOrderItemIds: request.orderItemIds,
+    failedOrderItemIds: [],
+    courierName: request.courierName,
+    trackingNumber: request.trackingNumber,
+    shippedAt: new Date().toISOString(),
+  }
+}
+
+// 운송장 수정(PUT) mock — 요청한 itemIds 각각에 대해 업데이트 결과 반환
+export function getMockUpdateShipmentResponse(
+  request: ShipmentRequest,
+): UpdateShipmentResult {
+  const now = new Date().toISOString()
+  return request.orderItemIds.map(() => ({
+    orderId: request.orderId,
+    orderStatus: 'PRODUCT_SHIPPED' as const,
+    deliveryStatus: 'DELIVERING' as const,
+    courierName: request.courierName,
+    trackingNumber: request.trackingNumber,
+    updatedAt: now,
+  }))
+}
+
+// 반품 요청 생성 mock — 요청한 itemIds 전부 성공 처리
+export function getMockCreateReturnResponse(
+  request: CreateReturnRequest,
+): CreateReturnResult {
+  return {
+    orderId: request.orderId,
+    summary: {
+      requestedCount: request.orderItemIds.length,
+      successCount: request.orderItemIds.length,
+      failCount: 0,
+    },
+    successOrderItemIds: request.orderItemIds,
+    failedOrderItemIds: [],
+  }
+}
+
+// 교환 요청 생성 mock — 요청한 itemIds 전부 성공 처리
+export function getMockCreateExchangeResponse(
+  request: CreateExchangeRequest,
+): CreateExchangeResult {
+  return {
+    orderId: request.orderId,
+    summary: {
+      requestedCount: request.orderItemIds.length,
+      successCount: request.orderItemIds.length,
+      failCount: 0,
+    },
+    successOrderItemIds: request.orderItemIds,
+    failedOrderItemIds: [],
+  }
+}
+
+// 발주확인 mock — 요청한 itemIds 전부 성공 처리
+export function getMockConfirmOrderResponse(
+  request: ConfirmOrderRequest,
+): ConfirmOrderResult {
+  return {
+    orderId: request.orderId,
+    summary: {
+      requestedCount: request.orderItemIds.length,
+      successCount: request.orderItemIds.length,
+      failCount: 0,
+    },
+    confirmedOrderItemIds: request.orderItemIds,
+    failedOrderItemIds: [],
+  }
+}
+
 export function getMockOrderDetailResponse(
   orderNumbers: string[],
-): OrderDetailResponse {
-  const details = MOCK_ORDERS.filter((o) =>
-    orderNumbers.includes(o.orderNumber),
-  ).flatMap(buildMockOrderDetails)
+): OrderDetail[] {
+  if (orderNumbers.length === 0) return []
+  const matched = MOCK_ORDERS.filter((o) => orderNumbers.includes(o.orderNumber))
 
-  return {
-    success: true,
-    code: 0,
-    message: 'Success',
-    result: details,
+  if (matched.length === 0) {
+    console.warn("[mock] 일치하는 주문이 없습니다.", orderNumbers)
   }
+
+  return matched.flatMap(buildMockOrderDetails)
 }
 
 // Mock API 응답 생성
