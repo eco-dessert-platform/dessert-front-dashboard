@@ -23,6 +23,9 @@ interface UseReasonActionParams {
   onClearSelection: () => void
 }
 
+const buildReason = (data: ReasonInputData) =>
+  [data.reasonType, data.reasonDetail].filter(Boolean).join(' - ') || null
+
 export function useReasonAction({
   selectedIds,
   onClearSelection,
@@ -97,12 +100,9 @@ export function useReasonAction({
     const returnIds = selectedIds
       .map((id) => Number(id))
       .filter((n) => !Number.isNaN(n))
-    const reason = [data.reasonType, data.reasonDetail]
-      .filter(Boolean)
-      .join(' - ')
 
     decideReturnMutation.mutate(
-      { returnIds, decisionType, reason: reason || null },
+      { returnIds, decisionType, reason: buildReason(data) },
       {
         onSuccess: () => {
           toast.success(REASON_TOAST_MESSAGE[action])
@@ -122,12 +122,9 @@ export function useReasonAction({
     const cancelIds = selectedIds
       .map((id) => Number(id))
       .filter((n) => !Number.isNaN(n))
-    const reason = [data.reasonType, data.reasonDetail]
-      .filter(Boolean)
-      .join(' - ')
 
     decideCancelMutation.mutate(
-      { cancelIds, decisionType, reason: reason || null },
+      { cancelIds, decisionType, reason: buildReason(data) },
       {
         onSuccess: () => {
           toast.success(REASON_TOAST_MESSAGE[action])
