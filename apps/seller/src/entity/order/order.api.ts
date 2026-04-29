@@ -54,7 +54,7 @@ export interface CompleteOrderRequest {
 const useMock = import.meta.env.VITE_USE_MOCK === 'true'
 
 function ensureSuccess(data: ApiResponse<unknown>, fallback: string): void {
-  if (!data.success) {
+  if (!data.success || data.result === null) {
     throw new Error(data.message ?? fallback)
   }
 }
