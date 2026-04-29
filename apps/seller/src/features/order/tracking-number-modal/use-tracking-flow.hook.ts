@@ -70,7 +70,9 @@ export function useTrackingFlow() {
           toast.success('운송장 정보가 저장되었습니다.')
           setIsOpen(false)
         } else if (successCount > 0) {
+          // 부분 성공: 모달을 닫아 재시도 시 성공 건이 중복 전송되는 것을 막는다.
           toast.success(`${successCount}건 등록 성공, ${failCount}건 실패`)
+          setIsOpen(false)
         } else {
           toast.error('운송장 저장에 실패했습니다.')
         }

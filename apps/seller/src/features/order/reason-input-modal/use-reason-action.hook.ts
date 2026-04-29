@@ -58,22 +58,31 @@ export function useReasonAction({
     reason: string | null,
     sellerComment: string | null,
   ) => {
+    const targetOrderIds = selectedIds
+      .map((orderNumber) => Number(orderNumber))
+      .filter((id) => Number.isFinite(id))
+    const invalidCount = selectedIds.length - targetOrderIds.length
+
+    if (targetOrderIds.length === 0) {
+      toast.error('유효한 주문이 없습니다.')
+      return
+    }
+
     const results = await Promise.allSettled(
-      selectedIds.map((orderNumber) => {
-        const id = Number(orderNumber)
-        return mutation.mutateAsync({
+      targetOrderIds.map((id) =>
+        mutation.mutateAsync({
           orderId: id,
           orderItemIds: [id],
           reason,
           sellerComment,
-        })
-      }),
+        }),
+      ),
     )
 
     const successCount = results.filter(
       (r) => r.status === 'fulfilled' && r.value.summary.successCount > 0,
     ).length
-    const failCount = results.length - successCount
+    const failCount = results.length - successCount + invalidCount
 
     if (successCount > 0) {
       finishWithCleanup()
