@@ -21,8 +21,7 @@ import {
   useOrderSelection,
 } from '@/features/order/order-table'
 import {
-  REASON_REQUIRED_ACTIONS,
-  ReasonAction,
+  isReasonAction,
   ReasonInputModal,
   useReasonAction,
 } from '@/features/order/reason-input-modal'
@@ -109,8 +108,8 @@ function AllOrdersPage() {
       onShowDetail: () => setDetailOpen(true),
       onSelectionEmpty: () => setAlertOpen(true),
       onUnhandled: (action) => {
-        if (REASON_REQUIRED_ACTIONS.has(action)) {
-          openReason(action as ReasonAction)
+        if (isReasonAction(action)) {
+          openReason(action)
         }
       },
     })
