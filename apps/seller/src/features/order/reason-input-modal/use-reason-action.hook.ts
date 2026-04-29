@@ -158,7 +158,7 @@ export function useReasonAction({
         images: data.images,
       },
       {
-        onSuccess: onClearSelection,
+        onSuccess: finishWithCleanup,
         onError: () => toast.error('주문 상태 변경에 실패했습니다.'),
       },
     )
