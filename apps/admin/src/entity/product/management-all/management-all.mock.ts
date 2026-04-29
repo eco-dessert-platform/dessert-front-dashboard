@@ -59,8 +59,8 @@ const generateMockData = (count: number): AdminProduct[] => {
 const ALL_MOCK_DATA = generateMockData(52)
 
 export const getAdminProductMockData = (page: number, size: number) => {
-  const safePage = Math.max(1, page)
-  const safeSize = Math.max(1, size)
+  const safePage = Math.max(1, Number.isFinite(page) ? Math.floor(page) : 1)
+  const safeSize = Math.max(1, Number.isFinite(size) ? Math.floor(size) : 1)
   const start = (safePage - 1) * safeSize
   const end = start + safeSize
   return {

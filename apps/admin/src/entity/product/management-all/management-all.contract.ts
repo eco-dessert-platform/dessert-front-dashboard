@@ -55,7 +55,7 @@ export const GetAdminProductsRequestParamsSchema = z.object({
 })
 
 export const DeleteAdminProductsRequestParamsSchema = z.object({
-  productIds: z.array(z.number().int()),
+  productIds: z.array(z.number().int()).min(1),
 })
 
 export const DeleteAdminProductOptionsBodySchema = z
@@ -72,7 +72,19 @@ export const DeleteAdminProductOptionsBodySchema = z
 
 export const EditStockFlagSchema = z.enum(['INCREASE', 'DECREASE', 'SOLDOUT'])
 
-export const EditAdminProductOptionStockBodySchema = z.object({
-  editStockFlag: EditStockFlagSchema.optional(),
-  amount: z.number().int().optional(),
-})
+export const EditAdminProductOptionStockBodySchema = z.discriminatedUnion(
+  'editStockFlag',
+  [
+    z.object({
+      editStockFlag: z.literal('INCREASE'),
+      amount: z.number().int().positive(),
+    }),
+    z.object({
+      editStockFlag: z.literal('DECREASE'),
+      amount: z.number().int().positive(),
+    }),
+    z.object({
+      editStockFlag: z.literal('SOLDOUT'),
+    }),
+  ],
+)
