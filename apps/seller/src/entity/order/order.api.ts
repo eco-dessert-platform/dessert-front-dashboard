@@ -33,6 +33,10 @@ import {
   ShipmentRequest,
   UpdateShipmentResult,
 } from './order.type'
+import {
+  DELIVERY_STATUS_MAP,
+  TAB_TO_STATUS,
+} from '@/entity/order/order.constant.ts'
 
 export interface UpdateOrderStatusRequest {
   orderNumbers: string[]
@@ -69,16 +73,6 @@ export async function getOrders(
 
   const today = new Date().toISOString().split('T')[0]
 
-  const TAB_TO_STATUS: Partial<Record<string, string>> = {
-    paymentCompleted: 'PAYMENT_COMPLETED',
-    orderConfirmed: 'ORDER_CONFIRMED',
-    productShipped: 'PRODUCT_SHIPPED',
-    deliveryCompleted: 'DELIVERY_COMPLETED',
-    canceled: 'CANCELED',
-    returned: 'RETURNED',
-    exchanged: 'EXCHANGED',
-  }
-
   const { data } = await client.post<ApiResponse<OrderListResult>>(
     '/api/v1/seller/orders/list',
     {
@@ -103,14 +97,6 @@ export async function getOrders(
   }
 
   return transformOrderListResult(data.result)
-}
-
-const DELIVERY_STATUS_MAP: Record<OrderDeliveryStatusSpec, DeliveryStatus> = {
-  PREPARING: 'PRODUCT_PREPARING',
-  COLLECTING: 'COLLECTING',
-  COLLECT_COMPLETED: 'COLLECT_COMPLETED',
-  DELIVERING: 'DELIVERING',
-  DELIVERY_COMPLETED: 'DELIVERY_COMPLETED',
 }
 
 function transformOrderListResult(result: OrderListResult): OrderListResponse {
@@ -145,7 +131,7 @@ function toOrderItem(item: OrderListContent): OrderItem {
 
   return {
     recipientName: item.recipientName,
-    orderNumber: item.orderNumber,
+    orderNumber: String(item.orderNumber),
     products: item.orderItems.map((i) => ({
       productName: i.orderItemInfo.itemName,
       optionName: null,
@@ -170,11 +156,16 @@ function toOrderItem(item: OrderListContent): OrderItem {
 }
 
 export async function getOrderDetails(
-  orderItemIds: number[],
+  orderNumbers: string[],
 ): Promise<OrderDetail[]> {
   if (useMock) {
-    return getMockOrderDetailResponse(orderItemIds)
+    return getMockOrderDetailResponse(orderNumbers)
   }
+
+  // 서버 스펙: orderItemIds: number[] (int64). FE는 string으로 들고 다니다 wire에서만 변환
+  const orderItemIds = orderNumbers
+    .map((n) => Number(n))
+    .filter((n) => Number.isFinite(n))
 
   const { data } = await client.post<ApiResponse<OrderDetail[]>>(
     '/api/v1/seller/orders/items',

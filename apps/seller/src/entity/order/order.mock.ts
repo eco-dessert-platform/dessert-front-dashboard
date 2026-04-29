@@ -15,6 +15,7 @@ import {
   ShipmentRequest,
   UpdateShipmentResult,
 } from './order.type'
+import { TAB_TO_STATUS } from '@/entity/order/order.constant.ts'
 
 // 20개 Mock 주문 데이터
 export const MOCK_ORDERS: OrderItem[] = [
@@ -862,17 +863,6 @@ export const MOCK_ORDERS: OrderItem[] = [
   },
 ]
 
-// 탭 → API 상태 매핑
-const TAB_TO_STATUS: Partial<Record<OrderStatusTab, OrderStatus>> = {
-  paymentCompleted: 'PAYMENT_COMPLETED',
-  orderConfirmed: 'ORDER_CONFIRMED',
-  productShipped: 'PRODUCT_SHIPPED',
-  deliveryCompleted: 'DELIVERY_COMPLETED',
-  canceled: 'CANCELED',
-  returned: 'RETURNED',
-  exchanged: 'EXCHANGED',
-}
-
 // Mock API 필터 함수
 export function filterOrders(
   orders: OrderItem[],
@@ -1090,16 +1080,17 @@ export function getMockConfirmOrderResponse(
   }
 }
 
-// TODO: 스펙은 orderItemId(number[])지만 mock 데이터에 ID가 없어 orderNumber를 숫자 캐스팅해 매칭
 export function getMockOrderDetailResponse(
-  orderItemIds: number[],
+  orderNumbers: string[],
 ): OrderDetail[] {
-  if (orderItemIds.length === 0) return []
-  const matched = MOCK_ORDERS.filter((o) =>
-    orderItemIds.includes(Number(o.orderNumber)),
-  )
-  const result = matched.length > 0 ? matched : MOCK_ORDERS.slice(0, orderItemIds.length)
-  return result.flatMap(buildMockOrderDetails)
+  if (orderNumbers.length === 0) return []
+  const matched = MOCK_ORDERS.filter((o) => orderNumbers.includes(o.orderNumber))
+
+  if (matched.length === 0) {
+    console.warn("[mock] 일치하는 주문이 없습니다.", orderNumbers)
+  }
+
+  return matched.flatMap(buildMockOrderDetails)
 }
 
 // Mock API 응답 생성

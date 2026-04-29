@@ -28,13 +28,9 @@ export function OrderDetailModal({
   onOpenChange,
   orderNumbers,
 }: OrderDetailModalProps) {
-  const orderItemIds = orderNumbers
-    .map((n) => Number(n))
-    .filter((n) => Number.isFinite(n))
-
   const { data } = useQuery({
-    ...orderQueries.detail(orderItemIds),
-    enabled: open && orderItemIds.length > 0,
+    ...orderQueries.detail(orderNumbers),
+    enabled: open && orderNumbers.length > 0,
   })
 
   const grouped = groupByOrderNumber(data ?? [])
