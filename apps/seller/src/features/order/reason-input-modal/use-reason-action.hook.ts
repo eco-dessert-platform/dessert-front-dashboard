@@ -6,8 +6,6 @@ import { toast } from '@dessert/ui'
 
 import { useCreateExchangeMutation } from './create-exchange.mutation'
 import { useCreateReturnMutation } from './create-return.mutation'
-import { useDecideCancelMutation } from './decide-cancel.mutation'
-import { useDecideReturnMutation } from './decide-return.mutation'
 import {
   REASON_TOAST_MESSAGE,
   type ReasonAction,
@@ -26,9 +24,6 @@ interface UseReasonActionParams {
   onClearSelection: () => void
 }
 
-const buildReason = (data: ReasonInputData) =>
-  [data.reasonType, data.reasonDetail].filter(Boolean).join(' - ') || null
-
 export function useReasonAction({
   selectedIds,
   onClearSelection,
@@ -39,15 +34,11 @@ export function useReasonAction({
 
   const createReturnMutation = useCreateReturnMutation()
   const createExchangeMutation = useCreateExchangeMutation()
-  const decideReturnMutation = useDecideReturnMutation()
-  const decideCancelMutation = useDecideCancelMutation()
   const updateStatusMutation = useUpdateOrderStatusMutation()
 
   const isPending =
     createReturnMutation.isPending ||
     createExchangeMutation.isPending ||
-    decideReturnMutation.isPending ||
-    decideCancelMutation.isPending ||
     updateStatusMutation.isPending
 
   const open = (next: ReasonAction) => {
@@ -98,48 +89,11 @@ export function useReasonAction({
     }
   }
 
-  const submitDecideReturn = (
-    decisionType: 'APPROVE' | 'REJECT',
-    data: ReasonInputData,
-  ) => {
-    // TODO: 백엔드가 목록 응답에 returnId를 노출하면 selection에서 수집
-    // 임시: orderNumber 숫자 캐스팅을 returnId로 사용
-    const returnIds = selectedIds
-      .map((id) => Number(id))
-      .filter((n) => !Number.isNaN(n))
-
-    decideReturnMutation.mutate(
-      { returnIds, decisionType, reason: buildReason(data) },
-      {
-        onSuccess: () => {
-          toast.success(REASON_TOAST_MESSAGE[action])
-          finishWithCleanup()
-        },
-        onError: () => toast.error('반품 처리에 실패했습니다.'),
-      },
-    )
-  }
-
-  const submitDecideCancel = (
-    decisionType: 'APPROVE' | 'REJECT',
-    data: ReasonInputData,
-  ) => {
-    // TODO: 백엔드가 목록 응답에 cancelId를 노출하면 selection에서 수집
-    // 임시: orderNumber 숫자 캐스팅을 cancelId로 사용
-    const cancelIds = selectedIds
-      .map((id) => Number(id))
-      .filter((n) => !Number.isNaN(n))
-
-    decideCancelMutation.mutate(
-      { cancelIds, decisionType, reason: buildReason(data) },
-      {
-        onSuccess: () => {
-          toast.success(REASON_TOAST_MESSAGE[action])
-          finishWithCleanup()
-        },
-        onError: () => toast.error('주문 취소 처리에 실패했습니다.'),
-      },
-    )
+  // 백엔드가 목록 응답에 returnId/cancelId를 노출하기 전까지 호출 차단.
+  // orderNumber를 ID로 캐스팅해 보내면 다른 건이 처리될 위험이 있어 안내 토스트만 노출.
+  const notifyDecisionPending = () => {
+    toast.error('아직 준비 중인 기능입니다.')
+    finishWithCleanup()
   }
 
   const submitUpdateStatus = (data: ReasonInputData) => {
@@ -177,13 +131,10 @@ export function useReasonAction({
           data.reasonDetail || null,
         )
       case 'approveReturn':
-        return submitDecideReturn('APPROVE', data)
       case 'rejectReturn':
-        return submitDecideReturn('REJECT', data)
       case 'approveCancellation':
-        return submitDecideCancel('APPROVE', data)
       case 'rejectCancellation':
-        return submitDecideCancel('REJECT', data)
+        return notifyDecisionPending()
       default:
         return submitUpdateStatus(data)
     }
