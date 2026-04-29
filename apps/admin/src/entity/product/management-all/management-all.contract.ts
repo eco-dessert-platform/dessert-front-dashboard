@@ -69,3 +69,10 @@ export const DeleteAdminProductOptionsBodySchema = z
       (data.optionIds !== undefined && data.optionIds.length > 0),
     { message: 'removeAll이 false인 경우 optionIds가 필요합니다.' },
   )
+
+export const EditStockFlagSchema = z.enum(['INCREASE', 'DECREASE', 'SOLDOUT'])
+
+export const EditAdminProductOptionStockBodySchema = z.object({
+  editStockFlag: EditStockFlagSchema.optional(),
+  amount: z.number().int().optional(),
+})

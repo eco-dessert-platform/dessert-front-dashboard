@@ -6,6 +6,9 @@ export type {
   DeleteAdminProductsRequestParams,
   DeleteAdminProductOptionsBody,
   DeleteAdminProductOptionsParams,
+  EditStockFlag,
+  EditAdminProductOptionStockBody,
+  EditAdminProductOptionStockParams,
 } from './management-all.type'
 
 export {
@@ -17,12 +20,15 @@ export {
   DeleteAdminProductsRequestParamsSchema,
   DeleteAdminProductsResponseSchema,
   DeleteAdminProductOptionsBodySchema,
+  EditStockFlagSchema,
+  EditAdminProductOptionStockBodySchema,
 } from './management-all.contract'
 
 export {
   getAdminProducts,
   deleteAdminProducts,
   deleteAdminProductOptions,
+  editAdminProductOptionStock,
 } from './management-all.api'
 
 export { managementAllQueries } from './management-all.query'

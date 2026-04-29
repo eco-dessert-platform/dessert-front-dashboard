@@ -4,6 +4,8 @@ import type {
   AdminProductSchema,
   DeleteAdminProductOptionsBodySchema,
   DeleteAdminProductsRequestParamsSchema,
+  EditAdminProductOptionStockBodySchema,
+  EditStockFlagSchema,
   GetAdminProductsRequestParamsSchema,
 } from './management-all.contract'
 import type { z } from 'zod'
@@ -26,4 +28,15 @@ export type DeleteAdminProductOptionsBody = z.infer<
 export interface DeleteAdminProductOptionsParams {
   productId: number
   body: DeleteAdminProductOptionsBody
+}
+
+export type EditStockFlag = z.infer<typeof EditStockFlagSchema>
+
+export type EditAdminProductOptionStockBody = z.infer<
+  typeof EditAdminProductOptionStockBodySchema
+>
+
+export interface EditAdminProductOptionStockParams {
+  optionId: number
+  body: EditAdminProductOptionStockBody
 }
