@@ -43,6 +43,14 @@ function flattenOrders(orders: OrderItem[]): FlatOrderRow[] {
   })
 }
 
+interface TrackingOpenArgs {
+  orderNumber: string
+  orderId: number
+  orderItemIds: number[]
+  courier?: CourierName | null
+  trackingNumber?: string | null
+}
+
 interface OrderTableProps {
   tab: OrderStatusTab
   orders: OrderItem[]
@@ -53,12 +61,7 @@ interface OrderTableProps {
   onToggleAll: () => void
   onToggleOne: (orderNumber: string) => void
   onToggleProduct: (productKey: string, orderNumber: string) => void
-  onTrackingOpen?: (
-    mode: 'create' | 'edit',
-    orderId: number,
-    courier?: CourierName | null,
-    trackingNumber?: string | null,
-  ) => void
+  onTrackingOpen?: (mode: 'create' | 'edit', args: TrackingOpenArgs) => void
   loadingMode?: OrderTableLoadingMode
   onCancelLoading?: () => void
 }
@@ -347,16 +350,20 @@ export function OrderTable({
 interface TrackingNumberCellProps {
   row: Row<FlatOrderRow>
   tab: OrderStatusTab
-  onTrackingOpen?: (
-    mode: 'create' | 'edit',
-    orderId: number,
-    courier?: CourierName | null,
-    trackingNumber?: string | null,
-  ) => void
+  onTrackingOpen?: (mode: 'create' | 'edit', args: TrackingOpenArgs) => void
 }
 
 function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProps) {
-  const { orderId, trackingNumber, courierName, returnStatus, exchangeStatus } = row.original
+  const {
+    orderNumber,
+    orderId,
+    orderItemId,
+    trackingNumber,
+    courierName,
+    returnStatus,
+    exchangeStatus,
+  } = row.original
+  const orderItemIds = [orderItemId]
 
   // 반품 탭: returnStatus에 따라 운송장 셀 렌더링
   if (tab === 'returned') {
@@ -370,7 +377,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
           variant="secondary-outlined"
           size="sm"
           title="입력"
-          onClick={() => onTrackingOpen?.('create', orderId)}
+          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId, orderItemIds })}
         />
       )
     }
@@ -387,7 +394,13 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
             title="수정"
             className="w-56"
             onClick={() =>
-              onTrackingOpen?.('edit', orderId, courierName, trackingNumber)
+              onTrackingOpen?.('edit', {
+                orderNumber,
+                orderId,
+                orderItemIds,
+                courier: courierName,
+                trackingNumber,
+              })
             }
           />
         </div>
@@ -411,7 +424,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
           variant="secondary-outlined"
           size="sm"
           title="입력"
-          onClick={() => onTrackingOpen?.('create', orderId)}
+          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId, orderItemIds })}
         />
       )
     }
@@ -428,7 +441,13 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
             title="수정"
             className="w-56"
             onClick={() =>
-              onTrackingOpen?.('edit', orderId, courierName, trackingNumber)
+              onTrackingOpen?.('edit', {
+                orderNumber,
+                orderId,
+                orderItemIds,
+                courier: courierName,
+                trackingNumber,
+              })
             }
           />
         </div>
@@ -442,7 +461,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
         variant="secondary-outlined"
         size="sm"
         title="입력"
-        onClick={() => onTrackingOpen?.('create', orderId)}
+        onClick={() => onTrackingOpen?.('create', { orderNumber, orderId, orderItemIds })}
       />
     )
   }
@@ -461,7 +480,13 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
             title="수정"
             className="w-56"
             onClick={() =>
-              onTrackingOpen?.('edit', orderId, courierName, trackingNumber)
+              onTrackingOpen?.('edit', {
+                orderNumber,
+                orderId,
+                orderItemIds,
+                courier: courierName,
+                trackingNumber,
+              })
             }
           />
         </div>

@@ -12,9 +12,9 @@ export const orderQueries = {
       queryFn: () => getOrders(filters),
     }),
   details: () => [...orderQueries.all(), 'detail'],
-  detail: (orderItemIds: number[]) =>
+  detail: (orderNumbers: string[]) =>
     queryOptions({
-      queryKey: [...orderQueries.details(), [...orderItemIds].sort((a, b) => a - b)],
-      queryFn: () => getOrderDetails(orderItemIds),
+      queryKey: [...orderQueries.details(), [...orderNumbers].sort()],
+      queryFn: () => getOrderDetails(orderNumbers),
     }),
 }

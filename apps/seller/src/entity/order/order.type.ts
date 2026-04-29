@@ -67,6 +67,25 @@ export type CourierName =
   | 'GSPostbox택배'
   | '기타'
 
+export type OrderAction =
+  | 'detailView'
+  | 'confirmOrder'
+  | 'cancelOrder'
+  | 'requestReturn'
+  | 'requestExchange'
+  | 'approveCancellation'
+  | 'rejectCancellation'
+  | 'approveReturn'
+  | 'rejectReturn'
+  | 'completeReturn'
+  | 'turnDownReturn'
+  | 'holdReturn'
+  | 'approveExchange'
+  | 'rejectExchange'
+  | 'completeExchange'
+  | 'turnDownExchange'
+  | 'holdExchange'
+
 export interface OrderProduct {
   orderItemId: number
   productName: string
@@ -200,7 +219,7 @@ type SingleButton = {
   type: 'single'
   label: string
   variant: 'primary-outlined' | 'secondary-outlined'
-  action: string // 이벤트 핸들러 key
+  action: OrderAction // 이벤트 핸들러 key
 }
 
 // 버튼 그룹 (취소/반품/교환 탭에서 사용)
@@ -208,7 +227,7 @@ type GroupButton = {
   type: 'group'
   items: Array<{
     label: string
-    action: string
+    action: OrderAction
   }>
 }
 
@@ -283,6 +302,14 @@ export interface CompletedOrderListResponse {
   totalElements: number
 }
 
+// ─── 다건 액션 공통 요약 ──────────────────────────────
+
+export interface BulkActionSummary {
+  requestedCount: number
+  successCount: number
+  failCount: number
+}
+
 // ─── 발주 확인 API ────────────────────────────────────
 
 export interface ConfirmOrderRequest {
@@ -290,15 +317,9 @@ export interface ConfirmOrderRequest {
   orderItemIds: number[]
 }
 
-export interface ConfirmOrderSummary {
-  requestedCount: number
-  successCount: number
-  failCount: number
-}
-
 export interface ConfirmOrderResult {
   orderId: number
-  summary: ConfirmOrderSummary
+  summary: BulkActionSummary
   confirmedOrderItemIds: number[]
   failedOrderItemIds: number[]
 }
@@ -316,7 +337,7 @@ export interface ShipmentRequest {
 
 export interface CreateShipmentResult {
   orderId: number
-  summary: ConfirmOrderSummary
+  summary: BulkActionSummary
   successOrderItemIds: number[]
   failedOrderItemIds: number[]
   courierName: CourierName | null
@@ -335,7 +356,7 @@ export interface CreateReturnRequest {
 
 export interface CreateReturnResult {
   orderId: number
-  summary: ConfirmOrderSummary
+  summary: BulkActionSummary
   successOrderItemIds: number[]
   failedOrderItemIds: number[]
 }
@@ -351,7 +372,7 @@ export interface CreateExchangeRequest {
 
 export interface CreateExchangeResult {
   orderId: number
-  summary: ConfirmOrderSummary
+  summary: BulkActionSummary
   successOrderItemIds: number[]
   failedOrderItemIds: number[]
 }
@@ -368,9 +389,11 @@ export interface CancelDecisionRequest {
 
 // ─── 반품 요청 승인/거절 API ──────────────────────────
 
+export type ReturnDecisionType = 'APPROVE' | 'REJECT'
+
 export interface ReturnDecisionRequest {
   returnIds: number[]
-  decisionType: CancelDecisionType
+  decisionType: ReturnDecisionType
   reason: string | null
 }
 

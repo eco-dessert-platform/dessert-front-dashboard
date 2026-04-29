@@ -1,11 +1,15 @@
 import { Button, Pagination } from '@dessert/ui'
 
 import { ORDER_ACTION_BAR_CONFIG } from '@/entity/order/order.constant'
-import { ActionButton, OrderStatusTab } from '@/entity/order/order.type'
+import {
+  ActionButton,
+  OrderAction,
+  OrderStatusTab,
+} from '@/entity/order/order.type'
 
 interface OrderActionBarProps {
   tab: OrderStatusTab
-  onAction: (action: string) => void
+  onAction: (action: OrderAction) => void
   selectedCount: number // 선택된 주문 수
   totalCount: number // 전체 주문 수
   currentPage: number
@@ -56,7 +60,7 @@ export function OrderActionBar({
 
 interface OrderActionButtonProps {
   buttons: ActionButton[]
-  onAction: (action: string) => void
+  onAction: (action: OrderAction) => void
 }
 
 function OrderActionButton({ buttons, onAction }: OrderActionButtonProps) {

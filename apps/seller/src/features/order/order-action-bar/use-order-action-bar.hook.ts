@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query'
+
 import { toast } from '@dessert/ui'
 
 import type { OrderItem } from '@/entity/order/order.type'
@@ -5,6 +7,9 @@ import type { OrderItem } from '@/entity/order/order.type'
 import { useCompleteExchangeMutation } from './complete-exchange.mutation'
 import { useCompleteReturnMutation } from './complete-return.mutation'
 import { useConfirmOrderMutation } from './confirm-order.mutation'
+import { MUTATION_BATCH_SIZE, OrderAction } from '@/entity/order'
+import { orderQueries } from '@/entity/order/order.query'
+import { settledInBatches } from '@/shared/utils/promise'
 
 interface UseOrderActionBarParams {
   selectedIds: string[]
@@ -12,7 +17,7 @@ interface UseOrderActionBarParams {
   onClearSelection: () => void
   onShowDetail: () => void
   onSelectionEmpty: () => void
-  onUnhandled: (action: string) => void
+  onUnhandled: (action: OrderAction) => void
 }
 
 export function useOrderActionBar({
@@ -23,6 +28,7 @@ export function useOrderActionBar({
   onSelectionEmpty,
   onUnhandled,
 }: UseOrderActionBarParams) {
+  const queryClient = useQueryClient()
   const confirmOrderMutation = useConfirmOrderMutation()
   const completeReturnMutation = useCompleteReturnMutation()
   const completeExchangeMutation = useCompleteExchangeMutation()
@@ -33,47 +39,49 @@ export function useOrderActionBar({
     completeExchangeMutation.isPending
 
   const submitConfirmOrders = async () => {
-    const results = await Promise.allSettled(
-      selectedOrders.map((order) =>
-        confirmOrderMutation.mutateAsync({
-          orderId: order.orderId,
-          orderItemIds: order.products.map((p) => p.orderItemId),
-        }),
-      ),
+    const targetOrderIds = selectedIds
+      .map((orderNumber) => Number(orderNumber))
+      .filter((id) => Number.isFinite(id))
+    const invalidCount = selectedIds.length - targetOrderIds.length
+
+    if (targetOrderIds.length === 0) {
+      toast.error('유효한 주문이 없습니다.')
+      return
+    }
+
+    const results = await settledInBatches(
+      targetOrderIds,
+      MUTATION_BATCH_SIZE,
+      (id) =>
+        confirmOrderMutation.mutateAsync({ orderId: id, orderItemIds: [id] }),
     )
 
-    let successItemCount = 0
-    const failedItemIds: number[] = []
-    results.forEach((r, i) => {
-      if (r.status === 'fulfilled') {
-        successItemCount += r.value.summary.successCount
-        failedItemIds.push(...r.value.failedOrderItemIds)
-      } else {
-        failedItemIds.push(
-          ...selectedOrders[i].products.map((p) => p.orderItemId),
-        )
-      }
-    })
-    const failItemCount = failedItemIds.length
+    const successCount = results.filter(
+      (r) => r.status === 'fulfilled' && r.value.summary.successCount > 0,
+    ).length
+    const failCount = results.length - successCount + invalidCount
 
-    if (failItemCount === 0) {
+    if (successCount > 0) {
       onClearSelection()
-      toast.success(`${successItemCount}건 발주 확인 완료`)
-    } else if (successItemCount > 0) {
-      toast.success(`${successItemCount}건 성공, ${failItemCount}건 실패`)
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+    }
+
+    if (failCount === 0) {
+      toast.success(`${successCount}건 발주 확인 완료`)
+    } else if (successCount > 0) {
+      toast.success(`${successCount}건 성공, ${failCount}건 실패`)
     } else {
       toast.error('발주 확인에 실패했습니다.')
     }
   }
 
-  const bulkCompleteActions: Record<
-    string,
+  const bulkCompleteActions: Partial<Record<OrderAction,
     {
       mutation: typeof completeReturnMutation
       successMessage: string
       errorMessage: string
     }
-  > = {
+  >> = {
     completeReturn: {
       mutation: completeReturnMutation,
       successMessage: '반품이 완료 처리되었습니다.',
@@ -86,7 +94,7 @@ export function useOrderActionBar({
     },
   }
 
-  const handleAction = (action: string) => {
+  const handleAction = (action: OrderAction) => {
     if (selectedIds.length === 0) {
       onSelectionEmpty()
       return

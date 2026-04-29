@@ -7,6 +7,8 @@ import { ColumnDef } from '@tanstack/react-table'
 import { UploadApproval, productQueries } from '@/entity/product'
 
 import { UploadApprovalActionGroup } from './upload-approval-action-group.ui'
+import { UploadApprovalConfirmDialog } from './upload-approval-confirm-dialog.ui'
+import { UploadApprovalRejectDialog } from './upload-approval-reject-dialog.ui'
 
 const PAGE_SIZE = 10
 const HEADER_CLASS = 'border-b-[0.8px] border-b-gray-400'
@@ -18,6 +20,8 @@ if (!CUSTOMER_URL) {
 
 export const UploadApprovalTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
+  const [approveBoardId, setApproveBoardId] = useState<number | null>(null)
+  const [rejectBoardId, setRejectBoardId] = useState<number | null>(null)
 
   const { data } = useQuery({
     ...productQueries.uploadApprovalList({
@@ -28,11 +32,19 @@ export const UploadApprovalTable = () => {
   })
 
   const handleApprove = useCallback((boardId: number) => {
-    alert(`승인: ${boardId}`)
+    setApproveBoardId(boardId)
+  }, [])
+
+  const handleApproveDialogClose = useCallback(() => {
+    setApproveBoardId(null)
   }, [])
 
   const handleReject = useCallback((boardId: number) => {
-    alert(`거절: ${boardId}`)
+    setRejectBoardId(boardId)
+  }, [])
+
+  const handleRejectDialogClose = useCallback(() => {
+    setRejectBoardId(null)
   }, [])
 
   const columns = useMemo<ColumnDef<UploadApproval>[]>(
@@ -50,7 +62,7 @@ export const UploadApprovalTable = () => {
       },
       {
         accessorKey: 'storeName',
-        header: '변경 전 스토어명',
+        header: '스토어명',
         meta: { headerClassName: HEADER_CLASS, flexible: true },
         cell: ({ row }) => (
           <span className="typo-title-14-r text-gray-900 underline">
@@ -100,17 +112,27 @@ export const UploadApprovalTable = () => {
   )
 
   return (
-    <Table
-      data={data?.content ?? []}
-      columns={columns}
-      tableClassName="w-full table-fixed"
-      topArea={
-        <UploadApprovalActionGroup
-          currentPage={currentPage}
-          totalPages={data?.totalPages || 0}
-          onPageChange={setCurrentPage}
-        />
-      }
-    />
+    <>
+      <Table
+        data={data?.content ?? []}
+        columns={columns}
+        tableClassName="w-full table-fixed"
+        topArea={
+          <UploadApprovalActionGroup
+            currentPage={currentPage}
+            totalPages={data?.totalPages || 0}
+            onPageChange={setCurrentPage}
+          />
+        }
+      />
+      <UploadApprovalConfirmDialog
+        boardId={approveBoardId}
+        onClose={handleApproveDialogClose}
+      />
+      <UploadApprovalRejectDialog
+        boardId={rejectBoardId}
+        onClose={handleRejectDialogClose}
+      />
+    </>
   )
 }

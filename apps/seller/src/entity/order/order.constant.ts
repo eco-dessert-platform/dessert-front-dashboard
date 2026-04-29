@@ -360,3 +360,16 @@ export const DELIVERY_STATUS_MAP: Record<OrderDeliveryStatusSpec, DeliveryStatus
   DELIVERING: 'DELIVERING',
   DELIVERY_COMPLETED: 'DELIVERY_COMPLETED',
 }
+
+// 다건 mutation을 chunk 단위로 끊어 호출하기 위한 동시성 상한.
+export const MUTATION_BATCH_SIZE = 10
+
+export const TAB_TO_STATUS: Partial<Record<OrderStatusTab, OrderStatus>> = {
+  paymentCompleted: 'PAYMENT_COMPLETED',
+  orderConfirmed: 'ORDER_CONFIRMED',
+  productShipped: 'PRODUCT_SHIPPED',
+  deliveryCompleted: 'DELIVERY_COMPLETED',
+  canceled: 'CANCELED',
+  returned: 'RETURNED',
+  exchanged: 'EXCHANGED',
+}

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
@@ -19,8 +19,7 @@ import {
   useOrderTableLoading,
 } from '@/features/order/order-table'
 import {
-  REASON_REQUIRED_ACTIONS,
-  ReasonAction,
+  isReasonAction,
   ReasonInputModal,
   useReasonAction,
 } from '@/features/order/reason-input-modal'
@@ -107,11 +106,6 @@ function AllOrdersPage() {
 
   const tracking = useTrackingFlow(orders)
 
-  const detailOrderItemIds = useMemo(
-    () => selectedOrders.flatMap((o) => o.products.map((p) => p.orderItemId)),
-    [selectedOrders],
-  )
-
   const { handleAction: handleActionBar, isPending: isActionBarPending } =
     useOrderActionBar({
       selectedIds,
@@ -120,8 +114,8 @@ function AllOrdersPage() {
       onShowDetail: () => setDetailOpen(true),
       onSelectionEmpty: () => setAlertOpen(true),
       onUnhandled: (action) => {
-        if (REASON_REQUIRED_ACTIONS.has(action)) {
-          openReason(action as ReasonAction)
+        if (isReasonAction(action)) {
+          openReason(action)
         }
       },
     })
@@ -205,7 +199,7 @@ function AllOrdersPage() {
       <OrderDetailModal
         open={detailOpen}
         onOpenChange={setDetailOpen}
-        orderItemIds={detailOrderItemIds}
+        orderNumbers={selectedIds}
       />
       <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
       <ReasonInputModal

@@ -10,7 +10,7 @@ import { OrderAccordionItem } from './order-accordion-item.ui'
 interface OrderDetailModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  orderItemIds: number[]
+  orderNumbers: string[]
 }
 
 function groupByOrderNumber(details: OrderDetail[]) {
@@ -26,11 +26,11 @@ function groupByOrderNumber(details: OrderDetail[]) {
 export function OrderDetailModal({
   open,
   onOpenChange,
-  orderItemIds,
+  orderNumbers,
 }: OrderDetailModalProps) {
   const { data } = useQuery({
-    ...orderQueries.detail(orderItemIds),
-    enabled: open && orderItemIds.length > 0,
+    ...orderQueries.detail(orderNumbers),
+    enabled: open && orderNumbers.length > 0,
   })
 
   const grouped = groupByOrderNumber(data ?? [])
