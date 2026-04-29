@@ -33,7 +33,7 @@ export function OrderDetailModal({
     enabled: open && orderNumbers.length > 0,
   })
 
-  const grouped = groupByOrderNumber(data?.result ?? [])
+  const grouped = groupByOrderNumber(data ?? [])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

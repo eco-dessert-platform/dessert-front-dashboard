@@ -1,9 +1,10 @@
 import { XIcon } from '@dessert/icons'
-import { clsx } from 'clsx'
+
+import { cn } from '../lib/utils'
 
 interface ChipProps {
   children: React.ReactNode
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
   closable?: boolean
   selected?: boolean
   onClose?: () => void
@@ -30,18 +31,20 @@ const Chip = ({
   }
 
   const sizeClasses = {
-    sm: 'px-2 py-1 typo-body-10-r rounded-full',
-    md: 'px-3 py-1.5 typo-body-12-r rounded-full',
+    sm: 'px-2.25 py-4 typo-body-10-r rounded-full',
+    md: 'px-12 py-6 typo-body-12-r rounded-full',
+    lg: 'px-12 py-6 typo-body-14-r rounded-full',
   }
 
   const closeClasses = {
     sm: 'size-12',
     md: 'size-16',
+    lg: 'size-4.5',
   }
 
   return (
     <span
-      className={clsx(
+      className={cn(
         'inline-flex cursor-pointer items-center justify-center gap-1 border border-solid transition-colors duration-150',
         sizeClasses[size],
         selected
@@ -58,8 +61,7 @@ const Chip = ({
           className="flex items-center justify-center transition-opacity hover:opacity-70"
           aria-label="닫기"
         >
-          {/* <XIcon className={cn(closeClasses[size])} /> */}
-          <XIcon />
+          <XIcon className={closeClasses[size]} />
         </button>
       )}
     </span>
