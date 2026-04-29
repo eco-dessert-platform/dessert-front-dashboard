@@ -327,10 +327,14 @@ export function filterCompletedOrders(
 
   // 날짜 필터
   if (filters.startDate) {
-    result = result.filter((o) => o.paymentDate >= filters.startDate!)
+    result = result.filter(
+      (o) => o.paymentDate !== null && o.paymentDate >= filters.startDate!,
+    )
   }
   if (filters.endDate) {
-    result = result.filter((o) => o.paymentDate <= filters.endDate!)
+    result = result.filter(
+      (o) => o.paymentDate !== null && o.paymentDate <= filters.endDate!,
+    )
   }
 
   // 검색 키워드 필터
@@ -356,12 +360,12 @@ export function filterCompletedOrders(
 
   // 정렬
   if (filters.sort === 'ASC') {
-    result = [...result].sort(
-      (a, b) => a.paymentDate.localeCompare(b.paymentDate),
+    result = [...result].sort((a, b) =>
+      (a.paymentDate ?? '').localeCompare(b.paymentDate ?? ''),
     )
   } else {
-    result = [...result].sort(
-      (a, b) => b.paymentDate.localeCompare(a.paymentDate),
+    result = [...result].sort((a, b) =>
+      (b.paymentDate ?? '').localeCompare(a.paymentDate ?? ''),
     )
   }
 

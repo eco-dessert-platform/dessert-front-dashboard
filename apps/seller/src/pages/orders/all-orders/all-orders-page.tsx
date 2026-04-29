@@ -8,13 +8,7 @@ import {
 } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
-import {
-  completeExchange,
-  completeReturn,
-  confirmOrder,
-  updateOrderStatus,
-  updateTracking,
-} from '@/entity/order/order.api'
+import { updateOrderStatus } from '@/entity/order/order.api'
 import { orderQueries } from '@/entity/order/order.query'
 import {
   CourierName,
@@ -106,54 +100,6 @@ function AllOrdersPage() {
     },
   })
 
-  const updateTrackingMutation = useMutation({
-    mutationFn: updateTracking,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('운송장 정보가 저장되었습니다.')
-      setTrackingModalOpen(false)
-    },
-    onError: () => {
-      toast.error('운송장 저장에 실패했습니다.')
-    },
-  })
-
-  const completeReturnMutation = useMutation({
-    mutationFn: completeReturn,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('반품이 완료 처리되었습니다.')
-      selectionReset()
-    },
-    onError: () => {
-      toast.error('반품 완료 처리에 실패했습니다.')
-    },
-  })
-
-  const completeExchangeMutation = useMutation({
-    mutationFn: completeExchange,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('교환이 완료 처리되었습니다.')
-      selectionReset()
-    },
-    onError: () => {
-      toast.error('교환 완료 처리에 실패했습니다.')
-    },
-  })
-
-  const confirmOrderMutation = useMutation({
-    mutationFn: confirmOrder,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('발주가 확인되었습니다.')
-      selectionReset()
-    },
-    onError: () => {
-      toast.error('발주 확인에 실패했습니다.')
-    },
-  })
-
   const {
     selectedIds,
     productSelectedIds,
@@ -196,33 +142,15 @@ function AllOrdersPage() {
       return
     }
 
-    if (action === 'confirmOrder') {
+    // TODO(feat/order-action-mutations): 후속 PR에서 mutation hook 연결
+    if (
+      action === 'confirmOrder' ||
+      action === 'completeReturn' ||
+      action === 'completeExchange'
+    ) {
       if (selectedIds.length === 0) {
         setAlertOpen(true)
-        return
       }
-      if (confirmOrderMutation.isPending) return
-      confirmOrderMutation.mutate({ orderNumbers: selectedIds })
-      return
-    }
-
-    if (action === 'completeReturn') {
-      if (selectedIds.length === 0) {
-        setAlertOpen(true)
-        return
-      }
-      if (completeReturnMutation.isPending) return
-      completeReturnMutation.mutate({ orderNumbers: selectedIds })
-      return
-    }
-
-    if (action === 'completeExchange') {
-      if (selectedIds.length === 0) {
-        setAlertOpen(true)
-        return
-      }
-      if (completeExchangeMutation.isPending) return
-      completeExchangeMutation.mutate({ orderNumbers: selectedIds })
       return
     }
 
@@ -260,16 +188,12 @@ function AllOrdersPage() {
     setTrackingModalOpen(true)
   }
 
+  // TODO(feat/order-action-mutations): 후속 PR에서 운송장 mutation 연결
   const handleTrackingConfirm = (
-    courier: CourierName,
-    trackingNumber: string,
+    _courier: CourierName,
+    _trackingNumber: string,
   ) => {
-    if (!trackingTarget?.orderNumber) return
-    updateTrackingMutation.mutate({
-      orderNumber: trackingTarget.orderNumber,
-      courierName: courier,
-      trackingNumber,
-    })
+    setTrackingModalOpen(false)
   }
 
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1

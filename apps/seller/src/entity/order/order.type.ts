@@ -80,7 +80,7 @@ export interface OrderItem {
   products: OrderProduct[]
   orderStatus: OrderStatus
   paymentMethod: PaymentMethod
-  paymentDate: string
+  paymentDate: string | null
   totalOrderAmount: number
   deliveryStatus: DeliveryStatus | null
   courierName: CourierName | null
@@ -107,6 +107,68 @@ export interface OrderListResponse {
   size: number
   totalPages: number
   totalElements: number
+}
+
+// ─── 주문 내역 조회 API 스펙 원본 응답 ────────────────
+// (fetcher 내부에서 OrderListResponse 로 transform)
+
+export type OrderDeliveryStatusSpec =
+  | 'PREPARING'
+  | 'COLLECTING'
+  | 'COLLECT_COMPLETED'
+  | 'DELIVERING'
+  | 'DELIVERY_COMPLETED'
+
+export interface OrderListItemInfo {
+  itemName: string
+  quantity: number
+  unitPrice: number
+  totalPrice: number
+}
+
+export interface OrderListItemDetail {
+  orderNumber: string
+  orderStatus: OrderStatus
+  orderItemInfo: OrderListItemInfo
+  orderDeliveryStatus: OrderDeliveryStatusSpec
+  courierCompany: CourierName | 'NONE' | null
+  trackingNumber: string | null
+}
+
+export interface OrderListPaymentInfo {
+  paymentStatus: string
+  paymentMethod: PaymentMethod
+}
+
+export interface OrderListContent {
+  orderNumber: string
+  recipientName: string
+  orderItems: OrderListItemDetail[]
+  paymentInfo: OrderListPaymentInfo
+  totalOrderPrice: string
+  sellerId: number
+}
+
+export interface OrderListSpecStatusCounts {
+  total: number
+  paymentCompleted: number
+  orderConfirmed: number
+  shipped: number
+  deliveryCompleted: number
+  cancelled: number
+  returned: number
+  exchanged: number
+}
+
+export interface OrderListResult {
+  orders: {
+    content: OrderListContent[]
+    page: number
+    size: number
+    totalPages: number
+    totalElements: number
+  }
+  statusCounts: OrderListSpecStatusCounts
 }
 
 export type SearchType =
@@ -208,13 +270,6 @@ export interface OrderDetail {
   }
 }
 
-export interface OrderDetailResponse {
-  success: boolean
-  code: number
-  message: string
-  result: OrderDetail[]
-}
-
 export interface CompletedOrderListResponse {
   statusCount: CompletedOrderStatusCount
   content: OrderItem[]
@@ -223,3 +278,111 @@ export interface CompletedOrderListResponse {
   totalPages: number
   totalElements: number
 }
+
+// ─── 다건 액션 공통 요약 ──────────────────────────────
+
+export interface BulkActionSummary {
+  requestedCount: number
+  successCount: number
+  failCount: number
+}
+
+// ─── 발주 확인 API ────────────────────────────────────
+
+export interface ConfirmOrderRequest {
+  orderId: number
+  orderItemIds: number[]
+}
+
+export interface ConfirmOrderResult {
+  orderId: number
+  summary: BulkActionSummary
+  confirmedOrderItemIds: number[]
+  failedOrderItemIds: number[]
+}
+
+// ─── 운송장 입력/수정 공통 Request ─────────────────────
+
+export interface ShipmentRequest {
+  orderId: number
+  orderItemIds: number[]
+  courierName: CourierName
+  trackingNumber: string
+}
+
+// ─── 운송장 입력 API (POST) ───────────────────────────
+
+export interface CreateShipmentResult {
+  orderId: number
+  summary: BulkActionSummary
+  successOrderItemIds: number[]
+  failedOrderItemIds: number[]
+  courierName: CourierName | null
+  trackingNumber: string | null
+  shippedAt: string | null
+}
+
+// ─── 판매자 요청 반품 생성 API ────────────────────────
+
+export interface CreateReturnRequest {
+  orderId: number
+  orderItemIds: number[]
+  reason: string | null
+  sellerComment: string | null
+}
+
+export interface CreateReturnResult {
+  orderId: number
+  summary: BulkActionSummary
+  successOrderItemIds: number[]
+  failedOrderItemIds: number[]
+}
+
+// ─── 판매자 요청 교환 생성 API ────────────────────────
+
+export interface CreateExchangeRequest {
+  orderId: number
+  orderItemIds: number[]
+  reason: string | null
+  sellerComment: string | null
+}
+
+export interface CreateExchangeResult {
+  orderId: number
+  summary: BulkActionSummary
+  successOrderItemIds: number[]
+  failedOrderItemIds: number[]
+}
+
+// ─── 주문 취소 승인/거절 API ──────────────────────────
+
+export type CancelDecisionType = 'APPROVE' | 'REJECT'
+
+export interface CancelDecisionRequest {
+  cancelIds: number[]
+  decisionType: CancelDecisionType
+  reason: string | null
+}
+
+// ─── 반품 요청 승인/거절 API ──────────────────────────
+
+export type ReturnDecisionType = 'APPROVE' | 'REJECT'
+
+export interface ReturnDecisionRequest {
+  returnIds: number[]
+  decisionType: ReturnDecisionType
+  reason: string | null
+}
+
+// ─── 운송장 수정 API (PUT) ────────────────────────────
+
+export interface UpdateShipmentItem {
+  orderId: number
+  orderStatus: OrderStatus
+  deliveryStatus: DeliveryStatus | null
+  courierName: CourierName | null
+  trackingNumber: string | null
+  updatedAt: string
+}
+
+export type UpdateShipmentResult = UpdateShipmentItem[]
