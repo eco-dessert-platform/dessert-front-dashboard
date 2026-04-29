@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { useQueryClient } from '@tanstack/react-query'
+
 import { toast } from '@dessert/ui'
 
 import { useCreateExchangeMutation } from './create-exchange.mutation'
@@ -11,6 +13,7 @@ import {
   type ReasonAction,
 } from './reason-input-modal.constant'
 import { useUpdateOrderStatusMutation } from './update-status.mutation'
+import { orderQueries } from '@/entity/order/order.query'
 
 interface ReasonInputData {
   reasonType: string
@@ -30,6 +33,7 @@ export function useReasonAction({
   selectedIds,
   onClearSelection,
 }: UseReasonActionParams) {
+  const queryClient = useQueryClient()
   const [isOpen, setIsOpen] = useState(false)
   const [action, setAction] = useState<ReasonAction>('cancelOrder')
 
@@ -80,7 +84,10 @@ export function useReasonAction({
     ).length
     const failCount = results.length - successCount
 
-    if (successCount > 0) finishWithCleanup()
+    if (successCount > 0) {
+      finishWithCleanup()
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+    }
 
     if (failCount === 0) {
       toast.success(`${successCount}건 ${label} 요청 완료`)

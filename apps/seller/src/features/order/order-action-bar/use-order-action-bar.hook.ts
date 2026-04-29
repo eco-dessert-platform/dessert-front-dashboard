@@ -1,9 +1,12 @@
+import { useQueryClient } from '@tanstack/react-query'
+
 import { toast } from '@dessert/ui'
 
 import { useCompleteExchangeMutation } from './complete-exchange.mutation'
 import { useCompleteReturnMutation } from './complete-return.mutation'
 import { useConfirmOrderMutation } from './confirm-order.mutation'
 import { OrderAction } from '@/entity/order'
+import { orderQueries } from '@/entity/order/order.query'
 
 interface UseOrderActionBarParams {
   selectedIds: string[]
@@ -20,6 +23,7 @@ export function useOrderActionBar({
   onSelectionEmpty,
   onUnhandled,
 }: UseOrderActionBarParams) {
+  const queryClient = useQueryClient()
   const confirmOrderMutation = useConfirmOrderMutation()
   const completeReturnMutation = useCompleteReturnMutation()
   const completeExchangeMutation = useCompleteExchangeMutation()
@@ -45,7 +49,10 @@ export function useOrderActionBar({
     ).length
     const failCount = results.length - successCount
 
-    if (successCount > 0) onClearSelection()
+    if (successCount > 0) {
+      onClearSelection()
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+    }
 
     if (failCount === 0) {
       toast.success(`${successCount}건 발주 확인 완료`)
