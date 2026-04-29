@@ -62,7 +62,7 @@ export const UploadApprovalTable = () => {
       },
       {
         accessorKey: 'storeName',
-        header: '변경 전 스토어명',
+        header: '스토어명',
         meta: { headerClassName: HEADER_CLASS, flexible: true },
         cell: ({ row }) => (
           <span className="typo-title-14-r text-gray-900 underline">
