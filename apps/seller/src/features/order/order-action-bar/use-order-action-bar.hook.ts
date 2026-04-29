@@ -5,8 +5,9 @@ import { toast } from '@dessert/ui'
 import { useCompleteExchangeMutation } from './complete-exchange.mutation'
 import { useCompleteReturnMutation } from './complete-return.mutation'
 import { useConfirmOrderMutation } from './confirm-order.mutation'
-import { OrderAction } from '@/entity/order'
+import { MUTATION_BATCH_SIZE, OrderAction } from '@/entity/order'
 import { orderQueries } from '@/entity/order/order.query'
+import { settledInBatches } from '@/shared/utils/promise'
 
 interface UseOrderActionBarParams {
   selectedIds: string[]
@@ -44,10 +45,11 @@ export function useOrderActionBar({
       return
     }
 
-    const results = await Promise.allSettled(
-      targetOrderIds.map((id) =>
+    const results = await settledInBatches(
+      targetOrderIds,
+      MUTATION_BATCH_SIZE,
+      (id) =>
         confirmOrderMutation.mutateAsync({ orderId: id, orderItemIds: [id] }),
-      ),
     )
 
     const successCount = results.filter(

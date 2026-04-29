@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { toast } from '@dessert/ui'
 
+import { MUTATION_BATCH_SIZE } from '@/entity/order'
 import { useCreateExchangeMutation } from './create-exchange.mutation'
 import { useCreateReturnMutation } from './create-return.mutation'
 import {
@@ -12,6 +13,7 @@ import {
 } from './reason-input-modal.constant'
 import { useUpdateOrderStatusMutation } from './update-status.mutation'
 import { orderQueries } from '@/entity/order/order.query'
+import { settledInBatches } from '@/shared/utils/promise'
 
 interface ReasonInputData {
   reasonType: string
@@ -68,15 +70,16 @@ export function useReasonAction({
       return
     }
 
-    const results = await Promise.allSettled(
-      targetOrderIds.map((id) =>
+    const results = await settledInBatches(
+      targetOrderIds,
+      MUTATION_BATCH_SIZE,
+      (id) =>
         mutation.mutateAsync({
           orderId: id,
           orderItemIds: [id],
           reason,
           sellerComment,
         }),
-      ),
     )
 
     const successCount = results.filter(
