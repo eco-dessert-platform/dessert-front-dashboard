@@ -15,6 +15,7 @@ import {
   ShipmentRequest,
   UpdateShipmentResult,
 } from './order.type'
+import { TAB_TO_STATUS } from '@/entity/order/order.constant.ts'
 
 // 20개 Mock 주문 데이터
 export const MOCK_ORDERS: OrderItem[] = [
@@ -861,17 +862,6 @@ export const MOCK_ORDERS: OrderItem[] = [
     exchangeStatus: 'EXCHANGE_COMPLETED',
   },
 ]
-
-// 탭 → API 상태 매핑
-const TAB_TO_STATUS: Partial<Record<OrderStatusTab, OrderStatus>> = {
-  paymentCompleted: 'PAYMENT_COMPLETED',
-  orderConfirmed: 'ORDER_CONFIRMED',
-  productShipped: 'PRODUCT_SHIPPED',
-  deliveryCompleted: 'DELIVERY_COMPLETED',
-  canceled: 'CANCELED',
-  returned: 'RETURNED',
-  exchanged: 'EXCHANGED',
-}
 
 // Mock API 필터 함수
 export function filterOrders(
