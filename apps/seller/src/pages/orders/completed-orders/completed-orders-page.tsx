@@ -56,14 +56,14 @@ function CompletedOrdersPage() {
     reset: filtersReset,
   } = useCompletedOrderFilter(selectedTab)
 
-  const { data, isLoading } = useQuery({
+  const { data, isFetching } = useQuery({
     ...completedOrderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
   const orders = data?.content ?? []
 
   const { loadingMode, dismissMutationLoading } = useOrderTableLoading({
-    isListLoading: isLoading,
+    isListLoading: isFetching,
     isMutationPending: false,
   })
 

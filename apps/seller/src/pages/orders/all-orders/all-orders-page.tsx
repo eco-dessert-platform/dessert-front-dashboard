@@ -71,7 +71,7 @@ function AllOrdersPage() {
     reset: filtersReset,
   } = useOrderFilter(selectedTab)
 
-  const { data, isLoading } = useQuery({
+  const { data, isFetching } = useQuery({
     ...orderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
@@ -152,10 +152,11 @@ function AllOrdersPage() {
   const totalPages = data?.totalPages ?? 1
   const totalCount = data?.totalElements ?? 0
 
-  const isMutationPending = isActionBarPending || isReasonPending
+  const isMutationPending =
+    isActionBarPending || isReasonPending || tracking.isPending
 
   const { loadingMode, dismissMutationLoading } = useOrderTableLoading({
-    isListLoading: isLoading,
+    isListLoading: isFetching,
     isMutationPending,
   })
 
