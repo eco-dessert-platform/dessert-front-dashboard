@@ -9,8 +9,13 @@ import { useUpdateShipmentMutation } from './update-shipment.mutation'
 
 type TrackingMode = 'create' | 'edit'
 
-interface TrackingTarget {
+// 표시용(orderNumber)과 API 식별자(orderId/orderItemIds)를 분리해 보관한다.
+// 호출부에서 두 값을 명시적으로 전달하므로, 향후 백엔드가 목록 응답에 ID를 노출하면
+// hook 내부 변경 없이 호출부 한 곳만 수정하면 됨.
+export interface TrackingTarget {
   orderNumber: string
+  orderId: number
+  orderItemIds: number[]
   courier?: CourierName | null
   trackingNumber?: string | null
 }
@@ -26,29 +31,23 @@ export function useTrackingFlow() {
   const isPending =
     createShipmentMutation.isPending || updateShipmentMutation.isPending
 
-  const open = (
-    nextMode: TrackingMode,
-    orderNumber: string,
-    courier?: CourierName | null,
-    trackingNumber?: string | null,
-  ) => {
+  const open = (nextMode: TrackingMode, next: TrackingTarget) => {
     setMode(nextMode)
-    setTarget({ orderNumber, courier, trackingNumber })
+    setTarget(next)
     setIsOpen(true)
   }
 
   const handleConfirm = (courier: CourierName, trackingNumber: string) => {
-    if (!target?.orderNumber) return
-    const id = Number(target.orderNumber)
+    if (!target) return
 
-    if (Number.isNaN(id)) {
-      toast.error('유효하지 않은 주문번호입니다.')
+    if (!Number.isFinite(target.orderId) || target.orderItemIds.length === 0) {
+      toast.error('유효하지 않은 주문 정보입니다.')
       return
     }
 
     const payload = {
-      orderId: id,
-      orderItemIds: [id],
+      orderId: target.orderId,
+      orderItemIds: target.orderItemIds,
       courierName: courier,
       trackingNumber,
     }
