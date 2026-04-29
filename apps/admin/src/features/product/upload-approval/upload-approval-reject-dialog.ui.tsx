@@ -81,7 +81,7 @@ export const UploadApprovalRejectDialog = ({
             거절 사유
           </DialogTitle>
           <DialogDescription>
-            스토어명 변경 거절에 대한 사유를 입력하세요
+            업로드 상품 거절에 대한 사유를 입력하세요
           </DialogDescription>
         </DialogHeader>
 
