@@ -13,8 +13,10 @@ export function useOrderTableLoading({
 }: UseOrderTableLoadingParams) {
   const [mutationLoadingDismissed, setMutationLoadingDismissed] = useState(false)
 
+  // pending 전환(시작/종료) 시점마다 dismiss를 풀어,
+  // 새 mutation이 시작되면 항상 오버레이가 다시 노출되도록 한다.
   useEffect(() => {
-    if (!isMutationPending) setMutationLoadingDismissed(false)
+    setMutationLoadingDismissed(false)
   }, [isMutationPending])
 
   const loadingMode: OrderTableLoadingMode | undefined = isListLoading
@@ -24,6 +26,7 @@ export function useOrderTableLoading({
       : undefined
 
   const dismissMutationLoading = () => setMutationLoadingDismissed(true)
+  const resetMutationLoading = () => setMutationLoadingDismissed(false)
 
-  return { loadingMode, dismissMutationLoading }
+  return { loadingMode, dismissMutationLoading, resetMutationLoading }
 }

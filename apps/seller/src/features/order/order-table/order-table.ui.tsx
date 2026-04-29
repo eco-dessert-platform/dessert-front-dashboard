@@ -332,7 +332,7 @@ export function OrderTable({
   const showEmpty = !loadingMode && orders.length === 0
 
   return (
-    <div className="relative">
+    <div className="relative" aria-busy={!!loadingMode}>
       <Table
         data={flatRows}
         columns={columns}
@@ -340,7 +340,9 @@ export function OrderTable({
         getRowClassName={getRowClassName}
       />
       {loadingMode && (
-        <OrderTableLoading mode={loadingMode} onCancel={onCancelLoading} />
+        <div role="status" aria-live="polite">
+          <OrderTableLoading mode={loadingMode} onCancel={onCancelLoading} />
+        </div>
       )}
       {showEmpty && <OrderTableEmpty />}
     </div>
