@@ -17,7 +17,7 @@ const meta = {
     },
     size: {
       control: 'select',
-      options: ['sm', 'md'],
+      options: ['sm', 'md', 'lg'],
     },
     closable: {
       control: 'boolean',
@@ -65,6 +65,14 @@ export const Small: Story = {
   },
 }
 
+export const Large: Story = {
+  args: {
+    children: 'Large Chip',
+    size: 'lg',
+    closable: false,
+  },
+}
+
 export const AllVariants: Story = {
   args: {
     children: '',
@@ -76,14 +84,20 @@ export const AllVariants: Story = {
           Small
         </Chip>
         <Chip selected={false}>Default</Chip>
+        <Chip selected={false} size="lg">
+          Large
+        </Chip>
         <Chip selected>Active</Chip>
       </div>
       <div className="flex flex-wrap items-center gap-2">
         <Chip selected={false} size="sm" closable onClose={fn()}>
-          Closable
+          Small Closable
         </Chip>
         <Chip selected={false} closable onClose={fn()}>
-          Closable
+          Default Closable
+        </Chip>
+        <Chip selected={false} size="lg" closable onClose={fn()}>
+          Large Closable
         </Chip>
         <Chip selected closable onClose={fn()}>
           Closable Primary
