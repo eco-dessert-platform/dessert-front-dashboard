@@ -67,6 +67,25 @@ export type CourierName =
   | 'GSPostbox택배'
   | '기타'
 
+export type OrderAction =
+  | 'detailView'
+  | 'confirmOrder'
+  | 'cancelOrder'
+  | 'requestReturn'
+  | 'requestExchange'
+  | 'approveCancellation'
+  | 'rejectCancellation'
+  | 'approveReturn'
+  | 'rejectReturn'
+  | 'completeReturn'
+  | 'turnDownReturn'
+  | 'holdReturn'
+  | 'approveExchange'
+  | 'rejectExchange'
+  | 'completeExchange'
+  | 'turnDownExchange'
+  | 'holdExchange'
+
 export interface OrderProduct {
   productName: string
   optionName: string | null
@@ -196,7 +215,7 @@ type SingleButton = {
   type: 'single'
   label: string
   variant: 'primary-outlined' | 'secondary-outlined'
-  action: string // 이벤트 핸들러 key
+  action: OrderAction // 이벤트 핸들러 key
 }
 
 // 버튼 그룹 (취소/반품/교환 탭에서 사용)
@@ -204,7 +223,7 @@ type GroupButton = {
   type: 'group'
   items: Array<{
     label: string
-    action: string
+    action: OrderAction
   }>
 }
 

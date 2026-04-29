@@ -1,11 +1,15 @@
 import { Button, Pagination } from '@dessert/ui'
 
 import { COMPLETED_ORDER_ACTION_BAR_CONFIG } from '@/entity/order/order.constant'
-import { ActionButton, CompletedOrderTab } from '@/entity/order/order.type'
+import {
+  ActionButton,
+  CompletedOrderTab,
+  OrderAction,
+} from '@/entity/order/order.type'
 
 interface CompletedOrderActionBarProps {
   tab: CompletedOrderTab
-  onAction: (action: string) => void
+  onAction: (action: OrderAction) => void
   selectedCount: number
   totalCount: number
   currentPage: number
@@ -56,7 +60,7 @@ export function CompletedOrderActionBar({
 
 interface CompletedOrderActionButtonProps {
   buttons: ActionButton[]
-  onAction: (action: string) => void
+  onAction: (action: OrderAction) => void
 }
 
 function CompletedOrderActionButton({
