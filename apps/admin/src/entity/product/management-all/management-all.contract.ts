@@ -57,3 +57,15 @@ export const GetAdminProductsRequestParamsSchema = z.object({
 export const DeleteAdminProductsRequestParamsSchema = z.object({
   productIds: z.array(z.number().int()),
 })
+
+export const DeleteAdminProductOptionsBodySchema = z
+  .object({
+    removeAll: z.boolean().optional(),
+    optionIds: z.array(z.number().int()).optional(),
+  })
+  .refine(
+    (data) =>
+      data.removeAll === true ||
+      (data.optionIds !== undefined && data.optionIds.length > 0),
+    { message: 'removeAll이 false인 경우 optionIds가 필요합니다.' },
+  )

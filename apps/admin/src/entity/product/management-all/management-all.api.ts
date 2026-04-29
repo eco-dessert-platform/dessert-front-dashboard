@@ -7,6 +7,7 @@ import {
 
 import type {
   AdminProductListResult,
+  DeleteAdminProductOptionsParams,
   DeleteAdminProductsRequestParams,
   GetAdminProductsRequestParams,
 } from './management-all.type'
@@ -27,6 +28,17 @@ export const deleteAdminProducts = async ({
     params: { productIds },
   })
   const parsed = DeleteAdminProductsResponseSchema.parse(response.data)
+  if (!parsed.success) throw new Error(parsed.message)
+}
 
+export const deleteAdminProductOptions = async ({
+  productId,
+  body,
+}: DeleteAdminProductOptionsParams): Promise<void> => {
+  const response = await client.delete(
+    `/api/v1/admin/products/${productId}/options`,
+    { data: body },
+  )
+  const parsed = DeleteAdminProductsResponseSchema.parse(response.data)
   if (!parsed.success) throw new Error(parsed.message)
 }

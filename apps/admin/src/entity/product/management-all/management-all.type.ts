@@ -2,6 +2,7 @@ import type {
   AdminProductListResultSchema,
   AdminProductOptionSchema,
   AdminProductSchema,
+  DeleteAdminProductOptionsBodySchema,
   DeleteAdminProductsRequestParamsSchema,
   GetAdminProductsRequestParamsSchema,
 } from './management-all.contract'
@@ -18,3 +19,11 @@ export type GetAdminProductsRequestParams = z.infer<
 export type DeleteAdminProductsRequestParams = z.infer<
   typeof DeleteAdminProductsRequestParamsSchema
 >
+export type DeleteAdminProductOptionsBody = z.infer<
+  typeof DeleteAdminProductOptionsBodySchema
+>
+
+export interface DeleteAdminProductOptionsParams {
+  productId: number
+  body: DeleteAdminProductOptionsBody
+}
