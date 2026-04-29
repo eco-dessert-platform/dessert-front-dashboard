@@ -75,16 +75,25 @@ export function useReasonAction({
       ),
     )
 
-    const successCount = results.filter(
-      (r) => r.status === 'fulfilled' && r.value.summary.successCount > 0,
-    ).length
-    const failCount = results.length - successCount
+    let successItemCount = 0
+    const failedItemIds: number[] = []
+    results.forEach((r, i) => {
+      if (r.status === 'fulfilled') {
+        successItemCount += r.value.summary.successCount
+        failedItemIds.push(...r.value.failedOrderItemIds)
+      } else {
+        failedItemIds.push(
+          ...selectedOrders[i].products.map((p) => p.orderItemId),
+        )
+      }
+    })
+    const failItemCount = failedItemIds.length
 
-    if (failCount === 0) {
+    if (failItemCount === 0) {
       finishWithCleanup()
-      toast.success(`${successCount}건 ${label} 요청 완료`)
-    } else if (successCount > 0) {
-      toast.success(`${successCount}건 성공, ${failCount}건 실패`)
+      toast.success(`${successItemCount}건 ${label} 요청 완료`)
+    } else if (successItemCount > 0) {
+      toast.success(`${successItemCount}건 성공, ${failItemCount}건 실패`)
     } else {
       toast.error(`${label} 요청에 실패했습니다.`)
     }
