@@ -28,12 +28,13 @@ export function RegisterProcessStep({
         {STEPS.map((label, index) => {
           const step = (index + 1) as RegisterStep
           const isActive = step <= current
+          const isCurrent = step === current
           const isLast = index === STEPS.length - 1
 
           return (
             <Fragment key={label}>
               <span
-                aria-current={isActive ? 'step' : undefined}
+                aria-current={isCurrent ? 'step' : undefined}
                 className={cn(
                   'typo-title-16-sb whitespace-nowrap',
                   isActive ? 'text-primary-500' : 'text-gray-300',

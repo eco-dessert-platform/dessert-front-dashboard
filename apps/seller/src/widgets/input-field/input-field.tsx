@@ -13,6 +13,7 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: boolean
   errorMessage?: string
   layout?: 'vertical' | 'horizontal'
+  allowEmptyButtonClick?: boolean
 }
 
 export function InputField({
@@ -30,6 +31,7 @@ export function InputField({
   disabled,
   readOnly,
   className,
+  allowEmptyButtonClick = false,
   ...restProps
 }: InputFieldProps) {
   const isHorizontal = layout === 'horizontal'
@@ -64,7 +66,10 @@ export function InputField({
             title={buttonText}
             size="md"
             onClick={onButtonClick}
-            disabled={disabled || (!readOnly && !value?.toString().trim())}
+            disabled={
+              disabled ||
+              (!allowEmptyButtonClick && !value?.toString().trim())
+            }
             className="whitespace-nowrap"
           />
         </div>

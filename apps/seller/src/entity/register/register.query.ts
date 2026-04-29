@@ -10,7 +10,7 @@ export const registerQueries = {
   all: () => ['register'],
   storeNamesList: () => [...registerQueries.all(), 'storeNames'],
   storeNames: (query: string) => {
-    const normalized = query.replace(/\s/g, '').trim()
+    const normalized = query.replace(/\s/g, '')
     return queryOptions({
       queryKey: [...registerQueries.storeNamesList(), normalized],
       queryFn: () => getStoreNames(normalized),

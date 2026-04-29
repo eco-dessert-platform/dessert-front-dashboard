@@ -1,6 +1,5 @@
-import { clsx } from 'clsx'
-
 import loginImg from '@/assets/images/login.png'
+import { cn } from '@/shared/libs/utils'
 
 interface AuthFlowImageProps {
   className?: string
@@ -9,15 +8,17 @@ interface AuthFlowImageProps {
 
 export const AuthFlowImage = ({
   className = '',
-  alt = 'Auth Flow Illustration',
+  alt = '',
 }: AuthFlowImageProps) => {
+  const isDecorative = alt === ''
   return (
     <div
-      className={clsx('relative flex-1 shrink-0 overflow-hidden', className)}
+      className={cn('relative flex-1 shrink-0 overflow-hidden', className)}
     >
       <img
         src={loginImg}
         alt={alt}
+        aria-hidden={isDecorative || undefined}
         className="size-full rounded-20 object-cover"
       />
     </div>

@@ -13,8 +13,8 @@ interface RegisterStepFooterProps {
 }
 
 export function RegisterStepFooter({
-  nextLabel = '수정하기',
-  prevLabel = '다음',
+  nextLabel = '다음',
+  prevLabel = '수정하기',
   onNext,
   onPrev,
   nextDisabled,
