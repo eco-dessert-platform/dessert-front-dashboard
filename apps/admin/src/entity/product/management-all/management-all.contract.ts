@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 const BaseResponseSchema = z.object({
-  code: z.number(),
+  code: z.number().int(),
   message: z.string(),
   fieldErrors: z
     .array(z.object({ field: z.string(), msg: z.string() }))
@@ -58,17 +58,18 @@ export const DeleteAdminProductsRequestParamsSchema = z.object({
   productIds: z.array(z.number().int()).min(1),
 })
 
-export const DeleteAdminProductOptionsBodySchema = z
-  .object({
-    removeAll: z.boolean().optional(),
-    optionIds: z.array(z.number().int()).optional(),
-  })
-  .refine(
-    (data) =>
-      data.removeAll === true ||
-      (data.optionIds !== undefined && data.optionIds.length > 0),
-    { message: 'removeAll이 false인 경우 optionIds가 필요합니다.' },
-  )
+export const DeleteAdminProductOptionsBodySchema = z.discriminatedUnion(
+  'removeAll',
+  [
+    z.object({
+      removeAll: z.literal(true),
+    }),
+    z.object({
+      removeAll: z.literal(false),
+      optionIds: z.array(z.number().int()).min(1),
+    }),
+  ],
+)
 
 export const EditStockFlagSchema = z.enum(['INCREASE', 'DECREASE', 'SOLDOUT'])
 
