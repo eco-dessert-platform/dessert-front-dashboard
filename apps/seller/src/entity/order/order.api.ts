@@ -131,7 +131,7 @@ function toOrderItem(item: OrderListContent): OrderItem {
 
   return {
     recipientName: item.recipientName,
-    orderNumber: item.orderNumber,
+    orderNumber: String(item.orderNumber),
     products: item.orderItems.map((i) => ({
       productName: i.orderItemInfo.itemName,
       optionName: null,
@@ -156,11 +156,16 @@ function toOrderItem(item: OrderListContent): OrderItem {
 }
 
 export async function getOrderDetails(
-  orderItemIds: number[],
+  orderNumbers: string[],
 ): Promise<OrderDetail[]> {
   if (useMock) {
-    return getMockOrderDetailResponse(orderItemIds)
+    return getMockOrderDetailResponse(orderNumbers)
   }
+
+  // 서버 스펙: orderItemIds: number[] (int64). FE는 string으로 들고 다니다 wire에서만 변환
+  const orderItemIds = orderNumbers
+    .map((n) => Number(n))
+    .filter((n) => Number.isFinite(n))
 
   const { data } = await client.post<ApiResponse<OrderDetail[]>>(
     '/api/v1/seller/orders/items',

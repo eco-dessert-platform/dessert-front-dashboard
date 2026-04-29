@@ -1090,17 +1090,14 @@ export function getMockConfirmOrderResponse(
   }
 }
 
-// TODO: 스펙은 orderItemId(number[])지만 mock 데이터에 ID가 없어 orderNumber를 숫자 캐스팅해 매칭
 export function getMockOrderDetailResponse(
-  orderItemIds: number[],
+  orderNumbers: string[],
 ): OrderDetail[] {
-  if (orderItemIds.length === 0) return []
-  const matched = MOCK_ORDERS.filter((o) =>
-    orderItemIds.includes(Number(o.orderNumber)),
-  )
+  if (orderNumbers.length === 0) return []
+  const matched = MOCK_ORDERS.filter((o) => orderNumbers.includes(o.orderNumber))
 
   if (matched.length === 0) {
-    console.warn("[mock] 일치하는 주문이 없습니다.", orderItemIds)
+    console.warn("[mock] 일치하는 주문이 없습니다.", orderNumbers)
   }
 
   return matched.flatMap(buildMockOrderDetails)
