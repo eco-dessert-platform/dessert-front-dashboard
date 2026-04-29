@@ -44,8 +44,16 @@ export const AdminProductListResponseSchema = z.discriminatedUnion('success', [
   }),
 ])
 
+export const DeleteAdminProductsResponseSchema = BaseResponseSchema.extend({
+  success: z.boolean(),
+})
+
 export const GetAdminProductsRequestParamsSchema = z.object({
   page: z.number().int().nonnegative().optional(),
   size: z.number().int().positive().optional(),
   sort: z.array(z.string()).optional(),
+})
+
+export const DeleteAdminProductsRequestParamsSchema = z.object({
+  productIds: z.array(z.number().int()),
 })

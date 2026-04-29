@@ -3,6 +3,7 @@ export type {
   AdminProductOption,
   AdminProductListResult,
   GetAdminProductsRequestParams,
+  DeleteAdminProductsRequestParams,
 } from './management-all.type'
 
 export {
@@ -11,8 +12,10 @@ export {
   AdminProductListResultSchema,
   AdminProductListResponseSchema,
   GetAdminProductsRequestParamsSchema,
+  DeleteAdminProductsRequestParamsSchema,
+  DeleteAdminProductsResponseSchema,
 } from './management-all.contract'
 
-export { getAdminProducts } from './management-all.api'
+export { getAdminProducts, deleteAdminProducts } from './management-all.api'
 
 export { managementAllQueries } from './management-all.query'
