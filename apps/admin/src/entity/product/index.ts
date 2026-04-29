@@ -16,6 +16,7 @@ export {
   RejectBodySchema,
   DecideUploadApprovalRequestSchema,
   DecideUploadApprovalResponseSchema,
+  REJECT_CATEGORY_LABELS,
 } from './product.contract'
 
 export { getUploadApprovals, decideUploadApproval } from './product.api'
