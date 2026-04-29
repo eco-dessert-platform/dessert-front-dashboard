@@ -3,13 +3,14 @@ import { toast } from '@dessert/ui'
 import { useCompleteExchangeMutation } from './complete-exchange.mutation'
 import { useCompleteReturnMutation } from './complete-return.mutation'
 import { useConfirmOrderMutation } from './confirm-order.mutation'
+import { OrderAction } from '@/entity/order'
 
 interface UseOrderActionBarParams {
   selectedIds: string[]
   onClearSelection: () => void
   onShowDetail: () => void
   onSelectionEmpty: () => void
-  onUnhandled: (action: string) => void
+  onUnhandled: (action: OrderAction) => void
 }
 
 export function useOrderActionBar({
@@ -55,14 +56,13 @@ export function useOrderActionBar({
     }
   }
 
-  const bulkCompleteActions: Record<
-    string,
+  const bulkCompleteActions: Partial<Record<OrderAction,
     {
       mutation: typeof completeReturnMutation
       successMessage: string
       errorMessage: string
     }
-  > = {
+  >> = {
     completeReturn: {
       mutation: completeReturnMutation,
       successMessage: '반품이 완료 처리되었습니다.',
@@ -75,7 +75,7 @@ export function useOrderActionBar({
     },
   }
 
-  const handleAction = (action: string) => {
+  const handleAction = (action: OrderAction) => {
     if (selectedIds.length === 0) {
       onSelectionEmpty()
       return
