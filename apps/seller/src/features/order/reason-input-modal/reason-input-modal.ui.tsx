@@ -10,13 +10,11 @@ import {
   DialogTitle,
   Select,
   Textarea,
-  toast,
 } from '@dessert/ui'
 
 import { ImageUploadGrid } from './image-upload-grid.ui'
 import {
   REASON_MODAL_TITLE,
-  REASON_TOAST_MESSAGE,
   REASON_TYPE_OPTIONS,
   ReasonAction,
 } from './reason-input-modal.constant'
@@ -47,7 +45,6 @@ export function ReasonInputModal({
 
   const title = REASON_MODAL_TITLE[action]
   const options = REASON_TYPE_OPTIONS[action]
-  const toastMessage = REASON_TOAST_MESSAGE[action]
 
   const isValid =
     reasonType !== '' && reasonDetail.length >= MIN_LENGTH
@@ -64,7 +61,6 @@ export function ReasonInputModal({
   const handleConfirm = () => {
     if (!isValid) return
     onConfirm({ reasonType, reasonDetail, images })
-    toast.success(toastMessage)
     onOpenChange(false)
   }
 
