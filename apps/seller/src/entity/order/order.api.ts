@@ -33,7 +33,10 @@ import {
   ShipmentRequest,
   UpdateShipmentResult,
 } from './order.type'
-import { DELIVERY_STATUS_MAP } from '@/entity/order/order.constant.ts'
+import {
+  DELIVERY_STATUS_MAP,
+  TAB_TO_STATUS,
+} from '@/entity/order/order.constant.ts'
 
 export interface UpdateOrderStatusRequest {
   orderNumbers: string[]
@@ -69,16 +72,6 @@ export async function getOrders(
   } = filters
 
   const today = new Date().toISOString().split('T')[0]
-
-  const TAB_TO_STATUS: Partial<Record<string, string>> = {
-    paymentCompleted: 'PAYMENT_COMPLETED',
-    orderConfirmed: 'ORDER_CONFIRMED',
-    productShipped: 'PRODUCT_SHIPPED',
-    deliveryCompleted: 'DELIVERY_COMPLETED',
-    canceled: 'CANCELED',
-    returned: 'RETURNED',
-    exchanged: 'EXCHANGED',
-  }
 
   const { data } = await client.post<ApiResponse<OrderListResult>>(
     '/api/v1/seller/orders/list',

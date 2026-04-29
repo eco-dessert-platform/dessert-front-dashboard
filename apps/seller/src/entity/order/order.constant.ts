@@ -360,3 +360,13 @@ export const DELIVERY_STATUS_MAP: Record<OrderDeliveryStatusSpec, DeliveryStatus
   DELIVERING: 'DELIVERING',
   DELIVERY_COMPLETED: 'DELIVERY_COMPLETED',
 }
+
+export const TAB_TO_STATUS: Partial<Record<OrderStatusTab, OrderStatus>> = {
+  paymentCompleted: 'PAYMENT_COMPLETED',
+  orderConfirmed: 'ORDER_CONFIRMED',
+  productShipped: 'PRODUCT_SHIPPED',
+  deliveryCompleted: 'DELIVERY_COMPLETED',
+  canceled: 'CANCELED',
+  returned: 'RETURNED',
+  exchanged: 'EXCHANGED',
+}
