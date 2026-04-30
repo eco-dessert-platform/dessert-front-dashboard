@@ -60,8 +60,10 @@ function ensureSuccess(data: ApiResponse<unknown>, fallback: string): void {
   }
 }
 
+// success 검증 후 result를 꺼냄. 백엔드가 result를 null로 보낼 수도 있으므로
+// == null 로 null/undefined 모두 걸러낸다. (T | undefined → T narrowing 의도 포함)
 function unwrap<T>(data: ApiResponse<T>, fallback: string): T {
-  if (!data.success || data.result === undefined) {
+  if (!data.success || data.result == null) {
     throw new Error(data.message ?? fallback)
   }
   return data.result
