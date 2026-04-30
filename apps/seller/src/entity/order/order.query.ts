@@ -12,9 +12,10 @@ export const orderQueries = {
       queryFn: () => getOrders(filters),
     }),
   details: () => [...orderQueries.all(), 'detail'],
-  detail: (orderNumbers: string[]) =>
+  // orderItemIds는 wire 직전 string 표현(int64 ID의 문자열). 변환은 getOrderDetails 내부에서 1회 수행.
+  detail: (orderItemIds: string[]) =>
     queryOptions({
-      queryKey: [...orderQueries.details(), [...orderNumbers].sort()],
-      queryFn: () => getOrderDetails(orderNumbers),
+      queryKey: [...orderQueries.details(), [...orderItemIds].sort()],
+      queryFn: () => getOrderDetails(orderItemIds),
     }),
 }

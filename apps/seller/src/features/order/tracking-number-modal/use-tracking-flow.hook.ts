@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { toast } from '@dessert/ui'
 
-import type { CourierName, OrderItem } from '@/entity/order/order.type'
+import type { CourierName } from '@/entity/order/order.type'
 
 import { useCreateShipmentMutation } from './create-shipment.mutation'
 import { useUpdateShipmentMutation } from './update-shipment.mutation'
@@ -20,7 +20,7 @@ export interface TrackingTarget {
   trackingNumber?: string | null
 }
 
-export function useTrackingFlow(orders: OrderItem[]) {
+export function useTrackingFlow() {
   const [isOpen, setIsOpen] = useState(false)
   const [mode, setMode] = useState<TrackingMode>('create')
   const [target, setTarget] = useState<TrackingTarget | null>(null)

@@ -26,7 +26,6 @@ export function useOrderTableLoading({
       : undefined
 
   const dismissMutationLoading = () => setMutationLoadingDismissed(true)
-  const resetMutationLoading = () => setMutationLoadingDismissed(false)
 
-  return { loadingMode, dismissMutationLoading, resetMutationLoading }
+  return { loadingMode, dismissMutationLoading }
 }

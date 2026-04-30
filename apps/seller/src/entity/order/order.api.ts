@@ -37,6 +37,7 @@ import {
   DELIVERY_STATUS_MAP,
   TAB_TO_STATUS,
 } from '@/entity/order/order.constant.ts'
+import { toWireOrderItemIds } from './order.wire'
 
 export interface UpdateOrderStatusRequest {
   orderNumbers: string[]
@@ -169,20 +170,20 @@ function toOrderItem(item: OrderListContent): OrderItem {
 }
 
 export async function getOrderDetails(
-  orderNumbers: string[],
+  orderItemIds: string[],
 ): Promise<OrderDetail[]> {
   if (useMock) {
-    return getMockOrderDetailResponse(orderNumbers)
+    return getMockOrderDetailResponse(orderItemIds)
   }
 
-  // 서버 스펙: orderItemIds: number[] (int64). FE는 string으로 들고 다니다 wire에서만 변환
-  const orderItemIds = orderNumbers
-    .map((n) => Number(n))
-    .filter((n) => Number.isFinite(n))
+  const wireIds = toWireOrderItemIds(orderItemIds)
+  if (wireIds.length === 0) {
+    return []
+  }
 
   const { data } = await client.post<ApiResponse<OrderDetail[]>>(
     '/api/v1/seller/orders/items',
-    orderItemIds,
+    wireIds,
   )
 
   return unwrap(data, '주문 상세 조회에 실패했습니다.')

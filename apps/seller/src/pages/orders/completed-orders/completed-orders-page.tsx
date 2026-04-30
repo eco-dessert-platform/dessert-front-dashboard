@@ -159,7 +159,9 @@ function CompletedOrdersPage() {
       <OrderDetailModal
         open={detailOpen}
         onOpenChange={setDetailOpen}
-        orderNumbers={selectedIds}
+        orderItemIds={orders
+          .filter((o) => selectedIds.includes(o.orderNumber))
+          .flatMap((o) => o.products.map((p) => String(p.orderItemId)))}
       />
       <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
     </div>

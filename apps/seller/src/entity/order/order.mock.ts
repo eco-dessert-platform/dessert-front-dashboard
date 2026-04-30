@@ -15,6 +15,7 @@ import {
   ShipmentRequest,
   UpdateShipmentResult,
 } from './order.type'
+import { toWireOrderItemIds } from './order.wire'
 import { TAB_TO_STATUS } from '@/entity/order/order.constant.ts'
 
 // 20개 Mock 주문 데이터
@@ -1162,15 +1163,15 @@ export function getMockConfirmOrderResponse(
 }
 
 export function getMockOrderDetailResponse(
-  orderNumbers: string[],
+  orderItemIds: string[],
 ): OrderDetail[] {
-  if (orderNumbers.length === 0) return []
-  const orderItemIds = orderNumbers
-    .map((n) => Number(n))
-    .filter((n) => Number.isFinite(n))
+  const wireIds = toWireOrderItemIds(orderItemIds)
+  if (wireIds.length === 0) {
+    return []
+  }
   return MOCK_ORDERS.flatMap((order) => {
     const matchedProducts = order.products.filter((p) =>
-      orderItemIds.includes(p.orderItemId),
+      wireIds.includes(p.orderItemId),
     )
     if (matchedProducts.length === 0) return []
     return buildMockOrderDetails({ ...order, products: matchedProducts })

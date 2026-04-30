@@ -43,10 +43,11 @@ function flattenOrders(orders: OrderItem[]): FlatOrderRow[] {
   })
 }
 
+// 운송장은 주문 단위로 등록되므로 셀은 주문 식별자만 알리고
+// orderItemIds 합성은 호출부(페이지)가 orders에서 lookup해 수행한다.
 interface TrackingOpenArgs {
   orderNumber: string
   orderId: number
-  orderItemIds: number[]
   courier?: CourierName | null
   trackingNumber?: string | null
 }
@@ -359,13 +360,11 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
   const {
     orderNumber,
     orderId,
-    orderItemId,
     trackingNumber,
     courierName,
     returnStatus,
     exchangeStatus,
   } = row.original
-  const orderItemIds = [orderItemId]
 
   // 반품 탭: returnStatus에 따라 운송장 셀 렌더링
   if (tab === 'returned') {
@@ -379,7 +378,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
           variant="secondary-outlined"
           size="sm"
           title="입력"
-          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId, orderItemIds })}
+          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId })}
         />
       )
     }
@@ -399,7 +398,6 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
               onTrackingOpen?.('edit', {
                 orderNumber,
                 orderId,
-                orderItemIds,
                 courier: courierName,
                 trackingNumber,
               })
@@ -426,7 +424,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
           variant="secondary-outlined"
           size="sm"
           title="입력"
-          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId, orderItemIds })}
+          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId })}
         />
       )
     }
@@ -446,7 +444,6 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
               onTrackingOpen?.('edit', {
                 orderNumber,
                 orderId,
-                orderItemIds,
                 courier: courierName,
                 trackingNumber,
               })
@@ -463,7 +460,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
         variant="secondary-outlined"
         size="sm"
         title="입력"
-        onClick={() => onTrackingOpen?.('create', { orderNumber, orderId, orderItemIds })}
+        onClick={() => onTrackingOpen?.('create', { orderNumber, orderId })}
       />
     )
   }
@@ -485,7 +482,6 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
               onTrackingOpen?.('edit', {
                 orderNumber,
                 orderId,
-                orderItemIds,
                 courier: courierName,
                 trackingNumber,
               })

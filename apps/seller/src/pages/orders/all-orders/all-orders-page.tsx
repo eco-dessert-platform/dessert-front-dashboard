@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
+
+import { toast } from '@dessert/ui'
 
 import { orderQueries } from '@/entity/order/order.query'
 import { OrderStatusCount, OrderStatusTab } from '@/entity/order/order.type'
@@ -104,7 +106,15 @@ function AllOrdersPage() {
     onClearSelection: selectionReset,
   })
 
-  const tracking = useTrackingFlow(orders)
+  const tracking = useTrackingFlow()
+
+  const detailOrderItemIds = useMemo(
+    () =>
+      selectedOrders.flatMap((o) =>
+        o.products.map((p) => String(p.orderItemId)),
+      ),
+    [selectedOrders],
+  )
 
   const { handleAction: handleActionBar, isPending: isActionBarPending } =
     useOrderActionBar({
@@ -190,7 +200,21 @@ function AllOrdersPage() {
           onToggleAll={toggleAll}
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
-          onTrackingOpen={tracking.open}
+          onTrackingOpen={(mode, args) => {
+            // 운송장은 주문 단위로 등록 — 같은 orderId의 모든 product를 묶어 보낸다.
+            const order = orders.find((o) => o.orderId === args.orderId)
+            if (!order) {
+              toast.error('주문 정보를 찾을 수 없습니다.')
+              return
+            }
+            tracking.open(mode, {
+              orderNumber: args.orderNumber,
+              orderId: args.orderId,
+              orderItemIds: order.products.map((p) => p.orderItemId),
+              courier: args.courier,
+              trackingNumber: args.trackingNumber,
+            })
+          }}
           loadingMode={loadingMode}
           onCancelLoading={dismissMutationLoading}
         />
@@ -199,7 +223,7 @@ function AllOrdersPage() {
       <OrderDetailModal
         open={detailOpen}
         onOpenChange={setDetailOpen}
-        orderNumbers={selectedIds}
+        orderItemIds={detailOrderItemIds}
       />
       <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
       <ReasonInputModal
