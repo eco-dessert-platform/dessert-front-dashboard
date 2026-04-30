@@ -12,7 +12,7 @@ const EMAIL_DOMAIN = [
   { label: 'icloud.com', value: 'icloud.com' },
   { label: 'hanmail.net', value: 'hanmail.net' },
   { label: 'hotmail.com', value: 'hotmail.com' },
-  { label: 'outlook.com', value: 'outlooko.com' },
+  { label: 'outlook.com', value: 'outlook.com' },
   { label: '직접 입력', value: CUSTOM_EMAIL_DOMAIN },
 ]
 
