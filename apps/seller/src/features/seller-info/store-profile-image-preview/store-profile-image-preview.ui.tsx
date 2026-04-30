@@ -75,6 +75,7 @@ export function StoreProfileImagePreview({
             <button
               type="button"
               onClick={handleRemove}
+              aria-label="이미지 제거"
               className="absolute top-12 right-12 flex size-20 cursor-pointer items-center justify-center"
             >
               <XIcon className="size-20" />
