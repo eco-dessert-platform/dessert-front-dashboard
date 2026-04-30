@@ -2,8 +2,10 @@ import { useState } from 'react'
 
 import { Button } from '@dessert/ui'
 
-import { SellerInfoConfirmDialog } from '../seller-info-confirm-dialog'
-import { SELLER_INFO_SUBMIT_DIALOG_CONTENT } from '../seller-info-confirm-dialog-content'
+import {
+  SELLER_INFO_SUBMIT_DIALOG_CONTENT,
+  SellerInfoConfirmDialog,
+} from '../seller-info-confirm-dialog'
 import { StoreContactAddressForm } from '../store-contact-address-form'
 import { StoreProfileForm } from '../store-profile-form'
 

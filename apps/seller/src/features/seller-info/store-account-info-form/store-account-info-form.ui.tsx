@@ -2,11 +2,11 @@ import { useRef, useState } from 'react'
 
 import { Button, Input, Label } from '@dessert/ui'
 
-import { SellerInfoConfirmDialog } from '../seller-info-confirm-dialog'
 import {
   SELLER_INFO_CANCEL_DIALOG_CONTENT,
   SELLER_INFO_SUBMIT_DIALOG_CONTENT,
-} from '../seller-info-confirm-dialog-content'
+  SellerInfoConfirmDialog,
+} from '../seller-info-confirm-dialog'
 
 export function StoreAccountInfoForm() {
   const [isEditable, setIsEditable] = useState<boolean>(false)

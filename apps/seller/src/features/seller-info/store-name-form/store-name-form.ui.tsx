@@ -5,15 +5,15 @@ import { Button } from '@dessert/ui'
 import { cn } from '@/shared/libs/utils'
 import { InputField } from '@/widgets/input-field'
 
-import { SellerInfoConfirmDialog } from '../seller-info-confirm-dialog'
 import {
   SELLER_INFO_CANCEL_DIALOG_CONTENT,
   SELLER_INFO_SUBMIT_DIALOG_CONTENT,
-} from '../seller-info-confirm-dialog-content'
+  SellerInfoConfirmDialog,
+} from '../seller-info-confirm-dialog'
 import {
   STORE_NAME_RULE,
   getStoreNameValidationState,
-} from '../store-name-validation/store-name.validation'
+} from './store-name.validation'
 
 type ConfirmDialogType = 'cancel' | 'submit'
 
