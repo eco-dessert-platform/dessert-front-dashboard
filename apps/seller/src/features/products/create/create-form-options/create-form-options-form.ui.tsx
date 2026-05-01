@@ -4,10 +4,10 @@ import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
 import { Copy, Trash2 } from 'lucide-react'
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
-import { NUTRITION_FIELDS } from '@/entity/products/create/create-options/product-nutritions.constant'
-import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/product-options.constant'
 import DaySelector from '@/shared/block/day-selector/day-selector'
 
+import { MAIN_CATEGORY_OPTIONS } from './options-category.constant'
+import { NUTRITION_FIELDS } from './options-nutrition.constant'
 import { useProductOptionForm } from './use-product-options.form.hook'
 //import { ProductFinalPrice } from '../create-form'
 //ProductFinalPrice는 상품 정보 폼에서도 공통으로 사용되는 디자인이므로
