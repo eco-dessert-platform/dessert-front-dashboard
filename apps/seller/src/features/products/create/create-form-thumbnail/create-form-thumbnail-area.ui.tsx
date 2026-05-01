@@ -151,23 +151,26 @@ function UploadButton({
   onChange,
 }: UploadButtonProps) {
   return (
-    <label
-      htmlFor={id}
-      className="flex h-[120px] w-[120px] cursor-pointer flex-col items-center justify-center rounded-16 border border-dashed border-gray-200 bg-white transition-colors hover:bg-gray-100"
-    >
-      <Camera className="w-16 text-gray-300" />
-      <span className="typo-body-12-r text-gray-800">
-        사진 <span className="text-primary-500">{count}</span>/{max}
-      </span>
-      <input
-        id={id}
-        type="file"
-        className="hidden"
-        accept="image/*"
-        multiple={multiple}
-        onChange={onChange}
-      />
-    </label>
+    <div className="relative">
+      <label
+        htmlFor={id}
+        className="flex h-[120px] w-[120px] cursor-pointer flex-col items-center justify-center rounded-16 border border-dashed border-gray-200 bg-white transition-colors outline-none focus-within:border-transparent focus-within:ring-2 focus-within:ring-gray-300"
+      >
+        <Camera className="w-16 text-gray-300" />
+        <span className="typo-body-12-r text-gray-800">
+          사진 <span className="text-primary-500">{count}</span>/{max}
+        </span>
+
+        <input
+          id={id}
+          type="file"
+          className="sr-only"
+          accept="image/*"
+          multiple={multiple}
+          onChange={onChange}
+        />
+      </label>
+    </div>
   )
 }
 
