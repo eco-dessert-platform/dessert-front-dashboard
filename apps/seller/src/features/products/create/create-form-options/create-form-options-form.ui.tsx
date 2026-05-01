@@ -2,7 +2,7 @@
 
 import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
 import { Copy, Trash2 } from 'lucide-react'
-import { Controller } from 'react-hook-form'
+import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 import { NUTRITION_FIELDS } from '@/entity/products/create/create-options/product-nutritions.constant'
 import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/product-options.constant'
@@ -34,6 +34,13 @@ export const ProductOptionForm = ({
 }: ProductOptionFormProps) => {
   //   const { productPrice, setProductFields, setNutritionData } =
   //     useCreateHeaderSteps()
+  const { control: rootControl } = useFormContext()
+
+  const rootProductPrice = useWatch({
+    control: rootControl,
+    name: 'price',
+  })
+
   const {
     form,
     mainCategory,
@@ -51,7 +58,7 @@ export const ProductOptionForm = ({
     stockInput,
     nutritionInputs,
     toggleShippingDay,
-  } = useProductOptionForm(index)
+  } = useProductOptionForm(index, rootProductPrice)
 
   const { control, register } = form
 
@@ -178,7 +185,11 @@ export const ProductOptionForm = ({
               labelClassName="typo-title-16-r"
               placeholder="0~100,000"
               className="flex-1"
-              //   value={productPrice ?? ''}
+              value={
+                rootProductPrice
+                  ? Number(rootProductPrice).toLocaleString('ko-KR')
+                  : ''
+              }
               disabled
             />
             <span className="relative top-11">원</span>
