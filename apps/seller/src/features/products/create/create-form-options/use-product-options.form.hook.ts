@@ -1,7 +1,8 @@
 import { useFormContext } from 'react-hook-form'
 
 //import { CreateFormType } from '@/entity/products/create/create-form'
-import { ProductOptionFormInput } from '@/entity/products/create/create-form/create-indivisual-form.type'
+
+import { ProductOptionFormInput } from '@/entity/products'
 import { SUB_CATEGORY_MAP } from '@/entity/products/create/create-options/product-options.constant'
 
 import { productOptionSchema } from './create-options.schema'
