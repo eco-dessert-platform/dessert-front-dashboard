@@ -1,4 +1,14 @@
-import { createShipment } from '@/entity/order/order.api'
-import { useOrderMutation } from '@/entity/order/use-order-mutation'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-export const useCreateShipmentMutation = () => useOrderMutation(createShipment)
+import { orderQueries } from '@/entity/order'
+import { createShipment } from '@/entity/order/order.api'
+
+export const useCreateShipmentMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: createShipment,
+    onSuccess: () => queryClient.invalidateQueries({
+      queryKey: orderQueries.all() 
+    })
+  })
+}

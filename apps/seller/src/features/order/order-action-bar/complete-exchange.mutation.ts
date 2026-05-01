@@ -1,4 +1,15 @@
-import { completeExchange } from '@/entity/order/order.api'
-import { useOrderMutation } from '@/entity/order/use-order-mutation'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-export const useCompleteExchangeMutation = () => useOrderMutation(completeExchange)
+import { orderQueries } from '@/entity/order'
+import { completeExchange } from '@/entity/order/order.api'
+
+export const useCompleteExchangeMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: completeExchange,
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: orderQueries.all(),
+      }),
+  })
+}

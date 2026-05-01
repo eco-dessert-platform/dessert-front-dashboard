@@ -1,4 +1,14 @@
-import { decideReturn } from '@/entity/order/order.api'
-import { useOrderMutation } from '@/entity/order/use-order-mutation'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-export const useDecideReturnMutation = () => useOrderMutation(decideReturn)
+import { orderQueries } from '@/entity/order'
+import { decideReturn } from '@/entity/order/order.api'
+
+export const useDecideReturnMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: decideReturn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
+    },
+  })
+}
