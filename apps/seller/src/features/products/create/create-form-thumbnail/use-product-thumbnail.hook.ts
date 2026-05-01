@@ -19,10 +19,13 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png']
 const MIN_SIZE = 160
 
+const RECOMMENDED_SIZE = 1000
+
 const validateImage = (
   file: File,
 ): Promise<{ error: string | null; warning: string | null }> => {
   return new Promise((resolve) => {
+    // 필수 체크
     if (!ALLOWED_TYPES.includes(file.type)) {
       resolve({
         error: 'jpg, jpeg, png 형식의 이미지만 업로드 가능해요',
@@ -40,14 +43,23 @@ const validateImage = (
     const url = URL.createObjectURL(file)
     img.onload = () => {
       URL.revokeObjectURL(url)
+
+      const { width, height } = img
       let warning = null
+
+      // 2. 권장 사항 체크 (등록은 가능하지만 안내만 띄움)
+      // 기준: 1000px 미만 OR 160px 미만 OR 1:1 비율 아님
       if (
-        img.width < MIN_SIZE ||
-        img.height < MIN_SIZE ||
-        img.width !== img.height
+        width < RECOMMENDED_SIZE ||
+        height < RECOMMENDED_SIZE ||
+        width < MIN_SIZE ||
+        height < MIN_SIZE ||
+        width !== height
       ) {
-        warning = '권장 크기는 1000×1000 (1:1 비율)이에요'
+        warning = '권장 크기 1000×1000, 최소 160×160 이상 (1:1 비율)이에요'
       }
+
+      // error는 null로 보내서 등록을 막지 않음
       resolve({ error: null, warning })
     }
     img.onerror = () => {
