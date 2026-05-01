@@ -9,7 +9,8 @@ import { deliverySchema } from '../create-form-delivery/create-delivery.schema'
 import { disclosureSchema } from '../create-form-disclosure/create-disclosure.schema'
 import { productSchema } from '../create-form-info/create-info.schema'
 import { productOptionSchema } from '../create-form-options/create-options.schema'
-import { ThumbnailFormType, thumbnailSchema } from '../create-form-thumbnail'
+import { thumbnailSchema } from '../create-form-thumbnail/create-form-thumbnail.schema'
+import { ThumbnailFormType } from '../create-form-thumbnail/create-form-thumbnail.type'
 
 //ThumbnailFormType이 entity에 있지 않는 이유는
 //이전 PR에서 entity구조에 대한 FSD위반 코드리뷰를 받았기 때문입니다.
