@@ -42,7 +42,6 @@ export const ThumbnailUploadArea = () => {
   // 16,29~33line : 대표 이미지 등록은 필수 입력 사항으로, 이미지를 등록할 시
   // sticky header 우측 상단의 필수 입력 폼 잔여 갯수와 연동되는 기능입니다.
   // 추후 header 관련 기능을 ContextAPI -> zustand로 마이그레이션 하면서 롤백 할 예정입니다.
-
   return (
     <>
       <div className="mb-24 flex items-center gap-2">
@@ -128,6 +127,7 @@ export const ThumbnailUploadArea = () => {
       {/* 삭제 확인 모달 */}
       <DeleteConfirmDialog
         isOpen={deleteTarget !== null}
+        deletetarget={deleteTarget === 'main' ? '대표' : '추가'}
         onClose={() => setDeleteTarget(null)}
         onConfirm={handleImageDelete}
       />
@@ -176,12 +176,14 @@ function UploadButton({
 
 interface DeleteConfirmDialogProps {
   isOpen: boolean
+  deletetarget: '대표' | '추가'
   onClose: () => void
   onConfirm: () => void
 }
 
 function DeleteConfirmDialog({
   isOpen,
+  deletetarget,
   onClose,
   onConfirm,
 }: DeleteConfirmDialogProps) {
@@ -191,7 +193,7 @@ function DeleteConfirmDialog({
         <DialogHeader>
           <DialogTitle>이미지를 삭제 하시겠어요?</DialogTitle>
           <DialogDescription>
-            현재 등록된 대표 이미지를 삭제하면 기존에
+            현재 등록된 {deletetarget} 이미지를 삭제하면 기존에
             <br /> 등록된 이미지를 복구할 수 없어요.{' '}
           </DialogDescription>
         </DialogHeader>
