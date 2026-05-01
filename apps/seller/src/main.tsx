@@ -10,6 +10,8 @@ import CompletedOrdersPage from '@/pages/orders/completed-orders/completed-order
 import CreatePage from '@/pages/products/create/create-page'
 import { DetailEditPage } from '@/pages/products/create/detail-edit-page'
 import ProductsPage from '@/pages/products/product/product-page'
+import RegisterLayout from '@/pages/register/register-layout'
+import VerificationPage from '@/pages/register/verification/verification-page'
 import SettlementPage from '@/pages/settlement/settlement-page'
 import { ROUTES } from '@/shared/constant/routes'
 
@@ -24,6 +26,17 @@ const router = createBrowserRouter([
   {
     path: ROUTES.CALLBACK.SOCIAL,
     element: <SocialCallbackPage />,
+  },
+  {
+    path: ROUTES.REGISTER.DEFAULT,
+    element: <RegisterLayout />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to={ROUTES.REGISTER.VERIFICATION} replace />,
+      },
+      { path: ROUTES.REGISTER.VERIFICATION, element: <VerificationPage /> },
+    ],
   },
   {
     path: ROUTES.HOME,
