@@ -103,20 +103,23 @@ export const ThumbnailUploadArea = () => {
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              // File 객체의 고유 식별자 배열을 넘겨줍니다.
               items={(extraImages as File[]).map(
                 (f) => `${f.name}-${f.lastModified}`,
               )}
               strategy={rectSortingStrategy}
             >
-              {(extraImages as File[]).map((file, idx) => (
-                <SortableImageItems
-                  key={`${file.name}-${file.lastModified}`}
-                  id={`${file.name}-${file.lastModified}`}
-                  file={file}
-                  onDelete={() => setDeleteTarget(idx)}
-                />
-              ))}
+              {(extraImages as File[]).map((file) => {
+                const fileId = `${file.name}-${file.lastModified}`
+                return (
+                  <SortableImageItems
+                    key={fileId}
+                    id={fileId}
+                    file={file}
+                    // idx 대신 고유 ID를 전달
+                    onDelete={() => setDeleteTarget(fileId)}
+                  />
+                )
+              })}
             </SortableContext>
           </DndContext>
         </div>

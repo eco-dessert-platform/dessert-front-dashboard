@@ -64,7 +64,7 @@ export function useProductThumbnailForm() {
   const mainImage = form.watch('mainImage')
   const extraImages = form.watch('extraImages') || []
 
-  const [deleteTarget, setDeleteTarget] = useState<number | 'main' | null>(null)
+  const [deleteTarget, setDeleteTarget] = useState<string | 'main' | null>(null)
 
   const isFormField = mainImage !== null
 
@@ -140,11 +140,16 @@ export function useProductThumbnailForm() {
   }
 
   const handleImageDelete = () => {
+    if (!deleteTarget) return
+
     if (deleteTarget === 'main') {
       handleMainImageChange(null)
-    } else if (typeof deleteTarget === 'number') {
-      const newImages = extraImages.filter((_, i) => i !== deleteTarget)
-      handleExtraImagesChange(newImages)
+    } else {
+      // deleteTarget이 'main'이 아닌 문자열(fileId)인 경우
+      const newExtraImages = (extraImages as File[]).filter(
+        (f) => `${f.name}-${f.lastModified}` !== deleteTarget,
+      )
+      handleExtraImagesChange(newExtraImages)
     }
     setDeleteTarget(null)
   }

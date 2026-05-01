@@ -6,7 +6,7 @@ import { XIcon } from 'lucide-react'
 
 interface SortableImageItemsProps {
   id: string
-  file: File | null
+  file: File
   onDelete: () => void
 }
 
@@ -25,10 +25,11 @@ export const SortableImageItems = ({
   } = useSortable({ id })
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    // transform이 null일 때의 방어 로직 추가
+    transform: transform ? CSS.Translate.toString(transform) : undefined,
     transition,
-    zIndex: isDragging ? 50 : 1,
-    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 999 : 1, // 드래그 시 최상단으로
+    opacity: isDragging ? 0.3 : 1, // 드래그 중인 원본은 투명하게
   }
 
   return (
