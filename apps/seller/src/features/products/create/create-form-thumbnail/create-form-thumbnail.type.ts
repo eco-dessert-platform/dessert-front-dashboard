@@ -1,4 +1,4 @@
 export type ThumbnailFormType = {
   mainImage: File | null
-  extraImages: File[]
+  extraImages: { id: string; file: File }[]
 }

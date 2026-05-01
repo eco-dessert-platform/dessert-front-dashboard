@@ -11,21 +11,17 @@ import {
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useFormContext } from 'react-hook-form'
 
-//import { CreateFormType } from '@/entity/products/create/create-form'
 import { CreateProductForm } from '../create-form/product-create.types'
-//추후 type과 상수 관련 파일 수정하며 CreateProductForm -> CreateFormType으로 변경 예정
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png']
 const MIN_SIZE = 160
-
 const RECOMMENDED_SIZE = 1000
 
 const validateImage = (
   file: File,
 ): Promise<{ error: string | null; warning: string | null }> => {
   return new Promise((resolve) => {
-    // 필수 체크
     if (!ALLOWED_TYPES.includes(file.type)) {
       resolve({
         error: 'jpg, jpeg, png 형식의 이미지만 업로드 가능해요',
@@ -43,12 +39,9 @@ const validateImage = (
     const url = URL.createObjectURL(file)
     img.onload = () => {
       URL.revokeObjectURL(url)
-
       const { width, height } = img
       let warning = null
 
-      // 2. 권장 사항 체크 (등록은 가능하지만 안내만 띄움)
-      // 기준: 1000px 미만 OR 160px 미만 OR 1:1 비율 아님
       if (
         width < RECOMMENDED_SIZE ||
         height < RECOMMENDED_SIZE ||
@@ -59,7 +52,6 @@ const validateImage = (
         warning = '권장 크기 1000×1000, 최소 160×160 이상 (1:1 비율)이에요'
       }
 
-      // error는 null로 보내서 등록을 막지 않음
       resolve({ error: null, warning })
     }
     img.onerror = () => {
@@ -70,9 +62,12 @@ const validateImage = (
   })
 }
 
+const generateId = () => Math.random().toString(36).substring(2, 11)
+
 export function useProductThumbnailForm() {
   const form = useFormContext<CreateProductForm>()
 
+  // 1. 타입 수정 덕분에 이제 casting 없이 바로 타입을 인식합니다.
   const mainImage = form.watch('mainImage')
   const extraImages = form.watch('extraImages') || []
 
@@ -84,13 +79,11 @@ export function useProductThumbnailForm() {
     form.setValue('mainImage', file, { shouldValidate: true })
   }
 
-  const handleExtraImagesChange = (files: File[]) => {
-    form.setValue('extraImages', files, { shouldValidate: true })
+  // 2. newItems 타입이 정의와 일치하므로 에러가 나지 않습니다.
+  const handleExtraImagesChange = (newItems: { id: string; file: File }[]) => {
+    form.setValue('extraImages', newItems, { shouldValidate: true })
   }
 
-  const handleReorderExtraImages = (newImages: File[]) => {
-    form.setValue('extraImages', newImages, { shouldValidate: true })
-  }
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
     useSensor(KeyboardSensor, {
@@ -101,15 +94,13 @@ export function useProductThumbnailForm() {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
     if (over && active.id !== over.id) {
-      const images = extraImages as File[]
-      const oldIndex = images.findIndex(
-        (f) => `${f.name}-${f.lastModified}` === active.id,
-      )
-      const newIndex = images.findIndex(
-        (f) => `${f.name}-${f.lastModified}` === over.id,
-      )
+      const oldIndex = extraImages.findIndex((item) => item.id === active.id)
+      const newIndex = extraImages.findIndex((item) => item.id === over.id)
+
       if (oldIndex < 0 || newIndex < 0) return
-      handleReorderExtraImages(arrayMove(images, oldIndex, newIndex))
+
+      const newOrder = arrayMove(extraImages, oldIndex, newIndex)
+      handleExtraImagesChange(newOrder)
     }
   }
 
@@ -133,7 +124,7 @@ export function useProductThumbnailForm() {
     } else {
       const remainingSlots = 9 - extraImages.length
       const selectedFiles = Array.from(files).slice(0, remainingSlots)
-      const validFiles: File[] = []
+      const newValidItems: { id: string; file: File }[] = []
 
       for (const file of selectedFiles) {
         const { error, warning } = await validateImage(file)
@@ -141,12 +132,12 @@ export function useProductThumbnailForm() {
           toast.error(`${file.name}: ${error}`)
         } else {
           if (warning) toast.info(`${file.name}: ${warning}`)
-          validFiles.push(file)
+          newValidItems.push({ id: generateId(), file })
         }
       }
 
-      if (validFiles.length > 0) {
-        handleExtraImagesChange([...extraImages, ...validFiles])
+      if (newValidItems.length > 0) {
+        handleExtraImagesChange([...extraImages, ...newValidItems])
       }
     }
     e.target.value = ''
@@ -158,9 +149,8 @@ export function useProductThumbnailForm() {
     if (deleteTarget === 'main') {
       handleMainImageChange(null)
     } else {
-      // deleteTarget이 'main'이 아닌 문자열(fileId)인 경우
-      const newExtraImages = (extraImages as File[]).filter(
-        (f) => `${f.name}-${f.lastModified}` !== deleteTarget,
+      const newExtraImages = extraImages.filter(
+        (item) => item.id !== deleteTarget,
       )
       handleExtraImagesChange(newExtraImages)
     }
@@ -177,7 +167,6 @@ export function useProductThumbnailForm() {
     setDeleteTarget,
     handleFileChange,
     handleImageDelete,
-    handleReorderExtraImages,
     handleDragEnd,
   }
 }

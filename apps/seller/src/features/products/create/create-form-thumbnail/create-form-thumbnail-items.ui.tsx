@@ -60,7 +60,7 @@ export const ImagePreviewItem = ({ file, onDelete }: ImagePreviewItemProps) => {
     const url = URL.createObjectURL(file)
     setPreviewUrl(url)
 
-    // 클린업 함수: 컴포넌트가 언마운트되거나 file이 바뀔 때 메모리를 해제합니다.
+    // 클린업 함수: 컴포넌트가 언마운트되거나 file이 바뀔 때 메모리를 해제
     return () => {
       URL.revokeObjectURL(url)
     }
