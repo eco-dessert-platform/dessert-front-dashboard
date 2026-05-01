@@ -29,7 +29,7 @@ export const ThumbnailUploadArea = () => {
     setDeleteTarget,
     handleFileChange,
     handleImageDelete,
-    handleReorderExtraImages,
+
     handleDragEnd,
   } = useProductThumbnailForm()
 
