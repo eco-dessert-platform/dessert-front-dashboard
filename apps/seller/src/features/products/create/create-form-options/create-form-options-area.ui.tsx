@@ -1,13 +1,13 @@
 import { Label } from '@dessert/ui'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
-import { CreateFormType } from '@/entity/products/create/create-form'
-
+//import { CreateFormType } from '@/entity/products/create/create-form'
+//추후 CreateProductForm -> CreateFormType 변경 예정입니다.
 import { ProductOptionForm } from './create-form-options-form.ui'
-import { DEFAULT_PRODUCT_OPTION } from '../create-form'
+import { CreateProductForm, DEFAULT_PRODUCT_OPTION } from '../create-form'
 
 export const ProductOptionsArea = () => {
-  const form = useFormContext<CreateFormType>()
+  const form = useFormContext<CreateProductForm>()
   const { fields, append, remove, insert } = useFieldArray({
     control: form.control,
     name: 'options',
