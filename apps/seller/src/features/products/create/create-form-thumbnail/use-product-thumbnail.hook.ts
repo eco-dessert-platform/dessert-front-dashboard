@@ -68,6 +68,10 @@ export function useProductThumbnailForm() {
     form.setValue('extraImages', files, { shouldValidate: true })
   }
 
+  const handleReorderExtraImages = (newImages: File[]) => {
+    form.setValue('extraImages', newImages, { shouldValidate: true })
+  }
+
   const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
     type: 'main' | 'extra',
@@ -126,5 +130,6 @@ export function useProductThumbnailForm() {
     setDeleteTarget,
     handleFileChange,
     handleImageDelete,
+    handleReorderExtraImages,
   }
 }

@@ -10,6 +10,23 @@ import {
   DialogTitle,
   Label,
 } from '@dessert/ui'
+import {
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  arrayMove,
+  rectSortingStrategy,
+  sortableKeyboardCoordinates,
+  useSortable,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { Camera, XIcon } from 'lucide-react'
 
 import { useProductThumbnailForm } from './use-product-thumbnail.hook'
@@ -24,6 +41,7 @@ export const ThumbnailUploadArea = () => {
     setDeleteTarget,
     handleFileChange,
     handleImageDelete,
+    handleReorderExtraImages,
   } = useProductThumbnailForm()
 
   //   const { setProductFields } = useCreateHeaderSteps()
@@ -35,7 +53,26 @@ export const ThumbnailUploadArea = () => {
   // 16,29~33line : 대표 이미지 등록은 필수 입력 사항으로, 이미지를 등록할 시
   // sticky header 우측 상단의 필수 입력 폼 잔여 갯수와 연동되는 기능입니다.
   // 추후 header 관련 기능을 ContextAPI -> zustand로 마이그레이션 하면서 롤백 할 예정입니다.
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  )
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+    if (over && active.id !== over.id) {
+      const images = extraImages as File[]
+      const oldIndex = images.findIndex(
+        (f) => `${f.name}-${f.lastModified}` === active.id,
+      )
+      const newIndex = images.findIndex(
+        (f) => `${f.name}-${f.lastModified}` === over.id,
+      )
+      handleReorderExtraImages(arrayMove(images, oldIndex, newIndex))
+    }
+  }
   return (
     <>
       <div className="mb-24 flex items-center gap-2">
@@ -89,13 +126,29 @@ export const ThumbnailUploadArea = () => {
               onChange={(e) => handleFileChange(e, 'extra')}
             />
           )}
-          {extraImages.map((file: File, idx: number) => (
-            <ImagePreviewItem
-              key={`${file.name}-${idx}`}
-              file={file}
-              onDelete={() => setDeleteTarget(idx)}
-            />
-          ))}
+
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              // File 객체의 고유 식별자 배열을 넘겨줍니다.
+              items={(extraImages as File[]).map(
+                (f) => `${f.name}-${f.lastModified}`,
+              )}
+              strategy={rectSortingStrategy}
+            >
+              {(extraImages as File[]).map((file, idx) => (
+                <SortableImageItem
+                  key={`${file.name}-${file.lastModified}`}
+                  id={`${file.name}-${file.lastModified}`}
+                  file={file}
+                  onDelete={() => setDeleteTarget(idx)}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
         </div>
       </div>
 
@@ -221,5 +274,43 @@ function DeleteConfirmDialog({
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  )
+}
+function SortableImageItem({
+  id,
+  file,
+  onDelete,
+}: {
+  id: string
+  file: File
+  onDelete: () => void
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 50 : 1,
+    opacity: isDragging ? 0.5 : 1,
+  }
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      // 드래그 중 커서 모양 변경 및 터치 스크롤 방지
+      className="cursor-grab touch-none active:cursor-grabbing"
+    >
+      <ImagePreviewItem file={file} onDelete={onDelete} />
+    </div>
   )
 }
