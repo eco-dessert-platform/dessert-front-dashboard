@@ -165,7 +165,7 @@ function UploadButton({
           id={id}
           type="file"
           className="sr-only"
-          accept="image/*"
+          accept=".jpg,.jpeg,.png,image/jpeg,image/png"
           multiple={multiple}
           onChange={onChange}
         />
