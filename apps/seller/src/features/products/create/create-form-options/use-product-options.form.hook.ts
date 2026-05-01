@@ -2,9 +2,9 @@ import { useFormContext } from 'react-hook-form'
 
 //import { CreateFormType } from '@/entity/products/create/create-form'
 
-import { ProductOptionFormInput } from '@/entity/products'
 import { SUB_CATEGORY_MAP } from '@/entity/products/create/create-options/product-options.constant'
 
+import { ProductOptionsType } from './create-form-options.type'
 import { productOptionSchema } from './create-options.schema'
 import { useFloatInput } from '../create-calculation/create-form-float-input.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
@@ -52,7 +52,7 @@ export function useProductOptionForm(
     form.setValue(`${p}.subCategory`, '', { shouldValidate: false })
   }
 
-  type Day = ProductOptionFormInput['shippingDays'][number]
+  type Day = ProductOptionsType['shippingDays'][number]
 
   const toggleShippingDay = (days: string[]) => {
     const validDays = days.filter(
@@ -104,7 +104,7 @@ export function useProductOptionForm(
 
   const nutritionInputs: Record<
     keyof Pick<
-      ProductOptionFormInput,
+      ProductOptionsType,
       | 'totalWeight'
       | 'calories'
       | 'carbohydrate'

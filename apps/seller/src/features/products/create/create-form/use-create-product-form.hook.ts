@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Resolver, useForm } from 'react-hook-form'
 
-import { DISCLOSURE_FIELDS, ProductOptionFormInput } from '@/entity/products'
+import { DISCLOSURE_FIELDS } from '@/entity/products'
 
+import { ProductOptionsType } from '../create-form-options'
 import { CreateProductForm, createProductSchema } from './product-create.types'
-export const DEFAULT_PRODUCT_OPTION: ProductOptionFormInput = {
+export const DEFAULT_PRODUCT_OPTION: ProductOptionsType = {
   mainCategory: '',
   subCategory: '',
   optionName: '',
