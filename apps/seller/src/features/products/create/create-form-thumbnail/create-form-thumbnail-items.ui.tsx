@@ -76,6 +76,7 @@ export const ImagePreviewItem = ({ file, onDelete }: ImagePreviewItemProps) => {
       )}
       <button
         type="button"
+        aria-label="이미지 삭제"
         onClick={onDelete}
         className="absolute top-6 right-6 rounded-full bg-black/10 p-2 text-white transition-colors hover:bg-gray-900/50"
       >
