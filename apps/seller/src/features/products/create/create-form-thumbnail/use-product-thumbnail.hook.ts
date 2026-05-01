@@ -1,6 +1,14 @@
 import { useState } from 'react'
 
 import { toast } from '@dessert/ui'
+import {
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
+import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useFormContext } from 'react-hook-form'
 
 //import { CreateFormType } from '@/entity/products/create/create-form'
@@ -71,6 +79,26 @@ export function useProductThumbnailForm() {
   const handleReorderExtraImages = (newImages: File[]) => {
     form.setValue('extraImages', newImages, { shouldValidate: true })
   }
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  )
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+    if (over && active.id !== over.id) {
+      const images = extraImages as File[]
+      const oldIndex = images.findIndex(
+        (f) => `${f.name}-${f.lastModified}` === active.id,
+      )
+      const newIndex = images.findIndex(
+        (f) => `${f.name}-${f.lastModified}` === over.id,
+      )
+      handleReorderExtraImages(arrayMove(images, oldIndex, newIndex))
+    }
+  }
 
   const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -127,9 +155,11 @@ export function useProductThumbnailForm() {
     extraImages,
     isFormField,
     deleteTarget,
+    sensors,
     setDeleteTarget,
     handleFileChange,
     handleImageDelete,
     handleReorderExtraImages,
+    handleDragEnd,
   }
 }

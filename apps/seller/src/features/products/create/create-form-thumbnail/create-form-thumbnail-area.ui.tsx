@@ -38,10 +38,12 @@ export const ThumbnailUploadArea = () => {
     extraImages,
     isFormField,
     deleteTarget,
+    sensors,
     setDeleteTarget,
     handleFileChange,
     handleImageDelete,
     handleReorderExtraImages,
+    handleDragEnd,
   } = useProductThumbnailForm()
 
   //   const { setProductFields } = useCreateHeaderSteps()
@@ -53,26 +55,7 @@ export const ThumbnailUploadArea = () => {
   // 16,29~33line : 대표 이미지 등록은 필수 입력 사항으로, 이미지를 등록할 시
   // sticky header 우측 상단의 필수 입력 폼 잔여 갯수와 연동되는 기능입니다.
   // 추후 header 관련 기능을 ContextAPI -> zustand로 마이그레이션 하면서 롤백 할 예정입니다.
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  )
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event
-    if (over && active.id !== over.id) {
-      const images = extraImages as File[]
-      const oldIndex = images.findIndex(
-        (f) => `${f.name}-${f.lastModified}` === active.id,
-      )
-      const newIndex = images.findIndex(
-        (f) => `${f.name}-${f.lastModified}` === over.id,
-      )
-      handleReorderExtraImages(arrayMove(images, oldIndex, newIndex))
-    }
-  }
   return (
     <>
       <div className="mb-24 flex items-center gap-2">
