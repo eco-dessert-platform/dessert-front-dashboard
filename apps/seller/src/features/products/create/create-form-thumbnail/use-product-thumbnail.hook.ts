@@ -96,6 +96,7 @@ export function useProductThumbnailForm() {
       const newIndex = images.findIndex(
         (f) => `${f.name}-${f.lastModified}` === over.id,
       )
+      if (oldIndex < 0 || newIndex < 0) return
       handleReorderExtraImages(arrayMove(images, oldIndex, newIndex))
     }
   }
