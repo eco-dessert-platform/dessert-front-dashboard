@@ -48,7 +48,7 @@ export interface AccountVerificationRequest {
 
 export interface AccountVerificationResult {
   id: number
-  seller_id: number
+  sellerId: number
   verified: boolean
   createdAt: string
 }
