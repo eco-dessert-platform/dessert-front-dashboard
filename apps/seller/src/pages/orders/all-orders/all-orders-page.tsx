@@ -1,13 +1,12 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
+import { toast } from '@dessert/ui'
+
 import { orderQueries } from '@/entity/order/order.query'
-import {
-  OrderStatusCount,
-  OrderStatusTab,
-} from '@/entity/order/order.type'
+import { OrderStatusCount, OrderStatusTab } from '@/entity/order/order.type'
 import {
   OrderActionBar,
   useOrderActionBar,
@@ -19,6 +18,7 @@ import { OrderStatusTabs } from '@/features/order/order-status-tabs'
 import {
   OrderTable,
   useOrderSelection,
+  useOrderTableLoading,
 } from '@/features/order/order-table'
 import {
   isReasonAction,
@@ -72,7 +72,7 @@ function AllOrdersPage() {
     reset: filtersReset,
   } = useOrderFilter(selectedTab)
 
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     ...orderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
@@ -89,21 +89,37 @@ function AllOrdersPage() {
     reset: selectionReset,
   } = useOrderSelection(orders)
 
+  const selectedOrders = orders.filter((o) =>
+    selectedIds.includes(o.orderNumber),
+  )
+
   const {
     isOpen: isReasonOpen,
     setIsOpen: setReasonOpen,
     action: reasonAction,
     open: openReason,
     handleConfirm: handleReasonConfirm,
+    isPending: isReasonPending,
   } = useReasonAction({
     selectedIds,
+    selectedOrders,
     onClearSelection: selectionReset,
   })
 
   const tracking = useTrackingFlow()
 
-  const { handleAction: handleActionBar } = useOrderActionBar({
+  const detailOrderItemIds = useMemo(
+    () =>
+      selectedOrders.flatMap((o) =>
+        o.products.map((p) => String(p.orderItemId)),
+      ),
+    [selectedOrders],
+  )
+
+  const { handleAction: handleActionBar, isPending: isActionBarPending } =
+    useOrderActionBar({
       selectedIds,
+      selectedOrders,
       onClearSelection: selectionReset,
       onShowDetail: () => setDetailOpen(true),
       onSelectionEmpty: () => setAlertOpen(true),
@@ -139,6 +155,14 @@ function AllOrdersPage() {
   const currentTab = appliedFilters.tab ?? 'all'
   const totalPages = data?.totalPages ?? 1
   const totalCount = data?.totalElements ?? 0
+
+  const isMutationPending =
+    isActionBarPending || isReasonPending || tracking.isPending
+
+  const { loadingMode, dismissMutationLoading } = useOrderTableLoading({
+    isListLoading: isFetching,
+    isMutationPending,
+  })
 
   return (
     <div className="flex flex-col gap-6 p-4">
@@ -176,14 +200,30 @@ function AllOrdersPage() {
           onToggleAll={toggleAll}
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
-          onTrackingOpen={tracking.open}
+          onTrackingOpen={(mode, args) => {
+            // 운송장은 주문 단위로 등록 — 같은 orderId의 모든 product를 묶어 보낸다.
+            const order = orders.find((o) => o.orderId === args.orderId)
+            if (!order) {
+              toast.error('주문 정보를 찾을 수 없습니다.')
+              return
+            }
+            tracking.open(mode, {
+              orderNumber: args.orderNumber,
+              orderId: args.orderId,
+              orderItemIds: order.products.map((p) => p.orderItemId),
+              courier: args.courier,
+              trackingNumber: args.trackingNumber,
+            })
+          }}
+          loadingMode={loadingMode}
+          onCancelLoading={dismissMutationLoading}
         />
       </section>
 
       <OrderDetailModal
         open={detailOpen}
         onOpenChange={setDetailOpen}
-        orderNumbers={selectedIds}
+        orderItemIds={detailOrderItemIds}
       />
       <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
       <ReasonInputModal
