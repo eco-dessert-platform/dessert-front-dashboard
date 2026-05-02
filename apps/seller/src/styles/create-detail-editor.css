@@ -5,6 +5,7 @@
 
 .quill-wrapper {
   height: 100%;
+  background-color: var(--color-gray-50);
 }
 
 .quill-wrapper .ql-toolbar {
@@ -18,8 +19,9 @@
 }
 
 .ql-container.ql-snow {
-  padding: 0 196px;
-  background-color: var(--color-gray-50);
+  max-width: calc(100% - 392px);
+  width: 100%;
+  margin: 0 auto;
 }
 
 .quill-wrapper .ql-editor {
