@@ -1,9 +1,11 @@
+import { useState } from 'react'
+
 import { BbanggreuiOvenLogo } from '@dessert/icons'
 import { Button, Editor } from '@dessert/ui'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
+import '../../../styles/create-detail-editor.css'
 
 export function DetailEditPage() {
   const navigate = useNavigate()
@@ -13,7 +15,7 @@ export function DetailEditPage() {
   const [localDetail, setLocalDetail] = useState(productDetail)
 
   return (
-    <div className="flex h-screen w-full flex-col overflow-hidden bg-gray-50">
+    <div className="flex h-screen w-full flex-col overflow-hidden">
       {/* Header */}
       <header className="flex h-header shrink-0 items-center border-b border-gray-300 bg-white px-24 py-10">
         <div className="flex items-center">
@@ -22,21 +24,21 @@ export function DetailEditPage() {
       </header>
 
       {/* Content Body */}
-      <main className="flex flex-1 flex-col items-center overflow-auto px-[196px] pb-[100px]">
+      <main className="flex flex-1 flex-col items-center overflow-auto">
         {/* Editor wrapper */}
-        <div className="mt-32 flex min-h-[710px] w-full max-w-[1440px] flex-col bg-white p-32 shadow-sm">
+        <div className="flex size-full flex-col bg-white">
           <Editor
             value={localDetail}
             onChange={setLocalDetail}
             image={true}
             height={600}
             placeholder="자유롭게 상세페이지를 작성해보세요 (권장크기 : 가로 860px)"
+            className="block! size-full rounded-none! border-none!"
           />
         </div>
       </main>
-
       {/* Footer Nav */}
-      <footer className="fixed bottom-0 z-10 flex w-full shrink-0 items-center justify-end gap-12 border-t border-gray-200 bg-white p-24">
+      <footer className="flex w-full shrink-0 items-center justify-end gap-12 border-t border-gray-200 p-24">
         <Button
           type="button"
           title="취소"
