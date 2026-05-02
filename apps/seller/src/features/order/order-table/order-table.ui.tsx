@@ -21,6 +21,11 @@ import {
 import Table from '@/shared/components/ui/table/table'
 import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
 
+import { OrderTableEmpty } from './order-table-empty.ui'
+import { OrderTableLoading } from './order-table-loading.ui'
+
+import type { OrderTableLoadingMode } from './order-table-loading.hook'
+
 type FlatOrderRow = Omit<OrderItem, 'products'> &
   OrderProduct & {
     productKey: string
@@ -38,10 +43,11 @@ function flattenOrders(orders: OrderItem[]): FlatOrderRow[] {
   })
 }
 
+// 운송장은 주문 단위로 등록되므로 셀은 주문 식별자만 알리고
+// orderItemIds 합성은 호출부(페이지)가 orders에서 lookup해 수행한다.
 interface TrackingOpenArgs {
   orderNumber: string
   orderId: number
-  orderItemIds: number[]
   courier?: CourierName | null
   trackingNumber?: string | null
 }
@@ -57,6 +63,8 @@ interface OrderTableProps {
   onToggleOne: (orderNumber: string) => void
   onToggleProduct: (productKey: string, orderNumber: string) => void
   onTrackingOpen?: (mode: 'create' | 'edit', args: TrackingOpenArgs) => void
+  loadingMode?: OrderTableLoadingMode
+  onCancelLoading?: () => void
 }
 
 export function OrderTable({
@@ -70,6 +78,8 @@ export function OrderTable({
   onToggleOne,
   onToggleProduct,
   onTrackingOpen,
+  loadingMode,
+  onCancelLoading,
 }: OrderTableProps) {
   const flatRows = useMemo(() => flattenOrders(orders), [orders])
   const getRowSpanForOrder = useCallback(
@@ -237,7 +247,7 @@ export function OrderTable({
               {row.original.paymentMethod}
             </p>
             <p className="typo-body-12-r text-gray-800">
-              {row.original.paymentDate}
+              {row.original.paymentDate ?? '-'}
             </p>
           </div>
         ),
@@ -320,13 +330,23 @@ export function OrderTable({
     ],
   )
 
+  const showEmpty = !loadingMode && orders.length === 0
+
   return (
-    <Table
-      data={flatRows}
-      columns={columns}
-      scrollHeight={498}
-      getRowClassName={getRowClassName}
-    />
+    <div className="relative" aria-busy={!!loadingMode}>
+      <Table
+        data={flatRows}
+        columns={columns}
+        scrollHeight={498}
+        getRowClassName={getRowClassName}
+      />
+      {loadingMode && (
+        <div role="status" aria-live="polite">
+          <OrderTableLoading mode={loadingMode} onCancel={onCancelLoading} />
+        </div>
+      )}
+      {showEmpty && <OrderTableEmpty />}
+    </div>
   )
 }
 
@@ -337,12 +357,14 @@ interface TrackingNumberCellProps {
 }
 
 function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProps) {
-  const { orderNumber, trackingNumber, courierName, returnStatus, exchangeStatus } = row.original
-
-  // list 응답이 orderId/orderItemIds를 노출하지 않아 orderNumber 캐스팅으로 대체.
-  // 응답 확장 시 row.original에서 직접 가져오도록 교체한다.
-  const orderId = Number(orderNumber)
-  const orderItemIds = [orderId]
+  const {
+    orderNumber,
+    orderId,
+    trackingNumber,
+    courierName,
+    returnStatus,
+    exchangeStatus,
+  } = row.original
 
   // 반품 탭: returnStatus에 따라 운송장 셀 렌더링
   if (tab === 'returned') {
@@ -356,7 +378,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
           variant="secondary-outlined"
           size="sm"
           title="입력"
-          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId, orderItemIds })}
+          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId })}
         />
       )
     }
@@ -376,7 +398,6 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
               onTrackingOpen?.('edit', {
                 orderNumber,
                 orderId,
-                orderItemIds,
                 courier: courierName,
                 trackingNumber,
               })
@@ -403,7 +424,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
           variant="secondary-outlined"
           size="sm"
           title="입력"
-          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId, orderItemIds })}
+          onClick={() => onTrackingOpen?.('create', { orderNumber, orderId })}
         />
       )
     }
@@ -423,7 +444,6 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
               onTrackingOpen?.('edit', {
                 orderNumber,
                 orderId,
-                orderItemIds,
                 courier: courierName,
                 trackingNumber,
               })
@@ -440,7 +460,7 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
         variant="secondary-outlined"
         size="sm"
         title="입력"
-        onClick={() => onTrackingOpen?.('create', { orderNumber, orderId, orderItemIds })}
+        onClick={() => onTrackingOpen?.('create', { orderNumber, orderId })}
       />
     )
   }
@@ -462,7 +482,6 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
               onTrackingOpen?.('edit', {
                 orderNumber,
                 orderId,
-                orderItemIds,
                 courier: courierName,
                 trackingNumber,
               })

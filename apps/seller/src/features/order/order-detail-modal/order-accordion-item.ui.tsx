@@ -1,7 +1,10 @@
-import { useState } from 'react'
-
-import { ChevronDownIcon } from '@dessert/icons'
-import { Badge } from '@dessert/ui'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Badge,
+} from '@dessert/ui'
 
 import { ORDER_STATUS_BADGE_COLOR } from '@/entity/order/order.constant'
 import { OrderDetail, OrderStatus } from '@/entity/order/order.type'
@@ -29,8 +32,6 @@ export function OrderAccordionItem({
   details,
   defaultOpen = false,
 }: OrderAccordionItemProps) {
-  const [isOpen, setIsOpen] = useState(defaultOpen)
-
   const { orderInfo, buyer, shipping } = details[0]
   const statusKey = LABEL_TO_STATUS[orderInfo.orderStatusLabel]
   const totalAmount = details.reduce(
@@ -39,46 +40,43 @@ export function OrderAccordionItem({
   )
 
   return (
-    <div className="overflow-hidden rounded-10 border border-gray-200">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full cursor-pointer items-center justify-between bg-gray-50 px-16 py-20"
-      >
-        <div className="flex items-center gap-30">
-          <div className="flex items-center gap-10">
-            <span className="rounded-4 border border-gray-300 bg-white px-8 py-2 typo-title-14-m text-gray-800">
-              주문일
-            </span>
-            <span className="typo-title-16-r text-gray-800">
-              {orderInfo.orderDate}
-            </span>
-          </div>
-          <div className="flex items-center gap-10">
-            <span className="rounded-4 border border-gray-300 bg-white px-8 py-2 typo-title-14-m text-gray-800">
-              주문번호
-            </span>
-            <div className="flex items-center gap-6">
-              <span className="typo-title-16-r text-gray-800">
-                {orderNumber}
+    <Accordion
+      type="single"
+      collapsible
+      defaultValue={defaultOpen ? orderNumber : undefined}
+      className="overflow-hidden rounded-10 border border-gray-200"
+    >
+      <AccordionItem value={orderNumber}>
+        <AccordionTrigger className="bg-gray-50 px-16 py-20 **:data-[slot=accordion-trigger-icon]:size-24">
+          <div className="flex items-center gap-30">
+            <div className="flex items-center gap-10">
+              <span className="rounded-4 border border-gray-300 bg-white px-8 py-2 typo-title-14-m text-gray-800">
+                주문일
               </span>
-              {statusKey && (
-                <Badge
-                  content={orderInfo.orderStatusLabel}
-                  variant="outline"
-                  color={ORDER_STATUS_BADGE_COLOR[statusKey]}
-                />
-              )}
+              <span className="typo-title-16-r text-gray-800">
+                {orderInfo.orderDate}
+              </span>
+            </div>
+            <div className="flex items-center gap-10">
+              <span className="rounded-4 border border-gray-300 bg-white px-8 py-2 typo-title-14-m text-gray-800">
+                주문번호
+              </span>
+              <div className="flex items-center gap-6">
+                <span className="typo-title-16-r text-gray-800">
+                  {orderNumber}
+                </span>
+                {statusKey && (
+                  <Badge
+                    content={orderInfo.orderStatusLabel}
+                    variant="outline"
+                    color={ORDER_STATUS_BADGE_COLOR[statusKey]}
+                  />
+                )}
+              </div>
             </div>
           </div>
-        </div>
-
-        <ChevronDownIcon
-          className={`size-24 shrink-0 text-gray-800 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-        />
-      </button>
-
-      {isOpen && (
-        <div className="flex flex-col gap-12 bg-gray-100 p-12">
+        </AccordionTrigger>
+        <AccordionContent className="flex h-auto flex-col gap-12 bg-gray-100 p-12">
           {/* 주문 정보 */}
           <div className="rounded-10 border border-gray-200 bg-white px-20 pb-24 pt-20">
             <h3 className="mb-24 typo-heading-18-b text-gray-900">주문 정보</h3>
@@ -178,8 +176,8 @@ export function OrderAccordionItem({
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   )
 }
