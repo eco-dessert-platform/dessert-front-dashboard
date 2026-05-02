@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEditorImageUpdate } from '@/features/products/create'
 import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
 import '../../../styles/create-detail-editor.css'
+import { cn } from '@/shared/libs/utils'
 
 export function DetailEditPage() {
   const navigate = useNavigate()
@@ -27,7 +28,13 @@ export function DetailEditPage() {
       </header>
 
       {/* Content Body */}
-      <main className="flex flex-1 flex-col items-center overflow-auto">
+
+      <main
+        className={cn(
+          // eslint-disable-next-line better-tailwindcss/no-unknown-classes
+          'detail-edit-page flex flex-1 flex-col items-center overflow-auto',
+        )}
+      >
         {/* Editor wrapper */}
         <div className="flex size-full flex-col bg-white">
           <Editor

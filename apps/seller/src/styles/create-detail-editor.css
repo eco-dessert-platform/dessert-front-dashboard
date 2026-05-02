@@ -1,14 +1,14 @@
 /* editor.css 오버라이드 */
-.quill {
+.detail-edit-page .quill {
   height: calc(100% - 66px) !important;
 }
 
-.quill-wrapper {
+.detail-edit-page .quill-wrapper {
   height: 100%;
   background-color: var(--color-gray-50);
 }
 
-.quill-wrapper .ql-toolbar {
+.detail-edit-page .quill-wrapper .ql-toolbar {
   padding: 20px 48px;
   position: sticky;
   top: 0;
@@ -18,13 +18,13 @@
   left: 0;
 }
 
-.ql-container.ql-snow {
+.detail-edit-page .ql-container.ql-snow {
   max-width: calc(100% - 392px);
   width: 100%;
   margin: 0 auto;
 }
 
-.quill-wrapper .ql-editor {
+.detail-edit-page .quill-wrapper .ql-editor {
   position: relative;
   padding: 32px;
   width: 100%;
@@ -33,6 +33,6 @@
   background-color: #fff;
 }
 
-.quill-wrapper .ql-editor.ql-blank::before {
+.detail-edit-page .quill-wrapper .ql-editor.ql-blank::before {
   left: 32px;
 }
