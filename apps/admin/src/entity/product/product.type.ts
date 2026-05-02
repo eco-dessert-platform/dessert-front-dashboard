@@ -1,5 +1,7 @@
 import type {
+  DecideUploadApprovalRequestSchema,
   GetUploadApprovalsRequestParamsSchema,
+  RejectCategorySchema,
   UploadApprovalListResultSchema,
   UploadApprovalSchema,
 } from './product.contract'
@@ -35,9 +37,7 @@ export interface ProductResponse {
 }
 
 export type UploadApproval = z.infer<typeof UploadApprovalSchema>
-export type UploadApprovalListResult = z.infer<
-  typeof UploadApprovalListResultSchema
->
-export type GetUploadApprovalsRequestParams = z.infer<
-  typeof GetUploadApprovalsRequestParamsSchema
->
+export type UploadApprovalListResult = z.infer<typeof UploadApprovalListResultSchema>
+export type GetUploadApprovalsRequestParams = z.infer<typeof GetUploadApprovalsRequestParamsSchema>
+export type RejectCategory = z.infer<typeof RejectCategorySchema>
+export type DecideUploadApproval = z.infer<typeof DecideUploadApprovalRequestSchema>

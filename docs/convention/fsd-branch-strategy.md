@@ -232,6 +232,28 @@ Entity PR이 머지되면 Feature PR의 base를 `develop`으로 변경합니다.
 
 > PR 본문의 `## 참고사항`에 "이 PR은 #174 머지 이후 리뷰를 요청드립니다"와 같이 명시합니다.
 
+### ⚠️ 브랜치 동기화 주의사항
+
+base 브랜치로 지정한 Entity 브랜치에 새로운 커밋이 push되면 Feature 브랜치를 반드시 최신화해야 합니다.
+
+**Entity 브랜치가 열려있는 동안** 새 커밋이 push된 경우:
+
+```bash
+git checkout feat/<domain>-<feature-name>
+git merge feat/<domain>-entity
+git push
+```
+
+**Entity 브랜치가 `develop`에 머지·삭제된 이후**에는 GitHub이 Feature PR의 base를 자동으로 `develop`으로 변경합니다. 이때는 아래 명령어로 동기화하세요.
+
+```bash
+git checkout feat/<domain>-<feature-name>
+git merge develop
+git push
+```
+
+> 동기화하지 않으면 머지 시 충돌이 발생하거나 Entity 변경사항이 누락될 수 있습니다.
+
 <br/>
 
 ## 공통 컴포넌트(packages/ui) 변경이 필요한 경우
