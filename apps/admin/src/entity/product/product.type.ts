@@ -1,3 +1,12 @@
+import type {
+  DecideUploadApprovalRequestSchema,
+  GetUploadApprovalsRequestParamsSchema,
+  RejectCategorySchema,
+  UploadApprovalListResultSchema,
+  UploadApprovalSchema,
+} from './product.contract'
+import type { z } from 'zod'
+
 export interface ProductOption {
   optionId: number
   optionName: string
@@ -26,3 +35,9 @@ export interface ProductResponse {
     totalPages: number
   }
 }
+
+export type UploadApproval = z.infer<typeof UploadApprovalSchema>
+export type UploadApprovalListResult = z.infer<typeof UploadApprovalListResultSchema>
+export type GetUploadApprovalsRequestParams = z.infer<typeof GetUploadApprovalsRequestParamsSchema>
+export type RejectCategory = z.infer<typeof RejectCategorySchema>
+export type DecideUploadApproval = z.infer<typeof DecideUploadApprovalRequestSchema>
