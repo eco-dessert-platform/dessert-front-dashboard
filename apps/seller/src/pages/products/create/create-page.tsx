@@ -14,6 +14,7 @@ import {
   useCreateProductForm,
 } from '@/features/products/create'
 import { CreateFooter } from '@/features/products/create/create-footer'
+import { ProductPreviewModal } from '@/features/products/create/create-preview'
 
 function CreatePage() {
   const form = useCreateProductForm()
@@ -52,6 +53,10 @@ function CreatePageInner() {
       </CreateFormContainer>
 
       <CreateFooter onPreview={() => setIsPreviewOpen(true)} />
+      <ProductPreviewModal
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)}
+      />
     </>
   )
 }
