@@ -4,6 +4,7 @@ export const MAIN_CATEGORY_OPTIONS = [
 ]
 
 export const SUB_CATEGORY_MAP = {
+  '': [],
   bread: [
     { label: '식빵·모닝빵', value: 'bread_white' },
     { label: '베이글·도넛', value: 'bread_bagel' },
