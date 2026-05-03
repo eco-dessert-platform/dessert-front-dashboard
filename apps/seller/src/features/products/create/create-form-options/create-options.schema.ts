@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const productOptionSchema = z
   .object({
-    mainCategory: z.enum(['bread', 'snack']),
+    mainCategory: z.enum(['bread', 'snack']).or(z.literal('')),
     subCategory: z.string(),
     optionName: z.string(),
     ingredientCategories: z.array(z.enum(['glutenFree', 'vegan'])),
@@ -25,6 +25,10 @@ export const productOptionSchema = z
     protein: z.union([z.number().min(0), z.null()]),
     fat: z.union([z.number().min(0), z.null()]),
     sodium: z.union([z.number().min(0), z.null()]),
+  })
+  .refine((data) => data.mainCategory !== '', {
+    message: '상품 카테고리를 선택해주세요',
+    path: ['mainCategory'],
   })
   .refine(
     (data) =>

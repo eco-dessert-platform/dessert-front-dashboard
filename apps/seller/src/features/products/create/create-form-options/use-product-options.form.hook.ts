@@ -45,9 +45,13 @@ export function useProductOptionForm(
       : null
 
   const handleMainCategoryChange = (val: string) => {
-    form.setValue(`${p}.mainCategory`, val as 'bread' | 'snack', {
-      shouldValidate: true,
-    })
+    form.setValue(
+      `${p}.mainCategory`,
+      val as ProductOptionsType['mainCategory'],
+      {
+        shouldValidate: true,
+      },
+    )
     form.setValue(`${p}.subCategory`, '', { shouldValidate: false })
   }
 
