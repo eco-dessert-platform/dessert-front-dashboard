@@ -10,7 +10,8 @@ import { OrderAccordionItem } from './order-accordion-item.ui'
 interface OrderDetailModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  orderNumbers: string[]
+  // wire 직전 표현. FE는 ID를 string으로 들고 다니다 API 함수에서 number(int64)로 변환한다.
+  orderItemIds: string[]
 }
 
 function groupByOrderNumber(details: OrderDetail[]) {
@@ -26,11 +27,11 @@ function groupByOrderNumber(details: OrderDetail[]) {
 export function OrderDetailModal({
   open,
   onOpenChange,
-  orderNumbers,
+  orderItemIds,
 }: OrderDetailModalProps) {
   const { data } = useQuery({
-    ...orderQueries.detail(orderNumbers),
-    enabled: open && orderNumbers.length > 0,
+    ...orderQueries.detail(orderItemIds),
+    enabled: open && orderItemIds.length > 0,
   })
 
   const grouped = groupByOrderNumber(data ?? [])
@@ -42,7 +43,7 @@ export function OrderDetailModal({
           <DialogTitle showCloseButton>주문 상세</DialogTitle>
         </DialogHeader>
 
-        <div className="overflow-y-auto bg-white px-20 py-12">
+        <div className="overflow-y-auto rounded-b-16 bg-white px-20 py-12">
           <div className="space-y-12">
             {grouped.map(([orderNumber, details], index) => (
               <OrderAccordionItem
