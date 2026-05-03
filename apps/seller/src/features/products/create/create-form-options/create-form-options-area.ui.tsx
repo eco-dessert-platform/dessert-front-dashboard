@@ -12,7 +12,7 @@ const MAX_LENGTH = 50
 
 export const ProductOptionsArea = () => {
   const form = useFormContext<CreateProductForm>()
-  const { fields, append, remove, insert } = useFieldArray({
+  const { fields, remove, insert } = useFieldArray({
     control: form.control,
     name: 'options',
   })
