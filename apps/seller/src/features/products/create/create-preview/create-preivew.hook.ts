@@ -37,7 +37,7 @@ export const useCreatePreviewHook = () => {
   //     URL.createObjectURL(f),
   //   )
   //   const allImageUrls = mainImageUrl ? [mainImageUrl, ...extraImageUrls] : []
-
+  // line 33~39: PR#214에서 이미지와 관련된 type을 추가했기때문에 해당 PR merge 후 복구 예정입니다.
   return {
     formData,
     productPrice,

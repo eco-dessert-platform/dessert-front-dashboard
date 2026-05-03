@@ -1,7 +1,7 @@
 import { Button, LogoHeader } from '@dessert/ui'
 import { ChevronDown, Heart, Star } from 'lucide-react'
 
-import NoThumb from '@/assets/icons/preview/noimage.svg'
+import NoThumb from '@/assets/icons/bbangle-cry.svg'
 import Icon1 from '@/assets/icons/reviewBadge/badge-good.svg'
 import Icon2 from '@/assets/icons/reviewBadge/badge-plain.svg'
 import Icon3 from '@/assets/icons/reviewBadge/badge-soft.svg'
@@ -33,6 +33,8 @@ export const ProductPreviewModal = ({
   if (!isOpen) return null
 
   //const options = formData.options ?? []
+  //TODO : options 변수와 관련된 부분은 모두 주석처리 되어 있습니다.
+  //#PR216 에서 options와 관련된 type, form 구조가 변경되었기때문에 해당 PR merge 후 수정합니다.
   const BADGES = [
     { label: '맛있어요', icon: Icon1 },
     { label: '담백해요', icon: Icon2 },
