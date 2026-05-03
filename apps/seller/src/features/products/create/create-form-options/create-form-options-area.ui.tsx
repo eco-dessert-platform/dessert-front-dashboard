@@ -7,6 +7,9 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 import { ProductOptionForm } from './create-form-options-form.ui'
 import { CreateProductForm, DEFAULT_PRODUCT_OPTION } from '../create-form'
 
+const SUFFIX = ' (복사본)'
+const MAX_LENGTH = 50
+
 export const ProductOptionsArea = () => {
   const form = useFormContext<CreateProductForm>()
   const { fields, append, remove, insert } = useFieldArray({
@@ -30,9 +33,13 @@ export const ProductOptionsArea = () => {
           onDelete={() => fields.length > 1 && remove(index)}
           onCopy={() => {
             const current = form.getValues(`options.${index}`)
+            const truncatedName = current.optionName.slice(
+              0,
+              MAX_LENGTH - SUFFIX.length,
+            )
             insert(index + 1, {
               ...current,
-              optionName: `${current.optionName} (복사본)`,
+              optionName: `${truncatedName}${SUFFIX}`,
             })
           }}
           onAdd={() => insert(index + 1, DEFAULT_PRODUCT_OPTION)}
