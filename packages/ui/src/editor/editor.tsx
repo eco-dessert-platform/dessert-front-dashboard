@@ -56,14 +56,26 @@ interface QuillFormat {
 const Link = Quill.import('formats/link') as QuillFormat
 const Image = Quill.import('formats/image') as QuillFormat
 
+const getProtocol = (rawUrl: string) => {
+  const normalized = rawUrl.trim()
+  if (!normalized) return ''
+  try {
+    return new URL(normalized, 'http://localhost').protocol
+      .replace(':', '')
+      .toLowerCase()
+  } catch {
+    return ''
+  }
+}
+
 // 커스텀 함수를 할당
 const linkSanitize = (url: string) => {
-  const protocol = url.split(':')[0]?.toLowerCase()
-  return ['http', 'https', 'mailto'].includes(protocol) ? url : '//:0'
+  const protocol = getProtocol(url)
+  return ['http', 'https', 'mailto', 'tel'].includes(protocol) ? url : '//:0'
 }
 
 const imageSanitize = (url: string) => {
-  const protocol = url.split(':')[0]?.toLowerCase()
+  const protocol = getProtocol(url)
   return ['http', 'https', 'data', 'blob'].includes(protocol) ? url : '//:0'
 }
 
