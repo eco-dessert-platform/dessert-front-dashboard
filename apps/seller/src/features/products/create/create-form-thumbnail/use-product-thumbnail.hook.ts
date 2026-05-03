@@ -123,10 +123,11 @@ export function useProductThumbnailForm() {
       handleMainImageChange(file)
     } else {
       const remainingSlots = 9 - extraImages.length
-      const selectedFiles = Array.from(files).slice(0, remainingSlots)
+      const selectedFiles = Array.from(files)
       const newValidItems: { id: string; file: File }[] = []
 
       for (const file of selectedFiles) {
+        if (newValidItems.length >= remainingSlots) break
         const { error, warning } = await validateImage(file)
         if (error) {
           toast.error(`${file.name}: ${error}`)
