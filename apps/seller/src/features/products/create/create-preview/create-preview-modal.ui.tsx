@@ -7,8 +7,8 @@ import Icon2 from '@/assets/icons/reviewBadge/badge-plain.svg'
 import Icon3 from '@/assets/icons/reviewBadge/badge-soft.svg'
 import { cn } from '@/shared/libs/utils'
 
+import { useCreatePreviewHook } from './create-preivew.hook'
 import { CreatePreviewOptionItemUi } from './create-preview-option-item.ui'
-import { useCreatePreviewPreviewHook } from './create-preview.hook'
 
 interface ProductPreviewModalProps {
   isOpen: boolean
@@ -28,7 +28,7 @@ export const ProductPreviewModal = ({
     isPriceEntered,
     //allImageUrls,
     discountAmount,
-  } = useCreatePreviewPreviewHook()
+  } = useCreatePreviewHook()
 
   if (!isOpen) return null
 

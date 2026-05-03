@@ -5,7 +5,7 @@ import { CreateProductForm } from '../create-form'
 import { useProductCreationStore } from '../create-form/product-creation.store'
 //import { useCreateHeaderSteps } from '../create-store'
 
-export const useCreatePreviewPreviewHook = () => {
+export const useCreatePreviewHook = () => {
   const { watch } = useFormContext<CreateProductForm>()
   const { control: rootControl } = useFormContext()
   const rootProductPrice = useWatch({
