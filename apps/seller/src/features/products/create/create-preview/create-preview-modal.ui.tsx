@@ -32,7 +32,7 @@ export const ProductPreviewModal = ({
 
   if (!isOpen) return null
 
-  const options = formData.options ?? []
+  //const options = formData.options ?? []
   const BADGES = [
     { label: '맛있어요', icon: Icon1 },
     { label: '담백해요', icon: Icon2 },
@@ -85,11 +85,11 @@ export const ProductPreviewModal = ({
                 <p className="typo-title-16-m">등록된 이미지가 없습니다.</p>
               </div>
             )} */}
-            {options.length > 1 && (
+            {/* {options.length > 1 && (
               <div className="absolute top-16 left-16 rounded-4 bg-[#F26565] px-8 py-4 typo-body-12-sb text-white">
                 묶음상품
               </div>
-            )}
+            )} */}
             {/* <div className="absolute right-10 bottom-10 rounded-full bg-black/50 px-10 py-4 typo-body-12-r text-white">
               1 / {allImageUrls.length || 1}
             </div> */}
@@ -121,11 +121,11 @@ export const ProductPreviewModal = ({
                   ? `${totalPrice.toLocaleString()}원~`
                   : '{{상품가격}}'}
               </span>
-              {options.length > 1 && (
+              {/* {options.length > 1 && (
                 <span className="typo-title-14-m text-gray-500">
                   맛별 가격 상이
                 </span>
-              )}
+              )} */}
             </div>
             <div className="flex items-center gap-2 typo-body-14-m text-gray-900">
               <Star className="fill-yellow-400 text-yellow-400" size={18} />
@@ -178,7 +178,7 @@ export const ProductPreviewModal = ({
         <div className="h-6 w-full bg-gray-100" />
         <div>
           <h3 className="p-16 typo-title-14-sb text-gray-800">상품 옵션</h3>
-          {options.length === 0 ? (
+          {/* {options.length === 0 ? (
             <div className="p-16 typo-body-14-r text-gray-400">
               옵션을 입력해주세요
             </div>
@@ -192,7 +192,7 @@ export const ProductPreviewModal = ({
                 discountAmount={discountAmount}
               />
             ))
-          )}
+          )} */}
           <div className="p-16">
             <div className="mt-16 w-full rounded-10 border border-gray-200 py-8 text-center typo-title-16-m text-gray-800">
               간단히 보기
