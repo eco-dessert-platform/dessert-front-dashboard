@@ -312,10 +312,20 @@ export const ProductOptionForm = ({
 
       {/* 삭제 / 복사 */}
       <div className="flex items-center justify-end gap-16">
-        <button className="text-gray-700" onClick={onDelete}>
+        <button
+          type="button"
+          aria-label="상품 옵션 삭제"
+          className="text-gray-700"
+          onClick={onDelete}
+        >
           <Trash2 size={20} />
         </button>
-        <button className="text-gray-700" onClick={onCopy}>
+        <button
+          type="button"
+          aria-label="상품 옵션 복사"
+          className="text-gray-700"
+          onClick={onCopy}
+        >
           <Copy size={20} />
         </button>
       </div>
