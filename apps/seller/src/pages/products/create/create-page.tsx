@@ -1,4 +1,5 @@
-import { Button } from '@dessert/ui'
+import { useState } from 'react'
+
 import { FormProvider } from 'react-hook-form'
 
 import {
@@ -12,6 +13,7 @@ import {
   ProductOptionsArea,
   useCreateProductForm,
 } from '@/features/products/create'
+import { CreateFooter } from '@/features/products/create/create-footer'
 
 function CreatePage() {
   const form = useCreateProductForm()
@@ -25,6 +27,7 @@ function CreatePage() {
 }
 
 function CreatePageInner() {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false) //미리보기
   return (
     <>
       <ProductHeader />
@@ -48,21 +51,7 @@ function CreatePageInner() {
         <ProductDisclosureArea />
       </CreateFormContainer>
 
-      <div className="mt-40 flex gap-12">
-        <Button
-          title="미리보기"
-          variant="primary-outlined"
-          size="lg"
-          disabled
-        />
-        <Button
-          title="임시저장"
-          variant="primary-outlined"
-          size="lg"
-          disabled
-        />
-        <Button title="저장하기" variant="primary-filled" size="lg" disabled />
-      </div>
+      <CreateFooter onPreview={() => setIsPreviewOpen(true)} />
     </>
   )
 }
