@@ -38,13 +38,13 @@ export const useCreatePreviewPreviewHook = () => {
 
   const isPriceEntered = rawPrice !== null && rawPrice > 0
 
-  const mainImageUrl = formData.mainImage
-    ? URL.createObjectURL(formData.mainImage)
-    : null
-  const extraImageUrls = (formData.extraImages ?? []).map((f) =>
-    URL.createObjectURL(f),
-  )
-  const allImageUrls = mainImageUrl ? [mainImageUrl, ...extraImageUrls] : []
+  //   const mainImageUrl = formData.mainImage
+  //     ? URL.createObjectURL(formData.mainImage)
+  //     : null
+  //   const extraImageUrls = (formData.extraImages ?? []).map((f) =>
+  //     URL.createObjectURL(f),
+  //   )
+  //   const allImageUrls = mainImageUrl ? [mainImageUrl, ...extraImageUrls] : []
 
   return {
     formData,
@@ -53,7 +53,7 @@ export const useCreatePreviewPreviewHook = () => {
     discountPercent,
     totalPrice,
     isPriceEntered,
-    allImageUrls,
+    //allImageUrls,
     discountAmount,
   }
 }

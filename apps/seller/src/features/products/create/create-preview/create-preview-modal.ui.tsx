@@ -26,7 +26,7 @@ export const ProductPreviewModal = ({
     discountPercent,
     totalPrice,
     isPriceEntered,
-    allImageUrls,
+    //allImageUrls,
     discountAmount,
   } = useCreatePreviewPreviewHook()
 
@@ -73,7 +73,7 @@ export const ProductPreviewModal = ({
         {/* 3. 이미지 */}
         <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden p-16">
           <div className="relative size-full overflow-hidden rounded-6 bg-gray-100">
-            {allImageUrls[0] ? (
+            {/* {allImageUrls[0] ? (
               <img
                 src={allImageUrls[0]}
                 alt="product preview"
@@ -84,15 +84,15 @@ export const ProductPreviewModal = ({
                 <img src={NoThumb} alt="썸네일이 등록되지 않았습니다" />
                 <p className="typo-title-16-m">등록된 이미지가 없습니다.</p>
               </div>
-            )}
+            )} */}
             {options.length > 1 && (
               <div className="absolute top-16 left-16 rounded-4 bg-[#F26565] px-8 py-4 typo-body-12-sb text-white">
                 묶음상품
               </div>
             )}
-            <div className="absolute right-10 bottom-10 rounded-full bg-black/50 px-10 py-4 typo-body-12-r text-white">
+            {/* <div className="absolute right-10 bottom-10 rounded-full bg-black/50 px-10 py-4 typo-body-12-r text-white">
               1 / {allImageUrls.length || 1}
-            </div>
+            </div> */}
           </div>
         </div>
 
