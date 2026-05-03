@@ -272,11 +272,13 @@ export const ProductOptionForm = ({
               checked={field.value}
               onCheckedChange={(checked: boolean) => {
                 field.onChange(checked)
-                NUTRITION_FIELDS.forEach(({ key }) => {
-                  const inputProps =
-                    nutritionInputs[key as keyof typeof nutritionInputs]
-                  inputProps.handleNull()
-                })
+                if (!checked) {
+                  NUTRITION_FIELDS.forEach(({ key }) => {
+                    const inputProps =
+                      nutritionInputs[key as keyof typeof nutritionInputs]
+                    inputProps.handleNull()
+                  })
+                }
               }}
             />
           )}
