@@ -3,8 +3,9 @@ import { useFormContext } from 'react-hook-form'
 
 //import { CreateFormType } from '@/entity/products/create/create-form'
 import { CreateProductForm } from '../create-form'
-import { useCreateDraftStore } from './create-draft.store'
-import { useProductCreationStore } from '../create-store/product-creation.store'
+import { useCreateDraftStore } from './create-draft-store'
+import { useProductCreationStore } from '../create-form/product-creation.store'
+
 export const useCreateDraft = () => {
   const form = useFormContext<CreateProductForm>()
   const { productDetail } = useProductCreationStore()

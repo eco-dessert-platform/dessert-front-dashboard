@@ -8,17 +8,17 @@ import {
   DialogTitle,
 } from '@dessert/ui'
 
-interface CreateDraftDialogProps {
+interface CreateDraftModalProps {
   isOpen: boolean
   onClose: () => void
   onConfirm: () => void
 }
 
-export function CreateDraftDialog({
+export function CreateDraftModal({
   isOpen,
   onClose,
   onConfirm,
-}: CreateDraftDialogProps) {
+}: CreateDraftModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent showCloseButton={false}>
