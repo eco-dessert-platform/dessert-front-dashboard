@@ -37,6 +37,7 @@ import {
   DELIVERY_STATUS_MAP,
   TAB_TO_STATUS,
 } from '@/entity/order/order.constant.ts'
+import { toWireOrderItemIds } from './order.wire'
 
 export interface UpdateOrderStatusRequest {
   orderNumbers: string[]
@@ -51,7 +52,22 @@ export interface CompleteOrderRequest {
 
 // VITE_USE_MOCK=true 일 때 mock 응답 사용
 // 미설정(false) 기타 값이면 실서버호출
-const useMock = import.meta.env.VITE_USE_MOCK === 'false'
+const useMock = import.meta.env.VITE_USE_MOCK === 'true'
+
+function ensureSuccess(data: ApiResponse<unknown>, fallback: string): void {
+  if (!data.success || data.result === null) {
+    throw new Error(data.message ?? fallback)
+  }
+}
+
+// success 검증 후 result를 꺼냄. 백엔드가 result를 null로 보낼 수도 있으므로
+// == null 로 null/undefined 모두 걸러낸다. (T | undefined → T narrowing 의도 포함)
+function unwrap<T>(data: ApiResponse<T>, fallback: string): T {
+  if (!data.success || data.result == null) {
+    throw new Error(data.message ?? fallback)
+  }
+  return data.result
+}
 
 export async function getOrders(
   filters: OrderFilters,
@@ -92,11 +108,9 @@ export async function getOrders(
     },
   )
 
-  if (!data.result) {
-    throw new Error(data.message ?? '주문 목록 조회에 실패했습니다.')
-  }
-
-  return transformOrderListResult(data.result)
+  return transformOrderListResult(
+    unwrap(data, '주문 목록 조회에 실패했습니다.'),
+  )
 }
 
 function transformOrderListResult(result: OrderListResult): OrderListResponse {
@@ -130,9 +144,11 @@ function toOrderItem(item: OrderListContent): OrderItem {
     courier && courier !== 'NONE' ? (courier as CourierName) : null
 
   return {
+    orderId: item.orderId,
     recipientName: item.recipientName,
     orderNumber: String(item.orderNumber),
     products: item.orderItems.map((i) => ({
+      orderItemId: i.orderItemId,
       productName: i.orderItemInfo.itemName,
       optionName: null,
       quantity: i.orderItemInfo.quantity,
@@ -156,27 +172,23 @@ function toOrderItem(item: OrderListContent): OrderItem {
 }
 
 export async function getOrderDetails(
-  orderNumbers: string[],
+  orderItemIds: string[],
 ): Promise<OrderDetail[]> {
   if (useMock) {
-    return getMockOrderDetailResponse(orderNumbers)
+    return getMockOrderDetailResponse(orderItemIds)
   }
 
-  // 서버 스펙: orderItemIds: number[] (int64). FE는 string으로 들고 다니다 wire에서만 변환
-  const orderItemIds = orderNumbers
-    .map((n) => Number(n))
-    .filter((n) => Number.isFinite(n))
+  const wireIds = toWireOrderItemIds(orderItemIds)
+  if (wireIds.length === 0) {
+    return []
+  }
 
   const { data } = await client.post<ApiResponse<OrderDetail[]>>(
     '/api/v1/seller/orders/items',
-    orderItemIds,
+    wireIds,
   )
 
-  if (!data.result) {
-    throw new Error(data.message ?? '주문 상세 조회에 실패했습니다.')
-  }
-
-  return data.result
+  return unwrap(data, '주문 상세 조회에 실패했습니다.')
 }
 
 export async function updateOrderStatus(
@@ -194,9 +206,12 @@ export async function updateOrderStatus(
     formData.append('images', image)
   })
 
-  await client.post('/api/v1/seller/orders/status', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
+  const { data } = await client.post<ApiResponse<never>>(
+    '/api/v1/seller/orders/status',
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } },
+  )
+  ensureSuccess(data, '주문 상태 변경에 실패했습니다.')
 }
 
 // NOTE: 운송장 API의 응답 envelope 키가 백엔드 스펙상
@@ -218,11 +233,7 @@ export async function createShipment(
     trackingNumber,
   })
 
-  if (!data.result?.content) {
-    throw new Error(data.message ?? '운송장 등록에 실패했습니다.')
-  }
-
-  return data.result.content
+  return unwrap(data, '운송장 등록에 실패했습니다.').content
 }
 
 export async function updateShipment(
@@ -241,11 +252,7 @@ export async function updateShipment(
     trackingNumber,
   })
 
-  if (!data.result?.contents) {
-    throw new Error(data.message ?? '운송장 수정에 실패했습니다.')
-  }
-
-  return data.result.contents
+  return unwrap(data, '운송장 수정에 실패했습니다.').contents
 }
 
 export async function completeReturn(
@@ -255,7 +262,11 @@ export async function completeReturn(
     return Promise.resolve()
   }
 
-  await client.post('/api/v1/seller/orders/return/complete', request)
+  const { data } = await client.post<ApiResponse<never>>(
+    '/api/v1/seller/orders/return/complete',
+    request,
+  )
+  ensureSuccess(data, '반품 완료 처리에 실패했습니다.')
 }
 
 export async function completeExchange(
@@ -265,7 +276,11 @@ export async function completeExchange(
     return Promise.resolve()
   }
 
-  await client.post('/api/v1/seller/orders/exchange/complete', request)
+  const { data } = await client.post<ApiResponse<never>>(
+    '/api/v1/seller/orders/exchange/complete',
+    request,
+  )
+  ensureSuccess(data, '교환 완료 처리에 실패했습니다.')
 }
 
 export async function createReturn(
@@ -284,11 +299,7 @@ export async function createReturn(
     sellerComment,
   })
 
-  if (!data.result?.content) {
-    throw new Error(data.message ?? '반품 요청에 실패했습니다.')
-  }
-
-  return data.result.content
+  return unwrap(data, '반품 요청에 실패했습니다.').content
 }
 
 export async function createExchange(
@@ -307,11 +318,7 @@ export async function createExchange(
     sellerComment,
   })
 
-  if (!data.result?.content) {
-    throw new Error(data.message ?? '교환 요청에 실패했습니다.')
-  }
-
-  return data.result.content
+  return unwrap(data, '교환 요청에 실패했습니다.').content
 }
 
 export async function decideCancel(
@@ -325,10 +332,7 @@ export async function decideCancel(
     '/api/v1/seller/cancels/decision',
     request,
   )
-
-  if (!data.success) {
-    throw new Error(data.message ?? '주문 취소 처리에 실패했습니다.')
-  }
+  ensureSuccess(data, '주문 취소 처리에 실패했습니다.')
 }
 
 export async function decideReturn(
@@ -342,10 +346,7 @@ export async function decideReturn(
     '/api/v1/seller/returns/decision',
     request,
   )
-
-  if (!data.success) {
-    throw new Error(data.message ?? '반품 처리에 실패했습니다.')
-  }
+  ensureSuccess(data, '반품 처리에 실패했습니다.')
 }
 
 export async function confirmOrder(
@@ -363,9 +364,5 @@ export async function confirmOrder(
     { orderItemIds },
   )
 
-  if (!data.result?.content) {
-    throw new Error(data.message ?? '발주 확인에 실패했습니다.')
-  }
-
-  return data.result.content
+  return unwrap(data, '발주 확인에 실패했습니다.').content
 }

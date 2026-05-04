@@ -71,7 +71,6 @@ client.interceptors.response.use(
         return client(originalRequest)
       }
     } catch {
-      // console.error('토큰 재발급 실패 - 리다이렉트 임시 차단')
       window.location.href = '/auth'
     } finally {
       isRefreshing = false
