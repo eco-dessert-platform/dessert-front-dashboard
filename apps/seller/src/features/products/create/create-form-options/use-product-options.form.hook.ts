@@ -2,9 +2,9 @@ import { useFormContext } from 'react-hook-form'
 
 //import { CreateFormType } from '@/entity/products/create/create-form'
 // CreateProductForm -> CreateFormType변경 예정입니다.
+import { SUB_CATEGORY_MAP } from './create-form-options.constant'
 import { ProductOptionsType } from './create-form-options.type'
 import { productOptionSchema } from './create-options.schema'
-import { SUB_CATEGORY_MAP } from './options-category.constant'
 import { useFloatInput } from '../create-calculation/create-form-float-input.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
 import { CreateProductForm } from '../create-form/product-create.types'

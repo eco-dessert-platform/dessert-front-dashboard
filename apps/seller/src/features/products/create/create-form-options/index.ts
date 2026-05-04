@@ -6,7 +6,7 @@ export type { ProductOptionsType } from './create-form-options.type'
 export {
   MAIN_CATEGORY_OPTIONS,
   SUB_CATEGORY_MAP,
-} from './options-category.constant'
-export { NUTRITION_FIELDS } from './options-nutrition.constant'
-export type { NutritionFieldKey } from './options-nutrition.constant'
-export { SHIPPING_DAYS } from './options-shipping-days.constant'
+  NUTRITION_FIELDS,
+  SHIPPING_DAYS,
+} from './create-form-options.constant'
+export type { NutritionFieldKey } from './create-form-options.constant'

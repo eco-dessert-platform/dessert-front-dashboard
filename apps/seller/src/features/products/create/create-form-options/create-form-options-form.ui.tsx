@@ -6,8 +6,10 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 import DaySelector from '@/shared/block/day-selector/day-selector'
 
-import { MAIN_CATEGORY_OPTIONS } from './options-category.constant'
-import { NUTRITION_FIELDS } from './options-nutrition.constant'
+import {
+  MAIN_CATEGORY_OPTIONS,
+  NUTRITION_FIELDS,
+} from './create-form-options.constant'
 import { useProductOptionForm } from './use-product-options.form.hook'
 //import { ProductFinalPrice } from '../create-form'
 //ProductFinalPrice는 상품 정보 폼에서도 공통으로 사용되는 디자인이므로
