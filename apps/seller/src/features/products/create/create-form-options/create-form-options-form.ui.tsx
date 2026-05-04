@@ -188,7 +188,7 @@ export const ProductOptionForm = ({
               placeholder="0~100,000"
               className="flex-1"
               value={
-                rootProductPrice
+                rootProductPrice !== null
                   ? Number(rootProductPrice).toLocaleString('ko-KR')
                   : ''
               }
