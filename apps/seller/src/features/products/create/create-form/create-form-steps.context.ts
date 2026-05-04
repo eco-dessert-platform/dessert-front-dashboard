@@ -1,10 +1,10 @@
-import React, { createContext } from 'react'
+// import React, { createContext } from 'react'
 
-export type FormStepStatus = Record<string, boolean>
+// export type FormStepStatus = Record<string, boolean>
 
-interface FormStepsContextType {
-  productFields: FormStepStatus
-  setProductFields: React.Dispatch<React.SetStateAction<FormStepStatus>>
-}
+// interface FormStepsContextType {
+//   productFields: FormStepStatus
+//   setProductFields: React.Dispatch<React.SetStateAction<FormStepStatus>>
+// }
 
-export const FormStepsContext = createContext<FormStepsContextType | null>(null)
+// export const FormStepsContext = createContext<FormStepsContextType | null>(null)
