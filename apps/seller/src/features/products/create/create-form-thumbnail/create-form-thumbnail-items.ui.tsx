@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
+import { XIcon } from '@dessert/icons'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { XIcon } from 'lucide-react'
 
 interface SortableImageItemsProps {
   id: string

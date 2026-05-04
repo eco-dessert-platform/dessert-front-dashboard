@@ -1,3 +1,4 @@
+import { CameraIcon } from '@dessert/icons'
 import {
   Button,
   Dialog,
@@ -10,7 +11,6 @@ import {
 } from '@dessert/ui'
 import { DndContext, closestCenter } from '@dnd-kit/core'
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable'
-import { Camera } from 'lucide-react'
 
 import {
   ImagePreviewItem,
@@ -153,7 +153,7 @@ function UploadButton({
         htmlFor={id}
         className="flex h-[120px] w-[120px] cursor-pointer flex-col items-center justify-center rounded-16 border border-dashed border-gray-200 bg-white transition-colors outline-none focus-within:border-transparent focus-within:ring-2 focus-within:ring-gray-300"
       >
-        <Camera className="w-16 text-gray-300" />
+        <CameraIcon className="size-24 text-gray-300" />
         <span className="typo-body-12-r text-gray-800">
           사진 <span className="text-primary-500">{count}</span>/{max}
         </span>
