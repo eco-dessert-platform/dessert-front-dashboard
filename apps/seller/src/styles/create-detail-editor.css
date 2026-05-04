@@ -14,8 +14,7 @@
   top: 0;
   z-index: 10;
   background-color: white;
-  width: 100vw;
-  left: 0;
+  width: 100%;
 }
 
 .detail-edit-page .ql-container.ql-snow {
