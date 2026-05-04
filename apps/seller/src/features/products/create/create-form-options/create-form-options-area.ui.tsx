@@ -2,15 +2,15 @@ import { useEffect } from 'react'
 
 import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
 import { Copy, Trash2 } from 'lucide-react'
-import { Controller } from 'react-hook-form'
+import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 import { NUTRITION_FIELDS } from '@/entity/products/create/create-options/product-nutritions.constant'
 import { MAIN_CATEGORY_OPTIONS } from '@/entity/products/create/create-options/product-options.constant'
 import DaySelector from '@/shared/block/day-selector/day-selector'
 
 import { useProductOptionForm } from './use-product-options.form.hook'
+import { InfoTooltip, ProductFinalPrice } from '../create-form'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
 
 export const ProductOptionsArea = () => {
   const {
@@ -36,6 +36,13 @@ export const ProductOptionsArea = () => {
     register,
     formState: { errors },
   } = form
+
+  const { control: rootControl } = useFormContext()
+
+  const rootProductPrice = useWatch({
+    control: rootControl,
+    name: 'price',
+  })
 
   const { setProductFields } = useCreateFormSteps()
 
@@ -168,14 +175,11 @@ export const ProductOptionsArea = () => {
           </div>
         </div>
         {totalPrice !== null && (
-          <div className="mt-8 flex justify-end">
-            <p className="typo-title-16-r text-gray-600">
-              최종 가격:
-              <span className="typo-heading-18-b text-gray-900">
-                {totalPrice.toLocaleString('ko-KR')}원
-              </span>
-            </p>
-          </div>
+          <ProductFinalPrice
+            title={'최종 상품 옵션 금액'}
+            price={rootProductPrice}
+            finalPrice={totalPrice}
+          />
         )}
       </div>
 
