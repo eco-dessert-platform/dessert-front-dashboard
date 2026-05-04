@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react'
 
 import { useProductCreationStore } from '../create-form/product-creation.store'
-export const useEditorImageUpdate = () => {
+export const useEditorImageInsert = () => {
   const { setEditorImageFiles } = useProductCreationStore()
 
   const editorImageFiles = useRef<Map<string, File>>(new Map())
 
-  const handleImageUpload = async (file: File) => {
+  const handleImageInsert = async (file: File) => {
     const blobUrl = URL.createObjectURL(file)
     editorImageFiles.current.set(blobUrl, file)
     return blobUrl
@@ -26,5 +26,5 @@ export const useEditorImageUpdate = () => {
     }
   }, [setEditorImageFiles])
 
-  return { handleImageUpload, editorImageFiles }
+  return { handleImageInsert, editorImageFiles }
 }
