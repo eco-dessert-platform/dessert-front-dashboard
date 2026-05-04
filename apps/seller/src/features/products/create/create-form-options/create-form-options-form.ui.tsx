@@ -4,7 +4,7 @@ import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
 import { Copy, Trash2 } from 'lucide-react'
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
-import DaySelector from '@/shared/block/day-selector/day-selector'
+import { DaySelector } from '@/widgets/day-selector'
 
 import {
   MAIN_CATEGORY_OPTIONS,
