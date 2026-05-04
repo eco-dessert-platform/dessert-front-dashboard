@@ -24,16 +24,23 @@ export function useProductOptionForm(
   const ingredientCategories = form.watch(`${p}.ingredientCategories`)
   const nutritionValues = form.watch([
     `${p}.totalWeight`,
-    `${p}.calories`,
+    `${p}.servingSize`,
     `${p}.carbohydrate`,
     `${p}.sugar`,
     `${p}.protein`,
     `${p}.fat`,
-    `${p}.sodium`,
+    `${p}.calories`,
   ])
 
-  const [totalWeight, calories, carbohydrate, sugar, protein, fat, sodium] =
-    nutritionValues
+  const [
+    totalWeight,
+    servingSize,
+    calories,
+    carbohydrate,
+    sugar,
+    protein,
+    fat,
+  ] = nutritionValues
 
   const subCategoryOptions = mainCategory
     ? (SUB_CATEGORY_MAP[mainCategory] ?? [])
@@ -86,6 +93,9 @@ export function useProductOptionForm(
   const totalWeightInput = useFloatInput(totalWeight, (val) => {
     form.setValue(`${p}.totalWeight`, val, { shouldValidate: true })
   })
+  const servingSizeInput = useFloatInput(servingSize, (val) => {
+    form.setValue(`${p}.servingSize`, val, { shouldValidate: true })
+  })
   const caloriesInput = useFloatInput(calories, (val) => {
     form.setValue(`${p}.calories`, val, { shouldValidate: true })
   })
@@ -101,9 +111,6 @@ export function useProductOptionForm(
   const fatInput = useFloatInput(fat, (val) => {
     form.setValue(`${p}.fat`, val, { shouldValidate: true })
   })
-  const sodiumInput = useFloatInput(sodium, (val) => {
-    form.setValue(`${p}.sodium`, val, { shouldValidate: true })
-  })
 
   const nutritionInputs: Record<
     keyof Pick<
@@ -114,7 +121,7 @@ export function useProductOptionForm(
       | 'sugar'
       | 'protein'
       | 'fat'
-      | 'sodium'
+      | 'servingSize'
     >,
     {
       displayValue: string
@@ -123,12 +130,12 @@ export function useProductOptionForm(
     }
   > = {
     totalWeight: totalWeightInput,
-    calories: caloriesInput,
+    servingSize: servingSizeInput,
     carbohydrate: carbohydrateInput,
     sugar: sugarInput,
     protein: proteinInput,
     fat: fatInput,
-    sodium: sodiumInput,
+    calories: caloriesInput,
   }
 
   const isNutritionValid =

@@ -19,12 +19,13 @@ export const productOptionSchema = z
     ),
     hasNutrition: z.boolean(),
     totalWeight: z.union([z.number().min(0), z.null()]),
-    calories: z.union([z.number().min(0), z.null()]),
+    servingSize: z.union([z.number().min(0), z.null()]),
     carbohydrate: z.union([z.number().min(0), z.null()]),
     sugar: z.union([z.number().min(0), z.null()]),
     protein: z.union([z.number().min(0), z.null()]),
     fat: z.union([z.number().min(0), z.null()]),
     sodium: z.union([z.number().min(0), z.null()]),
+    calories: z.union([z.number().min(0), z.null()]),
   })
   .refine((data) => data.mainCategory !== '', {
     message: '상품 카테고리를 선택해주세요',

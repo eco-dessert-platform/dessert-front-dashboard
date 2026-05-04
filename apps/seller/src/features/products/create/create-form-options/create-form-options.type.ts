@@ -8,10 +8,10 @@ export type ProductOptionsType = {
   shippingDays: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[]
   hasNutrition: boolean
   totalWeight: number | null
-  calories: number | null
+  servingSize: number | null
   carbohydrate: number | null
   sugar: number | null
   protein: number | null
   fat: number | null
-  sodium: number | null
+  calories: number | null
 }

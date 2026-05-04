@@ -15,12 +15,12 @@ export const DEFAULT_PRODUCT_OPTION: ProductOptionsType = {
   shippingDays: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
   hasNutrition: true,
   totalWeight: null,
-  calories: null,
+  servingSize: null,
   carbohydrate: null,
   sugar: null,
   protein: null,
   fat: null,
-  sodium: null,
+  calories: null,
 }
 
 export const useCreateProductForm = () => {
