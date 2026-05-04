@@ -1,7 +1,7 @@
 //import { useEffect } from 'react'
 
+import { CopyIcon, TrashIcon } from '@dessert/icons'
 import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
-import { Copy, Trash2 } from 'lucide-react'
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 import { DaySelector } from '@/widgets/day-selector'
@@ -313,14 +313,14 @@ export const ProductOptionForm = ({
       </p>
 
       {/* 삭제 / 복사 */}
-      <div className="flex items-center justify-end gap-16">
+      <div className="flex items-center justify-end gap-12">
         <button
           type="button"
           aria-label="상품 옵션 삭제"
           className="text-gray-700"
           onClick={onDelete}
         >
-          <Trash2 size={20} />
+          <TrashIcon className="w-7 text-gray-700" />
         </button>
         <button
           type="button"
@@ -328,7 +328,7 @@ export const ProductOptionForm = ({
           className="text-gray-700"
           onClick={onCopy}
         >
-          <Copy size={20} />
+          <CopyIcon className="w-7 text-gray-700" />
         </button>
       </div>
 
