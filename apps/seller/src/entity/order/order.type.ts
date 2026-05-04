@@ -87,6 +87,7 @@ export type OrderAction =
   | 'holdExchange'
 
 export interface OrderProduct {
+  orderItemId: number
   productName: string
   optionName: string | null
   quantity: number
@@ -94,6 +95,7 @@ export interface OrderProduct {
 }
 
 export interface OrderItem {
+  orderId: number
   recipientName: string
   orderNumber: string
   products: OrderProduct[]
@@ -146,6 +148,7 @@ export interface OrderListItemInfo {
 }
 
 export interface OrderListItemDetail {
+  orderItemId: number
   orderNumber: string
   orderStatus: OrderStatus
   orderItemInfo: OrderListItemInfo
@@ -160,6 +163,7 @@ export interface OrderListPaymentInfo {
 }
 
 export interface OrderListContent {
+  orderId: number
   orderNumber: string
   recipientName: string
   orderItems: OrderListItemDetail[]
