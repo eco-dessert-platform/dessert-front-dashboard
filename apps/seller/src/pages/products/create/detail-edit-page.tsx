@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { BbanggreuiOvenLogo } from '@dessert/icons'
 import { Button, Editor } from '@dessert/ui'
@@ -13,6 +13,8 @@ export function DetailEditPage() {
   // 편집 시 로컬 상태를 사용하고 등록 시에만 스토어에 반영합니다 (CodeRabbit 피드백 반영)
   const [localDetail, setLocalDetail] = useState(productDetail)
 
+  const editorImageFiles = useRef<Map<string, File>>(new Map())
+  // line16: PR220을 위한 test 코드입니다.
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden bg-gray-50">
       {/* Header */}
@@ -31,6 +33,12 @@ export function DetailEditPage() {
             onChange={setLocalDetail}
             image={true}
             height={600}
+            onImageUpload={async (file) => {
+              const blobUrl = URL.createObjectURL(file)
+              editorImageFiles.current.set(blobUrl, file)
+              return blobUrl
+            }}
+            // line 36~40:PR220을 위한 test 코드입니다.
             placeholder="자유롭게 상세페이지를 작성해보세요 (권장크기 : 가로 860px)"
           />
         </div>
