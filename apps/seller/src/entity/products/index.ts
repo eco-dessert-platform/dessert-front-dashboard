@@ -9,9 +9,9 @@ export * from './create/create-disclosure/product-disclosure.constant'
 export * from './create/create-form/product-form.type'
 
 // Create - Header
-export * from './create/create-header/category-options.constants'
+export * from '../../features/products/create/create-header/category-options.constants'
 export * from './create/create-header/essential-options.constants'
-export * from './create/create-header/options-tag.type'
+export * from '../../features/products/create/create-header/options-tag.type'
 
 // Create - Info (Product Info)
 export * from './create/create-info/product-discount-type.constants'

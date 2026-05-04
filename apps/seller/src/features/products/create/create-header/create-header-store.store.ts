@@ -1,14 +1,12 @@
 import { create } from 'zustand'
 
-import {
-  CategoryOptions,
-  EssentialOptions,
-} from '@/entity/products/create/create-header'
+import { CategoryOptions } from './category-options.constants'
 import {
   ActiveTags,
   NutritionData,
   ProductFileType,
-} from '@/entity/products/create/create-store'
+} from './create-header-store.type'
+import { EssentialOptions } from './essential-options.constants'
 
 interface CreateFormStoreProps {
   // --- State ---
