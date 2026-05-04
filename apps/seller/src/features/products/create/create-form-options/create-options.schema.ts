@@ -34,8 +34,8 @@ export const productOptionSchema = z
   .refine(
     (data) =>
       data.optionName === '' ||
-      (data.optionName.length >= 3 && data.optionName.length <= 49),
-    { message: '3자 이상 50자 미만으로 입력해 주세요', path: ['optionName'] },
+      (data.optionName.length >= 1 && data.optionName.length <= 49),
+    { message: '1자 이상 50자 미만으로 입력해 주세요', path: ['optionName'] },
   )
   .refine((data) => data.additionalPrice !== null, {
     message: '',

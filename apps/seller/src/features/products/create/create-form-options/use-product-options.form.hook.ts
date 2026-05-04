@@ -147,7 +147,7 @@ export function useProductOptionForm(
   const isFormField =
     !!mainCategory &&
     subCategory !== '' &&
-    optionName.length >= 3 &&
+    optionName.length >= 1 &&
     optionName.length <= 49 &&
     ingredientCategories.length > 0 &&
     additionalPrice !== null &&

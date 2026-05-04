@@ -141,7 +141,7 @@ export const ProductOptionForm = ({
         <Input
           label="상품 옵션명"
           required
-          placeholder="상품 옵션명을 3~50자 미만으로 입력해주세요"
+          placeholder="상품 옵션명을 1~50자 미만으로 입력해주세요"
           className="gap-8"
           labelClassName="typo-heading-18-r"
           error={!!errors?.optionName}
