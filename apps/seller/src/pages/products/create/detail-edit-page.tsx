@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useEditorImageInsert } from '@/features/products/create'
 import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
-import '../../../styles/create-detail-editor.css'
+import './create-detail-editor.css'
 import { cn } from '@/shared/libs/utils'
 
 export function DetailEditPage() {
