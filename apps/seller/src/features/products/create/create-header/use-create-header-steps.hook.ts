@@ -1,35 +1,26 @@
-import { useMemo, useRef } from 'react'
-
-import { useShallow } from 'zustand/shallow'
-
 import { useCreateHeaderStore } from './create-header-store.store'
 
 export const useCreateHeaderSteps = () => {
-  const state = useCreateHeaderStore(
-    useShallow((s) => ({
-      currentStep: s.currentStep,
-      headerHeight: s.headerHeight,
-      productFields: s.productFields,
-      nutritionDataList: s.nutritionDataList,
-      productPrice: s.productPrice,
-      activeTags: s.getActiveTags(),
-      isScrolling: s.isScrolling,
-    })),
-  )
-  const actions = useCreateHeaderStore(
-    useShallow((s) => ({
-      setCurrentStep: s.setCurrentStep,
-      setHeaderHeight: s.setHeaderHeight,
-      setProductFields: s.setProductFields,
-      setNutritionData: s.setNutritionData,
-      setProductPrice: s.setProductPrice,
-      scrollToStep: s.scrollToStep,
-    })),
-  )
-  const isScrollingToStep = useRef(state.isScrolling)
-  isScrollingToStep.current = state.isScrolling
-  return useMemo(
-    () => ({ ...state, ...actions, isScrollingToStep }),
-    [state, actions, isScrollingToStep],
-  )
+  const store = useCreateHeaderStore()
+
+  return {
+    // 상태값 (State)
+    currentStep: store.currentStep,
+    headerHeight: store.headerHeight,
+    productFields: store.productFields,
+    nutritionDataList: store.nutritionDataList,
+    productPrice: store.productPrice,
+    activeTags: store.getActiveTags(),
+
+    // 액션 (Actions)
+    setCurrentStep: store.setCurrentStep,
+    setHeaderHeight: store.setHeaderHeight,
+    setProductFields: store.setProductFields,
+    setNutritionData: store.setNutritionData,
+    setProductPrice: store.setProductPrice,
+    scrollToStep: store.scrollToStep,
+
+    // Observer 로직 대응용 Ref 구조
+    isScrollingToStep: { current: store.isScrolling },
+  }
 }
