@@ -191,7 +191,7 @@ function DeleteConfirmDialog({
           <DialogTitle>이미지를 삭제 하시겠어요?</DialogTitle>
           <DialogDescription>
             현재 등록된 {deletetarget} 이미지를 삭제하면 기존에
-            <br /> 등록된 이미지를 복구할 수 없어요.{' '}
+            <br /> 등록된 이미지를 복구할 수 없어요.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
