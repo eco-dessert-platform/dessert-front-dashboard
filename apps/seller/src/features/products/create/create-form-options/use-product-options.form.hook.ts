@@ -35,11 +35,11 @@ export function useProductOptionForm(
   const [
     totalWeight,
     servingSize,
-    calories,
     carbohydrate,
     sugar,
     protein,
     fat,
+    calories,
   ] = nutritionValues
 
   const subCategoryOptions = mainCategory
