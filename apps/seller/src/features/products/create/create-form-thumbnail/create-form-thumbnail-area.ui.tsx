@@ -112,7 +112,7 @@ export const ThumbnailUploadArea = () => {
                     id={file.id}
                     file={file.file}
                     // idx 대신 고유 ID를 전달
-                    onDelete={() => setDeleteTarget(file.id)}
+                    onDelete={() => setDeleteTarget({ id: file.id })}
                   />
                 )
               })}

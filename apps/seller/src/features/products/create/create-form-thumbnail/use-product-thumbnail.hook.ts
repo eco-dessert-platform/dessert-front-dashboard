@@ -70,8 +70,8 @@ export function useProductThumbnailForm() {
   // 1. 타입 수정 덕분에 이제 casting 없이 바로 타입을 인식합니다.
   const mainImage = form.watch('mainImage')
   const extraImages = form.watch('extraImages') || []
-
-  const [deleteTarget, setDeleteTarget] = useState<string | 'main' | null>(null)
+  type DeleteTarget = 'main' | { id: string }
+  const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null)
 
   const isFormField = mainImage !== null
 
@@ -151,7 +151,7 @@ export function useProductThumbnailForm() {
       handleMainImageChange(null)
     } else {
       const newExtraImages = extraImages.filter(
-        (item) => item.id !== deleteTarget,
+        (item) => item.id !== deleteTarget.id,
       )
       handleExtraImagesChange(newExtraImages)
     }
