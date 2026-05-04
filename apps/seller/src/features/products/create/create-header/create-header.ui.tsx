@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 import {
   Accordion,
   AccordionContent,
@@ -5,13 +7,12 @@ import {
   AccordionTrigger,
   StageTab,
 } from '@dessert/ui'
-import { ChevronDown } from 'lucide-react'
 
-import { CategoryOptions, EssentialOptions } from '@/entity/products'
-
+import { CategoryOptions } from './category-options.constants'
 import { ProductHeaderTags } from './create-header-tags.ui'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
+import { EssentialOptions } from './essential-options.constants'
+import { InfoTooltip } from '../create-form'
+import { useCreateHeaderSteps } from './use-create-header-steps.hook'
 
 const stagestep = [
   '상품 정보',
@@ -23,19 +24,39 @@ const stagestep = [
 ]
 
 export const ProductHeader = () => {
-  const { productFields } = useCreateFormSteps()
+  const { productFields, currentStep, scrollToStep, setHeaderHeight } =
+    useCreateHeaderSteps()
+  const headerRef = useRef<HTMLDivElement>(null)
   const steps = Object.values(productFields).filter((e) => e === true).length
   const totalSteps = Object.keys(productFields).length
+  useEffect(() => {
+    if (!headerRef.current) return
 
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const height = Math.round(entry.target.clientHeight)
+        setHeaderHeight(height)
+      }
+    })
+
+    observer.observe(headerRef.current)
+    return () => observer.disconnect()
+  }, [setHeaderHeight])
   return (
-    <div className="sticky top-0 left-0 z-20 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16">
+    <div
+      ref={headerRef}
+      className="sticky top-0 left-0 z-50 -mt-40 -ml-[90px] w-[calc(100%+180px)] border-b border-b-gray-200 bg-white px-[90px] py-16"
+    >
       <div className="flex w-full items-center justify-between">
-        {/* TODO : 추후 기능 추가 예정 */}
-        <StageTab
-          currentStep={1}
-          steps={stagestep}
-          className="w-fit justify-start border-none"
-        />
+        <div className="relative">
+          <StageTab
+            currentStep={currentStep}
+            steps={stagestep}
+            className="w-fit justify-start border-none"
+            onStepClick={(idx) => scrollToStep(idx)}
+          />
+        </div>
+
         <p className="typo-title-16-sb">
           필수 입력 사항이{' '}
           <span className="text-primary-500">{totalSteps - steps}개</span>{' '}
@@ -64,11 +85,10 @@ export const ProductHeader = () => {
               />
             </div>
           </AccordionContent>
-          <AccordionTrigger className="absolute right-[90px] -bottom-[66px] justify-center border p-0">
-            <div className="rounded-b-16 bg-white px-[26px] py-6">
-              <ChevronDown size={36} />
-            </div>
-          </AccordionTrigger>
+          <AccordionTrigger
+            customIcon
+            className="absolute top-[unset] right-0 -bottom-64 h-48 w-22 items-center justify-center rounded-b-16 border border-gray-300 bg-white"
+          ></AccordionTrigger>
         </AccordionItem>
       </Accordion>
     </div>
