@@ -356,6 +356,9 @@ __metadata:
   dependencies:
     "@dessert/config": "npm:*"
     "@dessert/ui": "npm:*"
+    "@dnd-kit/core": "npm:^6.3.1"
+    "@dnd-kit/sortable": "npm:^10.0.0"
+    "@dnd-kit/utilities": "npm:^3.2.2"
     "@hookform/error-message": "npm:^2.0.1"
     "@hookform/resolvers": "npm:^5.2.2"
     "@radix-ui/react-accordion": "npm:^1.2.11"
@@ -5333,9 +5336,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dessert-front-dashboard@workspace:."
   dependencies:
-    "@dnd-kit/core": "npm:^6.3.1"
-    "@dnd-kit/sortable": "npm:^10.0.0"
-    "@dnd-kit/utilities": "npm:^3.2.2"
     "@eslint/js": "npm:^9.21.0"
     eslint: "npm:^9.21.0"
     eslint-import-resolver-typescript: "npm:^4.4.4"
