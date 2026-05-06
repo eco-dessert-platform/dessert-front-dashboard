@@ -1,4 +1,4 @@
-export const productionTimes = [
+export const PRODUCTION_TIME = [
   {
     label: '03:00~04:00',
     value: '03:00~04:00',
@@ -18,5 +18,15 @@ export const productionTimes = [
   {
     label: '07:00~08:00',
     value: '07:00~08:00',
+  },
+]
+export const PRODUCT_DISCOUNT_TYPE = [
+  {
+    label: '원',
+    value: 'won',
+  },
+  {
+    label: '%',
+    value: 'percentage',
   },
 ]
