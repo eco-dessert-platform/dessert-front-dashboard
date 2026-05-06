@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { DISCLOSURE_FIELDS } from '@/entity/products'
+import { DISCLOSURE_FIELDS } from './product-disclosure.constant'
 
 // DISCLOSURE_FIELDS 상수를 기반으로 스키마 객체를 동적 생성합니다.
 // 타입 추론을 위해 ZodTypeAny를 사용합니다.

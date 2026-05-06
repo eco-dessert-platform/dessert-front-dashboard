@@ -1,4 +1,4 @@
-import { ProductInfoNoticeKey } from '../create-disclosure/product-disclosure.constant'
+import { ProductInfoNoticeKey } from '../../../../features/products/create/create-form-disclosure/product-disclosure.constant'
 
 export type ProductFormInput = {
   productName: string

@@ -1,6 +1,3 @@
-// Create - Disclosure
-export * from './create/create-disclosure/product-disclosure.constant'
-
 // Create - Form Types
 export * from './create/create-form/product-form.type'
 

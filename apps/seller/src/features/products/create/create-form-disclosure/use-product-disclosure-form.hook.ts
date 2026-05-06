@@ -2,10 +2,9 @@ import { useEffect } from 'react'
 
 import { useFormContext, useWatch } from 'react-hook-form'
 
-import { DISCLOSURE_FIELDS } from '@/entity/products'
-
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { DISCLOSURE_FIELDS } from './product-disclosure.constant'
 import { CreateProductForm } from '../create-form/product-create.types'
+import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 type NoticeFieldKey = keyof CreateProductForm['productInfoNotice']
 
