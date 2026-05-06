@@ -3,11 +3,11 @@ import { useEffect } from 'react'
 import { Dropdown, Input, Label } from '@dessert/ui'
 import { Controller } from 'react-hook-form'
 
-import { DeliveryCompany, DeliveryTerms } from '@/entity/products'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
 import { cn } from '@/shared/libs/utils'
 
+import { DeliveryCompany, DeliveryTerms } from './create-delivery.constant'
 import { useProductDeliveryForm } from './use-product-delivery-form.hook'
+import { InfoTooltip } from '../create-form/info-tooltip.ui'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 export const ProductDeliveryArea = () => {

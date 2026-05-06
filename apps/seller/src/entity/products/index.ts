@@ -1,7 +1,3 @@
-// Create - Delivery
-export * from './create/create-delivery/product-delivery-company'
-export * from './create/create-delivery/product-delivery-terms'
-
 // Create - Disclosure
 export * from './create/create-disclosure/product-disclosure.constant'
 
