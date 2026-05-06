@@ -4,11 +4,11 @@ import { Dropdown, Input, Label } from '@dessert/ui'
 import { Controller } from 'react-hook-form'
 
 import { DeliveryCompany, DeliveryTerms } from '@/entity/products'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
 import { cn } from '@/shared/libs/utils'
 
 import { useProductDeliveryForm } from './use-product-delivery-form.hook'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { InfoTooltip } from '../create-form/info-tooltip.ui'
+import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
 
 export const ProductDeliveryArea = () => {
   const {
@@ -25,10 +25,10 @@ export const ProductDeliveryArea = () => {
     formState: { errors },
   } = form
 
-  const { setProductFields } = useCreateFormSteps()
+  const { setProductFields } = useCreateHeaderSteps()
 
   useEffect(() => {
-    setProductFields((prev) => ({ ...prev, productDelivery: isFormField }))
+    setProductFields({ productDelivery: isFormField })
   }, [isFormField, setProductFields])
 
   return (

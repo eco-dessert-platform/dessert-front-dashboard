@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { CameraIcon } from '@dessert/icons'
 import {
   Button,
@@ -18,6 +19,7 @@ import {
 } from './create-form-thumbnail-items.ui'
 import { useProductThumbnailForm } from './use-product-thumbnail.hook'
 // import { useCreateHeaderSteps } from '../create-store'
+import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
 
 export const ThumbnailUploadArea = () => {
   const {
@@ -33,15 +35,12 @@ export const ThumbnailUploadArea = () => {
     handleDragEnd,
   } = useProductThumbnailForm()
 
-  //   const { setProductFields } = useCreateHeaderSteps()
+  const { setProductFields } = useCreateHeaderSteps()
 
-  //   useEffect(() => {
-  //     setProductFields({ productThumbnail: isFormField })
-  //   }, [isFormField, setProductFields])
+  useEffect(() => {
+    setProductFields({ productThumbnail: isFormField })
+  }, [isFormField, setProductFields])
 
-  // 16,29~33line : 대표 이미지 등록은 필수 입력 사항으로, 이미지를 등록할 시
-  // sticky header 우측 상단의 필수 입력 폼 잔여 갯수와 연동되는 기능입니다.
-  // 추후 header 관련 기능을 ContextAPI -> zustand로 마이그레이션 하면서 롤백 할 예정입니다.
   return (
     <>
       <div className="mb-24 flex items-center gap-2">

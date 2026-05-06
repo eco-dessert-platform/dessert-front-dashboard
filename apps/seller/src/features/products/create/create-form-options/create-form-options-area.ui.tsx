@@ -5,7 +5,8 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 //추후 CreateProductForm -> CreateFormType 변경 예정입니다.
 
 import { ProductOptionForm } from './create-form-options-form.ui'
-import { CreateProductForm, DEFAULT_PRODUCT_OPTION } from '../create-form'
+import { DEFAULT_PRODUCT_OPTION } from '../create-form'
+import { CreateProductForm } from '../create-form/product-create.types'
 
 const SUFFIX = ' (복사본)'
 const MAX_LENGTH = 50
