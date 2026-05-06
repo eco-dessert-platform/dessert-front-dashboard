@@ -7,11 +7,10 @@ import {
 } from '@dessert/ui'
 import { ChevronDown } from 'lucide-react'
 
-import { CategoryOptions, EssentialOptions } from '@/entity/products'
-
 import { ProductHeaderTags } from './create-header-tags.ui'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { CATEGORY_OPTIONS, ESSENTIAL_OPTIONS } from './create-header.constant'
 import { InfoTooltip } from '../create-form/info-tooltip.ui'
+import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
 const stagestep = [
   '상품 정보',
@@ -56,11 +55,11 @@ export const ProductHeader = () => {
                     충족해야 합니다.
                   </InfoTooltip>
                 }
-                tagData={EssentialOptions}
+                tagData={ESSENTIAL_OPTIONS}
               />
               <ProductHeaderTags
                 title="적용된 카테고리"
-                tagData={CategoryOptions}
+                tagData={CATEGORY_OPTIONS}
               />
             </div>
           </AccordionContent>
