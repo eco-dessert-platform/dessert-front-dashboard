@@ -64,7 +64,7 @@ const MENU_LIST = [
     items: [
       {
         title: '판매자 정보 변경',
-        href: '#',
+        href: ROUTES.INFO.CHANGE,
       },
     ],
   },

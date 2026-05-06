@@ -24,7 +24,6 @@ export const productOptionSchema = z
     sugar: z.union([z.number().min(0), z.null()]),
     protein: z.union([z.number().min(0), z.null()]),
     fat: z.union([z.number().min(0), z.null()]),
-    sodium: z.union([z.number().min(0), z.null()]),
     calories: z.union([z.number().min(0), z.null()]),
   })
   .refine((data) => data.mainCategory !== '', {
