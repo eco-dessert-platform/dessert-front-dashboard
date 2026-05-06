@@ -11,6 +11,7 @@ import {
   ProductHeader,
   ProductInfoArea,
   ProductOptionsArea,
+  ThumbnailUploadArea,
   useCreateProductForm,
 } from '@/features/products/create'
 import { useCreateHeaderSteps } from '@/features/products/create/create-header/use-create-header-steps.hook'
@@ -83,6 +84,10 @@ function CreatePageInner() {
 
       <CreateFormContainer id="productDelivery">
         <ProductDeliveryArea />
+      </CreateFormContainer>
+
+      <CreateFormContainer id="productThumbnail">
+        <ThumbnailUploadArea />
       </CreateFormContainer>
 
       <CreateFormContainer id="productOptions">

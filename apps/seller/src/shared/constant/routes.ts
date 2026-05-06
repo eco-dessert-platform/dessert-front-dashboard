@@ -20,4 +20,7 @@ export const ROUTES = {
     VAT_REPORT: '/settlements/vat-report',
     TAX_INVOICE: '/settlements/tax-invoice',
   },
+  INFO: {
+    CHANGE: '/seller/info',
+  },
 } as const
