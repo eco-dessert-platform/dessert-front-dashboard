@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { BbanggreuiOvenLogo } from '@dessert/icons'
 import { Button, Editor } from '@dessert/ui'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import { useEditorImageInsert } from '@/features/products/create'
 import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
