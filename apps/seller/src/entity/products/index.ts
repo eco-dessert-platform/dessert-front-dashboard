@@ -9,8 +9,3 @@ export * from './create/create-header/options-tag.type'
 // Create - Info (Product Info)
 export * from './create/create-info/product-discount-type.constants'
 export * from './create/create-info/production-time.constants'
-
-// Create - Options
-export * from './create/create-options/product-nutritions.constant'
-export * from './create/create-options/product-options.constant'
-export * from './create/create-options/product-shipping-days.constant'
