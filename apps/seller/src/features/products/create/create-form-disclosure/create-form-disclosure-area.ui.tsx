@@ -5,7 +5,7 @@ import { cn } from '@/shared/libs/utils'
 
 import { DISCLOSURE_FIELDS, RADIO_OPTIONS } from './product-disclosure.constant'
 import { useProductDisclosureForm } from './use-product-disclosure-form.hook'
-import { CreateProductForm } from '../create-form/product-create.types'
+import { CreateFormType } from '../create-form/product-create.types'
 
 /**
  * [Refactoring] DisclosureFieldItem
@@ -20,8 +20,8 @@ const DisclosureFieldItem = ({
 }: {
   field: (typeof DISCLOSURE_FIELDS)[number]
   index: number
-  control: Control<CreateProductForm>
-  errors: FieldErrors<CreateProductForm>
+  control: Control<CreateFormType>
+  errors: FieldErrors<CreateFormType>
 }) => {
   // 개별 모드 값만 감시하여 리렌더링 범위 최소화
   const modeValue = useWatch({
