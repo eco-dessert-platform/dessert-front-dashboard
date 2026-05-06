@@ -1,29 +1,9 @@
 import { ChevronUp } from 'lucide-react'
 
-//import { ProductOptionFormInput } from '@/entity/products/create/create-form'
 import { EssentialOptions } from '@/entity/products/create/create-header/essential-options.constants'
 import { SHIPPING_DAYS } from '@/entity/products/create/create-options/product-shipping-days.constant'
 
-export type ProductOptionFormInput = {
-  mainCategory: 'bread' | 'snack' | ''
-  subCategory: string
-  optionName: string
-  ingredientCategories: ('glutenFree' | 'vegan')[]
-  additionalPrice: number | null
-  stockQuantity: number | null
-  shippingDays: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[]
-  hasNutrition: boolean
-  totalWeight: number | null
-  calories: number | null
-  carbohydrate: number | null
-  sugar: number | null
-  protein: number | null
-  fat: number | null
-  sodium: number | null
-}
-//TODO: #PR216에서 ProductOptionFormInput은 create-form-options 하위 폴더로 이동 예정입니다.
-// ProductOptionFormInput은 -> ProductOptionsType로 수정될 예정입니다.
-// line 7~ 23은 삭제 예정이며 주석처리 한 부분은 파일명과 경로 수정 예정입니다.
+import { ProductOptionsType } from '../create-form-options'
 
 const DaySelector = ({ selectedDays }: { selectedDays: string[] }) => {
   const days = SHIPPING_DAYS
@@ -45,7 +25,7 @@ const DaySelector = ({ selectedDays }: { selectedDays: string[] }) => {
   )
 }
 
-const getOptionTags = (option: ProductOptionFormInput) => {
+const getOptionTags = (option: ProductOptionsType) => {
   const tags: string[] = []
   const { ingredientCategories, protein, fat, sugar } = option
   if (ingredientCategories.includes('glutenFree'))
@@ -59,7 +39,7 @@ const getOptionTags = (option: ProductOptionFormInput) => {
 }
 
 interface OptionItemProps {
-  option: ProductOptionFormInput
+  option: ProductOptionsType
   idx: number
   productPrice: number | null
   discountAmount: number
