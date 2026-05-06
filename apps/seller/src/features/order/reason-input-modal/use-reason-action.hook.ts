@@ -5,6 +5,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import { toast } from '@dessert/ui'
 
 import { MUTATION_BATCH_SIZE } from '@/entity/order'
+import type { OrderItem } from '@/entity/order/order.type'
+
 import { useCreateExchangeMutation } from './create-exchange.mutation'
 import { useCreateReturnMutation } from './create-return.mutation'
 import {
@@ -23,11 +25,13 @@ interface ReasonInputData {
 
 interface UseReasonActionParams {
   selectedIds: string[]
+  selectedOrders: OrderItem[]
   onClearSelection: () => void
 }
 
 export function useReasonAction({
   selectedIds,
+  selectedOrders,
   onClearSelection,
 }: UseReasonActionParams) {
   const queryClient = useQueryClient()
@@ -60,23 +64,18 @@ export function useReasonAction({
     reason: string | null,
     sellerComment: string | null,
   ) => {
-    const targetOrderIds = selectedIds
-      .map((orderNumber) => Number(orderNumber))
-      .filter((id) => Number.isFinite(id))
-    const invalidCount = selectedIds.length - targetOrderIds.length
-
-    if (targetOrderIds.length === 0) {
+    if (selectedOrders.length === 0) {
       toast.error('유효한 주문이 없습니다.')
       return
     }
 
     const results = await settledInBatches(
-      targetOrderIds,
+      selectedOrders,
       MUTATION_BATCH_SIZE,
-      (id) =>
+      (order) =>
         mutation.mutateAsync({
-          orderId: id,
-          orderItemIds: [id],
+          orderId: order.orderId,
+          orderItemIds: order.products.map((p) => p.orderItemId),
           reason,
           sellerComment,
         }),
@@ -85,7 +84,7 @@ export function useReasonAction({
     const successCount = results.filter(
       (r) => r.status === 'fulfilled' && r.value.summary.successCount > 0,
     ).length
-    const failCount = results.length - successCount + invalidCount
+    const failCount = results.length - successCount
 
     if (successCount > 0) {
       finishWithCleanup()

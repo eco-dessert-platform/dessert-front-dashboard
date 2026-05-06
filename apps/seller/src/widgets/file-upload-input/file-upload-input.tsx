@@ -40,7 +40,7 @@ export function FileUploadInput({
       )}
       <div className="flex items-start gap-16 self-stretch">
         <Input
-          className="flex flex-1 items-center gap-1.5 rounded-10 border border-gray-300 px-12 py-8 typo-title-16-r text-gray-800 placeholder:text-gray-400"
+          className="flex-1"
           placeholder={placeholder}
           value={value}
           readOnly

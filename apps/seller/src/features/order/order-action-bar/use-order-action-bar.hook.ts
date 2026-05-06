@@ -2,6 +2,8 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { toast } from '@dessert/ui'
 
+import type { OrderItem } from '@/entity/order/order.type'
+
 import { useCompleteExchangeMutation } from './complete-exchange.mutation'
 import { useCompleteReturnMutation } from './complete-return.mutation'
 import { useConfirmOrderMutation } from './confirm-order.mutation'
@@ -11,6 +13,7 @@ import { settledInBatches } from '@/shared/utils/promise'
 
 interface UseOrderActionBarParams {
   selectedIds: string[]
+  selectedOrders: OrderItem[]
   onClearSelection: () => void
   onShowDetail: () => void
   onSelectionEmpty: () => void
@@ -19,6 +22,7 @@ interface UseOrderActionBarParams {
 
 export function useOrderActionBar({
   selectedIds,
+  selectedOrders,
   onClearSelection,
   onShowDetail,
   onSelectionEmpty,

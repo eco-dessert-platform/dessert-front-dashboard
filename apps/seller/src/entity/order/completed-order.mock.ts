@@ -9,16 +9,19 @@ import {
 export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
   // 구매확정 (6개)
   {
+    orderId: 1,
     recipientName: '김민수',
     orderNumber: '25030010001',
     products: [
       {
+        orderItemId: 1,
         productName: '노밀가루 프로틴 식빵 식단조절빵',
         optionName: '밤',
         quantity: 1,
         price: 4700,
       },
       {
+        orderItemId: 2,
         productName: '프로틴스콘 노밀가루 노설탕 간식',
         optionName: '카카오커피',
         quantity: 2,
@@ -27,7 +30,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '간편결제',
-    paymentDate: '2025. 03. 01',
+    paymentDate: '2025-03-01',
     totalOrderAmount: 24300,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '우체국택배',
@@ -36,10 +39,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     exchangeStatus: null,
   },
   {
+    orderId: 2,
     recipientName: '이서연',
     orderNumber: '25030010002',
     products: [
       {
+        orderItemId: 3,
         productName: '저당 그래놀라 클러스터 다이어트 간식',
         optionName: null,
         quantity: 3,
@@ -48,7 +53,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '신용카드',
-    paymentDate: '2025. 03. 01',
+    paymentDate: '2025-03-01',
     totalOrderAmount: 36000,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: 'CJ대한통운',
@@ -57,10 +62,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     exchangeStatus: null,
   },
   {
+    orderId: 3,
     recipientName: '박지훈',
     orderNumber: '25030010003',
     products: [
       {
+        orderItemId: 4,
         productName: '단백질 쿠키 노밀가루 저당 식단관리',
         optionName: '초코칩',
         quantity: 2,
@@ -69,7 +76,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '간편결제',
-    paymentDate: '2025. 02. 28',
+    paymentDate: '2025-02-28',
     totalOrderAmount: 17000,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '한진택배',
@@ -78,10 +85,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     exchangeStatus: null,
   },
   {
+    orderId: 4,
     recipientName: '최유나',
     orderNumber: '25030010004',
     products: [
       {
+        orderItemId: 5,
         productName: '두부 티라미수 저칼로리 디저트',
         optionName: null,
         quantity: 1,
@@ -90,7 +99,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '가상계좌',
-    paymentDate: '2025. 02. 27',
+    paymentDate: '2025-02-27',
     totalOrderAmount: 15000,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: 'CJ대한통운',
@@ -99,16 +108,19 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     exchangeStatus: null,
   },
   {
+    orderId: 5,
     recipientName: '정우진',
     orderNumber: '25030010024',
     products: [
       {
+        orderItemId: 6,
         productName: '저당 마들렌 식단조절 케이크',
         optionName: '레몬',
         quantity: 2,
         price: 7000,
       },
       {
+        orderItemId: 7,
         productName: '저당 마들렌 식단조절 케이크',
         optionName: '바닐라',
         quantity: 1,
@@ -117,7 +129,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '간편결제',
-    paymentDate: '2025. 03. 01',
+    paymentDate: '2025-03-01',
     totalOrderAmount: 21000,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '우체국택배',
@@ -126,10 +138,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     exchangeStatus: null,
   },
   {
+    orderId: 6,
     recipientName: '강하늘',
     orderNumber: '25030010005',
     products: [
       {
+        orderItemId: 8,
         productName: '아몬드 비스코티 저당 커피 간식',
         optionName: null,
         quantity: 1,
@@ -138,7 +152,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '신용카드',
-    paymentDate: '2025. 02. 26',
+    paymentDate: '2025-02-26',
     totalOrderAmount: 9500,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '롯데택배',
@@ -148,10 +162,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
   },
   // 배송완료 (4개)
   {
+    orderId: 7,
     recipientName: '윤서진',
     orderNumber: '25030010006',
     products: [
       {
+        orderItemId: 9,
         productName: '단백질 파운드케이크 식단조절 베이커리',
         optionName: '플레인',
         quantity: 1,
@@ -160,7 +176,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '신용카드',
-    paymentDate: '2025. 02. 25',
+    paymentDate: '2025-02-25',
     totalOrderAmount: 18000,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: 'CJ대한통운',
@@ -169,10 +185,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     exchangeStatus: null,
   },
   {
+    orderId: 8,
     recipientName: '임도현',
     orderNumber: '25030010007',
     products: [
       {
+        orderItemId: 10,
         productName: '저당 초콜릿 브라우니 다이어트 간식',
         optionName: null,
         quantity: 2,
@@ -181,7 +199,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '간편결제',
-    paymentDate: '2025. 02. 24',
+    paymentDate: '2025-02-24',
     totalOrderAmount: 22000,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '한진택배',
@@ -190,10 +208,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     exchangeStatus: null,
   },
   {
+    orderId: 9,
     recipientName: '신예린',
     orderNumber: '25030010008',
     products: [
       {
+        orderItemId: 11,
         productName: '귀리 그래놀라 바 저당 운동 간식',
         optionName: '다크초코',
         quantity: 3,
@@ -202,7 +222,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '신용카드',
-    paymentDate: '2025. 02. 23',
+    paymentDate: '2025-02-23',
     totalOrderAmount: 10500,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: '로젠택배',
@@ -211,10 +231,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     exchangeStatus: null,
   },
   {
+    orderId: 10,
     recipientName: '오지아',
     orderNumber: '25030010009',
     products: [
       {
+        orderItemId: 12,
         productName: '노밀가루 프로틴 머핀 식단 간식',
         optionName: '블루베리',
         quantity: 2,
@@ -223,7 +245,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'DELIVERY_COMPLETED',
     paymentMethod: '가상계좌',
-    paymentDate: '2025. 02. 22',
+    paymentDate: '2025-02-22',
     totalOrderAmount: 13000,
     deliveryStatus: 'DELIVERY_COMPLETED',
     courierName: 'CJ대한통운',
@@ -234,10 +256,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
 
   // 취소 (2개)
   {
+    orderId: 11,
     recipientName: '류성훈',
     orderNumber: '25030010010',
     products: [
       {
+        orderItemId: 13,
         productName: '프로틴 리조또 닭가슴살 식사대용',
         optionName: '버섯',
         quantity: 2,
@@ -246,7 +270,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'CANCELED',
     paymentMethod: '가상계좌',
-    paymentDate: '2025. 02. 20',
+    paymentDate: '2025-02-20',
     totalOrderAmount: 18000,
     deliveryStatus: null,
     courierName: null,
@@ -255,16 +279,19 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     exchangeStatus: null,
   },
   {
+    orderId: 12,
     recipientName: '전미래',
     orderNumber: '25030010011',
     products: [
       {
+        orderItemId: 14,
         productName: '저당 과일 타르트 식단조절 디저트',
         optionName: '딸기',
         quantity: 1,
         price: 14500,
       },
       {
+        orderItemId: 15,
         productName: '저당 과일 타르트 식단조절 디저트',
         optionName: '블루베리',
         quantity: 1,
@@ -273,7 +300,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'CANCELED',
     paymentMethod: '신용카드',
-    paymentDate: '2025. 02. 18',
+    paymentDate: '2025-02-18',
     totalOrderAmount: 29000,
     deliveryStatus: null,
     courierName: null,
@@ -284,10 +311,12 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
 
   // 반품 (1개)
   {
+    orderId: 13,
     recipientName: '고은서',
     orderNumber: '25030010012',
     products: [
       {
+        orderItemId: 16,
         productName: '저당 바나나 브레드 식단조절 빵',
         optionName: null,
         quantity: 2,
@@ -296,7 +325,7 @@ export const MOCK_COMPLETED_ORDERS: OrderItem[] = [
     ],
     orderStatus: 'RETURNED',
     paymentMethod: '간편결제',
-    paymentDate: '2025. 02. 15',
+    paymentDate: '2025-02-15',
     totalOrderAmount: 15000,
     deliveryStatus: 'COLLECTING',
     courierName: 'CJ대한통운',
