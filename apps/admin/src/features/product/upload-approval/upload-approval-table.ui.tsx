@@ -4,7 +4,10 @@ import { Button, Table } from '@dessert/ui'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { UploadApproval, productQueries } from '@/entity/product'
+import {
+  UploadApproval,
+  productQueries,
+} from '@/entity/product/upload-approval'
 
 import { UploadApprovalActionGroup } from './upload-approval-action-group.ui'
 import { UploadApprovalConfirmDialog } from './upload-approval-confirm-dialog.ui'
