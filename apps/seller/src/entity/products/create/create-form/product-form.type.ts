@@ -17,7 +17,7 @@ export type DeliveryFormInput = {
 }
 
 export type ProductOptionFormInput = {
-  mainCategory: string
+  mainCategory: 'bread' | 'snack' | ''
   subCategory: string
   optionName: string
   ingredientCategories: ('glutenFree' | 'vegan')[]

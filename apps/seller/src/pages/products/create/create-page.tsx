@@ -11,6 +11,7 @@ import {
   ProductHeader,
   ProductInfoArea,
   ProductOptionsArea,
+  ThumbnailUploadArea,
   useCreateProductForm,
 } from '@/features/products/create'
 import { CreateFooter } from '@/features/products/create/create-footer'
@@ -38,6 +39,10 @@ function CreatePageInner() {
 
       <CreateFormContainer>
         <ProductDeliveryArea />
+      </CreateFormContainer>
+
+      <CreateFormContainer>
+        <ThumbnailUploadArea />
       </CreateFormContainer>
 
       <CreateFormContainer>
