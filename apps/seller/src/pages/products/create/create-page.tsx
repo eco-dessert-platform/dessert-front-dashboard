@@ -34,7 +34,6 @@ const stepIds = [
 ]
 
 function CreatePageInner() {
-  const isInitialMount = useRef(true)
   const { setCurrentStep, headerHeight, isScrollingToStep } =
     useCreateHeaderSteps()
 
@@ -73,7 +72,7 @@ function CreatePageInner() {
 
     elements.forEach((el) => el && observer.observe(el))
     return () => observer.disconnect()
-  }, [headerHeight, setCurrentStep])
+  }, [headerHeight, setCurrentStep]) // isScrollingToStep은 내부에서 ref로 참조되므로 생략 가능
 
   return (
     <>
