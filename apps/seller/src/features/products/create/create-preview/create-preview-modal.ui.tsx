@@ -15,6 +15,12 @@ interface ProductPreviewModalProps {
   onClose: () => void
 }
 
+const BADGES = [
+  { label: '맛있어요', icon: Icon1 },
+  { label: '담백해요', icon: Icon2 },
+  { label: '부드러워요', icon: Icon3 },
+]
+
 export const ProductPreviewModal = ({
   isOpen,
   onClose,
@@ -33,12 +39,6 @@ export const ProductPreviewModal = ({
   if (!isOpen) return null
 
   const options = formData.options ?? []
-
-  const BADGES = [
-    { label: '맛있어요', icon: Icon1 },
-    { label: '담백해요', icon: Icon2 },
-    { label: '부드러워요', icon: Icon3 },
-  ]
 
   return (
     <div
@@ -91,9 +91,11 @@ export const ProductPreviewModal = ({
                 묶음상품
               </div>
             )}
-            <div className="absolute right-10 bottom-10 rounded-full bg-black/50 px-10 py-4 typo-body-12-r text-white">
-              1 / {allImageUrls.length || 1}
-            </div>
+            {allImageUrls.length > 0 && (
+              <div className="absolute right-10 bottom-10 rounded-full bg-black/50 px-10 py-4 typo-body-12-r text-white">
+                1 / {allImageUrls.length}
+              </div>
+            )}
           </div>
         </div>
 
