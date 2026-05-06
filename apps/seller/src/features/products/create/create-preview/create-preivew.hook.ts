@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import { useFormContext } from 'react-hook-form'
 
 //import { CreateFormType } from '@/entity/products/create/create-form'
@@ -30,14 +32,34 @@ export const useCreatePreviewHook = () => {
 
   const isPriceEntered = productPrice !== null && productPrice > 0
 
-  //   const mainImageUrl = formData.mainImage
-  //     ? URL.createObjectURL(formData.mainImage)
-  //     : null
-  //   const extraImageUrls = (formData.extraImages ?? []).map((f) =>
-  //     URL.createObjectURL(f),
-  //   )
-  //   const allImageUrls = mainImageUrl ? [mainImageUrl, ...extraImageUrls] : []
-  // line 33~39: PR#214에서 이미지와 관련된 type을 추가했기때문에 해당 PR merge 후 복구 예정입니다.
+  // 미리보기 URL들을 관리할 상태
+  const [allImageUrls, setAllImageUrls] = useState<string[]>([])
+
+  useEffect(() => {
+    const newUrls: string[] = []
+
+    // 메인 이미지 처리 (File 객체인지 확인)
+    if (formData.mainImage instanceof File) {
+      newUrls.push(URL.createObjectURL(formData.mainImage))
+    }
+
+    // 추가 이미지 처리 (FileList 또는 File[] 대응)
+    if (formData.extraImages) {
+      Array.from(formData.extraImages).forEach((file) => {
+        if (file instanceof File) {
+          newUrls.push(URL.createObjectURL(file))
+        }
+      })
+    }
+
+    setAllImageUrls(newUrls)
+
+    // 다음 렌더링 시 혹은 언마운트 시 생성했던 URL들을 메모리에서 해제
+    return () => {
+      newUrls.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [formData.mainImage, formData.extraImages])
+
   return {
     formData,
     productPrice,
@@ -45,7 +67,7 @@ export const useCreatePreviewHook = () => {
     discountPercent,
     totalPrice,
     isPriceEntered,
-    //allImageUrls,
+    allImageUrls,
     discountAmount,
   }
 }
