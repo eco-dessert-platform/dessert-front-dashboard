@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Resolver, useForm } from 'react-hook-form'
 
 import { DISCLOSURE_FIELDS } from '@/entity/products'
+
 import { CreateProductForm, createProductSchema } from './product-create.types'
 
 export const useCreateProductForm = () => {
@@ -19,6 +20,9 @@ export const useCreateProductForm = () => {
       deliveryCompany: '',
       deliveryFee: null,
       deliveryMinFee: null,
+
+      mainImage: null,
+      extraImages: [],
 
       mainCategory: '',
       subCategory: '',
