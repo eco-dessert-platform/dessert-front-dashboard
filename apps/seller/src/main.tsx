@@ -26,6 +26,7 @@ const router = createBrowserRouter([
     path: ROUTES.CALLBACK.SOCIAL,
     element: <SocialCallbackPage />,
   },
+  { path: ROUTES.PRODUCTS.CREATE_DETAIL, element: <DetailEditPage /> },
   {
     path: ROUTES.HOME,
     element: <FixedLayout />,
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
       { path: ROUTES.ORDERS.COMPLETED, element: <CompletedOrdersPage /> },
       { path: ROUTES.PRODUCTS.ALL, element: <ProductsPage /> },
       { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
-      { path: ROUTES.PRODUCTS.CREATE_DETAIL, element: <DetailEditPage /> },
+
       { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
       { path: ROUTES.INFO.CHANGE, element: <SellerInfoPage /> },
     ],
