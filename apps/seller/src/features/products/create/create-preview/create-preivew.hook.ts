@@ -93,5 +93,6 @@ export const useCreatePreviewHook = () => {
     isPriceEntered,
     allImageUrls,
     discountAmount,
+    hasMainImage: !!formData.mainImage,
   }
 }

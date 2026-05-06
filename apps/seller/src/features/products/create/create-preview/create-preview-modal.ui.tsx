@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react'
+
 import { Button, LogoHeader } from '@dessert/ui'
+import { PanInfo, motion } from 'framer-motion'
 import { ChevronDown, Heart, Star } from 'lucide-react'
 
 import NoThumb from '@/assets/icons/bbangle-cry.svg'
@@ -7,6 +10,7 @@ import Icon2 from '@/assets/icons/reviewBadge/badge-plain.svg'
 import Icon3 from '@/assets/icons/reviewBadge/badge-soft.svg'
 import { cn } from '@/shared/libs/utils'
 
+import { usePreviewSlider } from './create-preivew-slider.hook'
 import { useCreatePreviewHook } from './create-preivew.hook'
 import { CreatePreviewOptionItemUi } from './create-preview-option-item.ui'
 
@@ -34,7 +38,17 @@ export const ProductPreviewModal = ({
     isPriceEntered,
     allImageUrls,
     discountAmount,
+    hasMainImage,
   } = useCreatePreviewHook()
+
+  const slides = !hasMainImage
+    ? (['placeholder', ...allImageUrls] as const)
+    : allImageUrls
+
+  const { currentIndex, canDrag, handlePanEnd } = usePreviewSlider({
+    slideCount: slides.length,
+    resetDeps: [isOpen, allImageUrls.length, hasMainImage],
+  })
 
   if (!isOpen) return null
 
@@ -42,10 +56,15 @@ export const ProductPreviewModal = ({
 
   return (
     <div
-      className="fixed inset-0 z-9999 flex flex-col items-center bg-gray-100"
-      onClick={onClose}
+      className="fixed inset-0 z-9999 flex flex-col items-center overflow-hidden bg-gray-100"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
     >
-      <div className="h-header w-screen" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="h-header w-full shrink-0"
+        onClick={(e) => e.stopPropagation()}
+      >
         <LogoHeader />
       </div>
 
@@ -71,43 +90,68 @@ export const ProductPreviewModal = ({
           </div>
         </div>
 
-        {/* 3. 이미지 */}
-        <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden p-16">
+        {/* 3. 이미지 슬라이더 */}
+        <div className="relative aspect-square w-full p-16">
           <div className="relative size-full overflow-hidden rounded-6 bg-gray-100">
-            {allImageUrls[0] ? (
-              <img
-                src={allImageUrls[0]}
-                alt="product preview"
-                className="size-full object-cover"
-              />
-            ) : (
-              <div className="flex size-full flex-col items-center justify-center gap-2 typo-body-14-r text-gray-400">
-                <img src={NoThumb} alt="썸네일이 등록되지 않았습니다" />
-                <p className="typo-title-16-m">등록된 이미지가 없습니다.</p>
-              </div>
-            )}
+            <motion.div
+              className={cn(
+                'flex size-full select-none',
+                canDrag && 'cursor-grab active:cursor-grabbing',
+              )}
+              onPanEnd={handlePanEnd}
+              animate={{ x: `-${currentIndex * 100}%` }}
+              transition={{
+                type: 'spring',
+                stiffness: 300,
+                damping: 30,
+                mass: 0.8,
+              }}
+              style={{ touchAction: 'pan-y' }}
+            >
+              {slides.map((item, i) => (
+                <div key={`slide-${i}`} className="size-full shrink-0">
+                  {item === 'placeholder' ? (
+                    <div className="flex size-full flex-col items-center justify-center gap-2 bg-gray-100 typo-body-14-r text-gray-400">
+                      <img
+                        src={NoThumb}
+                        alt="메인 이미지 없음"
+                        className="w-64"
+                      />
+                      <p className="typo-title-14-m text-gray-500">
+                        대표 이미지가 등록되지 않았습니다.
+                      </p>
+                    </div>
+                  ) : (
+                    <img
+                      src={item}
+                      alt={`preview-${i}`}
+                      className="size-full object-cover select-none"
+                      draggable={false}
+                    />
+                  )}
+                </div>
+              ))}
+            </motion.div>
+
             {options.length > 1 && (
-              <div className="absolute top-16 left-16 rounded-4 bg-[#F26565] px-8 py-4 typo-body-12-sb text-white">
+              <div className="absolute top-16 left-16 z-10 rounded-4 bg-[#F26565] px-8 py-4 typo-body-12-sb text-white">
                 묶음상품
               </div>
             )}
-            {allImageUrls.length > 0 && (
-              <div className="absolute right-10 bottom-10 rounded-full bg-black/50 px-10 py-4 typo-body-12-r text-white">
-                1 / {allImageUrls.length}
-              </div>
-            )}
+            <div className="absolute right-10 bottom-10 z-10 rounded-full bg-black/50 px-10 py-4 typo-body-12-r text-white select-none">
+              {currentIndex + 1} / {slides.length}
+            </div>
           </div>
         </div>
 
         {/* 4. 상품 기본 정보 */}
-        <div className="flex w-full items-center justify-between bg-white px-16 py-10">
-          <div className="mb-16 flex items-center gap-6">
+        <div className="flex w-full items-center justify-between bg-white px-16 py-12">
+          <div className="flex items-center gap-6">
             <div className="size-24 rounded-6 bg-gray-500" />
             <p className="typo-title-14-m text-gray-600">Brand Name</p>
           </div>
-          <Heart size={18} color="text-gray-300" />
+          <Heart size={18} className="text-gray-300" />
         </div>
-
         <div className="border-t border-gray-300 bg-white p-16">
           <h2 className="typo-title-16-r text-gray-800">
             {formData.productName || '{{상품명}}'}
@@ -231,8 +275,7 @@ export const ProductPreviewModal = ({
         </div>
       </div>
 
-      {/* 푸터 */}
-      <div className="flex w-screen justify-end border-t border-gray-200 bg-white p-24">
+      <div className="flex w-full shrink-0 justify-end border-t border-gray-200 bg-white p-24">
         <Button title="닫기" onClick={onClose} size="lg" />
       </div>
     </div>
