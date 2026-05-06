@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import { DISCLOSURE_FIELDS } from './product-disclosure.constant'
-import { CreateProductForm } from '../create-form/product-create.types'
+import { CreateFormType } from '../create-form/product-create.types'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
 
-type NoticeFieldKey = keyof CreateProductForm['productInfoNotice']
+type NoticeFieldKey = keyof CreateFormType['productInfoNotice']
 
 export const useProductDisclosureForm = () => {
   const {
@@ -14,7 +14,7 @@ export const useProductDisclosureForm = () => {
     watch,
     setValue,
     formState: { errors },
-  } = useFormContext<CreateProductForm>()
+  } = useFormContext<CreateFormType>()
   const { setProductFields } = useCreateFormSteps()
 
   // 1. 필요한 값만 콕 집어서 감시 (불필요한 리렌더링 방지)

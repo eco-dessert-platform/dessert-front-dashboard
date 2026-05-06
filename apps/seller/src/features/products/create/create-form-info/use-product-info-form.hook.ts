@@ -1,10 +1,10 @@
 import { useFormContext } from 'react-hook-form'
 
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
-import { CreateProductForm } from '../create-form/product-create.types'
+import { CreateFormType } from '../create-form'
 
 export function useProductInfoForm() {
-  const form = useFormContext<CreateProductForm>()
+  const form = useFormContext<CreateFormType>()
 
   // 실시간으로 가격/할인 최종 금액 계산
   const productName = form.watch('productName')

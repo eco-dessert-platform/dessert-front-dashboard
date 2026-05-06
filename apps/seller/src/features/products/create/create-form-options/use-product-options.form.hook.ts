@@ -1,18 +1,17 @@
 import { useFormContext } from 'react-hook-form'
 
-//import { CreateFormType } from '@/entity/products/create/create-form'
-// CreateProductForm -> CreateFormType변경 예정입니다.
 import { SUB_CATEGORY_MAP } from './create-form-options.constant'
 import { ProductOptionsType } from './create-form-options.type'
 import { productOptionSchema } from './create-options.schema'
 import { useFloatInput } from '../create-calculation/create-form-float-input.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
-import { CreateProductForm } from '../create-form/product-create.types'
+import { CreateFormType } from '../create-form/product-create.types'
+
 export function useProductOptionForm(
   index: number,
   basePrice: number | null = null,
 ) {
-  const form = useFormContext<CreateProductForm>()
+  const form = useFormContext<CreateFormType>()
   const p = `options.${index}` as const
   const mainCategory = form.watch(`${p}.mainCategory`)
   const subCategory = form.watch(`${p}.subCategory`)

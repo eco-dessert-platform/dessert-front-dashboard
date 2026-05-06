@@ -1,10 +1,10 @@
 import { useFormContext } from 'react-hook-form'
 
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
-import { CreateProductForm } from '../create-form/product-create.types'
+import { CreateFormType } from '../create-form/product-create.types'
 
 export function useProductDeliveryForm() {
-  const form = useFormContext<CreateProductForm>()
+  const form = useFormContext<CreateFormType>()
 
   const deliveryTerms = form.watch('deliveryTerms')
   const deliveryCompany = form.watch('deliveryCompany')
