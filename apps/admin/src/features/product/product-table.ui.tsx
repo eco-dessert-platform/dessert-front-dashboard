@@ -2,8 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { Table } from '@dessert/ui'
 
-import { getProductMockData } from '@/entity/product/product.mock'
-import { Product } from '@/entity/product/product.type'
+import {
+  AdminProduct,
+  getAdminProductMockData,
+} from '@/entity/product/management-all'
 
 import {
   OptionActionType,
@@ -18,7 +20,7 @@ import {
 
 const PAGE_SIZE = 10
 
-const flattenData = (data: Product[]): FlatAdminProduct[] => {
+const flattenData = (data: AdminProduct[]): FlatAdminProduct[] => {
   return data.flatMap((product) =>
     product.productOptions.map((option, index) => ({
       ...product,
@@ -32,11 +34,14 @@ const flattenData = (data: Product[]): FlatAdminProduct[] => {
 export const ProductTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
-  const { data: mockData, totalCount } = useMemo(
-    () => getProductMockData(currentPage, PAGE_SIZE),
+  const mockData = useMemo(
+    () => getAdminProductMockData(currentPage, PAGE_SIZE),
     [currentPage],
   )
-  const flatData = useMemo(() => flattenData(mockData), [mockData])
+  const flatData = useMemo(
+    () => flattenData(mockData.content),
+    [mockData.content],
+  )
 
   const {
     selectedProductIds,
@@ -44,7 +49,7 @@ export const ProductTable = () => {
     handleProductToggle,
     handleOptionToggle,
     resetSelection,
-  } = useProductSelection(mockData)
+  } = useProductSelection(mockData.content)
 
   // 페이지 변경 시 선택 상태 초기화
   useEffect(() => {
@@ -83,8 +88,6 @@ export const ProductTable = () => {
     ],
   )
 
-  const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE))
-
   return (
     <div>
       <Table
@@ -93,7 +96,7 @@ export const ProductTable = () => {
         topArea={
           <ProductActionGroup
             currentPage={currentPage}
-            totalPages={totalPages}
+            totalPages={mockData.totalPages}
             onPageChange={setCurrentPage}
             onProductAction={handleProductAction}
             onOptionAction={handleOptionAction}
