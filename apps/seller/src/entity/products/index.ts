@@ -1,6 +1,3 @@
-// Create - Form Types
-export * from './create/create-form/product-form.type'
-
 // Create - Header
 export * from './create/create-header/category-options.constants'
 export * from './create/create-header/essential-options.constants'

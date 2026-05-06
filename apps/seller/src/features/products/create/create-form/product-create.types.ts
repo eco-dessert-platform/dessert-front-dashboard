@@ -1,9 +1,8 @@
 import { z } from 'zod'
 
-import { ProductDisclosureFormInput } from '@/entity/products'
-
 import { ProductDeliveryType } from '../create-form-delivery'
 import { deliverySchema } from '../create-form-delivery/create-delivery.schema'
+import { ProductDisclosureType } from '../create-form-disclosure'
 import { disclosureSchema } from '../create-form-disclosure/create-disclosure.schema'
 import { ProductInfoType } from '../create-form-info'
 import { productSchema } from '../create-form-info/create-info.schema'
@@ -18,7 +17,7 @@ import { ThumbnailFormType } from '../create-form-thumbnail/create-form-thumbnai
 export type CreateProductForm = ProductInfoType &
   ProductDeliveryType & {
     options: z.infer<typeof productOptionSchema>[]
-  } & ProductDisclosureFormInput &
+  } & ProductDisclosureType &
   ThumbnailFormType
 
 export const createProductSchema = productSchema
