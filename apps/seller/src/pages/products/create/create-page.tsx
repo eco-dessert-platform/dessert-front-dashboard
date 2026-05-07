@@ -51,7 +51,7 @@ function CreatePageInner() {
       const offsets = elements.map((el) => {
         if (!el) return Infinity
         // main의 top 위치를 빼서 보정
-        return el.getBoundingClientRect().top - containerTop - topMargin
+        return el.getBoundingClientRect().top - containerTop - topMargin - 20
       })
 
       let activeIndex = 0
