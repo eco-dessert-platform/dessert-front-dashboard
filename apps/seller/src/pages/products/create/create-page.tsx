@@ -39,40 +39,34 @@ function CreatePageInner() {
 
   useEffect(() => {
     const elements = stepIds.map((id) => document.getElementById(id))
-
-    // 헤더가 가리는 만큼 상단 여백을 줌
     const topMargin = headerHeight > 0 ? headerHeight : 100
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // 클릭해서 스크롤 중일 때는 단계 변경 무시
-        if (isScrollingToStep.current) return
+    // main 요소 찾기
+    const scrollContainer = document.querySelector('main')
+    if (!scrollContainer) return
 
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
-        if (visibleEntries.length === 0) return
+    const handleScroll = () => {
+      const containerTop = scrollContainer.getBoundingClientRect().top
 
-        // 화면 상단 기준선에 가장 가까운 섹션 찾기
-        const topEntry = visibleEntries.reduce((prev, curr) => {
-          return curr.boundingClientRect.top < prev.boundingClientRect.top
-            ? curr
-            : prev
-        })
+      const offsets = elements.map((el) => {
+        if (!el) return Infinity
+        // main의 top 위치를 빼서 보정
+        return el.getBoundingClientRect().top - containerTop - topMargin
+      })
 
-        const index = stepIds.indexOf(topEntry.target.id)
-        if (index !== -1) {
-          setCurrentStep(index + 1)
+      let activeIndex = 0
+      for (let i = 0; i < offsets.length; i++) {
+        if (offsets[i] <= 0) {
+          activeIndex = i
         }
-      },
-      {
-        // 상단은 헤더 높이만큼 빼고, 하단은 화면 절반 위로 오면 인식
-        rootMargin: `-${topMargin}px 0px -50% 0px`,
-        threshold: 0,
-      },
-    )
+      }
 
-    elements.forEach((el) => el && observer.observe(el))
-    return () => observer.disconnect()
-  }, [headerHeight, setCurrentStep]) // isScrollingToStep은 내부에서 ref로 참조되므로 생략 가능
+      setCurrentStep(activeIndex + 1)
+    }
+
+    scrollContainer.addEventListener('scroll', handleScroll, { passive: true })
+    return () => scrollContainer.removeEventListener('scroll', handleScroll)
+  }, [headerHeight, setCurrentStep])
 
   return (
     <>

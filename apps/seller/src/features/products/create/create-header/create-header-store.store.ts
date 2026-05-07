@@ -87,12 +87,17 @@ export const useCreateHeaderStore = create<CreateFormStoreProps>(
       set({ isScrolling: true, currentStep: index + 1 })
       element.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-      const unlock = () => set({ isScrolling: false })
+      let timeoutId: ReturnType<typeof setTimeout>
+      const unlock = () => {
+        clearTimeout(timeoutId)
+        window.removeEventListener('scrollend', unlock)
+        set({ isScrolling: false })
+      }
       if ('onscrollend' in window) {
         window.addEventListener('scrollend', unlock, { once: true })
-        setTimeout(unlock, 1000) // fallback
+        timeoutId = setTimeout(unlock, 1000)
       } else {
-        setTimeout(unlock, 800)
+        timeoutId = setTimeout(unlock, 800)
       }
     },
     getActiveTags: () => {
