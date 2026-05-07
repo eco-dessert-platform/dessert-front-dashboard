@@ -1,41 +1,34 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
-import {
-  keepPreviousData,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
-import {
-  completeExchange,
-  completeReturn,
-  confirmOrder,
-  updateOrderStatus,
-  updateTracking,
-} from '@/entity/order/order.api'
-import { orderQueries } from '@/entity/order/order.query'
-import {
-  CourierName,
-  OrderStatusCount,
-  OrderStatusTab,
-} from '@/entity/order/order.type'
 import { toast } from '@dessert/ui'
-import { OrderActionBar } from '@/features/order/order-action-bar/order-action-bar.ui'
-import { OrderDetailModal } from '@/features/order/order-detail-modal/order-detail-modal.ui'
-import { useOrderFilter } from '@/features/order/order-filters/order-filters.hook'
-import { OrderFilters } from '@/features/order/order-filters/order-filters.ui'
+
+import { orderQueries } from '@/entity/order/order.query'
+import { OrderStatusCount, OrderStatusTab } from '@/entity/order/order.type'
 import {
-  REASON_REQUIRED_ACTIONS,
-  ReasonAction,
-} from '@/features/order/reason-input-modal/reason-input-modal.constant'
-import { ReasonInputModal } from '@/features/order/reason-input-modal/reason-input-modal.ui'
-import { OrderSelectAlertModal } from '@/features/order/order-select-alert-modal/order-select-alert-modal.ui'
-import { OrderStatusTabs } from '@/features/order/order-status-tabs/order-status-tabs.ui'
-import { useOrderSelection } from '@/features/order/order-table/order-selection.hook'
-import { OrderTable } from '@/features/order/order-table/order-table.ui'
-import { TrackingNumberModal } from '@/features/order/tracking-number-modal/tracking-number-modal.ui'
+  OrderActionBar,
+  useOrderActionBar,
+} from '@/features/order/order-action-bar'
+import { OrderDetailModal } from '@/features/order/order-detail-modal'
+import { OrderFilters, useOrderFilter } from '@/features/order/order-filters'
+import { OrderSelectAlertModal } from '@/features/order/order-select-alert-modal'
+import { OrderStatusTabs } from '@/features/order/order-status-tabs'
+import {
+  OrderTable,
+  useOrderSelection,
+  useOrderTableLoading,
+} from '@/features/order/order-table'
+import {
+  isReasonAction,
+  ReasonInputModal,
+  useReasonAction,
+} from '@/features/order/reason-input-modal'
+import {
+  TrackingNumberModal,
+  useTrackingFlow,
+} from '@/features/order/tracking-number-modal'
 
 const VALID_TABS: OrderStatusTab[] = [
   'all',
@@ -60,18 +53,8 @@ const DEFAULT_STATUS_COUNT: OrderStatusCount = {
 }
 
 function AllOrdersPage() {
-  const queryClient = useQueryClient()
   const [detailOpen, setDetailOpen] = useState(false)
   const [alertOpen, setAlertOpen] = useState(false)
-  const [reasonModalOpen, setReasonModalOpen] = useState(false)
-  const [reasonAction, setReasonAction] = useState<ReasonAction>('cancelOrder')
-  const [trackingModalOpen, setTrackingModalOpen] = useState(false)
-  const [trackingMode, setTrackingMode] = useState<'create' | 'edit'>('create')
-  const [trackingTarget, setTrackingTarget] = useState<{
-    orderNumber: string
-    courier?: CourierName | null
-    trackingNumber?: string | null
-  } | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
   const statusParam = searchParams.get('status')
   const selectedTab: OrderStatusTab = VALID_TABS.includes(
@@ -89,70 +72,11 @@ function AllOrdersPage() {
     reset: filtersReset,
   } = useOrderFilter(selectedTab)
 
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     ...orderQueries.list(appliedFilters),
     placeholderData: keepPreviousData,
   })
   const orders = data?.content ?? []
-
-  const updateStatusMutation = useMutation({
-    mutationFn: updateOrderStatus,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      selectionReset()
-    },
-    onError: () => {
-      toast.error('주문 상태 변경에 실패했습니다.')
-    },
-  })
-
-  const updateTrackingMutation = useMutation({
-    mutationFn: updateTracking,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('운송장 정보가 저장되었습니다.')
-      setTrackingModalOpen(false)
-    },
-    onError: () => {
-      toast.error('운송장 저장에 실패했습니다.')
-    },
-  })
-
-  const completeReturnMutation = useMutation({
-    mutationFn: completeReturn,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('반품이 완료 처리되었습니다.')
-      selectionReset()
-    },
-    onError: () => {
-      toast.error('반품 완료 처리에 실패했습니다.')
-    },
-  })
-
-  const completeExchangeMutation = useMutation({
-    mutationFn: completeExchange,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('교환이 완료 처리되었습니다.')
-      selectionReset()
-    },
-    onError: () => {
-      toast.error('교환 완료 처리에 실패했습니다.')
-    },
-  })
-
-  const confirmOrderMutation = useMutation({
-    mutationFn: confirmOrder,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderQueries.all() })
-      toast.success('발주가 확인되었습니다.')
-      selectionReset()
-    },
-    onError: () => {
-      toast.error('발주 확인에 실패했습니다.')
-    },
-  })
 
   const {
     selectedIds,
@@ -164,6 +88,47 @@ function AllOrdersPage() {
     toggleProduct,
     reset: selectionReset,
   } = useOrderSelection(orders)
+
+  const selectedOrders = orders.filter((o) =>
+    selectedIds.includes(o.orderNumber),
+  )
+
+  const {
+    isOpen: isReasonOpen,
+    setIsOpen: setReasonOpen,
+    action: reasonAction,
+    open: openReason,
+    handleConfirm: handleReasonConfirm,
+    isPending: isReasonPending,
+  } = useReasonAction({
+    selectedIds,
+    selectedOrders,
+    onClearSelection: selectionReset,
+  })
+
+  const tracking = useTrackingFlow()
+
+  const detailOrderItemIds = useMemo(
+    () =>
+      selectedOrders.flatMap((o) =>
+        o.products.map((p) => String(p.orderItemId)),
+      ),
+    [selectedOrders],
+  )
+
+  const { handleAction: handleActionBar, isPending: isActionBarPending } =
+    useOrderActionBar({
+      selectedIds,
+      selectedOrders,
+      onClearSelection: selectionReset,
+      onShowDetail: () => setDetailOpen(true),
+      onSelectionEmpty: () => setAlertOpen(true),
+      onUnhandled: (action) => {
+        if (isReasonAction(action)) {
+          openReason(action)
+        }
+      },
+    })
 
   const handleTabChange = (tab: OrderStatusTab) => {
     filtersReset(tab)
@@ -186,96 +151,18 @@ function AllOrdersPage() {
     setAppliedFilters((prev) => ({ ...prev, page: String(page - 1) }))
   }
 
-  const handleAction = (action: string) => {
-    if (action === 'detailView') {
-      if (selectedIds.length === 0) {
-        setAlertOpen(true)
-        return
-      }
-      setDetailOpen(true)
-      return
-    }
-
-    if (action === 'confirmOrder') {
-      if (selectedIds.length === 0) {
-        setAlertOpen(true)
-        return
-      }
-      if (confirmOrderMutation.isPending) return
-      confirmOrderMutation.mutate({ orderNumbers: selectedIds })
-      return
-    }
-
-    if (action === 'completeReturn') {
-      if (selectedIds.length === 0) {
-        setAlertOpen(true)
-        return
-      }
-      if (completeReturnMutation.isPending) return
-      completeReturnMutation.mutate({ orderNumbers: selectedIds })
-      return
-    }
-
-    if (action === 'completeExchange') {
-      if (selectedIds.length === 0) {
-        setAlertOpen(true)
-        return
-      }
-      if (completeExchangeMutation.isPending) return
-      completeExchangeMutation.mutate({ orderNumbers: selectedIds })
-      return
-    }
-
-    if (REASON_REQUIRED_ACTIONS.has(action)) {
-      if (selectedIds.length === 0) {
-        setAlertOpen(true)
-        return
-      }
-      setReasonAction(action as ReasonAction)
-      setReasonModalOpen(true)
-    }
-  }
-
-  const handleReasonConfirm = (data: {
-    reasonType: string
-    reasonDetail: string
-    images: File[]
-  }) => {
-    updateStatusMutation.mutate({
-      orderNumbers: selectedIds,
-      reasonType: data.reasonType,
-      reasonDetail: data.reasonDetail,
-      images: data.images,
-    })
-  }
-
-  const handleTrackingOpen = (
-    mode: 'create' | 'edit',
-    orderNumber: string,
-    courier?: CourierName | null,
-    trackingNumber?: string | null,
-  ) => {
-    setTrackingMode(mode)
-    setTrackingTarget({ orderNumber, courier, trackingNumber })
-    setTrackingModalOpen(true)
-  }
-
-  const handleTrackingConfirm = (
-    courier: CourierName,
-    trackingNumber: string,
-  ) => {
-    if (!trackingTarget?.orderNumber) return
-    updateTrackingMutation.mutate({
-      orderNumber: trackingTarget.orderNumber,
-      courierName: courier,
-      trackingNumber,
-    })
-  }
-
   const currentPage = appliedFilters.page ? Number(appliedFilters.page) + 1 : 1
   const currentTab = appliedFilters.tab ?? 'all'
   const totalPages = data?.totalPages ?? 1
   const totalCount = data?.totalElements ?? 0
+
+  const isMutationPending =
+    isActionBarPending || isReasonPending || tracking.isPending
+
+  const { loadingMode, dismissMutationLoading } = useOrderTableLoading({
+    isListLoading: isFetching,
+    isMutationPending,
+  })
 
   return (
     <div className="flex flex-col gap-6 p-4">
@@ -295,7 +182,7 @@ function AllOrdersPage() {
       <section className="mt-10 rounded-10 border bg-white">
         <OrderActionBar
           tab={currentTab}
-          onAction={handleAction}
+          onAction={handleActionBar}
           selectedCount={selectedIds.length}
           totalCount={totalCount}
           currentPage={currentPage}
@@ -313,30 +200,46 @@ function AllOrdersPage() {
           onToggleAll={toggleAll}
           onToggleOne={toggleOne}
           onToggleProduct={toggleProduct}
-          onTrackingOpen={handleTrackingOpen}
+          onTrackingOpen={(mode, args) => {
+            // 운송장은 주문 단위로 등록 — 같은 orderId의 모든 product를 묶어 보낸다.
+            const order = orders.find((o) => o.orderId === args.orderId)
+            if (!order) {
+              toast.error('주문 정보를 찾을 수 없습니다.')
+              return
+            }
+            tracking.open(mode, {
+              orderNumber: args.orderNumber,
+              orderId: args.orderId,
+              orderItemIds: order.products.map((p) => p.orderItemId),
+              courier: args.courier,
+              trackingNumber: args.trackingNumber,
+            })
+          }}
+          loadingMode={loadingMode}
+          onCancelLoading={dismissMutationLoading}
         />
       </section>
 
       <OrderDetailModal
         open={detailOpen}
         onOpenChange={setDetailOpen}
-        orderNumbers={selectedIds}
+        orderItemIds={detailOrderItemIds}
       />
       <OrderSelectAlertModal open={alertOpen} onOpenChange={setAlertOpen} />
       <ReasonInputModal
-        open={reasonModalOpen}
-        onOpenChange={setReasonModalOpen}
+        open={isReasonOpen}
+        onOpenChange={setReasonOpen}
         action={reasonAction}
         onConfirm={handleReasonConfirm}
       />
       <TrackingNumberModal
-        key={trackingTarget?.orderNumber ?? ''}
-        open={trackingModalOpen}
-        onOpenChange={setTrackingModalOpen}
-        mode={trackingMode}
-        defaultCourier={trackingTarget?.courier}
-        defaultTrackingNumber={trackingTarget?.trackingNumber}
-        onConfirm={handleTrackingConfirm}
+        key={tracking.target?.orderNumber ?? ''}
+        open={tracking.isOpen}
+        onOpenChange={tracking.setIsOpen}
+        mode={tracking.mode}
+        defaultCourier={tracking.target?.courier}
+        defaultTrackingNumber={tracking.target?.trackingNumber}
+        onConfirm={tracking.handleConfirm}
       />
     </div>
   )

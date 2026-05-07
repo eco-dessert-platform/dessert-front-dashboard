@@ -12,6 +12,7 @@ export interface TextareaProps
   error?: boolean
   errorMessage?: string
   className?: string
+  textareaClassName?: string
   maxLength?: number
   showCount?: boolean
 }
@@ -30,6 +31,7 @@ const Textarea = ({
   errorMessage,
   helperText,
   className = '',
+  textareaClassName = '',
   maxLength,
   showCount = false,
   ...restProps
@@ -48,6 +50,7 @@ const Textarea = ({
             'min-h-[100px] resize-none items-start gap-6 rounded-10 px-12 py-8 disabled:cursor-not-allowed',
             error &&
               'border-error-500 focus-visible:border-error-500 focus-visible:ring-error-500/40',
+            textareaClassName,
           )}
           placeholder={placeholder}
           value={value}

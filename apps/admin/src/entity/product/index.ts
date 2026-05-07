@@ -3,6 +3,8 @@ export type {
   UploadApproval,
   UploadApprovalListResult,
   GetUploadApprovalsRequestParams,
+  RejectCategory,
+  DecideUploadApproval,
 } from './product.type'
 
 export {
@@ -10,8 +12,13 @@ export {
   UploadApprovalListResultSchema,
   UploadApprovalListResponseSchema,
   GetUploadApprovalsRequestParamsSchema,
+  RejectCategorySchema,
+  RejectBodySchema,
+  DecideUploadApprovalRequestSchema,
+  DecideUploadApprovalResponseSchema,
+  REJECT_CATEGORY_LABELS,
 } from './product.contract'
 
-export { getUploadApprovals } from './product.api'
+export { getUploadApprovals, decideUploadApproval } from './product.api'
 
 export { productQueries } from './product.query'

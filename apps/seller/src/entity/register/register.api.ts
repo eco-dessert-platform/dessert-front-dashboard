@@ -130,7 +130,7 @@ export async function submitStoreApplication({
   request,
   profileImage,
 }: SubmitStoreApplicationInput): Promise<StoreApplicationResult> {
-  if (!request.profile && !profileImage) {
+  if (!request.profile?.trim() && !profileImage) {
     throw new Error('프로필 이미지 또는 프로필 URL 중 하나는 필수입니다.')
   }
 

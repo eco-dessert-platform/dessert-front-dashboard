@@ -16,6 +16,7 @@ import SettlementPage from '@/pages/settlement/settlement-page'
 import { ROUTES } from '@/shared/constant/routes'
 
 import App from './App'
+import { SellerInfoPage } from './pages/seller-info/seller-info-page'
 import FixedLayout from './shared/block/fixed-layout/fixed-layout'
 
 const router = createBrowserRouter([
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
     path: ROUTES.CALLBACK.SOCIAL,
     element: <SocialCallbackPage />,
   },
+  { path: ROUTES.PRODUCTS.CREATE_DETAIL, element: <DetailEditPage /> },
   {
     path: ROUTES.REGISTER.DEFAULT,
     element: <RegisterLayout />,
@@ -50,8 +52,9 @@ const router = createBrowserRouter([
       { path: ROUTES.ORDERS.COMPLETED, element: <CompletedOrdersPage /> },
       { path: ROUTES.PRODUCTS.ALL, element: <ProductsPage /> },
       { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
-      { path: ROUTES.PRODUCTS.CREATE_DETAIL, element: <DetailEditPage /> },
+
       { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
+      { path: ROUTES.INFO.CHANGE, element: <SellerInfoPage /> },
     ],
   },
 ])

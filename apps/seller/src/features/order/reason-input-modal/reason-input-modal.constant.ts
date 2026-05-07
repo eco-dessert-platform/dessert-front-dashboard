@@ -1,3 +1,5 @@
+import type { OrderAction } from '@/entity/order/order.type'
+
 /**
  * 주문상태 변경 사유입력 모달에서 사용하는 상수
  *
@@ -173,3 +175,7 @@ export const REASON_REQUIRED_ACTIONS: Set<string> = new Set<string>([
   'turnDownExchange',
   'holdExchange',
 ])
+
+/** 사유 입력이 필요한 액션인지 좁혀주는 타입 가드 */
+export const isReasonAction = (action: OrderAction): action is ReasonAction =>
+  REASON_REQUIRED_ACTIONS.has(action)
