@@ -3,7 +3,7 @@ import { Button, Pagination } from '@dessert/ui'
 export type ProductActionType = 'ADD' | 'EDIT' | 'DELETE'
 export type OptionActionType = 'DELETE_OPTION' | 'SOLD_OUT' | 'INCREASE_STOCK'
 
-interface ProductActionGroupProps {
+interface ManagementAllActionGroupProps {
   currentPage: number
   totalPages: number
   onPageChange: (page: number) => void
@@ -11,13 +11,13 @@ interface ProductActionGroupProps {
   onOptionAction: (action: OptionActionType) => void
 }
 
-export const ProductActionGroup = ({
+export const ManagementAllActionGroup = ({
   currentPage,
   totalPages,
   onPageChange,
   onProductAction,
   onOptionAction,
-}: ProductActionGroupProps) => {
+}: ManagementAllActionGroupProps) => {
   return (
     <div className="flex w-full items-center justify-between">
       <div className="flex shrink-0 items-center gap-16">

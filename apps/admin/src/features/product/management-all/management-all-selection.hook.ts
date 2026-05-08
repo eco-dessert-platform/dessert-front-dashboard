@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { AdminProduct } from '@/entity/product/management-all'
 
-export function useProductSelection(products: AdminProduct[]) {
+export function useManagementAllSelection(products: AdminProduct[]) {
   const [selectedProductIds, setSelectedProductIds] = useState<number[]>([])
   const [selectedOptionIds, setSelectedOptionIds] = useState<number[]>([])
 
