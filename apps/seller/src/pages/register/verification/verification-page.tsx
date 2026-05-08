@@ -28,13 +28,11 @@ const isFieldFilled = (value: unknown) => {
 
 const VerificationPage = () => {
   const { control, trigger, getValues } = useFormContext<RegisterForm>()
-  const watched = useWatch({ control })
   const navigate = useNavigate()
   const { mutate: registerDocs, isPending } = useRegisterDocumentsMutation()
 
-  const hasAnyInput = VERIFICATION_FIELDS.some((field) =>
-    isFieldFilled(watched[field]),
-  )
+  const watched = useWatch({ control, name: VERIFICATION_FIELDS })
+  const hasAnyInput = watched.some(isFieldFilled)
 
   const handleAdvance = async () => {
     const valid = await trigger(VERIFICATION_FIELDS)
