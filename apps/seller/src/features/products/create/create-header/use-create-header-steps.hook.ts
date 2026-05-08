@@ -9,7 +9,6 @@ export const useCreateHeaderSteps = () => {
     headerHeight: store.headerHeight,
     productFields: store.productFields,
     nutritionDataList: store.nutritionDataList,
-    productPrice: store.productPrice,
     activeTags: store.getActiveTags(),
 
     // 액션 (Actions)
@@ -17,7 +16,6 @@ export const useCreateHeaderSteps = () => {
     setHeaderHeight: store.setHeaderHeight,
     setProductFields: store.setProductFields,
     setNutritionData: store.setNutritionData,
-    setProductPrice: store.setProductPrice,
     scrollToStep: store.scrollToStep,
 
     // Observer 로직 대응용 Ref 구조

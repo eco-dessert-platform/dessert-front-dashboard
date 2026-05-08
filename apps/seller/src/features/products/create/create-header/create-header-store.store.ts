@@ -14,14 +14,12 @@ interface CreateFormStoreProps {
   currentStep: number
   headerHeight: number
   nutritionDataList: NutritionData[]
-  productPrice: number | null
   isScrolling: boolean // Ref 대신 State로 관리 (Zustand는 선택적 구독이 가능하므로)
 
   // --- Actions ---
   setProductFields: (fields: Partial<ProductFileType>) => void
   setCurrentStep: (step: number) => void
   setHeaderHeight: (height: number) => void
-  setProductPrice: (price: number | null) => void
   setNutritionData: (index: number, data: NutritionData) => void
 
   // 스크롤 로직
@@ -46,7 +44,6 @@ export const useCreateHeaderStore = create<CreateFormStoreProps>(
     nutritionDataList: [
       { sugar: null, protein: null, fat: null, ingredientCategories: [] },
     ],
-    productPrice: null,
     isScrolling: false,
 
     setProductFields: (fields: Partial<ProductFileType>) =>
@@ -61,7 +58,6 @@ export const useCreateHeaderStore = create<CreateFormStoreProps>(
       ),
     setCurrentStep: (step) => set({ currentStep: step }),
     setHeaderHeight: (height) => set({ headerHeight: height }),
-    setProductPrice: (price) => set({ productPrice: price }),
 
     setNutritionData: (index, data) =>
       set((state) => {

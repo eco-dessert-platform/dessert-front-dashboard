@@ -32,8 +32,7 @@ export const ProductOptionForm = ({
   onCopy,
   onAdd,
 }: ProductOptionFormProps) => {
-  const { productPrice, setProductFields, setNutritionData } =
-    useCreateHeaderSteps()
+  const { setProductFields, setNutritionData } = useCreateHeaderSteps()
   const { control: rootControl } = useFormContext()
 
   const rootProductPrice = useWatch({

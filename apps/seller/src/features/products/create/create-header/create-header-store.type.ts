@@ -26,7 +26,4 @@ export interface CreateFormHeaderType {
   nutritionDataList: NutritionData[]
   setNutritionData: (index: number, data: NutritionData) => void
   activeTags: ActiveTags
-
-  productPrice: number | null
-  setProductPrice: React.Dispatch<React.SetStateAction<number | null>>
 }
