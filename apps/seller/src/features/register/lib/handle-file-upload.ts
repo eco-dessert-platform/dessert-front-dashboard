@@ -1,7 +1,8 @@
 import { toast } from '@dessert/ui'
 
 import { FILE_UPLOAD_LIMITS } from '@/entity/register/register.constant'
-import { REGISTER_TOAST_MESSAGES } from '@/features/register'
+
+import { REGISTER_TOAST_MESSAGES } from '../register.constant'
 
 type FileUploadResult = 'success' | 'size-exceeded' | 'type-invalid' | 'cleared'
 
