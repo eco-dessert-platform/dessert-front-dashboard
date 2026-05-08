@@ -1,11 +1,13 @@
-export type { Product, ProductOption, ProductResponse } from './product.type'
 export type {
+  Product,
+  ProductOption,
+  ProductResponse,
   UploadApproval,
   UploadApprovalListResult,
   GetUploadApprovalsRequestParams,
   RejectCategory,
   DecideUploadApproval,
-} from './product.type'
+} from './upload-approval.type'
 
 export {
   UploadApprovalSchema,
@@ -17,8 +19,10 @@ export {
   DecideUploadApprovalRequestSchema,
   DecideUploadApprovalResponseSchema,
   REJECT_CATEGORY_LABELS,
-} from './product.contract'
+} from './upload-approval.contract'
 
-export { getUploadApprovals, decideUploadApproval } from './product.api'
+export { getUploadApprovals, decideUploadApproval } from './upload-approval.api'
 
-export { productQueries } from './product.query'
+export { productQueries } from './upload-approval.query'
+
+export { getProductMockData, getUploadApprovalMockData } from './upload-approval.mock'

@@ -32,3 +32,5 @@ export {
 } from './management-all.api'
 
 export { managementAllQueries } from './management-all.query'
+
+export { getAdminProductMockData } from './management-all.mock'
