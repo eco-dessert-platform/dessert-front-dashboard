@@ -8,7 +8,7 @@ import { productionTimes } from '@/entity/products/create/create-info/production
 
 import { useProductInfoForm } from './use-product-info-form.hook'
 import { InfoTooltip, ProductFinalPrice } from '../create-form'
-import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
+import { useCreateHeaderSteps } from '../create-header'
 
 export const ProductInfoArea = () => {
   const {

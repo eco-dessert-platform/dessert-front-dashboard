@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+
 import { CameraIcon } from '@dessert/icons'
 import {
   Button,
@@ -19,7 +20,7 @@ import {
 } from './create-form-thumbnail-items.ui'
 import { useProductThumbnailForm } from './use-product-thumbnail.hook'
 // import { useCreateHeaderSteps } from '../create-store'
-import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
+import { useCreateHeaderSteps } from '../create-header'
 
 export const ThumbnailUploadArea = () => {
   const {

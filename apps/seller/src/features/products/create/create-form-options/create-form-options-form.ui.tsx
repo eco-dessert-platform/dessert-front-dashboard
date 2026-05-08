@@ -14,8 +14,8 @@ import { useProductOptionForm } from './use-product-options.form.hook'
 //import { ProductFinalPrice } from '../create-form'
 //ProductFinalPrice는 상품 정보 폼에서도 공통으로 사용되는 디자인이므로
 //개별 브랜치를 생성해 작업하겠습니다.
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
-import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
+import { InfoTooltip } from '../create-form'
+import { useCreateHeaderSteps } from '../create-header'
 
 interface ProductOptionFormProps {
   index: number

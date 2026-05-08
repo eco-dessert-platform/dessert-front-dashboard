@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { PlusIcon, SquarePenIcon } from '@dessert/icons'
 import { Button, Label } from '@dessert/ui'
 import { useNavigate } from 'react-router-dom'
@@ -7,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import AppLogoImage from '@/assets/images/apple-120x120.png'
 import { ROUTES } from '@/shared/constant/routes'
 
-import { useProductCreationStore } from '../create-form/product-creation.store'
+import { useProductCreationStore } from '../create-form'
 
 export const ProductDetailArea = () => {
   const navigate = useNavigate()

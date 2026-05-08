@@ -7,8 +7,8 @@ import { DeliveryCompany, DeliveryTerms } from '@/entity/products'
 import { cn } from '@/shared/libs/utils'
 
 import { useProductDeliveryForm } from './use-product-delivery-form.hook'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
-import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
+import { InfoTooltip } from '../create-form'
+import { useCreateHeaderSteps } from '../create-header'
 
 export const ProductDeliveryArea = () => {
   const {
