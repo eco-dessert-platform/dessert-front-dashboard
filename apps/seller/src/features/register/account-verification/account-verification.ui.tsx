@@ -12,11 +12,11 @@ import {
   registerQueries,
   verifyAccount,
 } from '@/entity/register'
-import { REGISTER_TOAST_MESSAGES } from '@/features/register'
 import { FileUploadInput } from '@/widgets/file-upload-input'
 import { InputField } from '@/widgets/input-field'
 
 import { handleRegisterFileUpload, sanitizeAccountPayload } from '../lib'
+import { REGISTER_TOAST_MESSAGES } from '../register.constant'
 
 export function AccountVerification() {
   const { control, getValues, setValue } = useFormContext<RegisterForm>()
