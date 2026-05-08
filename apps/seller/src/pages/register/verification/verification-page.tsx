@@ -3,14 +3,11 @@ import { isAxiosError } from 'axios'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  REGISTER_TOAST_MESSAGES,
-  RegisterForm,
-  VERIFICATION_FIELDS,
-} from '@/entity/register'
+import { RegisterForm, VERIFICATION_FIELDS } from '@/entity/register'
 import {
   AccountVerification,
   DocumentUpload,
+  REGISTER_TOAST_MESSAGES,
   useRegisterDocumentsMutation,
 } from '@/features/register'
 import { ROUTES } from '@/shared/constant/routes'

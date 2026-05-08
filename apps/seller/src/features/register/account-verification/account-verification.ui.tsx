@@ -1,21 +1,23 @@
+import { useEffect } from 'react'
+
 import { Select, toast } from '@dessert/ui'
 import { useQuery } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
-import { useEffect } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
+import {
+  type RegisterForm,
+  registerQueries,
+} from '@/entity/register'
+import {
+  REGISTER_TOAST_MESSAGES,
+  useVerifyAccountMutation,
+} from '@/features/register'
 import { FileUploadInput } from '@/widgets/file-upload-input'
 import { InputField } from '@/widgets/input-field'
 
-import {
-  REGISTER_TOAST_MESSAGES,
-  registerQueries,
-  type RegisterForm,
-} from '@/entity/register'
-
 import { handleRegisterFileUpload } from '../lib'
 
-import { useVerifyAccountMutation } from './verify-account.mutation'
 
 // 토스페이먼츠 기관코드 기준 (https://docs.tosspayments.com/codes/org-codes)
 const BANK_OPTIONS = [
@@ -100,15 +102,15 @@ export function AccountVerification() {
   }
 
   return (
-    <section className="flex w-full flex-col overflow-clip rounded-[16px] bg-white">
-      <header className="flex flex-col gap-1 px-24 pb-12 pt-16">
+    <section className="flex w-full flex-col overflow-clip rounded-16 bg-white">
+      <header className="flex flex-col gap-1 px-24 pt-16 pb-12">
         <h2 className="typo-heading-20-sb text-gray-900">사업자 명의 계좌인증</h2>
         <p className="typo-title-16-r text-gray-700">
           사업자 명의의 통장 사본과 일치하는 계좌번호로 인증해주세요
         </p>
       </header>
 
-      <div className="flex flex-col gap-16 px-24 pb-16 pt-10">
+      <div className="flex flex-col gap-16 px-24 pt-10 pb-16">
         <Controller
           control={control}
           name="bankbook"
