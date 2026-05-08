@@ -4,7 +4,7 @@ import type {
   RejectCategorySchema,
   UploadApprovalListResultSchema,
   UploadApprovalSchema,
-} from './product.contract'
+} from './upload-approval.contract'
 import type { z } from 'zod'
 
 export interface ProductOption {
