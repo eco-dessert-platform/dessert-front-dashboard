@@ -32,7 +32,13 @@ const VerificationPage = () => {
   const { mutate: registerDocs, isPending } = useRegisterDocumentsMutation()
 
   const watched = useWatch({ control, name: VERIFICATION_FIELDS })
+  const accountVerificationId = useWatch({
+    control,
+    name: 'accountVerificationId',
+  })
   const hasAnyInput = watched.some(isFieldFilled)
+  const isAllFilled = watched.every(isFieldFilled)
+  const canAdvance = isAllFilled && accountVerificationId != null
 
   const handleAdvance = async () => {
     const valid = await trigger(VERIFICATION_FIELDS)
@@ -95,9 +101,10 @@ const VerificationPage = () => {
       <DocumentUpload />
       <AccountVerification />
       <RegisterStepFooter
-        onPrev={handleAdvance}
-        onNext={handleEdit}
+        onPrev={handleEdit}
+        onNext={handleAdvance}
         prevDisabled={!hasAnyInput || isPending}
+        nextDisabled={!canAdvance || isPending}
       />
     </>
   )

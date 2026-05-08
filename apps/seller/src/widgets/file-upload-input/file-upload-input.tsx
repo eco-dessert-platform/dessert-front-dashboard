@@ -1,10 +1,13 @@
 import { Input } from '@dessert/ui'
 
+import { cn } from '@/shared/libs/utils'
+
 interface FileUploadInputProps {
   label?: string
   required?: boolean
   placeholder: string
   buttonText?: string
+  reuploadButtonText?: string
   helperText?: string
   value?: string
   onChange?: (file: File | null) => void
@@ -16,11 +19,13 @@ export function FileUploadInput({
   required = false,
   placeholder,
   buttonText = '업로드',
+  reuploadButtonText = '재업로드',
   helperText,
   value,
   onChange,
   disabled = false,
 }: FileUploadInputProps) {
+  const hasFile = !!value
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
     onChange?.(file)
@@ -47,7 +52,12 @@ export function FileUploadInput({
           disabled={disabled}
         />
         <button
-          className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 border border-gray-300 bg-gray-300 px-16 py-8 disabled:cursor-not-allowed"
+          className={cn(
+            'flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 border px-16 py-8 disabled:cursor-not-allowed',
+            hasFile
+              ? 'border-primary-500 bg-white'
+              : 'border-gray-300 bg-gray-300',
+          )}
           disabled={disabled}
           onClick={() => {
             const input = document.createElement('input')
@@ -57,7 +67,14 @@ export function FileUploadInput({
             input.click()
           }}
         >
-          <span className="typo-title-16-m text-white">{buttonText}</span>
+          <span
+            className={cn(
+              'typo-title-16-m',
+              hasFile ? 'text-primary-500' : 'text-white',
+            )}
+          >
+            {hasFile ? reuploadButtonText : buttonText}
+          </span>
         </button>
       </div>
       {helperText && (

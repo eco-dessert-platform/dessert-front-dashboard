@@ -30,19 +30,20 @@ export function RegisterStepFooter({
     >
       <div className="mx-auto flex w-full max-w-[1240px] justify-end gap-12 px-[90px] py-24">
         <Button
+          title={nextLabel}
+          variant="primary-filled"
+          size="lg"
+          onClick={onNext}
+          disabled={nextDisabled}
+          className="disabled:border-gray-300 disabled:bg-gray-300 disabled:opacity-100"
+        />
+        <Button
           title={prevLabel}
           variant="primary-filled"
           size="lg"
           onClick={onPrev}
           disabled={prevDisabled}
           className="disabled:border-gray-300 disabled:bg-gray-300 disabled:opacity-100"
-        />
-        <Button
-          title={nextLabel}
-          variant="primary-filled"
-          size="lg"
-          onClick={onNext}
-          disabled={nextDisabled}
         />
       </div>
     </div>
