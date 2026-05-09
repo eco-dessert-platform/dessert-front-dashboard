@@ -32,6 +32,7 @@ export const disclosureSchema = z
     DISCLOSURE_FIELDS.forEach((field) => {
       if (noticeMode[field.key] === 'manual') {
         const val = noticeValue[field.key]
+        if (val.trim().length === 0) return
         if (val.trim().length < 3 || val.trim().length >= 50) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
