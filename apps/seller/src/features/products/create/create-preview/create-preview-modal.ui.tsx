@@ -1,6 +1,12 @@
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  HeartGrayIcon,
+  HeartRedIcon,
+  StarFilledIcon,
+} from '@dessert/icons'
 import { Button, LogoHeader } from '@dessert/ui'
 import { motion } from 'framer-motion'
-import { ChevronDown, Heart, Star } from 'lucide-react'
 
 import NoThumb from '@/assets/icons/bbangle-cry.svg'
 import Icon1 from '@/assets/icons/reviewBadge/badge-good.svg'
@@ -73,7 +79,7 @@ export const ProductPreviewModal = ({
       >
         {/* 1. 헤더 */}
         <div className="sticky top-0 z-10 flex items-center gap-12 bg-white p-16">
-          <ChevronDown className="rotate-90 text-gray-900" size={24} />
+          <ChevronLeftIcon className="size-24 text-gray-900" />
           <h1 className="flex-1 truncate typo-title-16-m text-gray-900">
             {productName || '{{상품명}}'}
           </h1>
@@ -149,7 +155,7 @@ export const ProductPreviewModal = ({
             <div className="size-24 rounded-6 bg-gray-500" />
             <p className="typo-title-14-m text-gray-600">Brand Name</p>
           </div>
-          <Heart size={18} className="text-gray-300" />
+          <HeartRedIcon className="size-24 text-gray-300" />
         </div>
         <div className="border-t border-gray-300 bg-white p-16">
           <h2 className="typo-title-16-r text-gray-800">
@@ -174,9 +180,9 @@ export const ProductPreviewModal = ({
               )}
             </div>
             <div className="flex items-center gap-2 typo-body-14-m text-gray-900">
-              <Star className="fill-yellow-400 text-yellow-400" size={18} />
+              <StarFilledIcon className="size-16 fill-yellow-400 text-yellow-400" />
               4.5 <span className="typo-body-12-r text-gray-500">(1,000)</span>
-              <ChevronDown className="-rotate-90 text-gray-300" size={12} />
+              <ChevronRightIcon className="size-16 text-gray-300" />
             </div>
           </div>
         </div>
@@ -264,7 +270,7 @@ export const ProductPreviewModal = ({
         {/* 하단 고정 바 */}
         <div className="sticky bottom-0 z-10 flex w-full items-center gap-10 border-t border-gray-100 bg-white p-16 px-20 py-16">
           <div className="flex size-56 items-center justify-center rounded-full border border-gray-200 text-gray-400">
-            <Heart size={32} />
+            <HeartGrayIcon className="size-32" />
           </div>
           <button className="flex-1 rounded-full bg-gray-900 py-[13.5px] text-center typo-title-16-sb text-white hover:bg-black">
             구매하러가기
