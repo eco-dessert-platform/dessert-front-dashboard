@@ -1,6 +1,6 @@
-import { Product } from './product.type'
+import { Product } from './upload-approval.type'
 
-import type { UploadApproval } from './product.type'
+import type { UploadApproval } from './upload-approval.type'
 
 const STORES = [
   '그린베이커리',

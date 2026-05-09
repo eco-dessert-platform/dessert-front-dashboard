@@ -3,13 +3,13 @@ import { client } from '@/shared/utils'
 import {
   DecideUploadApprovalResponseSchema,
   UploadApprovalListResponseSchema,
-} from './product.contract'
+} from './upload-approval.contract'
 
 import type {
   DecideUploadApproval,
   GetUploadApprovalsRequestParams,
   UploadApprovalListResult,
-} from './product.type'
+} from './upload-approval.type'
 
 export const getUploadApprovals = async (
   params: GetUploadApprovalsRequestParams = {},
