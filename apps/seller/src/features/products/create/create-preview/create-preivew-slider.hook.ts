@@ -23,10 +23,11 @@ export const usePreviewSlider = ({ slideCount, resetKey }: UseSliderProps) => {
     if (!canDrag) return
     const { offset, velocity } = info
     const swipeThreshold = 50
+    const velocityThreshold = 500
 
-    if (offset.x < -swipeThreshold || velocity.x < -500) {
+    if (offset.x < -swipeThreshold || velocity.x < -velocityThreshold) {
       setCurrentIndex((prev) => Math.min(prev + 1, slideCount - 1))
-    } else if (offset.x > swipeThreshold || velocity.x > 500) {
+    } else if (offset.x > swipeThreshold || velocity.x > velocityThreshold) {
       setCurrentIndex((prev) => Math.max(prev - 1, 0))
     }
   }
