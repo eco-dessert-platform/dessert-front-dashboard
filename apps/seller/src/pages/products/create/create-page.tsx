@@ -58,10 +58,12 @@ function CreatePageInner() {
       </CreateFormContainer>
 
       <CreateFooter onPreview={() => setIsPreviewOpen(true)} />
-      <ProductPreviewModal
-        isOpen={isPreviewOpen}
-        onClose={() => setIsPreviewOpen(false)}
-      />
+      {isPreviewOpen && (
+        <ProductPreviewModal
+          isOpen={isPreviewOpen}
+          onClose={() => setIsPreviewOpen(false)}
+        />
+      )}
     </>
   )
 }
