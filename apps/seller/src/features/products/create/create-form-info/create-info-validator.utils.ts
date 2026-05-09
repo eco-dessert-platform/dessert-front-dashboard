@@ -1,6 +1,6 @@
 import { FieldValues, Path, useFormContext } from 'react-hook-form'
 
-export function useInfoValidator<T extends FieldValues>(
+export function CreateInfoValidator<T extends FieldValues>(
   fields: Array<Path<T>>,
 ) {
   const {
