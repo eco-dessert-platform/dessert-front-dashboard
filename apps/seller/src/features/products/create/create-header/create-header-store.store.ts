@@ -36,7 +36,6 @@ export const useCreateHeaderStore = create<CreateFormStoreProps>(
       productDelivery: false,
       productThumbnail: false,
       productOptions: false,
-      productDetail: false,
       productDisclosure: false,
     },
     currentStep: 1,
