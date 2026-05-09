@@ -50,7 +50,7 @@ export const ProductPreviewModal = ({
 
   const { currentIndex, canDrag, handlePanEnd } = usePreviewSlider({
     slideCount: slides.length,
-    resetDeps: [isOpen, allImageUrls.length, hasMainImage],
+    resetKey: `${isOpen}-${allImageUrls.length}-${hasMainImage}`,
   })
 
   if (!isOpen) return null

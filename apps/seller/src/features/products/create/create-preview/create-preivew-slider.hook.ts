@@ -4,15 +4,15 @@ import { PanInfo } from 'framer-motion'
 
 interface UseSliderProps {
   slideCount: number
-  resetDeps: unknown[]
+  resetKey: string | number // unknown[] → string | number
 }
 
-export const usePreviewSlider = ({ slideCount, resetDeps }: UseSliderProps) => {
+export const usePreviewSlider = ({ slideCount, resetKey }: UseSliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
     setCurrentIndex(0)
-  }, resetDeps)
+  }, [resetKey]) // resetDeps → [resetKey]
 
   const canDrag = slideCount > 1
 
