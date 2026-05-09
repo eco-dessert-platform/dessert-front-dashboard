@@ -18,7 +18,7 @@ const getOptionTags = (option: ProductOptionsType) => {
   return tags
 }
 
-interface OptionItemProps {
+interface CreatePreviewOptionItemUiProps {
   option: ProductOptionsType
   idx: number
   productPrice: number | null
@@ -30,7 +30,7 @@ export const CreatePreviewOptionItemUi = ({
   idx,
   productPrice,
   discountAmount,
-}: OptionItemProps) => {
+}: CreatePreviewOptionItemUiProps) => {
   const basePrice = productPrice ?? 0
   const additionalPrice = option.additionalPrice ?? 0
   const originalPrice = basePrice + additionalPrice
