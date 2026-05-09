@@ -1,29 +1,9 @@
 import { ChevronUpIcon } from '@dessert/icons'
 
 import { EssentialOptions } from '@/entity/products/create/create-header/essential-options.constants'
-import { SHIPPING_DAYS } from '@/entity/products/create/create-options/product-shipping-days.constant'
+import { DaySelector } from '@/widgets/day-selector'
 
 import { ProductOptionsType } from '../create-form-options'
-
-const DaySelector = ({ selectedDays }: { selectedDays: string[] }) => {
-  const days = SHIPPING_DAYS
-  return (
-    <div className="flex gap-4">
-      {days.map((day) => (
-        <span
-          key={day.value}
-          className={`flex size-32 items-center justify-center rounded-full border typo-body-12-sb ${
-            selectedDays.includes(day.value)
-              ? 'border-[#F26565] bg-[#F26565] text-white'
-              : 'border-gray-100 bg-white text-gray-400'
-          }`}
-        >
-          {day.label}
-        </span>
-      ))}
-    </div>
-  )
-}
 
 const getOptionTags = (option: ProductOptionsType) => {
   const tags: string[] = []
@@ -82,7 +62,7 @@ export const CreatePreviewOptionItemUi = ({
           <span className="typo-title-14-sb text-gray-900">
             {displayFinalPrice}
           </span>
-          <ChevronUpIcon className="ml-8 text-gray-900 size-[20px]" />
+          <ChevronUpIcon className="ml-8 size-20 text-gray-900" />
         </div>
       </div>
 
@@ -107,7 +87,11 @@ export const CreatePreviewOptionItemUi = ({
       <div className="p-16 pt-0">
         <p className="mb-2 typo-body-12-sb text-gray-500">주문 가능날짜</p>
         <div className="flex w-full items-center justify-between">
-          <DaySelector selectedDays={option.shippingDays} />
+          <DaySelector
+            selectedDays={option.shippingDays}
+            className="gap-4"
+            size="small"
+          />
           <div className="rounded-8 bg-gray-900 px-10 py-[5.5px] typo-body-12-m text-white">
             빵켓팅 알림 신청
           </div>
