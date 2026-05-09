@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react'
-
 import { Button, LogoHeader } from '@dessert/ui'
-import { PanInfo, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ChevronDown, Heart, Star } from 'lucide-react'
 
 import NoThumb from '@/assets/icons/bbangle-cry.svg'
