@@ -181,7 +181,7 @@ export const ProductPreviewModal = ({
             </div>
             <div className="flex items-center gap-2 typo-body-14-m text-gray-900">
               <StarFilledIcon className="size-16 fill-yellow-400 text-yellow-400" />
-              4.5 <span className="typo-body-12-r text-gray-500">(1,000)</span>
+              0.0 <span className="typo-body-12-r text-gray-500">(0)</span>
               <ChevronRightIcon className="size-16 text-gray-300" />
             </div>
           </div>
