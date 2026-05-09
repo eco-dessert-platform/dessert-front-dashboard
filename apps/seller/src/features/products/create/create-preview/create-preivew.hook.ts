@@ -34,7 +34,11 @@ export const useCreatePreviewHook = () => {
   const { productDetail } = useProductCreationStore()
 
   const price = productPrice ?? 0
-  const discountAmount = rawDiscount ?? 0
+  const rawDiscountValue = rawDiscount ?? 0
+  const discountAmount =
+    discountType === 'won'
+      ? rawDiscountValue
+      : Math.round(price * (rawDiscountValue / 100))
 
   const discountPercent =
     discountType === 'won'
