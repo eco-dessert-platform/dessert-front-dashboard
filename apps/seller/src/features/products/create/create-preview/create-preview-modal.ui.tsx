@@ -14,9 +14,9 @@ import BadgePlainIcon from '@/assets/icons/reviewBadge/badge-plain.svg'
 import BadgeSoftIcon from '@/assets/icons/reviewBadge/badge-soft.svg'
 import { cn } from '@/shared/libs/utils'
 
-import { usePreviewSlider } from './create-preivew-slider.hook'
-import { useCreatePreviewHook } from './create-preivew.hook'
 import { CreatePreviewOptionItemUi } from './create-preview-option-item.ui'
+import { usePreviewSlider } from './create-preview-slider.hook'
+import { useCreatePreviewHook } from './create-preview.hook'
 
 interface ProductPreviewModalProps {
   isOpen: boolean
