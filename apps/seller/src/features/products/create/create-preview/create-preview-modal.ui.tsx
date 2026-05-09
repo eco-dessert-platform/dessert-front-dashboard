@@ -9,9 +9,9 @@ import { Button, LogoHeader } from '@dessert/ui'
 import { motion } from 'framer-motion'
 
 import NoThumb from '@/assets/icons/bbangle-cry.svg'
-import Icon1 from '@/assets/icons/reviewBadge/badge-good.svg'
-import Icon2 from '@/assets/icons/reviewBadge/badge-plain.svg'
-import Icon3 from '@/assets/icons/reviewBadge/badge-soft.svg'
+import BadgeGoodIcon from '@/assets/icons/reviewBadge/badge-good.svg'
+import BadgePlainIcon from '@/assets/icons/reviewBadge/badge-plain.svg'
+import BadgeSoftIcon from '@/assets/icons/reviewBadge/badge-soft.svg'
 import { cn } from '@/shared/libs/utils'
 
 import { usePreviewSlider } from './create-preivew-slider.hook'
@@ -24,9 +24,9 @@ interface ProductPreviewModalProps {
 }
 
 const BADGES = [
-  { label: '맛있어요', icon: Icon1 },
-  { label: '담백해요', icon: Icon2 },
-  { label: '부드러워요', icon: Icon3 },
+  { label: '맛있어요', icon: BadgeGoodIcon },
+  { label: '담백해요', icon: BadgePlainIcon },
+  { label: '부드러워요', icon: BadgeSoftIcon },
 ]
 
 export const ProductPreviewModal = ({
