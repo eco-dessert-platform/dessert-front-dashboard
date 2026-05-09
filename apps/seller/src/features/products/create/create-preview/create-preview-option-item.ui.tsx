@@ -67,7 +67,7 @@ export const CreatePreviewOptionItemUi = ({
   return (
     <div className="border-t border-gray-300">
       <div className="flex items-center justify-between p-16">
-        <h4 className="mb-6 typo-title-14-r text-gray-800">
+        <h4 className="typo-title-14-r text-gray-800">
           {option.optionName || `{{옵션명 ${idx + 1}}}`}
         </h4>
         <div className="flex items-center gap-6">

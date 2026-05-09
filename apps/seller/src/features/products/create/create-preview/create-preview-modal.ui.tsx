@@ -30,15 +30,18 @@ export const ProductPreviewModal = ({
   onClose,
 }: ProductPreviewModalProps) => {
   const {
-    formData,
+    productName,
     productPrice,
     productDetail,
     discountPercent,
+    deliveryFee,
+    deliveryMinFee,
     totalPrice,
     isPriceEntered,
     allImageUrls,
     discountAmount,
     hasMainImage,
+    options,
   } = useCreatePreviewHook()
 
   const slides = !hasMainImage
@@ -51,8 +54,6 @@ export const ProductPreviewModal = ({
   })
 
   if (!isOpen) return null
-
-  const options = formData.options ?? []
 
   return (
     <div
@@ -76,7 +77,7 @@ export const ProductPreviewModal = ({
         <div className="sticky top-0 z-10 flex items-center gap-12 bg-white p-16">
           <ChevronDown className="rotate-90 text-gray-900" size={24} />
           <h1 className="flex-1 truncate typo-title-16-m text-gray-900">
-            {formData.productName || '{{상품명}}'}
+            {productName || '{{상품명}}'}
           </h1>
         </div>
 
@@ -154,7 +155,7 @@ export const ProductPreviewModal = ({
         </div>
         <div className="border-t border-gray-300 bg-white p-16">
           <h2 className="typo-title-16-r text-gray-800">
-            {formData.productName || '{{상품명}}'}
+            {productName || '{{상품명}}'}
           </h2>
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-4">
@@ -187,13 +188,11 @@ export const ProductPreviewModal = ({
           <div className="typo-title-14-m text-gray-600">
             배송비
             <span className="ml-4 typo-title-14-r text-gray-800">
-              {formData.deliveryFee
-                ? `${formData.deliveryFee.toLocaleString()}원`
-                : '{{배송비}}'}
+              {deliveryFee ? `${deliveryFee.toLocaleString()}원` : '{{배송비}}'}
             </span>
-            {formData.deliveryMinFee && (
+            {deliveryMinFee && (
               <span className="ml-2 typo-body-12-r text-gray-500">
-                ({formData.deliveryMinFee.toLocaleString()}원 이상 구매 시 무료)
+                ({deliveryMinFee.toLocaleString()}원 이상 구매 시 무료)
               </span>
             )}
           </div>
