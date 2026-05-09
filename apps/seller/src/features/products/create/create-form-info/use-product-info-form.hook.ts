@@ -1,6 +1,6 @@
 import { Path, useFormContext } from 'react-hook-form'
 
-import { useInfoValidator } from './use-create-info-validator'
+import { useInfoValidator } from './create-info-validator.utils'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
 import { CreateProductForm } from '../create-form/product-create.types'
 
