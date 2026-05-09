@@ -1,4 +1,4 @@
-import { ChevronUp } from 'lucide-react'
+import { ChevronUpIcon } from '@dessert/icons'
 
 import { EssentialOptions } from '@/entity/products/create/create-header/essential-options.constants'
 import { SHIPPING_DAYS } from '@/entity/products/create/create-options/product-shipping-days.constant'
@@ -82,7 +82,7 @@ export const CreatePreviewOptionItemUi = ({
           <span className="typo-title-14-sb text-gray-900">
             {displayFinalPrice}
           </span>
-          <ChevronUp className="ml-8 text-gray-900" size={20} />
+          <ChevronUpIcon className="ml-8 text-gray-900 size-[20px]" />
         </div>
       </div>
 
