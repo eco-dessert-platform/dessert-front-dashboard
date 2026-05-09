@@ -57,7 +57,7 @@ export const CreatePreviewOptionItemUi = ({
   const finalPrice = originalPrice - discountAmount
   const discountRate =
     originalPrice > 0 ? Math.round((discountAmount / originalPrice) * 100) : 0
-
+  const optionTags = getOptionTags(option)
   const hasPrice = productPrice !== null
   const displayDiscountRate = hasPrice ? `${discountRate}%` : '{{할인율}}'
   const displayFinalPrice = hasPrice
@@ -88,8 +88,8 @@ export const CreatePreviewOptionItemUi = ({
 
       {/* 태그 영역 */}
       <div className="flex flex-wrap gap-6 border-t border-gray-300 p-16">
-        {getOptionTags(option).length > 0 ? (
-          getOptionTags(option).map((tag) => (
+        {optionTags.length > 0 ? (
+          optionTags.map((tag) => (
             <span
               key={tag}
               className="rounded-4 border border-gray-200 px-6 py-2 typo-body-10-r text-gray-600"
