@@ -1,2 +1,3 @@
 @import '@dessert/ui/styles';
 @source '../../../../packages/ui/src';
+@import './quill-editor-font.css';
