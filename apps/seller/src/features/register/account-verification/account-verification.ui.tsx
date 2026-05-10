@@ -43,11 +43,11 @@ export function AccountVerification() {
   const isReadOnly = isVerified && !isEditing
 
   useEffect(() => {
-    if (!existing?.verified) return
+    if (!existing?.verified || isEditing) return
     setValue('bank', existing.bankCode)
     setValue('accountNumber', existing.accountNumber)
     setValue('accountVerificationId', existing.id, { shouldValidate: true })
-  }, [existing, setValue])
+  }, [existing, isEditing, setValue])
 
   const isAccountInputFilled = (
     values: Pick<RegisterForm, 'bank' | 'accountNumber'>,
