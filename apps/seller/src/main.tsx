@@ -35,9 +35,9 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={ROUTES.REGISTER.VERIFICATION} replace />,
+        element: <Navigate to="verification" replace />,
       },
-      { path: ROUTES.REGISTER.VERIFICATION, element: <VerificationPage /> },
+      { path: 'verification', element: <VerificationPage /> },
     ],
   },
   {
