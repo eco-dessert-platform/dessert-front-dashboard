@@ -1,7 +1,5 @@
 import { Input } from '@dessert/ui'
 
-import { cn } from '@/shared/libs/utils'
-
 interface FileUploadInputProps {
   label?: string
   required?: boolean
@@ -52,12 +50,7 @@ export function FileUploadInput({
           disabled={disabled}
         />
         <button
-          className={cn(
-            'flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 border px-16 py-8 disabled:cursor-not-allowed',
-            hasFile
-              ? 'border-gray-300 bg-gray-300 hover:border-primary-500 hover:bg-primary-500'
-              : 'border-primary-500 bg-primary-500',
-          )}
+          className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 border border-primary-500 bg-primary-500 px-16 py-8 disabled:cursor-not-allowed"
           disabled={disabled}
           onClick={() => {
             const input = document.createElement('input')
