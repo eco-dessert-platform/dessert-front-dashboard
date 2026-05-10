@@ -55,8 +55,8 @@ export function FileUploadInput({
           className={cn(
             'flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 border px-16 py-8 disabled:cursor-not-allowed',
             hasFile
-              ? 'border-primary-500 bg-white'
-              : 'border-gray-300 bg-gray-300',
+              ? 'border-gray-300 bg-gray-300 hover:border-primary-500 hover:bg-primary-500'
+              : 'border-primary-500 bg-primary-500',
           )}
           disabled={disabled}
           onClick={() => {
@@ -67,12 +67,7 @@ export function FileUploadInput({
             input.click()
           }}
         >
-          <span
-            className={cn(
-              'typo-title-16-m',
-              hasFile ? 'text-primary-500' : 'text-white',
-            )}
-          >
+          <span className="typo-title-16-m text-white">
             {hasFile ? reuploadButtonText : buttonText}
           </span>
         </button>
