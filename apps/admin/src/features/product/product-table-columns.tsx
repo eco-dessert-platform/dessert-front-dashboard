@@ -1,10 +1,13 @@
 import { Checkbox } from '@dessert/ui'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { Product, ProductOption } from '@/entity/product/product.type'
+import {
+  AdminProduct,
+  AdminProductOption,
+} from '@/entity/product/management-all'
 
-export interface FlatAdminProduct extends Product {
-  option: ProductOption
+export interface FlatAdminProduct extends AdminProduct {
+  option: AdminProductOption
   optionIndex: number
   totalOptions: number
 }

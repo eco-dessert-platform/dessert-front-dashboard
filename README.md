@@ -147,6 +147,7 @@ apps/seller/src/
 → **[커밋 컨벤션 가이드 자세히 보기](/docs/convention/commit-convention.md)**<br/>
 → **[브랜치 컨벤션 가이드 자세히 보기](/docs/convention/branch-convention.md)**<br/>
 → **[환경변수 관리 가이드 자세히 보기](/docs/convention/env-convention.md)**<br/>
+→ **[FSD 브랜치 전략 가이드 자세히 보기](/docs/convention/fsd-branch-strategy.md)**<br/>
 
 <br/>
 

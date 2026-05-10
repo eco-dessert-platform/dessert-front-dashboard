@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [develop]
+    branches: [ develop ]
   workflow_dispatch:
     inputs:
       deploy_seller:
@@ -52,7 +52,8 @@ jobs:
   # ─────────────────────────────────────
   deploy-seller:
     needs: detect-changes
-    if: needs.detect-changes.outputs.seller == 'true' || github.event.inputs.deploy_seller == 'true'
+    if: needs.detect-changes.outputs.seller == 'true' ||
+      github.event.inputs.deploy_seller == 'true'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -78,7 +79,7 @@ jobs:
       - name: Seller App Build
         run: yarn run build:seller
         env:
-          VITE_API_BASE_URL: ${{secrets.SELLER_API_BASE_URL}}
+          VITE_PUBLIC_SERVER_URL: ${{secrets.VITE_PUBLIC_SERVER_URL}}
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -115,7 +116,8 @@ jobs:
   # ─────────────────────────────────────
   deploy-admin:
     needs: detect-changes
-    if: needs.detect-changes.outputs.admin == 'true' || github.event.inputs.deploy_admin == 'true'
+    if: needs.detect-changes.outputs.admin == 'true' ||
+      github.event.inputs.deploy_admin == 'true'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -141,7 +143,8 @@ jobs:
       - name: Admin App Build
         run: yarn run build:admin
         env:
-          VITE_PUBLIC_SERVER_URL: ${{secrets.ADMIN_API_BASE_URL}}
+          VITE_PUBLIC_SERVER_URL: ${{secrets.VITE_PUBLIC_SERVER_URL}}
+          VITE_PUBLIC_CUSTOMER_URL: ${{secrets.VITE_PUBLIC_CUSTOMER_URL}}
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
