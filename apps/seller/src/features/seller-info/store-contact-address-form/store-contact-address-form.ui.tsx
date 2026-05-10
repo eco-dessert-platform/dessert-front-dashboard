@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
+import { Controller, useFormContext } from 'react-hook-form'
 import { Button, Dropdown, Input, Label } from '@dessert/ui'
+
+import { StoreDetailFormValues } from '@/entity/seller-info'
 
 const CUSTOM_EMAIL_DOMAIN = 'custom'
 
@@ -17,38 +20,40 @@ const EMAIL_DOMAIN = [
 ]
 
 export function StoreContactAddressForm() {
-  const [selectedEmailDomain, setSelectedEmailDomain] = useState('')
-  const [emailDomain, setEmailDomain] = useState('')
   return (
     <section className="flex w-full min-w-0 flex-col gap-24">
       <ContactSection />
-      <EmailSection
-        emailDomain={emailDomain}
-        selectedEmailDomain={selectedEmailDomain}
-        onEmailDomainChange={setEmailDomain}
-        onSelectedEmailDomainChange={setSelectedEmailDomain}
-      />
-
+      <EmailSection />
       <AddressSection />
     </section>
   )
 }
 
 function ContactSection() {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<StoreDetailFormValues>()
+
   return (
     <div>
       <div className="flex w-full flex-col gap-20 2xl:flex-row">
+        <div className="flex flex-1 flex-col gap-6">
+          <Input
+            {...register('phoneNumber')}
+            placeholder="01011112222"
+            required
+            label="연락처"
+          />
+          {errors.phoneNumber && (
+            <span className="typo-body-12-r text-error-500">
+              {errors.phoneNumber.message}
+            </span>
+          )}
+        </div>
         <Input
-          placeholder="01011112222"
-          required={true}
-          onChange={() => {}}
-          label="연락처"
-          className="flex-1"
-        />
-        <Input
+          {...register('subPhoneNumber')}
           placeholder="01033334444"
-          required={false}
-          onChange={() => {}}
           label="추가 연락처"
           className="flex-1"
         />
@@ -60,55 +65,67 @@ function ContactSection() {
   )
 }
 
-interface EmailSectionProps {
-  emailDomain: string
-  selectedEmailDomain: string
-  onEmailDomainChange: (value: string) => void
-  onSelectedEmailDomainChange: (value: string) => void
-}
+function EmailSection() {
+  const {
+    register,
+    control,
+    setValue,
+    formState: { errors },
+  } = useFormContext<StoreDetailFormValues>()
 
-function EmailSection({
-  emailDomain,
-  onEmailDomainChange,
-  selectedEmailDomain,
-  onSelectedEmailDomainChange,
-}: EmailSectionProps) {
+  const [selectedEmailDomain, setSelectedEmailDomain] = useState('')
   const isCustomDomain = selectedEmailDomain === CUSTOM_EMAIL_DOMAIN
 
   return (
     <div>
-      <Label label="이메일" required={true} />
+      <Label label="이메일" required />
       <div className="flex w-full flex-col gap-20 2xl:flex-row 2xl:items-center">
-        <Input
-          placeholder="aaa123"
-          required={true}
-          onChange={() => {}}
-          className="flex-1"
-        />
+        <div className="flex flex-1 flex-col gap-6">
+          <Input {...register('emailLocal')} placeholder="aaa123" required />
+          {errors.emailLocal && (
+            <span className="typo-body-12-r text-error-500">
+              {errors.emailLocal.message}
+            </span>
+          )}
+        </div>
+
         <div className="flex items-center text-[16px] font-normal text-gray-800">
           @
         </div>
-        <Input
-          placeholder="naver.com"
-          value={emailDomain}
-          onChange={(event) => onEmailDomainChange(event.target.value)}
-          required={true}
-          className="flex-1"
-          disabled={!isCustomDomain}
-        />
+
+        <div className="flex flex-1 flex-col gap-6">
+          <Controller
+            name="emailDomain"
+            control={control}
+            render={({ field }) => (
+              <Input
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                placeholder="naver.com"
+                required
+                disabled={!isCustomDomain}
+              />
+            )}
+          />
+          {errors.emailDomain && (
+            <span className="typo-body-12-r text-error-500">
+              {errors.emailDomain.message}
+            </span>
+          )}
+        </div>
+
         <Dropdown
           options={EMAIL_DOMAIN}
           placeholder="선택하세요"
-          value={emailDomain}
+          value={selectedEmailDomain}
           onSelect={(value) => {
-            onSelectedEmailDomainChange(value)
-
+            setSelectedEmailDomain(value)
             if (value === CUSTOM_EMAIL_DOMAIN) {
-              onEmailDomainChange('')
+              setValue('emailDomain', '', { shouldValidate: true })
               return
             }
-
-            onEmailDomainChange(value)
+            setValue('emailDomain', value, { shouldValidate: true })
           }}
           className="flex-1"
         />
@@ -118,12 +135,17 @@ function EmailSection({
 }
 
 function AddressSection() {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<StoreDetailFormValues>()
+
   const [isPostalCodeSelected, setIsPostalCodeSelected] = useState(false)
 
   const handleClickPostalCodeSearch = () => {
     // 추후 우편번호 검색 라이브러리 연동
-    // 주소 선택 완료시 아래 호출
-    // setIsPostalCodeSelected(true);
+    // setValue('originAddress', '...')
+    // setIsPostalCodeSelected(true)
   }
 
   return (
@@ -131,33 +153,52 @@ function AddressSection() {
       <div className="flex flex-col gap-24">
         <div className="flex w-full flex-col gap-20 2xl:flex-row">
           <div className="w-full xl:w-[310px] 2xl:shrink-0">
-            <Label label="우편번호" required={true} />
+            <Label label="우편번호" required />
             <div className="flex gap-12">
               <Input
                 placeholder="12345"
-                required={true}
+                required
                 className="flex-1"
-                disabled={true}
+                disabled
               />
-              <Button title="우편번호 검색" className="shrink-0" />
+              <Button
+                title="우편번호 검색"
+                className="shrink-0"
+                onClick={handleClickPostalCodeSearch}
+              />
             </div>
           </div>
 
-          <Input
-            label="출고지 주소"
-            placeholder="서울시 강남구 선릉로"
-            required={true}
-            className="flex-1"
-            disabled={true}
-          />
+          <div className="flex flex-1 flex-col gap-6">
+            <Input
+              {...register('originAddress')}
+              label="출고지 주소"
+              placeholder="서울시 강남구 선릉로"
+              required
+              disabled
+            />
+            {errors.originAddress && (
+              <span className="typo-body-12-r text-error-500">
+                {errors.originAddress.message}
+              </span>
+            )}
+          </div>
         </div>
-        <Input
-          label="출고지 상세주소"
-          placeholder="1동 101호"
-          required={true}
-          className="flex-1"
-          disabled={!isPostalCodeSelected}
-        />
+
+        <div className="flex flex-col gap-6">
+          <Input
+            {...register('originAddressDetail')}
+            label="출고지 상세주소"
+            placeholder="1동 101호"
+            required
+            disabled={!isPostalCodeSelected}
+          />
+          {errors.originAddressDetail && (
+            <span className="typo-body-12-r text-error-500">
+              {errors.originAddressDetail.message}
+            </span>
+          )}
+        </div>
       </div>
     </div>
   )
