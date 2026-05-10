@@ -5,7 +5,7 @@ import {
   DecideUploadApproval,
   decideUploadApproval,
   productQueries,
-} from '@/entity/product'
+} from '@/entity/product/upload-approval'
 
 export const useDecideUploadApprovalMutation = () => {
   const queryClient = useQueryClient()
