@@ -7,7 +7,6 @@ export const FILE_UPLOAD_LIMITS = {
 export const BANK_OPTIONS = [
   { label: '경남은행', value: '39' },
   { label: '광주은행', value: '34' },
-  { label: '단위농협(지역농축협)', value: '12' },
   { label: '부산은행', value: '32' },
   { label: '새마을금고', value: '45' },
   { label: '산림조합', value: '64' },
@@ -25,11 +24,10 @@ export const BANK_OPTIONS = [
   { label: '하나은행', value: '81' },
   { label: '홍콩상하이은행', value: '54' },
   { label: 'IBK기업은행', value: '03' },
-  { label: 'KB국민은행', value: '06' },
+  { label: 'KB국민은행', value: '04' },
   { label: 'iM뱅크(대구)', value: '31' },
   { label: '한국산업은행', value: '02' },
   { label: 'NH농협은행', value: '11' },
   { label: 'SC제일은행', value: '23' },
   { label: 'Sh수협은행', value: '07' },
-  { label: '수협중앙회', value: '30' },
 ]
