@@ -1,3 +1,4 @@
+export { getAccountVerification } from './seller-info.api'
 export type {
   AccountVerificationDetail,
   AccountVerificationRequest,
