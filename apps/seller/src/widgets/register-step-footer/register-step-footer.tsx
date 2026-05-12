@@ -44,7 +44,7 @@ export function RegisterStepFooter({
           onClick={onPrev}
           disabled={prevDisabled}
           className="disabled:border-gray-300 disabled:bg-gray-300 disabled:opacity-100"
-        />x
+        />
       </div>
     </div>
   )
