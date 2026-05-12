@@ -52,7 +52,14 @@ export function AccountVerification() {
     setValue('accountNumber', existing.accountNumber)
     setValue('accountVerificationId', existing.id, { shouldValidate: true })
     hasSyncedRef.current = true
-  }, [existing, isEditing, setValue])
+  }, [
+    existing?.verified,
+    existing?.bankCode,
+    existing?.accountNumber,
+    existing?.id,
+    isEditing,
+    setValue,
+  ])
 
   const isAccountInputFilled = (
     values: Pick<RegisterForm, 'bank' | 'accountNumber'>,
