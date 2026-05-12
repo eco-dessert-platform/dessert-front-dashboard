@@ -38,7 +38,7 @@ export function AccountVerification() {
     name: 'accountVerificationId',
   })
 
-  const isVerified = accountVerificationId != null
+  const isVerified = accountVerificationId !== null
   const [isEditing, setIsEditing] = useState(false)
   const isReadOnly = isVerified && !isEditing
 
