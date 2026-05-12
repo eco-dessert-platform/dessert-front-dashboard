@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
 import type { RegisterForm } from '@/entity/register'
-import { FileUploadInput } from '@/widgets/file-upload-input'
+import { FileUploadInput } from '../../../shared/ui/file-upload-input'
 
 
 import { handleRegisterFileUpload } from '../lib'

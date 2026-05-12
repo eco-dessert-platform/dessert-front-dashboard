@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react'
 import { Button } from '@dessert/ui'
 
 import { cn } from '@/shared/libs/utils'
-import { InputField } from '@/widgets/input-field'
+import { InputField } from '../../../widgets/input-field'
 
 import {
   SELLER_INFO_CANCEL_DIALOG_CONTENT,
