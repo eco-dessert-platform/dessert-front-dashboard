@@ -1,4 +1,5 @@
 import { Input } from '@dessert/ui'
+import { useRef } from 'react'
 
 interface FileUploadInputProps {
   label?: string
@@ -23,10 +24,13 @@ export function FileUploadInput({
   onChange,
   disabled = false,
 }: FileUploadInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const hasFile = !!value
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
     onChange?.(file)
+    e.target.value = ''
   }
 
   return (
@@ -52,18 +56,19 @@ export function FileUploadInput({
         <button
           className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 border border-primary-500 bg-primary-500 px-16 py-8 disabled:cursor-not-allowed"
           disabled={disabled}
-          onClick={() => {
-            const input = document.createElement('input')
-            input.type = 'file'
-            input.accept = '.jpg,.jpeg,.png,.pdf'
-            input.onchange = handleFileChange as () => void
-            input.click()
-          }}
+          onClick={() => inputRef.current?.click()}
         >
           <span className="typo-title-16-m text-white">
             {hasFile ? reuploadButtonText : buttonText}
           </span>
         </button>
+        <input
+          ref={inputRef}
+          type="file"
+          accept=".jpg,.jpeg,.png,.pdf"
+          className="hidden"
+          onChange={handleFileChange}
+        />
       </div>
       {helperText && (
         <span className="typo-body-12-r text-gray-500">{helperText}</span>
