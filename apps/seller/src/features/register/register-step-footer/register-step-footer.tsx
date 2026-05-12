@@ -24,7 +24,7 @@ export function RegisterStepFooter({
   return (
     <div
       className={cn(
-        'sticky bottom-0 mt-auto -mx-[calc(50vw-50%)] w-screen border-t border-gray-200 bg-white',
+        'sticky bottom-0 -mx-[calc(50vw-50%)] mt-auto w-screen border-t border-gray-200 bg-white',
         className,
       )}
     >
