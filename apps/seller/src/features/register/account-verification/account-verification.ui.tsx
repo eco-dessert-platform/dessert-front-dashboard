@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Select, toast } from '@dessert/ui'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 import {
@@ -19,6 +19,7 @@ import { handleRegisterFileUpload, sanitizeAccountPayload } from '../lib'
 import { REGISTER_TOAST_MESSAGES } from '../register.constant'
 
 export function AccountVerification() {
+  const queryClient = useQueryClient()
   const { control, getValues, setValue } = useFormContext<RegisterForm>()
 
   const { mutate: verify, isPending: isVerifying } = useMutation({
@@ -77,7 +78,16 @@ export function AccountVerification() {
         accountNumber: values.accountNumber,
       }),
       {
-        onSuccess: () => {
+        onSuccess: (_, payload) => {
+          queryClient.setQueryData(
+            registerQueries.accountVerification().queryKey,
+            (prev) =>
+              prev && {
+                ...prev,
+                bankCode: payload.bankCode,
+                accountNumber: payload.accountNumber,
+              },
+          )
           setIsEditing(false)
           toast.success(REGISTER_TOAST_MESSAGES.ACCOUNT_EDIT_SUCCESS.title)
         },
