@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import { Select, toast } from '@dessert/ui'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { isAxiosError } from 'axios'
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 import {
@@ -12,6 +11,7 @@ import {
   registerQueries,
   verifyAccount,
 } from '@/entity/register'
+import { extractServerMessage } from '@/shared/utils/extract-server-message'
 import { FileUploadInput } from '@/widgets/file-upload-input'
 import { InputField } from '@/widgets/input-field'
 
@@ -205,12 +205,4 @@ export function AccountVerification() {
       </div>
     </section>
   )
-}
-
-function extractServerMessage(err: unknown): string | undefined {
-  if (isAxiosError(err)) {
-    const message = err.response?.data?.message
-    if (typeof message === 'string' && message.length > 0) return message
-  }
-  return undefined
 }

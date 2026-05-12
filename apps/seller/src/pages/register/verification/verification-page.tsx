@@ -1,5 +1,4 @@
 import { toast } from '@dessert/ui'
-import { isAxiosError } from 'axios'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -11,6 +10,7 @@ import {
   useRegisterDocumentsMutation,
 } from '@/features/register'
 import { ROUTES } from '@/shared/constant/routes'
+import { extractServerMessage } from '@/shared/utils/extract-server-message'
 import { RegisterStepFooter } from '@/widgets/register-step-footer'
 
 const FILE_FIELDS = [
@@ -78,10 +78,7 @@ const VerificationPage = () => {
       {
         onSuccess: () => navigate(ROUTES.REGISTER.STORE_INFO),
         onError: (err) => {
-          const serverMessage =
-            isAxiosError(err) && typeof err.response?.data?.message === 'string'
-              ? err.response.data.message
-              : undefined
+          const serverMessage = extractServerMessage(err)
           if (serverMessage) {
             toast.error(serverMessage)
           } else {
