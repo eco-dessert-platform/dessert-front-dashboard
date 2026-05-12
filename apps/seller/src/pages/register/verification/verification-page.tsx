@@ -10,7 +10,6 @@ import {
   RegisterStepFooter,
  useRegisterDocumentsMutation } from '@/features/register'
 import { ROUTES } from '@/shared/constant/routes'
-import { extractServerMessage } from '@/shared/utils/extract-server-message'
 
 const FILE_FIELDS = [
   'businessLicense',
@@ -76,15 +75,6 @@ const VerificationPage = () => {
       },
       {
         onSuccess: () => navigate(ROUTES.REGISTER.STORE_INFO),
-        onError: (err) => {
-          const serverMessage = extractServerMessage(err)
-          if (serverMessage) {
-            toast.error(serverMessage)
-          } else {
-            const msg = REGISTER_TOAST_MESSAGES.DOCUMENT_REGISTER_ERROR
-            toast.error(msg.title, msg.description)
-          }
-        },
       },
     )
   }
