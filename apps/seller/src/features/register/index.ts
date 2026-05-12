@@ -1,4 +1,4 @@
-export * from './account-verification'
-export * from './document-upload'
-export * from './register-form'
+export { AccountVerification } from './account-verification'
+export { DocumentUpload } from './document-upload'
+export { useRegisterForm } from './register-form'
 export { REGISTER_TOAST_MESSAGES } from './register.constant'
