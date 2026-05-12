@@ -7,11 +7,10 @@ import {
   AccountVerification,
   DocumentUpload,
   REGISTER_TOAST_MESSAGES,
-  useRegisterDocumentsMutation,
-} from '@/features/register'
+  RegisterStepFooter,
+ useRegisterDocumentsMutation } from '@/features/register'
 import { ROUTES } from '@/shared/constant/routes'
 import { extractServerMessage } from '@/shared/utils/extract-server-message'
-import { RegisterStepFooter } from '@/widgets/register-step-footer'
 
 const FILE_FIELDS = [
   'businessLicense',
