@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Select, toast } from '@dessert/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -20,6 +20,7 @@ import { REGISTER_TOAST_MESSAGES } from '../register.constant'
 
 export function AccountVerification() {
   const queryClient = useQueryClient()
+  const hasSyncedRef = useRef<boolean>(false)
   const { control, getValues, setValue } = useFormContext<RegisterForm>()
 
   const { mutate: verify, isPending: isVerifying } = useMutation({
@@ -44,10 +45,13 @@ export function AccountVerification() {
   const isReadOnly = isVerified && !isEditing
 
   useEffect(() => {
+    if (hasSyncedRef.current) return
     if (!existing?.verified || isEditing) return
+
     setValue('bank', existing.bankCode)
     setValue('accountNumber', existing.accountNumber)
     setValue('accountVerificationId', existing.id, { shouldValidate: true })
+    hasSyncedRef.current = true
   }, [existing, isEditing, setValue])
 
   const isAccountInputFilled = (
