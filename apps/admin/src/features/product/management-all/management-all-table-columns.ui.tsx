@@ -12,7 +12,7 @@ export interface FlatAdminProduct extends AdminProduct {
   totalOptions: number
 }
 
-export const getProductTableColumns = (
+export const getManagementAllTableColumns = (
   selectedProductIds: number[],
   selectedOptionIds: number[],
   onProductToggle: (productId: number) => void,
