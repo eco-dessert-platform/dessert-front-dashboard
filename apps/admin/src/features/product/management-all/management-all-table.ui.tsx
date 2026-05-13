@@ -16,7 +16,7 @@ import { useManagementAllSelection } from './management-all-selection.hook'
 import {
   FlatAdminProduct,
   getManagementAllTableColumns,
-} from './management-all-table-columns'
+} from './management-all-table-columns.ui'
 
 const PAGE_SIZE = 10
 

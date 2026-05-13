@@ -1,14 +1,17 @@
 import { Button, Pagination } from '@dessert/ui'
 
-export type ProductActionType = 'ADD' | 'EDIT' | 'DELETE'
-export type OptionActionType = 'DELETE_OPTION' | 'SOLD_OUT' | 'INCREASE_STOCK'
+export type ManagementAllProductActionType = 'ADD' | 'EDIT' | 'DELETE'
+export type ManagementAllOptionActionType =
+  | 'DELETE_OPTION'
+  | 'SOLD_OUT'
+  | 'INCREASE_STOCK'
 
 interface ManagementAllActionGroupProps {
   currentPage: number
   totalPages: number
   onPageChange: (page: number) => void
-  onProductAction: (action: ProductActionType) => void
-  onOptionAction: (action: OptionActionType) => void
+  onProductAction: (action: ManagementAllProductActionType) => void
+  onOptionAction: (action: ManagementAllOptionActionType) => void
 }
 
 export const ManagementAllActionGroup = ({
