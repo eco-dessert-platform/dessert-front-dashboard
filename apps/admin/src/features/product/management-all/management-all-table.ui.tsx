@@ -9,8 +9,8 @@ import {
 
 import {
   ManagementAllActionGroup,
-  OptionActionType,
-  ProductActionType,
+  ManagementAllOptionActionType,
+  ManagementAllProductActionType,
 } from './management-all-action-group.ui'
 import { useManagementAllSelection } from './management-all-selection.hook'
 import {
@@ -56,7 +56,7 @@ export const ManagementAllTable = () => {
     resetSelection()
   }, [currentPage, resetSelection])
 
-  const handleProductAction = (action: ProductActionType) => {
+  const handleProductAction = (action: ManagementAllProductActionType) => {
     if (selectedProductIds.length === 0) {
       alert('선택된 상품이 없습니다.')
       return
@@ -64,7 +64,7 @@ export const ManagementAllTable = () => {
     alert(`상품 액션 [${action}] 실행: ${selectedProductIds.join(', ')}`)
   }
 
-  const handleOptionAction = (action: OptionActionType) => {
+  const handleOptionAction = (action: ManagementAllOptionActionType) => {
     if (selectedOptionIds.length === 0) {
       alert('선택된 상품 옵션이 없습니다.')
       return
