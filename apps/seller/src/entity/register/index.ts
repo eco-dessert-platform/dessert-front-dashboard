@@ -6,9 +6,10 @@ export {
   registerDocuments,
   submitStoreApplication,
   verifyAccount,
+  editAccountRequest,
 } from './register.api'
 export { registerQueries } from './register.query'
-export { FILE_UPLOAD_LIMITS } from './register.constant'
+export { BANK_OPTIONS, FILE_UPLOAD_LIMITS } from './register.constant'
 export {
   registerSchema,
   storeInfoSchema,

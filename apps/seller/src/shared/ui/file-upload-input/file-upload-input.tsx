@@ -1,10 +1,12 @@
 import { Input } from '@dessert/ui'
+import { useRef } from 'react'
 
 interface FileUploadInputProps {
   label?: string
   required?: boolean
   placeholder: string
   buttonText?: string
+  reuploadButtonText?: string
   helperText?: string
   value?: string
   onChange?: (file: File | null) => void
@@ -16,14 +18,19 @@ export function FileUploadInput({
   required = false,
   placeholder,
   buttonText = '업로드',
+  reuploadButtonText = '재업로드',
   helperText,
   value,
   onChange,
   disabled = false,
 }: FileUploadInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const hasFile = !!value
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
     onChange?.(file)
+    e.target.value = ''
   }
 
   return (
@@ -47,18 +54,21 @@ export function FileUploadInput({
           disabled={disabled}
         />
         <button
-          className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 border border-gray-300 bg-gray-300 px-16 py-8 disabled:cursor-not-allowed"
+          className="flex min-w-[90px] cursor-pointer items-center justify-center rounded-10 border border-primary-500 bg-primary-500 px-16 py-8 disabled:cursor-not-allowed"
           disabled={disabled}
-          onClick={() => {
-            const input = document.createElement('input')
-            input.type = 'file'
-            input.accept = '.jpg,.jpeg,.png,.pdf'
-            input.onchange = handleFileChange as () => void
-            input.click()
-          }}
+          onClick={() => inputRef.current?.click()}
         >
-          <span className="typo-title-16-m text-white">{buttonText}</span>
+          <span className="typo-title-16-m text-white">
+            {hasFile ? reuploadButtonText : buttonText}
+          </span>
         </button>
+        <input
+          ref={inputRef}
+          type="file"
+          accept=".jpg,.jpeg,.png,.pdf"
+          className="hidden"
+          onChange={handleFileChange}
+        />
       </div>
       {helperText && (
         <span className="typo-body-12-r text-gray-500">{helperText}</span>
