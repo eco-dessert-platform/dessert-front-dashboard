@@ -1,4 +1,8 @@
-export { getAccountVerification } from './seller-info.api'
+export {
+  checkStoreName,
+  getAccountVerification,
+  requestStoreNameChange,
+} from './seller-info.api'
 export type {
   AccountVerificationDetail,
   AccountVerificationRequest,
