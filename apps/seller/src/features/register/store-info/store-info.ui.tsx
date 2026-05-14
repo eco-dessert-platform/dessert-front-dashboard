@@ -5,14 +5,11 @@ import { ImageIcon } from '@dessert/icons'
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 import { useKakaoPostcodePopup } from 'react-daum-postcode'
 
-import {
-  FILE_UPLOAD_LIMITS,
-  REGISTER_TOAST_MESSAGES,
-  RegisterForm,
-} from '@/entity/register'
+import { FILE_UPLOAD_LIMITS, RegisterForm } from '@/entity/register'
 import { formatDaumAddress } from '@/shared/utils/format-daum-address'
 import { InputField } from '@/widgets/input-field'
 
+import { REGISTER_TOAST_MESSAGES } from '../register.constant'
 import { useCheckStoreNameMutation } from './check-store-name.mutation'
 import { ConfirmStoreAlert } from './confirm-store-alert.ui'
 import { DuplicateStoreAlert } from './duplicate-store-alert.ui'
@@ -162,6 +159,7 @@ export function StoreInfo() {
           placeholder="스토어를 검색해주세요"
           buttonText="검색"
           readOnly
+          allowEmptyButtonClick
           value={storeName}
           onButtonClick={() => setSearchOpen(true)}
           error={!!errors.storeName}
