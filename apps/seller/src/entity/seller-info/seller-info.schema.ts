@@ -24,6 +24,7 @@ export const storeDetailSchema = z
     subPhoneNumber: z.string().optional(),
     emailLocal: z.string().min(1, '이메일을 입력해주세요.'),
     emailDomain: z.string().min(1, '도메인을 선택해주세요.'),
+    emailDomainSelection: z.string().default(''),
     originAddress: z.string().min(1, '주소를 입력해주세요.'),
     originAddressDetail: z.string().min(1, '상세주소를 입력해주세요.'),
   })

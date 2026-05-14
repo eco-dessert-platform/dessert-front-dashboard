@@ -20,7 +20,7 @@ export interface CheckStoreNameResponse {
 export interface UpdateStoreNameResponse {
   sellerId: number
   storeId: number
-  storeNameReuqestId: number
+  storeNameRequestId: number
   currentName: string
   newName: string
   status: StoreNameRequestStatus
@@ -28,7 +28,7 @@ export interface UpdateStoreNameResponse {
   rejectDetail: string
 }
 
-export interface updateStoreDetailRequest {
+export interface UpdateStoreDetailRequest {
   introduce: string
   phoneNumber: string
   subPhoneNumber?: string
@@ -45,7 +45,7 @@ export interface SellerAccountVerification {
   bankCode: string
   accountNumber: string
   accountHolder: string
-  verifed: boolean
+  verified: boolean
   createdAt: string
 }
 

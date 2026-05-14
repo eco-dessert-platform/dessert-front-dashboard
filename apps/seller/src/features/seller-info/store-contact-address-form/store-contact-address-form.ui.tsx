@@ -70,11 +70,11 @@ function EmailSection() {
     register,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useFormContext<StoreDetailFormValues>()
 
-  const [selectedEmailDomain, setSelectedEmailDomain] = useState('')
-  const isCustomDomain = selectedEmailDomain === CUSTOM_EMAIL_DOMAIN
+  const isCustomDomain = watch('emailDomainSelection') === CUSTOM_EMAIL_DOMAIN
 
   return (
     <div>
@@ -94,19 +94,11 @@ function EmailSection() {
         </div>
 
         <div className="flex flex-1 flex-col gap-6">
-          <Controller
-            name="emailDomain"
-            control={control}
-            render={({ field }) => (
-              <Input
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                placeholder="naver.com"
-                required
-                disabled={!isCustomDomain}
-              />
-            )}
+          <Input
+            {...register('emailDomain')}
+            placeholder="naver.com"
+            required
+            disabled={!isCustomDomain}
           />
           {errors.emailDomain && (
             <span className="typo-body-12-r text-error-500">
@@ -115,19 +107,25 @@ function EmailSection() {
           )}
         </div>
 
-        <Dropdown
-          options={EMAIL_DOMAIN}
-          placeholder="선택하세요"
-          value={selectedEmailDomain}
-          onSelect={(value) => {
-            setSelectedEmailDomain(value)
-            if (value === CUSTOM_EMAIL_DOMAIN) {
-              setValue('emailDomain', '', { shouldValidate: true })
-              return
-            }
-            setValue('emailDomain', value, { shouldValidate: true })
-          }}
-          className="flex-1"
+        <Controller
+          name="emailDomainSelection"
+          control={control}
+          render={({ field }) => (
+            <Dropdown
+              options={EMAIL_DOMAIN}
+              placeholder="선택하세요"
+              value={field.value}
+              onSelect={(value) => {
+                field.onChange(value)
+                setValue(
+                  'emailDomain',
+                  value === CUSTOM_EMAIL_DOMAIN ? '' : value,
+                  { shouldValidate: true },
+                )
+              }}
+              className="flex-1"
+            />
+          )}
         />
       </div>
     </div>
