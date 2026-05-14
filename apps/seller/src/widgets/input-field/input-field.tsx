@@ -58,8 +58,7 @@ export function InputField({
             error={error}
             value={value}
             onChange={onChange}
-            disabled={disabled}
-            readOnly={readOnly}
+            disabled={disabled || readOnly}
             {...restProps}
           />
           <Button

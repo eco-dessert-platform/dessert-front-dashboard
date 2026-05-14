@@ -1,20 +1,15 @@
 import { toast } from '@dessert/ui'
-import { isAxiosError } from 'axios'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  REGISTER_TOAST_MESSAGES,
-  RegisterForm,
-  VERIFICATION_FIELDS,
-} from '@/entity/register'
+import { RegisterForm, VERIFICATION_FIELDS } from '@/entity/register'
 import {
   AccountVerification,
   DocumentUpload,
-  useRegisterDocumentsMutation,
-} from '@/features/register'
+  REGISTER_TOAST_MESSAGES,
+  RegisterStepFooter,
+ useRegisterDocumentsMutation } from '@/features/register'
 import { ROUTES } from '@/shared/constant/routes'
-import { RegisterStepFooter } from '@/widgets/register-step-footer'
 
 const FILE_FIELDS = [
   'businessLicense',
@@ -31,13 +26,17 @@ const isFieldFilled = (value: unknown) => {
 
 const VerificationPage = () => {
   const { control, trigger, getValues } = useFormContext<RegisterForm>()
-  const watched = useWatch({ control })
   const navigate = useNavigate()
   const { mutate: registerDocs, isPending } = useRegisterDocumentsMutation()
 
-  const hasAnyInput = VERIFICATION_FIELDS.some((field) =>
-    isFieldFilled(watched[field]),
-  )
+  const watched = useWatch({ control, name: VERIFICATION_FIELDS })
+  const accountVerificationId = useWatch({
+    control,
+    name: 'accountVerificationId',
+  })
+  const hasAnyInput = watched.some(isFieldFilled)
+  const isAllFilled = watched.every(isFieldFilled)
+  const canAdvance = isAllFilled && accountVerificationId != null
 
   const handleAdvance = async () => {
     const valid = await trigger(VERIFICATION_FIELDS)
@@ -76,18 +75,6 @@ const VerificationPage = () => {
       },
       {
         onSuccess: () => navigate(ROUTES.REGISTER.STORE_INFO),
-        onError: (err) => {
-          const serverMessage =
-            isAxiosError(err) && typeof err.response?.data?.message === 'string'
-              ? err.response.data.message
-              : undefined
-          if (serverMessage) {
-            toast.error(serverMessage)
-          } else {
-            const msg = REGISTER_TOAST_MESSAGES.DOCUMENT_REGISTER_ERROR
-            toast.error(msg.title, msg.description)
-          }
-        },
       },
     )
   }
@@ -100,9 +87,10 @@ const VerificationPage = () => {
       <DocumentUpload />
       <AccountVerification />
       <RegisterStepFooter
-        onPrev={handleAdvance}
-        onNext={handleEdit}
+        onPrev={handleEdit}
+        onNext={handleAdvance}
         prevDisabled={!hasAnyInput || isPending}
+        nextDisabled={!canAdvance || isPending}
       />
     </>
   )

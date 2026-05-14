@@ -76,14 +76,9 @@ export async function getAccountVerification(): Promise<AccountVerificationDetai
 export async function verifyAccount(
   payload: AccountVerificationRequest,
 ): Promise<AccountVerificationResult> {
-  const sanitized: AccountVerificationRequest = {
-    ...payload,
-    accountNumber: payload.accountNumber.replace(/\D/g, ''),
-  }
-
   const { data } = await client.post<ApiResponse<AccountVerificationResult>>(
     '/api/v1/seller/sellers/account-verifications',
-    sanitized,
+    payload,
   )
 
   if (!data.result) {
@@ -91,6 +86,19 @@ export async function verifyAccount(
   }
 
   return data.result
+}
+
+export async function editAccountRequest(
+  payload: AccountVerificationRequest,
+): Promise<void> {
+  const { data } = await client.patch<ApiResponse<never>>(
+    '/api/v1/seller/sellers/account',
+    payload,
+  )
+
+  if (!data.success) {
+    throw new Error(data.message ?? '계좌 정보 수정에 실패했습니다.')
+  }
 }
 
 interface ListApiResponse<T> {
@@ -130,7 +138,7 @@ export async function submitStoreApplication({
   request,
   profileImage,
 }: SubmitStoreApplicationInput): Promise<StoreApplicationResult> {
-  if (!request.profile && !profileImage) {
+  if (!request.profile?.trim() && !profileImage) {
     throw new Error('프로필 이미지 또는 프로필 URL 중 하나는 필수입니다.')
   }
 
