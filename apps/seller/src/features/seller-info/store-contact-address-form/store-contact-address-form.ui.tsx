@@ -96,7 +96,7 @@ function EmailSection() {
             {...register('emailDomain')}
             placeholder="naver.com"
             required
-            disabled={!isCustomDomain}
+            readOnly={!isCustomDomain}
           />
           {errors.emailDomain && (
             <span className="typo-body-12-r text-error-500">
@@ -171,7 +171,7 @@ function AddressSection() {
               label="출고지 주소"
               placeholder="서울시 강남구 선릉로"
               required
-              disabled
+              readOnly
             />
             {errors.originAddress && (
               <span className="typo-body-12-r text-error-500">
