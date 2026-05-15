@@ -5,6 +5,7 @@ import { client } from '@/shared/utils/axios'
 
 import type {
   AccountVerificationDetail,
+  SellerAccountUpdateRequest,
   StoreNameCheckResult,
   UpdateStoreNameRequest,
   UpdateStoreNameResult,
@@ -50,8 +51,29 @@ export async function getAccountVerification(): Promise<AccountVerificationDetai
 
     return data.result ?? null
   } catch (err) {
-    // 계좌 인증 이력이 없으면 400 — 에러가 아니라 "아직 인증 안 함" 상태이므로 null
-    if (isAxiosError(err) && err.response?.status === 400) return null
+    // 인증 이력 없음: 스펙은 404, 실제 디플로이는 400 — 둘 다 "아직 인증 안 함"으로 흡수.
+    if (isAxiosError(err)) {
+      const status = err.response?.status
+      if (status === 400 || status === 404) return null
+    }
     throw err
+  }
+}
+
+export async function updateSellerAccount(
+  payload: SellerAccountUpdateRequest,
+): Promise<void> {
+  const sanitized: SellerAccountUpdateRequest = {
+    ...payload,
+    accountNumber: payload.accountNumber.replace(/\D/g, ''),
+  }
+
+  const { data } = await client.patch<ApiResponse<unknown>>(
+    '/api/v1/seller/sellers/account',
+    sanitized,
+  )
+
+  if (!data.success) {
+    throw new Error(data.message ?? '계좌 정보 변경에 실패했습니다.')
   }
 }

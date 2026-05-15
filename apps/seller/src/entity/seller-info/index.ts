@@ -2,7 +2,14 @@ export {
   checkStoreName,
   getAccountVerification,
   requestStoreNameChange,
+  updateSellerAccount,
 } from './seller-info.api'
+export { BANK_CODES, getBankLabel } from './seller-info.const'
+export type { BankCode } from './seller-info.const'
+export {
+  sellerInfoQueries,
+  useUpdateSellerAccountMutation,
+} from './seller-info.query'
 export type {
   AccountVerificationDetail,
   AccountVerificationRequest,
