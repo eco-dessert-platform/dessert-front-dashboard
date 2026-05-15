@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Controller, useFormContext } from 'react-hook-form'
 import { Button, Dropdown, Input, Label } from '@dessert/ui'
 
@@ -135,15 +133,15 @@ function EmailSection() {
 function AddressSection() {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext<StoreDetailFormValues>()
 
-  const [isPostalCodeSelected, setIsPostalCodeSelected] = useState(false)
+  const isPostalCodeSelected = Boolean(watch('originAddress'))
 
   const handleClickPostalCodeSearch = () => {
     // 추후 우편번호 검색 라이브러리 연동
     // setValue('originAddress', '...')
-    // setIsPostalCodeSelected(true)
   }
 
   return (
