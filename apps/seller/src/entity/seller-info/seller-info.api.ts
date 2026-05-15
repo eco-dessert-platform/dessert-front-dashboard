@@ -5,11 +5,24 @@ import { client } from '@/shared/utils/axios'
 
 import type {
   AccountVerificationDetail,
+  MyStoreSummary,
   SellerAccountUpdateRequest,
   StoreNameCheckResult,
   UpdateStoreNameRequest,
   UpdateStoreNameResult,
 } from './seller-info.type'
+
+export async function getStore(): Promise<MyStoreSummary> {
+  const { data } = await client.get<ApiResponse<MyStoreSummary>>(
+    '/api/v1/seller/stores',
+  )
+
+  if (!data.result) {
+    throw new Error(data.message ?? '스토어 정보 조회에 실패했습니다.')
+  }
+
+  return data.result
+}
 
 export async function checkStoreName(
   storeName: string,

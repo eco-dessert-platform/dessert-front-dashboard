@@ -15,6 +15,12 @@ export interface StoreNameCheckResult {
   store: Store | null
 }
 
+export interface MyStoreSummary {
+  // 변경 신청 가능 여부: 이미 변경했거나 PENDING 이면 false
+  available: boolean
+  store: Store
+}
+
 export type StoreNameRequestStatus = 'PENDING' | 'REJECT' | 'APPROVE'
 
 export type StoreNameRejectCategory =
