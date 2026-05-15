@@ -105,6 +105,7 @@ function EmailSection() {
           )}
         </div>
 
+        {/* Dropdown은 forwardRef 미지원 + onSelect 시그니처라 Controller 사용 */}
         <Controller
           name="emailDomainSelection"
           control={control}
