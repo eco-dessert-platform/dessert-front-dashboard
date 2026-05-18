@@ -101,9 +101,12 @@ export function StoreInfo() {
   const handleDomainSelect = (value: string) => {
     setDomainSelectValue(value)
     if (value === CUSTOM_DOMAIN) {
-      setValue('emailDomain', '', { shouldDirty: true })
+      setValue('emailDomain', '', { shouldDirty: true, shouldValidate: true })
     } else {
-      setValue('emailDomain', value, { shouldDirty: true })
+      setValue('emailDomain', value, {
+        shouldDirty: true,
+        shouldValidate: true,
+      })
     }
   }
 
@@ -285,7 +288,10 @@ export function StoreInfo() {
               disabled={!isCustomDomain}
               value={emailDomain}
               onChange={(e) =>
-                setValue('emailDomain', e.target.value, { shouldDirty: true })
+                setValue('emailDomain', e.target.value, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
               }
               className="flex-1 self-end!"
               error={!!errors.emailDomain}

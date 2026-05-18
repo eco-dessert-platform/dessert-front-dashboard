@@ -39,7 +39,7 @@ export function StoreSearchModal({
   const [selected, setSelected] = useState<StoreSelection | null>(null)
 
   useEffect(() => {
-    const timer = setTimeout(() => setDebouncedQuery(query), 500)
+    const timer = setTimeout(() => setDebouncedQuery(query.trim()), 500)
     return () => clearTimeout(timer)
   }, [query])
 
