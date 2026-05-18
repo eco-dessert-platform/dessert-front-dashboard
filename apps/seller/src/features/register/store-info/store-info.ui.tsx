@@ -89,7 +89,7 @@ export function StoreInfo() {
 
     const allowedImageTypes = ['image/jpeg', 'image/png']
     if (!allowedImageTypes.includes(file.type)) {
-      const msg = REGISTER_TOAST_MESSAGES.PROFILE_IMAGE_REQUIRED
+      const msg = REGISTER_TOAST_MESSAGES.PROFILE_IMAGE_TYPE_INVALID
       toast.error(msg.title, msg.description)
       return
     }
@@ -116,6 +116,11 @@ export function StoreInfo() {
         } else {
           setDuplicateAlertOpen(true)
         }
+      },
+      onError: () => {
+        const msg = REGISTER_TOAST_MESSAGES.STORE_NAME_CHECK_ERROR
+        toast.error(msg.title, msg.description)
+        setPendingStore(null)
       },
     })
   }
