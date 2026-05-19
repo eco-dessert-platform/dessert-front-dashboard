@@ -328,6 +328,7 @@ export function StoreInfo() {
                   errorMessage={errors.postalCode?.message}
                 />
                 <Button
+                  type="button"
                   title="우편번호 검색"
                   size="md"
                   onClick={handleSearchPostalCode}
