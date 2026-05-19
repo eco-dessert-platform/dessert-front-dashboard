@@ -25,12 +25,15 @@ const EMAIL_DOMAIN_OPTIONS = [
   { label: 'kakao.com', value: 'kakao.com' },
 ]
 
+const PRESET_EMAIL_DOMAINS = EMAIL_DOMAIN_OPTIONS.filter(
+  (option) => option.value !== CUSTOM_DOMAIN,
+).map((option) => option.value)
+
 export function StoreInfo() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [duplicateAlertOpen, setDuplicateAlertOpen] = useState(false)
   const [confirmAlertOpen, setConfirmAlertOpen] = useState(false)
   const [pendingStore, setPendingStore] = useState<StoreSelection | null>(null)
-  const [domainSelectValue, setDomainSelectValue] = useState('')
 
   const { mutate: checkDuplicate, isPending } = useCheckStoreNameMutation()
   const openPostcodePopup = useKakaoPostcodePopup()
@@ -38,8 +41,14 @@ export function StoreInfo() {
   const {
     control,
     setValue,
+    getValues,
     formState: { errors },
   } = useFormContext<RegisterForm>()
+  const [domainSelectValue, setDomainSelectValue] = useState(() => {
+    const domain = getValues('emailDomain')
+    if (!domain) return ''
+    return PRESET_EMAIL_DOMAINS.includes(domain) ? domain : CUSTOM_DOMAIN
+  })
   const storeName = useWatch({ control, name: 'storeName' }) ?? ''
   const emailDomain = useWatch({ control, name: 'emailDomain' }) ?? ''
   const postalCode = useWatch({ control, name: 'postalCode' }) ?? ''
