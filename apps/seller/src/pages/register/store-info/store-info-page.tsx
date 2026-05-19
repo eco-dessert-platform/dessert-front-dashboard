@@ -3,18 +3,15 @@ import { isAxiosError } from 'axios'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
+import { RegisterForm, STORE_INFO_FIELDS } from '@/entity/register'
 import {
   REGISTER_TOAST_MESSAGES,
-  RegisterForm,
-  STORE_INFO_FIELDS,
-} from '@/entity/register'
-import {
+  RegisterStepFooter,
   StoreInfo,
   TermsAgreement,
   useSubmitStoreApplicationMutation,
 } from '@/features/register'
 import { ROUTES } from '@/shared/constant/routes'
-import { RegisterStepFooter } from '@/widgets/register-step-footer'
 
 const isFieldFilled = (value: unknown) => {
   if (value === undefined || value === null) return false

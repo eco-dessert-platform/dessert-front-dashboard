@@ -2,13 +2,11 @@ import { Button } from '@dessert/ui'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  REGISTER_MESSAGES,
-  StoreApplicationStatus,
-  registerQueries,
-} from '@/entity/register'
+import { StoreApplicationStatus, registerQueries } from '@/entity/register'
 import { ROUTES } from '@/shared/constant/routes'
 import { AuthFlowCard, AuthFlowImage } from '@/shared/ui/auth-flow-card'
+
+import { REGISTER_MESSAGES } from '../register.constant'
 
 const STATUS_LABEL: Record<StoreApplicationStatus, string> = {
   PENDING: '승인 대기중',
