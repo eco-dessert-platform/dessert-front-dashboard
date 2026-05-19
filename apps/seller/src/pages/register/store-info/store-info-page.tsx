@@ -38,18 +38,6 @@ const StoreInfoPage = () => {
 
     const values = getValues()
 
-    if (!values.profileImage) {
-      const msg = REGISTER_TOAST_MESSAGES.PROFILE_IMAGE_REQUIRED
-      toast.error(msg.title, msg.description)
-      return
-    }
-
-    if (!values.agreeToServiceTerms || !values.agreeToPrivacyPolicy) {
-      const msg = REGISTER_TOAST_MESSAGES.TERMS_AGREEMENT_REQUIRED
-      toast.error(msg.title, msg.description)
-      return
-    }
-
     submitApplication(
       {
         request: {
