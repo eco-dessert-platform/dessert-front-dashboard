@@ -1,11 +1,15 @@
 import { Button, Pagination } from '@dessert/ui'
 
 import { ORDER_ACTION_BAR_CONFIG } from '@/entity/order/order.constant'
-import { ActionButton, OrderStatusTab } from '@/entity/order/order.type'
+import {
+  ActionButton,
+  OrderAction,
+  OrderStatusTab,
+} from '@/entity/order/order.type'
 
 interface OrderActionBarProps {
   tab: OrderStatusTab
-  onAction: (action: string) => void
+  onAction: (action: OrderAction) => void
   selectedCount: number // 선택된 주문 수
   totalCount: number // 전체 주문 수
   currentPage: number
@@ -56,7 +60,7 @@ export function OrderActionBar({
 
 interface OrderActionButtonProps {
   buttons: ActionButton[]
-  onAction: (action: string) => void
+  onAction: (action: OrderAction) => void
 }
 
 function OrderActionButton({ buttons, onAction }: OrderActionButtonProps) {
@@ -75,20 +79,20 @@ function OrderActionButton({ buttons, onAction }: OrderActionButtonProps) {
           )
         }
 
-        // todo: type === 'group' -> ButtonGroup 공통 컴포넌트로 추출 예정
         return (
           <div
             key={index}
             className="flex overflow-clip rounded-6 border border-gray-200"
           >
             {button.items.map((item) => (
-              <button
+              <Button
                 key={item.action}
-                className="cursor-pointer border-r border-gray-200 px-10 py-6 typo-body-12-m text-gray-800 last:border-r-0"
+                title={item.label}
+                variant="secondary-outlined"
+                size="sm"
                 onClick={() => onAction(item.action)}
-              >
-                {item.label}
-              </button>
+                className="h-auto min-w-0 rounded-none border-0 border-r border-gray-200 px-10 py-6 text-gray-800 last:border-r-0"
+              />
             ))}
           </div>
         )

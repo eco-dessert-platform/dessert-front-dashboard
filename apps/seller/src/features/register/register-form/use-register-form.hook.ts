@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Resolver, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { RegisterForm, registerSchema } from '@/entity/register'
 
 export const useRegisterForm = () => {
   return useForm<RegisterForm>({
-    resolver: zodResolver(registerSchema) as Resolver<RegisterForm>,
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       bank: '',
       accountNumber: '',
