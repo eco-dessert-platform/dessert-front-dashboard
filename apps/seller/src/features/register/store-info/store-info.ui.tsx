@@ -190,7 +190,7 @@ export function StoreInfo() {
             <p className="typo-title-14-m text-gray-800">스토어 프로필</p>
             <button
               type="button"
-              className="flex w-full size-[200px] cursor-pointer flex-col items-center justify-center gap-0 overflow-hidden rounded-[16px] border border-gray-200 bg-white p-10"
+              className="flex size-[200px] shrink-0 cursor-pointer flex-col items-center justify-center gap-0 overflow-hidden rounded-[16px] border border-gray-200 bg-white p-10"
               onClick={() => fileInputRef.current?.click()}
             >
               {profilePreviewUrl ? (
@@ -228,6 +228,7 @@ export function StoreInfo() {
               <Input
                 {...field}
                 label="한줄소개"
+                required
                 placeholder="스토어 소개를 작성해주세요"
                 className="w-full"
                 error={!!errors.introduce}

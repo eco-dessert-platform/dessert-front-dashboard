@@ -21,16 +21,25 @@ const isFieldFilled = (value: unknown) => {
 
 const StoreInfoPage = () => {
   const { control, trigger, getValues } = useFormContext<RegisterForm>()
-  const watched = useWatch({ control })
+  const storeFieldValues = useWatch({ control, name: STORE_INFO_FIELDS })
+  const profileImage = useWatch({ control, name: 'profileImage' })
+  const agreeToServiceTerms = useWatch({
+    control,
+    name: 'agreeToServiceTerms',
+  })
+  const agreeToPrivacyPolicy = useWatch({
+    control,
+    name: 'agreeToPrivacyPolicy',
+  })
   const navigate = useNavigate()
   const { mutate: submitApplication, isPending } =
     useSubmitStoreApplicationMutation()
 
   const allRequiredFilled =
-    STORE_INFO_FIELDS.every((field) => isFieldFilled(watched[field])) &&
-    !!watched.profileImage &&
-    !!watched.agreeToServiceTerms &&
-    !!watched.agreeToPrivacyPolicy
+    storeFieldValues.every(isFieldFilled) &&
+    !!profileImage &&
+    !!agreeToServiceTerms &&
+    !!agreeToPrivacyPolicy
 
   const handleAdvance = async () => {
     const valid = await trigger(STORE_INFO_FIELDS)
