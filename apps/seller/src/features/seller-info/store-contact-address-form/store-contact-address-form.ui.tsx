@@ -188,7 +188,7 @@ function AddressSection() {
             label="출고지 상세주소"
             placeholder="1동 101호"
             required
-            disabled={!isPostalCodeSelected}
+            readOnly={!isPostalCodeSelected}
           />
           {errors.originAddressDetail && (
             <span className="typo-body-12-r text-error-500">
