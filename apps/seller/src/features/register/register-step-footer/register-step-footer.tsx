@@ -24,11 +24,19 @@ export function RegisterStepFooter({
   return (
     <div
       className={cn(
-        'sticky bottom-0 mt-auto -mx-[calc(50vw-50%)] w-screen border-t border-gray-200 bg-white',
+        'sticky bottom-0 -mx-[calc(50vw-50%)] mt-auto w-screen border-t border-gray-200 bg-white',
         className,
       )}
     >
       <div className="mx-auto flex w-full max-w-[1240px] justify-end gap-12 px-[90px] py-24">
+        <Button
+          title={nextLabel}
+          variant="primary-filled"
+          size="lg"
+          onClick={onNext}
+          disabled={nextDisabled}
+          className="disabled:border-gray-300 disabled:bg-gray-300 disabled:opacity-100"
+        />
         <Button
           title={prevLabel}
           variant="primary-filled"
@@ -36,13 +44,6 @@ export function RegisterStepFooter({
           onClick={onPrev}
           disabled={prevDisabled}
           className="disabled:border-gray-300 disabled:bg-gray-300 disabled:opacity-100"
-        />
-        <Button
-          title={nextLabel}
-          variant="primary-filled"
-          size="lg"
-          onClick={onNext}
-          disabled={nextDisabled}
         />
       </div>
     </div>
