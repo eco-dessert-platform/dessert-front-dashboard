@@ -24,6 +24,7 @@ export function StoreInfoForm() {
       subPhoneNumber: '',
       emailLocal: '',
       emailDomain: '',
+      emailDomainSelection: '',
       originAddress: '',
       originAddressDetail: '',
     },
