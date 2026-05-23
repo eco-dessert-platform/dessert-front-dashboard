@@ -138,7 +138,7 @@ export function StoreSearchModal({
                       : isError
                         ? '검색에 실패했어요. 다시 시도해주세요'
                         : '검색되는 스토어가 없어요'
-                    : '검색된 결과가 없어요'}
+                    : '스토어명을 검색해주세요'}
                 </p>
               )}
             </div>
