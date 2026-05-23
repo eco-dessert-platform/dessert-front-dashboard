@@ -51,8 +51,6 @@ const StoreInfoPage = () => {
       {
         request: {
           storeName: values.storeName,
-          // 프로필 이미지를 별도 multipart 로 전송하므로 빈 값으로 보냄 — 서버가 업로드 후 URL 을 채움
-          profile: '',
           introduce: values.introduce,
           phoneNumber: values.phoneNumber,
           subPhoneNumber: values.subPhoneNumber || null,
