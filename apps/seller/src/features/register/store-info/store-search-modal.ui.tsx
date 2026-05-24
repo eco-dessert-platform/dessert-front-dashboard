@@ -26,6 +26,7 @@ interface StoreSearchModalProps {
   onOpenChange: (open: boolean) => void
   onCheckDuplicate: (store: StoreSelection) => void
   isChecking?: boolean
+  resetKey?: number
 }
 
 export function StoreSearchModal({
@@ -33,6 +34,7 @@ export function StoreSearchModal({
   onOpenChange,
   onCheckDuplicate,
   isChecking = false,
+  resetKey = 0,
 }: StoreSearchModalProps) {
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
@@ -42,6 +44,13 @@ export function StoreSearchModal({
     const timer = setTimeout(() => setDebouncedQuery(query), 500)
     return () => clearTimeout(timer)
   }, [query])
+
+  useEffect(() => {
+    if (resetKey === 0) return
+    setQuery('')
+    setDebouncedQuery('')
+    setSelected(null)
+  }, [resetKey])
 
   const { data, isFetching } = useQuery(
     registerQueries.storeNames(debouncedQuery),

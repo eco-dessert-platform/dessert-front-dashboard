@@ -85,8 +85,14 @@ export function TermsAgreement() {
                   size="lg"
                   checked={Boolean(agreements[index])}
                   onCheckedChange={handleToggleItem(item.fieldName)}
+                  aria-label={
+                    item.required ? `${item.title} (필수)` : item.title
+                  }
                 />
-                <div className="flex items-center gap-2 typo-title-16-m whitespace-nowrap">
+                <div
+                  aria-hidden
+                  className="flex items-center gap-2 typo-title-16-m whitespace-nowrap"
+                >
                   <span className="text-gray-900">{item.title}</span>
                   {item.required && (
                     <span className="text-primary-500">(필수)</span>
@@ -94,8 +100,11 @@ export function TermsAgreement() {
                 </div>
               </div>
               <div
+                tabIndex={0}
+                role="region"
+                aria-label={`${item.title} 본문`}
                 className={cn(
-                  'flex h-[200px] w-full flex-col items-start gap-4 overflow-y-auto rounded-10 border border-gray-300 p-16',
+                  'flex h-[200px] w-full flex-col items-start gap-4 overflow-y-auto rounded-10 border border-gray-300 p-16 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500',
                 )}
               >
                 {item.content}

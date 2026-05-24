@@ -91,9 +91,9 @@ const StoreInfoPage = () => {
       <StoreInfo />
       <TermsAgreement />
       <RegisterStepFooter
-        onPrev={handleAdvance}
-        onNext={handleEdit}
-        prevDisabled={!allRequiredFilled || isPending}
+        onPrev={handleEdit}
+        onNext={handleAdvance}
+        nextDisabled={!allRequiredFilled || isPending}
       />
     </>
   )
