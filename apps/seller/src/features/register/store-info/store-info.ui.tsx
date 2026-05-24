@@ -34,6 +34,7 @@ export function StoreInfo() {
   const [duplicateAlertOpen, setDuplicateAlertOpen] = useState(false)
   const [confirmAlertOpen, setConfirmAlertOpen] = useState(false)
   const [pendingStore, setPendingStore] = useState<StoreSelection | null>(null)
+  const [searchResetKey, setSearchResetKey] = useState(0)
 
   const { mutate: checkDuplicate, isPending } = useCheckStoreNameMutation()
   const openPostcodePopup = useKakaoPostcodePopup()
@@ -141,6 +142,7 @@ export function StoreInfo() {
     setDuplicateAlertOpen(false)
     setPendingStore(null)
     // 스펙 AU-03-02: 검색 모달 초기 화면으로 돌아감 (search modal 은 열린 상태 유지)
+    setSearchResetKey((key) => key + 1)
   }
 
   const handleConfirmCancel = () => {
@@ -373,6 +375,7 @@ export function StoreInfo() {
         onOpenChange={setSearchOpen}
         onCheckDuplicate={handleCheckDuplicate}
         isChecking={isPending}
+        resetKey={searchResetKey}
       />
       <DuplicateStoreAlert
         open={duplicateAlertOpen}
