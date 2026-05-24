@@ -7,10 +7,9 @@ import { useKakaoPostcodePopup } from 'react-daum-postcode'
 
 import { FILE_UPLOAD_LIMITS, RegisterForm } from '@/entity/register'
 import { formatDaumAddress } from '@/shared/utils/format-daum-address'
-import { InputField } from '@/widgets/input-field'
+import { InputField } from '../../../shared/ui/input-field'
 
 import { REGISTER_TOAST_MESSAGES } from '../register.constant'
-
 import { useCheckStoreNameMutation } from './check-store-name.mutation'
 import { ConfirmStoreAlert } from './confirm-store-alert.ui'
 import { DuplicateStoreAlert } from './duplicate-store-alert.ui'
@@ -26,12 +25,15 @@ const EMAIL_DOMAIN_OPTIONS = [
   { label: 'kakao.com', value: 'kakao.com' },
 ]
 
+const PRESET_EMAIL_DOMAINS = EMAIL_DOMAIN_OPTIONS.filter(
+  (option) => option.value !== CUSTOM_DOMAIN,
+).map((option) => option.value)
+
 export function StoreInfo() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [duplicateAlertOpen, setDuplicateAlertOpen] = useState(false)
   const [confirmAlertOpen, setConfirmAlertOpen] = useState(false)
   const [pendingStore, setPendingStore] = useState<StoreSelection | null>(null)
-  const [domainSelectValue, setDomainSelectValue] = useState('')
   const [searchResetKey, setSearchResetKey] = useState(0)
 
   const { mutate: checkDuplicate, isPending } = useCheckStoreNameMutation()
@@ -40,8 +42,14 @@ export function StoreInfo() {
   const {
     control,
     setValue,
+    getValues,
     formState: { errors },
   } = useFormContext<RegisterForm>()
+  const [domainSelectValue, setDomainSelectValue] = useState(() => {
+    const domain = getValues('emailDomain')
+    if (!domain) return ''
+    return PRESET_EMAIL_DOMAINS.includes(domain) ? domain : CUSTOM_DOMAIN
+  })
   const storeName = useWatch({ control, name: 'storeName' }) ?? ''
   const emailDomain = useWatch({ control, name: 'emailDomain' }) ?? ''
   const postalCode = useWatch({ control, name: 'postalCode' }) ?? ''
@@ -91,7 +99,7 @@ export function StoreInfo() {
 
     const allowedImageTypes = ['image/jpeg', 'image/png']
     if (!allowedImageTypes.includes(file.type)) {
-      const msg = REGISTER_TOAST_MESSAGES.PROFILE_IMAGE_REQUIRED
+      const msg = REGISTER_TOAST_MESSAGES.PROFILE_IMAGE_TYPE_INVALID
       toast.error(msg.title, msg.description)
       return
     }
@@ -103,9 +111,12 @@ export function StoreInfo() {
   const handleDomainSelect = (value: string) => {
     setDomainSelectValue(value)
     if (value === CUSTOM_DOMAIN) {
-      setValue('emailDomain', '', { shouldDirty: true })
+      setValue('emailDomain', '', { shouldDirty: true, shouldValidate: true })
     } else {
-      setValue('emailDomain', value, { shouldDirty: true })
+      setValue('emailDomain', value, {
+        shouldDirty: true,
+        shouldValidate: true,
+      })
     }
   }
 
@@ -167,6 +178,7 @@ export function StoreInfo() {
           placeholder="스토어를 검색해주세요"
           buttonText="검색"
           readOnly
+          allowEmptyButtonClick
           value={storeName}
           onButtonClick={() => setSearchOpen(true)}
           error={!!errors.storeName}
@@ -180,7 +192,7 @@ export function StoreInfo() {
             <p className="typo-title-14-m text-gray-800">스토어 프로필</p>
             <button
               type="button"
-              className="flex w-full size-[200px] cursor-pointer flex-col items-center justify-center gap-0 overflow-hidden rounded-[16px] border border-gray-200 bg-white p-10"
+              className="flex size-[200px] shrink-0 cursor-pointer flex-col items-center justify-center gap-0 overflow-hidden rounded-[16px] border border-gray-200 bg-white p-10"
               onClick={() => fileInputRef.current?.click()}
             >
               {profilePreviewUrl ? (
@@ -218,6 +230,7 @@ export function StoreInfo() {
               <Input
                 {...field}
                 label="한줄소개"
+                required
                 placeholder="스토어 소개를 작성해주세요"
                 className="w-full"
                 error={!!errors.introduce}
@@ -287,7 +300,10 @@ export function StoreInfo() {
               disabled={!isCustomDomain}
               value={emailDomain}
               onChange={(e) =>
-                setValue('emailDomain', e.target.value, { shouldDirty: true })
+                setValue('emailDomain', e.target.value, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
               }
               className="flex-1 self-end!"
               error={!!errors.emailDomain}
@@ -315,6 +331,7 @@ export function StoreInfo() {
                   errorMessage={errors.postalCode?.message}
                 />
                 <Button
+                  type="button"
                   title="우편번호 검색"
                   size="md"
                   onClick={handleSearchPostalCode}

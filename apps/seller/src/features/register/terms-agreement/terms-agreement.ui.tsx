@@ -10,7 +10,7 @@ interface TermsItem {
   title: string
   required: boolean
   fieldName: 'agreeToServiceTerms' | 'agreeToPrivacyPolicy'
-  content: React.ReactNode
+  renderContent: () => React.ReactNode
 }
 
 const TERMS_ITEMS: TermsItem[] = [
@@ -19,14 +19,14 @@ const TERMS_ITEMS: TermsItem[] = [
     title: '이용약관',
     required: true,
     fieldName: 'agreeToServiceTerms',
-    content: <ServiceTerms />,
+    renderContent: () => <ServiceTerms />,
   },
   {
     id: 'privacy',
     title: '개인정보 처리방침',
     required: true,
     fieldName: 'agreeToPrivacyPolicy',
-    content: <PrivacyTerms />,
+    renderContent: () => <PrivacyTerms />,
   },
 ]
 
@@ -107,7 +107,7 @@ export function TermsAgreement() {
                   'flex h-[200px] w-full flex-col items-start gap-4 overflow-y-auto rounded-10 border border-gray-300 p-16 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500',
                 )}
               >
-                {item.content}
+                {item.renderContent()}
               </div>
             </div>
           ))}

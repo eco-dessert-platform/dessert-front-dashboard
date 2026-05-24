@@ -5,10 +5,10 @@ export { useRegisterForm } from './register-form'
 export { REGISTER_TOAST_MESSAGES } from './register.constant'
 export { TermsAgreement } from './terms-agreement'
 export {
-  useCheckStoreNameMutation,
   ConfirmStoreAlert,
   DuplicateStoreAlert,
   StoreInfo,
   StoreSearchModal,
+  useCheckStoreNameMutation,
 } from './store-info'
 export { useSubmitStoreApplicationMutation } from './submit-application'

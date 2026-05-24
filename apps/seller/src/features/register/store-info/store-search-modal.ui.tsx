@@ -41,7 +41,7 @@ export function StoreSearchModal({
   const [selected, setSelected] = useState<StoreSelection | null>(null)
 
   useEffect(() => {
-    const timer = setTimeout(() => setDebouncedQuery(query), 500)
+    const timer = setTimeout(() => setDebouncedQuery(query.trim()), 500)
     return () => clearTimeout(timer)
   }, [query])
 
@@ -52,7 +52,7 @@ export function StoreSearchModal({
     setSelected(null)
   }, [resetKey])
 
-  const { data, isFetching } = useQuery(
+  const { data, isFetching, isError } = useQuery(
     registerQueries.storeNames(debouncedQuery),
   )
 
@@ -144,8 +144,10 @@ export function StoreSearchModal({
                   {hasQuery
                     ? isFetching
                       ? '검색 중이에요'
-                      : '검색되는 스토어가 없어요'
-                    : '검색된 결과가 없어요'}
+                      : isError
+                        ? '검색에 실패했어요. 다시 시도해주세요'
+                        : '검색되는 스토어가 없어요'
+                    : '스토어명을 검색해주세요'}
                 </p>
               )}
             </div>
@@ -183,12 +185,14 @@ function HighlightedText({
   highlight: string
 }) {
   if (!highlight) return <>{text}</>
-  const idx = text.indexOf(highlight)
+  const idx = text.toLowerCase().indexOf(highlight.toLowerCase())
   if (idx < 0) return <>{text}</>
   return (
     <>
       {text.slice(0, idx)}
-      <span className="text-primary-500">{highlight}</span>
+      <span className="text-primary-500">
+        {text.slice(idx, idx + highlight.length)}
+      </span>
       {text.slice(idx + highlight.length)}
     </>
   )
