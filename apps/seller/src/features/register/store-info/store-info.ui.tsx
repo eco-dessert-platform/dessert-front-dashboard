@@ -7,7 +7,7 @@ import { useKakaoPostcodePopup } from 'react-daum-postcode'
 
 import { FILE_UPLOAD_LIMITS, RegisterForm } from '@/entity/register'
 import { formatDaumAddress } from '@/shared/utils/format-daum-address'
-import { InputField } from '@/widgets/input-field'
+import { InputField } from '../../../shared/ui/input-field'
 
 import { REGISTER_TOAST_MESSAGES } from '../register.constant'
 import { useCheckStoreNameMutation } from './check-store-name.mutation'

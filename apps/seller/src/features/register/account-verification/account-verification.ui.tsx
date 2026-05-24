@@ -13,7 +13,7 @@ import {
 } from '@/entity/register'
 import { extractServerMessage } from '@/shared/utils/extract-server-message'
 import { FileUploadInput } from '../../../shared/ui/file-upload-input'
-import { InputField } from '../../../widgets/input-field'
+import { InputField } from '../../../shared/ui/input-field'
 
 import { handleRegisterFileUpload, sanitizeAccountPayload } from '../lib'
 import { REGISTER_TOAST_MESSAGES } from '../register.constant'
