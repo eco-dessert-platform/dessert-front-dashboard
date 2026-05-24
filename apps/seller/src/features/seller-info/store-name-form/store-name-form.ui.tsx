@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 
 import { StoreNameFormValues, storeNameSchema } from '@/entity/seller-info'
 import { cn } from '@/shared/libs/utils'
-import { InputField } from '../../../widgets/input-field'
+import { InputField } from '../../../shared/ui/input-field'
 
 import {
   SELLER_INFO_CANCEL_DIALOG_CONTENT,
