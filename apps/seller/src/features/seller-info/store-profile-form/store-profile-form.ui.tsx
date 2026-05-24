@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
+import { Controller, useFormContext } from 'react-hook-form'
 import { Textarea } from '@dessert/ui'
+
+import { StoreDetailFormValues } from '@/entity/seller-info'
 
 import { StoreProfileImagePreview } from '../store-profile-image-preview'
 
@@ -9,6 +12,11 @@ const IMG_NOTICE_FORMAT = 'jpg,jpeg,png 형식 10MB 이하 파일만 업로드 �
 
 export function StoreProfileForm() {
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null)
+
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<StoreDetailFormValues>()
 
   return (
     <section>
@@ -23,13 +31,25 @@ export function StoreProfileForm() {
         <p>{IMG_NOTICE_FORMAT}</p>
       </div>
 
-      <Textarea
-        label="한줄소개"
-        placeholder="빵그리입니다!"
-        maxLength={100}
-        showCount={true}
-        className="mt-8"
+      <Controller
+        name="introduce"
+        control={control}
+        render={({ field }) => (
+          <Textarea
+            {...field}
+            label="한줄소개"
+            placeholder="빵그리입니다!"
+            maxLength={100}
+            showCount
+            className="mt-8"
+          />
+        )}
       />
+      {errors.introduce && (
+        <span className="typo-body-12-r text-error-500">
+          {errors.introduce.message}
+        </span>
+      )}
     </section>
   )
 }
