@@ -15,6 +15,7 @@ import RegisterLayout from '@/pages/register/register-layout'
 import StoreInfoPage from '@/pages/register/store-info/store-info-page'
 import VerificationPage from '@/pages/register/verification/verification-page'
 import SettlementPage from '@/pages/settlement/settlement-page'
+import SalesAnalyticsPage from '@/pages/statistics/sales-analytics/sales-analytics-page'
 import { ROUTES } from '@/shared/constant/routes'
 
 import App from './App'
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
 
       { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
+      {
+        path: ROUTES.STATISTICS.SALES_ANALYTICS,
+        element: <SalesAnalyticsPage />,
+      },
       { path: ROUTES.INFO.CHANGE, element: <SellerInfoPage /> },
     ],
   },
