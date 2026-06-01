@@ -9,8 +9,8 @@ type ChartTooltipFormatter = (value: number, name: string) => string
 interface ChartTooltipProps extends TooltipProps<ValueType, NameType> {
   // 항목별 값을 어떻게 표시할지. 미지정 시 그대로 노출.
   valueFormatter?: ChartTooltipFormatter
-  // 상단 label(보통 X축 값) 가공.
-  labelFormatter?: (label: string) => string
+  // 상단 label(X축 값) 가공. 날짜 문자열뿐 아니라 weekday 같은 number도 받음.
+  labelFormatter?: (label: string | number) => string
 }
 
 // Recharts <Tooltip content={<ChartTooltip ... />} /> 형태로 사용.
@@ -25,7 +25,9 @@ export const ChartTooltip = ({
   if (!active || !payload || payload.length === 0) return null
 
   const displayLabel =
-    typeof label === 'string' && labelFormatter ? labelFormatter(label) : label
+    label != null && labelFormatter
+      ? labelFormatter(label as string | number)
+      : label
 
   return (
     <div className="rounded-md border border-gray-200 bg-white px-3 py-2 shadow-md">

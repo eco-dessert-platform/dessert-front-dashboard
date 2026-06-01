@@ -1,6 +1,7 @@
 export {
   CHART_COLORS,
   CHART_HEIGHT,
+  PERIOD_LABEL,
   formatKRW,
   formatKRWShort,
   formatPercent,

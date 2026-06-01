@@ -1,3 +1,12 @@
+import type { PaymentStatsPeriod } from '@/entity/payments'
+
+// period(DAY/WEEK/MONTH) → 차트 타이틀/툴팁에 들어가는 한글 라벨.
+export const PERIOD_LABEL: Record<PaymentStatsPeriod, string> = {
+  DAY: '일별',
+  WEEK: '주별',
+  MONTH: '월별',
+}
+
 // 디자인 토큰 alignment 필요 시 추후 @dessert/ui 색상 스케일로 교체.
 export const CHART_COLORS = {
   primary: '#3B82F6',
