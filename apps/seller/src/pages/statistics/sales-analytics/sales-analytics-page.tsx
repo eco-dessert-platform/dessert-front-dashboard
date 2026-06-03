@@ -1,47 +1,33 @@
-/** @temp Entity 브랜치 API 동작 검증용 — PR 3에서 실제 페이지로 교체 */
-import { useQuery } from '@tanstack/react-query'
+import { DateRangeFilter } from '@/features/statistics/sales-analytics/date-range-filter'
+import { PaymentAmountChart } from '@/features/statistics/sales-analytics/payment-amount-chart'
+import { PaymentCountChart } from '@/features/statistics/sales-analytics/payment-count-chart'
+import { RefundRateChart } from '@/features/statistics/sales-analytics/refund-rate-chart'
+import { useStatsFilter } from '@/features/statistics/sales-analytics/stats-filter.hook'
+import { WeekdayAmountChart } from '@/features/statistics/sales-analytics/weekday-amount-chart'
+import { WeekdayAverageChart } from '@/features/statistics/sales-analytics/weekday-average-chart'
 
-import { paymentsQueries } from '@/entity/payments'
-
-// @temp
+/**
+ * @description 판매통계 > 판매분석 페이지. 결제금액/결제수/요일별/환불율 5종 차트를 보여준다.
+ */
 const SalesAnalyticsPage = () => {
-  const request = { period: 'DAY' as const }
-  const dailyAmount = useQuery(paymentsQueries.dailyAmount(request))
-  const dailyCount = useQuery(paymentsQueries.dailyCount(request))
-  const weekday = useQuery(paymentsQueries.weekday(request))
-  const refundRate = useQuery(paymentsQueries.dailyRefundRate(request))
+  const { apiDate } = useStatsFilter()
 
   return (
-    <div className="p-6 space-y-4">
-      <h1 className="text-xl font-bold">[@temp] 판매통계 API 동작 검증</h1>
+    <div className="space-y-6 p-6">
+      <header className="flex items-center justify-between">
+        <h1 className="typo-heading-18-b text-gray-900">판매분석</h1>
+        <DateRangeFilter />
+      </header>
 
-      <section>
-        <h2 className="font-semibold">daily-amount</h2>
-        <pre className="overflow-auto bg-gray-100 p-2 text-xs">
-          {JSON.stringify(dailyAmount.data, null, 2)}
-        </pre>
-      </section>
+      <PaymentAmountChart date={apiDate} />
+      <PaymentCountChart date={apiDate} />
 
-      <section>
-        <h2 className="font-semibold">daily-count</h2>
-        <pre className="overflow-auto bg-gray-100 p-2 text-xs">
-          {JSON.stringify(dailyCount.data, null, 2)}
-        </pre>
-      </section>
+      <div className="grid grid-cols-2 gap-6">
+        <WeekdayAmountChart date={apiDate} />
+        <WeekdayAverageChart date={apiDate} />
+      </div>
 
-      <section>
-        <h2 className="font-semibold">weekday</h2>
-        <pre className="overflow-auto bg-gray-100 p-2 text-xs">
-          {JSON.stringify(weekday.data, null, 2)}
-        </pre>
-      </section>
-
-      <section>
-        <h2 className="font-semibold">daily-refund-rate</h2>
-        <pre className="overflow-auto bg-gray-100 p-2 text-xs">
-          {JSON.stringify(refundRate.data, null, 2)}
-        </pre>
-      </section>
+      <RefundRateChart date={apiDate} />
     </div>
   )
 }

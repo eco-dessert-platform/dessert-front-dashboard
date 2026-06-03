@@ -21,6 +21,7 @@ export function useStatsFilter(): UseStatsFilterResult {
   const [params, setParams] = useSearchParams()
   const apiDate = params.get(DATE_PARAM) ?? undefined
 
+  // Calendar single 모드의 invariant(from === to)에 맞춰 두 필드 모두 같은 날짜로 채움.
   const parsed = apiDate ? parseISO(apiDate) : undefined
   const dateRange: DateRange | undefined = parsed
     ? { from: parsed, to: parsed }
@@ -30,8 +31,11 @@ export function useStatsFilter(): UseStatsFilterResult {
     setParams(
       (prev) => {
         const next = new URLSearchParams(prev)
-        if (range?.to) {
-          next.set(DATE_PARAM, format(range.to, 'yyyy-MM-dd'))
+        // 사용자가 단일 날짜만 클릭(range.to 미선택)했을 때는 from을 종료일로 사용.
+        // 범위로 선택했을 땐 to(종료일)를 사용.
+        const endDate = range?.to ?? range?.from
+        if (endDate) {
+          next.set(DATE_PARAM, format(endDate, 'yyyy-MM-dd'))
         } else {
           next.delete(DATE_PARAM)
         }
