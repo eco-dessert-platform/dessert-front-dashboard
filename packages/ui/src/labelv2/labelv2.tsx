@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
 interface LabelProps extends ComponentPropsWithoutRef<'label'> {
   required?: boolean

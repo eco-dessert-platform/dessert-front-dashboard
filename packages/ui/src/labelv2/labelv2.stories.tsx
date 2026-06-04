@@ -1,6 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
-
 import { LabelV2 } from './labelv2'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof LabelV2> = {
   title: 'Components/LabelV2',
@@ -30,7 +29,7 @@ export const WithInput: Story = {
     htmlFor: 'story-labelv2-input',
     children: '이메일',
   },
-  render: args => (
+  render: (args) => (
     <div className="flex flex-col gap-2">
       <LabelV2 {...args} />
       <input
