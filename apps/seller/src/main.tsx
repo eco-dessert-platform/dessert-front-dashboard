@@ -14,13 +14,13 @@ import CompletePage from '@/pages/register/complete/complete-page'
 import RegisterLayout from '@/pages/register/register-layout'
 import StoreInfoPage from '@/pages/register/store-info/store-info-page'
 import VerificationPage from '@/pages/register/verification/verification-page'
-import SettlementPage from '@/pages/settlement/settlement-page'
+import SettlementPage from '@/pages/settlements/index-page'
 import { ROUTES } from '@/shared/constant/routes'
 
 import App from './App'
 import { SellerInfoPage } from './pages/seller-info/seller-info-page'
 import FixedLayout from './shared/block/fixed-layout/fixed-layout'
-import ChargePage from './pages/settlement/charge/charge-page'
+import ChargePage from './pages/settlements/charge/charge-page'
 
 const router = createBrowserRouter([
   {

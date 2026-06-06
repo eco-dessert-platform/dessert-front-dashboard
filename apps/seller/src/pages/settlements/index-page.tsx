@@ -6,12 +6,14 @@ import { SettlementOverview } from '@/features/settlement/history/history-overvi
 import { TransactionSettlementTable } from '@/features/settlement/history/history-transaction-table'
 import { useSettlementFilter } from '@/features/settlement/history/model/use-settlement-filter'
 
+import Layout from './layout'
+
 const SettlementPage = () => {
   const { draftFilters, setDraftFilters, appliedFilters, apply, setPage } =
     useSettlementFilter()
 
   return (
-    <div className="mx-[-90px] -my-40 flex min-h-[calc(100vh-80px)] flex-col gap-24 p-40">
+    <Layout>
       <Tab defaultValue="daily" variant="btn">
         <TabList>
           <TabTrigger value="daily">일별 정산내역</TabTrigger>
@@ -35,7 +37,7 @@ const SettlementPage = () => {
           />
         </TabContent>
       </Tab>
-    </div>
+    </Layout>
   )
 }
 
