@@ -41,11 +41,3 @@ export interface SettlementFilters {
   page: number
   size: number
 }
-
-export interface IChargeFilter {
-  startDate?: string
-  endDate?: string
-  page?: number
-  size?: number
-  sort?: string
-}
