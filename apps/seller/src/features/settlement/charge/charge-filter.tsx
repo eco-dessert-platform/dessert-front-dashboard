@@ -43,7 +43,7 @@ const ChargeFilter = ({ onSearch, children }: IChargeFilterProps) => {
         <Button
           title="조회"
           variant="primary-filled"
-          size="lg"
+          size="md"
           className="max-h-[42px] min-w-[70px]"
           onClick={() =>
             onSearch({
