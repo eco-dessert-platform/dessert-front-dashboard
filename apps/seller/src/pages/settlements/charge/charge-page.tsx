@@ -3,11 +3,11 @@ import { useMemo, useState } from 'react'
 import { Button, Text } from '@dessert/ui'
 import { getChargePageResponseMock } from '@/entity/settlement/charge/charge-mock'
 import ChargeFilter from '@/features/settlement/charge/charge-filter'
-import type { IChargeFilterValue } from '@/features/settlement/charge/charge-filter'
 import ChargeTable from '@/features/settlement/charge/charge-table'
 
 import Layout from '../layout'
 import { IChargePageResponse } from '@/entity/settlement/charge/entities'
+import { IChargeFilter } from '@/entity/settlement/charge/entities'
 
 const ChargePage = () => {
   const [page, setPage] = useState(1)
@@ -17,7 +17,7 @@ const ChargePage = () => {
     [page],
   )
 
-  const handleSearch = (filters: IChargeFilterValue) => {
+  const handleSearch = (filters: IChargeFilter) => {
     // TODO: API 연동 시 조회 파라미터로 사용
     void filters
     setPage(1)

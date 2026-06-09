@@ -5,14 +5,10 @@ import { format, subDays } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
 import { DatePicker } from '@/widgets/date-picker'
-
-interface IChargeFilterValue {
-  startDate: string | null
-  endDate: string | null
-}
+import { IChargeFilter } from '@/entity/settlement/charge/entities'
 
 interface IChargeFilterProps {
-  onSearch: (filters: IChargeFilterValue) => void
+  onSearch: (filters: Pick<IChargeFilter, 'startDate' | 'endDate'>) => void
   children: React.ReactNode
 }
 
@@ -45,7 +41,16 @@ const ChargeFilter = ({ onSearch, children }: IChargeFilterProps) => {
           variant="primary-filled"
           size="md"
           className="max-h-[42px] min-w-[70px]"
-          onClick={() => onSearch(selectedDateValue)}
+          onClick={() =>
+            onSearch({
+              startDate: selectedDateValue?.from
+                ? format(selectedDateValue.from, 'yyyy-MM-dd')
+                : undefined,
+              endDate: selectedDateValue?.to
+                ? format(selectedDateValue.to, 'yyyy-MM-dd')
+                : undefined,
+            })
+          }
         />
       </div>
       {children}
