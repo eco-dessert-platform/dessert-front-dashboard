@@ -7,6 +7,8 @@ export type {
   ApproveSellerItem,
   ApproveSellersRequest,
   ApproveSellersResult,
+  RejectSellersRequest,
+  RejectSellersResult,
 } from './member-approval.type'
 
 export {
@@ -20,8 +22,15 @@ export {
   ApproveSellersRequestSchema,
   ApproveSellersResultSchema,
   ApproveSellersResponseSchema,
+  RejectSellersRequestSchema,
+  RejectSellersResultSchema,
+  RejectSellersResponseSchema,
 } from './member-approval.contract'
 
-export { getAdminSellers, approveSellers } from './member-approval.api'
+export {
+  getAdminSellers,
+  approveSellers,
+  rejectSellers,
+} from './member-approval.api'
 
 export { memberApprovalQueries } from './member-approval.query'

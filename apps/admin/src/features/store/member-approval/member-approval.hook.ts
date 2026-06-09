@@ -4,7 +4,10 @@ import { toast } from '@dessert/ui'
 
 import type { ApproveSellersRequest } from '@/entity/store/member-approval'
 
-import { useApproveSellersMutation } from './member-approval.mutation'
+import {
+  useApproveSellersMutation,
+  useRejectSellersMutation,
+} from './member-approval.mutation'
 
 type ApplicantInput = {
   sellerName: string
@@ -14,6 +17,8 @@ type ApplicantInput = {
 export const useMemberApproval = () => {
   const [inputs, setInputs] = useState<Record<number, ApplicantInput>>({})
   const { mutate, isPending } = useApproveSellersMutation()
+  const { mutate: rejectMutate, isPending: isRejecting } =
+    useRejectSellersMutation()
 
   const updateInput = (
     applicationId: number,
@@ -53,6 +58,15 @@ export const useMemberApproval = () => {
     mutate(body, { onSuccess })
   }
 
+  const submitReject = (selectedIds: number[], onSuccess?: () => void) => {
+    if (selectedIds.length === 0) {
+      toast.error('선택된 항목이 없습니다.', '거절할 신청을 선택해주세요.')
+      return
+    }
+
+    rejectMutate({ applicationIds: selectedIds }, { onSuccess })
+  }
+
   const handleDownloadFile = () => {
     // 서류 다운로드 API(GET /api/v1/admin/sellers/documents) 연동 예정
   }
@@ -62,6 +76,8 @@ export const useMemberApproval = () => {
     updateInput,
     submitApproval,
     isApproving: isPending,
+    submitReject,
+    isRejecting,
     handleDownloadFile,
   }
 }

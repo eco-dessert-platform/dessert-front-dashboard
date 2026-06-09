@@ -5,6 +5,8 @@ import type {
   ApproveSellersRequestSchema,
   ApproveSellersResultSchema,
   GetAdminSellersRequestParamsSchema,
+  RejectSellersRequestSchema,
+  RejectSellersResultSchema,
   SellerSchema,
   SellerStoreSchema,
 } from './member-approval.contract'
@@ -22,3 +24,5 @@ export type GetAdminSellersRequestParams = z.infer<
 export type ApproveSellerItem = z.infer<typeof ApproveSellerItemSchema>
 export type ApproveSellersRequest = z.infer<typeof ApproveSellersRequestSchema>
 export type ApproveSellersResult = z.infer<typeof ApproveSellersResultSchema>
+export type RejectSellersRequest = z.infer<typeof RejectSellersRequestSchema>
+export type RejectSellersResult = z.infer<typeof RejectSellersResultSchema>

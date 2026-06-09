@@ -61,26 +61,47 @@ export const ApproveSellerItemSchema = z.object({
 
 export const ApproveSellersRequestSchema = z.array(ApproveSellerItemSchema)
 
+// 승인/거절 응답에서 실패 항목 구조는 동일 (둘 다 공유)
+export const FailDetailSchema = z.object({
+  storeApplicationId: z.number().int(),
+  reason: z.string(),
+})
+
 // 응답에서 실제 사용하는 필드만 파싱 (storeDTO/sellerDTO 등 부가 정보는 무시)
 export const ApproveSuccessDetailSchema = z.object({
   storeApplicationId: z.number().int(),
   storeApplicationStatus: z.string(),
 })
 
-export const ApproveFailDetailSchema = z.object({
-  storeApplicationId: z.number().int(),
-  reason: z.string(),
-})
-
 export const ApproveSellersResultSchema = z.object({
   successDetails: z.array(ApproveSuccessDetailSchema),
-  failDetails: z.array(ApproveFailDetailSchema),
+  failDetails: z.array(FailDetailSchema),
 })
 
 export const ApproveSellersResponseSchema = z.discriminatedUnion('success', [
   BaseResponseSchema.extend({
     success: z.literal(true),
     result: ApproveSellersResultSchema,
+  }),
+  BaseResponseSchema.extend({
+    success: z.literal(false),
+    result: z.null().optional(),
+  }),
+])
+
+export const RejectSellersRequestSchema = z.object({
+  applicationIds: z.array(z.number().int()),
+})
+
+export const RejectSellersResultSchema = z.object({
+  successIds: z.array(z.number().int()),
+  failDetails: z.array(FailDetailSchema),
+})
+
+export const RejectSellersResponseSchema = z.discriminatedUnion('success', [
+  BaseResponseSchema.extend({
+    success: z.literal(true),
+    result: RejectSellersResultSchema,
   }),
   BaseResponseSchema.extend({
     success: z.literal(false),

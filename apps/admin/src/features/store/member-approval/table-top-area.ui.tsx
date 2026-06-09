@@ -6,8 +6,10 @@ interface TableTopAreaProps {
   currentPage: number
   totalPages: number
   isApproving: boolean
+  isRejecting: boolean
   onPageChange: (page: number) => void
   onSubmitApproval: () => void
+  onSubmitReject: () => void
   handleDownloadFile: () => void
 }
 
@@ -17,8 +19,10 @@ export const TableTopArea = ({
   currentPage,
   totalPages,
   isApproving,
+  isRejecting,
   onPageChange,
   onSubmitApproval,
+  onSubmitReject,
   handleDownloadFile,
 }: TableTopAreaProps) => {
   return (
@@ -30,7 +34,13 @@ export const TableTopArea = ({
             title="승인"
             variant="primary-outlined"
             onClick={onSubmitApproval}
-            disabled={isApproving}
+            disabled={isApproving || isRejecting}
+          />
+          <Button
+            title="거절"
+            variant="secondary-outlined"
+            onClick={onSubmitReject}
+            disabled={isApproving || isRejecting}
           />
           <Button
             title="서류 다운로드"

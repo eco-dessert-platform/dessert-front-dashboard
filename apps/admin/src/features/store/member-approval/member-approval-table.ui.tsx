@@ -26,6 +26,8 @@ export const MemberApprovalTable = () => {
     updateInput,
     submitApproval,
     isApproving,
+    submitReject,
+    isRejecting,
     handleDownloadFile,
   } = useMemberApproval()
 
@@ -54,6 +56,10 @@ export const MemberApprovalTable = () => {
 
   const handleSubmitApproval = () => {
     submitApproval(selectedIds, () => setSelectedIds([]))
+  }
+
+  const handleSubmitReject = () => {
+    submitReject(selectedIds, () => setSelectedIds([]))
   }
 
   const renderSubRow = (row: AdminSellerApplication) => {
@@ -117,8 +123,10 @@ export const MemberApprovalTable = () => {
           currentPage={currentPage}
           totalPages={data?.totalPages ?? 0}
           isApproving={isApproving}
+          isRejecting={isRejecting}
           onPageChange={setCurrentPage}
           onSubmitApproval={handleSubmitApproval}
+          onSubmitReject={handleSubmitReject}
           handleDownloadFile={handleDownloadFile}
         />
       }
