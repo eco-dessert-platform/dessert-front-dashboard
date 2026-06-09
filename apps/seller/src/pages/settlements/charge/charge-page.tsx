@@ -1,40 +1,65 @@
 import { useMemo, useState } from 'react'
 
+import { useQuery } from '@tanstack/react-query'
 import { Button, Text } from '@dessert/ui'
-import { getChargePageResponseMock } from '@/entity/settlement/charge/charge-mock'
+import { format, subDays } from 'date-fns'
+import type {
+  IChargeFilter,
+  IChargePageResponse,
+} from '@/entity/settlement/charge/entities'
 import ChargeFilter from '@/features/settlement/charge/charge-filter'
 import ChargeTable from '@/features/settlement/charge/charge-table'
+import { chargeQueries } from '@/hooks/queries/charge-queries'
 
 import Layout from '../layout'
-import { IChargePageResponse } from '@/entity/settlement/charge/entities'
-import { IChargeFilter } from '@/entity/settlement/charge/entities'
 
 const ChargePage = () => {
-  const [page, setPage] = useState(1)
+  const today = new Date()
+  const [filters, setFilters] = useState<IChargeFilter>({
+    startDate: format(subDays(today, 7), 'yyyy-MM-dd'),
+    endDate: format(today, 'yyyy-MM-dd'),
+    page: 0,
+  })
+
+  const { data } = useQuery(chargeQueries.getChargeBalance(filters))
+
+  const updateChargeSearch = (updates: Partial<IChargeFilter>) => {
+    setFilters((prev) => ({
+      ...prev,
+      ...updates,
+    }))
+  }
 
   const pageResponse: IChargePageResponse = useMemo(
-    () => getChargePageResponseMock(page - 1),
-    [page],
+    () =>
+      data?.pageResponse
+        ? data.pageResponse
+        : {
+            content: [],
+            page: filters.page ?? 0,
+            size: 10,
+            totalPages: 1,
+            totalElements: 0,
+          },
+    [data],
   )
-
-  const handleSearch = (filters: IChargeFilter) => {
-    // TODO: API 연동 시 조회 파라미터로 사용
-    void filters
-    setPage(1)
-  }
 
   return (
     <Layout>
       <Text as="h2" variant="heading20-sb" className="mb-10">
         충전금 현황
       </Text>
-      <ChargeFilter onSearch={handleSearch}>
+      <ChargeFilter
+        onSearch={(dateFilters) =>
+          updateChargeSearch({ ...dateFilters, page: 0 })
+        }
+      >
         <div className="flex items-center gap-12">
           <Text as="span" variant="title16-m">
             충전금 잔액
           </Text>
           <Text as="span" variant="title16-m" color="primary-500">
-            100,000원
+            {data?.chargeBalance?.toLocaleString() ?? 0}원
           </Text>
           <Button
             title="출금하기"
@@ -44,7 +69,10 @@ const ChargePage = () => {
           />
         </div>
       </ChargeFilter>
-      <ChargeTable pageResponse={pageResponse} onPageChange={setPage} />
+      <ChargeTable
+        pageResponse={pageResponse}
+        onPageChange={(nextPage) => updateChargeSearch({ page: nextPage - 1 })}
+      />
     </Layout>
   )
 }
