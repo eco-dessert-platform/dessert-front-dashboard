@@ -3,21 +3,21 @@ import { useMemo, useState } from 'react'
 import { Button, Text } from '@dessert/ui'
 import { getChargePageResponseMock } from '@/entity/settlement/charge/charge-mock'
 import ChargeFilter from '@/features/settlement/charge/charge-filter'
-import type { ChargeFilterValue } from '@/features/settlement/charge/charge-filter'
+import type { IChargeFilterValue } from '@/features/settlement/charge/charge-filter'
 import ChargeTable from '@/features/settlement/charge/charge-table'
 
 import Layout from '../layout'
-import { ChargePageResponse } from '@/entity/settlement/charge/entities'
+import { IChargePageResponse } from '@/entity/settlement/charge/entities'
 
 const ChargePage = () => {
   const [page, setPage] = useState(1)
 
-  const pageResponse: ChargePageResponse = useMemo(
+  const pageResponse: IChargePageResponse = useMemo(
     () => getChargePageResponseMock(page - 1),
     [page],
   )
 
-  const handleSearch = (filters: ChargeFilterValue) => {
+  const handleSearch = (filters: IChargeFilterValue) => {
     // TODO: API 연동 시 조회 파라미터로 사용
     void filters
     setPage(1)

@@ -6,13 +6,13 @@ import { DateRange } from 'react-day-picker'
 
 import { DatePicker } from '@/widgets/date-picker'
 
-export interface ChargeFilterValue {
+interface IChargeFilterValue {
   startDate: string | null
   endDate: string | null
 }
 
 interface IChargeFilterProps {
-  onSearch: (filters: ChargeFilterValue) => void
+  onSearch: (filters: IChargeFilterValue) => void
   children: React.ReactNode
 }
 
@@ -45,16 +45,7 @@ const ChargeFilter = ({ onSearch, children }: IChargeFilterProps) => {
           variant="primary-filled"
           size="md"
           className="max-h-[42px] min-w-[70px]"
-          onClick={() =>
-            onSearch({
-              startDate: selectedDateValue?.from
-                ? format(selectedDateValue.from, 'yyyy-MM-dd')
-                : null,
-              endDate: selectedDateValue?.to
-                ? format(selectedDateValue.to, 'yyyy-MM-dd')
-                : null,
-            })
-          }
+          onClick={() => onSearch(selectedDateValue)}
         />
       </div>
       {children}

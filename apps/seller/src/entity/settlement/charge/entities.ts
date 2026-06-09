@@ -6,19 +6,19 @@ export interface IChargeFilter {
   sort?: string
 }
 
-export type ChargeCategory = 'ACCUMULATE' | 'DEDUCT'
-export type ChargeStatus = 'PENDING' | 'COMPLETED'
+export type TChargeCategory = 'ACCUMULATE' | 'DEDUCT'
+export type TChargeStatus = 'PENDING' | 'COMPLETED'
 
-export interface ChargeRow {
+export interface IChargeRow {
   baseDate: string
   settlementId: string
-  category: ChargeCategory
+  category: TChargeCategory
   amount: number
-  status: ChargeStatus
+  status: TChargeStatus
 }
 
-export interface ChargePageResponse {
-  content: ChargeRow[]
+export interface IChargePageResponse {
+  content: IChargeRow[]
   page: number
   size: number
   totalPages: number

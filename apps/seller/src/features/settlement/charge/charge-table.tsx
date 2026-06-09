@@ -2,8 +2,8 @@ import { Table } from '@dessert/ui'
 import type { ColumnDef } from '@tanstack/react-table'
 
 import {
-  ChargePageResponse,
-  ChargeRow,
+  IChargePageResponse,
+  IChargeRow,
 } from '@/entity/settlement/charge/entities'
 
 import ChargeTableTop from './charge-table-top'
@@ -12,7 +12,7 @@ import {
   STATUS_LABELS,
 } from '@/entity/settlement/charge/constants'
 
-const chargeColumns: ColumnDef<ChargeRow>[] = [
+const chargeColumns: ColumnDef<IChargeRow>[] = [
   {
     header: '일자',
     accessorKey: 'baseDate',
@@ -70,7 +70,7 @@ const chargeColumns: ColumnDef<ChargeRow>[] = [
 ]
 
 interface IChargeTableProps {
-  pageResponse: ChargePageResponse
+  pageResponse: IChargePageResponse
   onPageChange: (page: number) => void
 }
 

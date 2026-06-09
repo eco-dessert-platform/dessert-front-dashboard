@@ -1,6 +1,6 @@
 import {
-  ChargePageResponse,
-  ChargeRow,
+  IChargePageResponse,
+  IChargeRow,
 } from '@/entity/settlement/charge/entities'
 
 export type ChargeCategory = 'ACCUMULATE' | 'DEDUCT'
@@ -8,7 +8,7 @@ export type ChargeStatus = 'PENDING' | 'COMPLETED' | 'FAILED'
 
 const MOCK_TOTAL_ELEMENTS = 47
 
-export const chargePageResponseMock: ChargePageResponse = {
+export const chargePageResponseMock: IChargePageResponse = {
   content: [
     {
       baseDate: '2025-09-01',
@@ -27,7 +27,7 @@ export const chargePageResponseMock: ChargePageResponse = {
 export const getChargePageResponseMock = (
   page: number,
   size: number = chargePageResponseMock.size,
-): ChargePageResponse => {
+): IChargePageResponse => {
   const safePage = Math.max(0, page)
   const totalPages = Math.max(1, Math.ceil(MOCK_TOTAL_ELEMENTS / size))
   const start = safePage * size
@@ -46,7 +46,7 @@ export const getChargePageResponseMock = (
         category: idNum % 3 === 0 ? 'DEDUCT' : 'ACCUMULATE',
         amount: 123456 + idNum * 1000,
         status: idNum % 4 === 0 ? 'COMPLETED' : 'PENDING',
-      } satisfies ChargeRow
+      } satisfies IChargeRow
     },
   )
 
