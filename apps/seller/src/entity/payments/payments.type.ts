@@ -51,7 +51,7 @@ export interface DailyRefundRateStatsResult extends PaymentStatsResultBase {
 }
 
 // GET /api/v1/seller/payments/statistics/weekday
-// weekday: 1~7로 추정 (백엔드 인코딩 확인 필요)
+// weekday: 1=월 ~ 7=일 (ISO 8601, 실응답의 주말 매출 급증으로 확인)
 export interface WeekdayAmount {
   weekday: number
   amount: number

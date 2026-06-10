@@ -42,6 +42,10 @@ export const formatPercent = (value: number, fractionDigits = 1): string =>
 export const formatCount = (value: number): string =>
   `${value.toLocaleString('ko-KR')}건`
 
+// 조회 기간 캡션. ("2026-04-18", "2026-06-05") → "2026-04-18 ~ 2026-06-05"
+export const formatDateRange = (start: string, end: string): string =>
+  `${start} ~ ${end}`
+
 // "2026-04-10" → "04-10"
 export const formatShortDate = (dateStr: string): string => {
   const parts = dateStr.split('-')
@@ -49,7 +53,7 @@ export const formatShortDate = (dateStr: string): string => {
   return `${parts[1]}-${parts[2]}`
 }
 
-// API의 weekday(1~7 추정)를 한글 요일명으로. 1=월 가정 (확인 필요).
+// API의 weekday(1=월 ~ 7=일, ISO 8601)를 한글 요일명으로 변환.
 const WEEKDAY_LABELS = ['', '월', '화', '수', '목', '금', '토', '일']
 export const formatWeekday = (weekday: number): string =>
   WEEKDAY_LABELS[weekday] ?? String(weekday)

@@ -1,3 +1,6 @@
+import { useState } from 'react'
+
+import { type PaymentStatsPeriod } from '@/entity/payments'
 import { DateRangeFilter } from '@/features/statistics/sales-analytics/date-range-filter'
 import { PaymentAmountChart } from '@/features/statistics/sales-analytics/payment-amount-chart'
 import { PaymentCountChart } from '@/features/statistics/sales-analytics/payment-count-chart'
@@ -11,6 +14,8 @@ import { WeekdayAverageChart } from '@/features/statistics/sales-analytics/weekd
  */
 const SalesAnalyticsPage = () => {
   const { apiDate } = useStatsFilter()
+  // 요일 차트 2개가 같은 /weekday query를 공유하므로 period를 페이지가 소유해 dedup 유지
+  const [weekdayPeriod, setWeekdayPeriod] = useState<PaymentStatsPeriod>('DAY')
 
   return (
     <div className="space-y-6 p-6">
@@ -23,8 +28,12 @@ const SalesAnalyticsPage = () => {
       <PaymentCountChart date={apiDate} />
 
       <div className="grid grid-cols-2 gap-6">
-        <WeekdayAmountChart date={apiDate} />
-        <WeekdayAverageChart date={apiDate} />
+        <WeekdayAmountChart
+          date={apiDate}
+          period={weekdayPeriod}
+          onPeriodChange={setWeekdayPeriod}
+        />
+        <WeekdayAverageChart date={apiDate} period={weekdayPeriod} />
       </div>
 
       <RefundRateChart date={apiDate} />

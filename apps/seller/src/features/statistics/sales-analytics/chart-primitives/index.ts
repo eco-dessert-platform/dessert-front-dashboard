@@ -6,6 +6,7 @@ export {
   formatKRWShort,
   formatPercent,
   formatCount,
+  formatDateRange,
   formatShortDate,
   formatWeekday,
 } from './chart-constants'
