@@ -11,4 +11,11 @@ export const chargeQueries = {
       queryKey: chargeKeys.list(filters),
       queryFn: () => chargeService.getChargeBalance(filters),
     }),
+  getAccountVerification: () =>
+    queryOptions({
+      queryKey: chargeKeys.accountVerification(),
+      queryFn: () => chargeService.getAccountVerification(),
+      refetchOnWindowFocus: true,
+      refetchOnReconnect: true,
+    }),
 }

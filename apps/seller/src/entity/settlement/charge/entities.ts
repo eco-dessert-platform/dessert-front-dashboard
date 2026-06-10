@@ -24,3 +24,13 @@ export interface IChargePageResponse {
   totalPages: number
   totalElements: number
 }
+
+export interface IAccountVerification {
+  id: number
+  sellerId: number
+  bankCode: string
+  accountNumber: string
+  accountHolder: string
+  verified: boolean
+  createdAt: string
+}

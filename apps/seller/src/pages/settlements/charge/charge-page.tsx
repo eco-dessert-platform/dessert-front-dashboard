@@ -24,6 +24,9 @@ const ChargePage: React.FC = () => {
   })
 
   const { data } = useQuery(chargeQueries.getChargeBalance(filters))
+  const { data: accountVerification } = useQuery(
+    chargeQueries.getAccountVerification(),
+  )
 
   const updateChargeSearch = (updates: Partial<IChargeFilter>) => {
     setFilters((prev) => ({
@@ -84,6 +87,7 @@ const ChargePage: React.FC = () => {
         open={isWithdrawModalOpen}
         onOpenChange={setIsWithdrawModalOpen}
         chargeBalance={data?.chargeBalance ?? 0}
+        accountVerification={accountVerification}
       />
     </>
   )

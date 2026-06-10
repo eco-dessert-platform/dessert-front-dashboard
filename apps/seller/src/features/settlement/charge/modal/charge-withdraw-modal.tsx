@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
 import {
+  IAccountVerification,
+} from '@/entity/settlement/charge/entities'
+import {
   Button,
   Dialog,
   DialogClose,
@@ -16,12 +19,14 @@ interface ChargeWithdrawModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   chargeBalance?: number
+  accountVerification?: IAccountVerification
 }
 
 const ChargeWithdrawModal = ({
   open,
   onOpenChange,
   chargeBalance = 0,
+  accountVerification,
 }: ChargeWithdrawModalProps) => {
   const [withdrawAmount, setWithdrawAmount] = useState('')
 
@@ -71,7 +76,7 @@ const ChargeWithdrawModal = ({
               은행명
             </Text>
             <Text as="span" variant="title16-sb" className="text-right">
-              %은행명%
+              {accountVerification?.bankCode ?? '-'}
             </Text>
           </div>
 
@@ -80,7 +85,7 @@ const ChargeWithdrawModal = ({
               예금주
             </Text>
             <Text as="span" variant="title16-sb" className="text-right">
-              %예금주%
+              {accountVerification?.accountHolder ?? '-'}
             </Text>
           </div>
 
@@ -89,7 +94,7 @@ const ChargeWithdrawModal = ({
               계좌번호
             </Text>
             <Text as="span" variant="title16-sb" className="text-right">
-              %계좌번호%
+              {accountVerification?.accountNumber ?? '-'}
             </Text>
           </div>
         </div>
