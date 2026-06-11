@@ -1,4 +1,5 @@
 import characterLogo from '@/assets/images/character-logo.png'
+import { Text } from '@dessert/ui'
 
 interface TableEmptyProps {
   description: string
@@ -9,7 +10,9 @@ const TableEmpty = ({ description }: TableEmptyProps) => {
     <div className="absolute inset-0 z-9 flex items-center justify-center bg-white">
       <div className="flex flex-col items-center gap-2">
         <img src={characterLogo} alt="" className="size-28" />
-        <p className="typo-body-14-r text-gray-500">{description}</p>
+        <Text as="p" variant="body14-r" color="gray-500">
+          {description}
+        </Text>
       </div>
     </div>
   )

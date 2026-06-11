@@ -1,4 +1,5 @@
 import type { ColumnDef } from '@tanstack/react-table'
+import { Text } from '@dessert/ui'
 
 import {
   IChargePageResponse,
@@ -15,62 +16,64 @@ import TableEmpty from '@/shared/components/ui/table/table-empty'
 
 const chargeColumns: ColumnDef<IChargeRow>[] = [
   {
-    header: '일자',
+    header: () => (
+      <Text as="span" variant="body12-m" color="gray-800">
+        일자
+      </Text>
+    ),
     accessorKey: 'baseDate',
     size: 160,
     enableResizing: false,
-    cell: ({ row }) => (
-      <span className="typo-body-14-r text-gray-800">
-        {row.original.baseDate}
-      </span>
-    ),
+    cell: ({ row }) => <Text variant="body14-r">{row.original.baseDate}</Text>,
   },
   {
-    header: '정산ID',
+    header: () => (
+      <Text as="span" variant="body12-m" color="gray-800">
+        정산ID
+      </Text>
+    ),
     accessorKey: 'settlementId',
     size: 180,
     enableResizing: false,
-    cell: ({ row }) => (
-      <span className="typo-body-14-r text-gray-800">
-        {row.original.settlementId}
-      </span>
-    ),
+    cell: ({ row }) => <Text variant="body14-r">{row.original.settlementId}</Text>,
   },
   {
-    header: '구분',
+    header: () => (
+      <Text as="span" variant="body12-m" color="gray-800">
+        구분
+      </Text>
+    ),
     accessorKey: 'category',
     size: 130,
     enableResizing: false,
     cell: ({ row }) => (
-      <span className="typo-body-14-r text-gray-800">
-        {CATEGORY_LABELS[row.original.category]}
-      </span>
+      <Text variant="body14-r">{CATEGORY_LABELS[row.original.category]}</Text>
     ),
   },
   {
-    header: '상태',
+    header: () => (
+      <Text as="span" variant="body12-m" color="gray-800">
+        상태
+      </Text>
+    ),
     accessorKey: 'status',
     size: 130,
     enableResizing: false,
-    cell: ({ row }) => (
-      <span className="typo-body-14-r text-gray-800">
-        {STATUS_LABELS[row.original.status]}
-      </span>
-    ),
+    cell: ({ row }) => <Text variant="body14-r">{STATUS_LABELS[row.original.status]}</Text>,
   },
   {
-    header: '금액',
+    header: () => (
+      <Text as="span" variant="body12-m" color="gray-800">
+        금액
+      </Text>
+    ),
     accessorKey: 'amount',
     enableResizing: true,
     size: 130,
     meta: {
       flexible: true,
     },
-    cell: ({ row }) => (
-      <span className="typo-body-14-r text-gray-800">
-        {row.original.amount.toLocaleString()}
-      </span>
-    ),
+    cell: ({ row }) => <Text variant="body14-r">{row.original.amount.toLocaleString()}</Text>,
   },
 ]
 
