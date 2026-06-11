@@ -35,7 +35,9 @@ const chargeColumns: ColumnDef<IChargeRow>[] = [
     accessorKey: 'settlementId',
     size: 180,
     enableResizing: false,
-    cell: ({ row }) => <Text variant="body14-r">{row.original.settlementId}</Text>,
+    cell: ({ row }) => (
+      <Text variant="body14-r">{row.original.settlementId}</Text>
+    ),
   },
   {
     header: () => (
@@ -59,7 +61,9 @@ const chargeColumns: ColumnDef<IChargeRow>[] = [
     accessorKey: 'status',
     size: 130,
     enableResizing: false,
-    cell: ({ row }) => <Text variant="body14-r">{STATUS_LABELS[row.original.status]}</Text>,
+    cell: ({ row }) => (
+      <Text variant="body14-r">{STATUS_LABELS[row.original.status]}</Text>
+    ),
   },
   {
     header: () => (
@@ -73,32 +77,41 @@ const chargeColumns: ColumnDef<IChargeRow>[] = [
     meta: {
       flexible: true,
     },
-    cell: ({ row }) => <Text variant="body14-r">{row.original.amount.toLocaleString()}</Text>,
+    cell: ({ row }) => (
+      <Text variant="body14-r">{row.original.amount.toLocaleString()}</Text>
+    ),
   },
 ]
 
 interface IChargeTableProps {
-  pageResponse: IChargePageResponse
+  pageResponse?: IChargePageResponse
   onPageChange: (page: number) => void
 }
 
 const ChargeTable = ({ pageResponse, onPageChange }: IChargeTableProps) => {
+  const data = pageResponse ?? {
+    content: [],
+    page: 0,
+    totalPages: 0,
+    totalElements: 0,
+  }
+
   return (
     <div className="relative [&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
       <Table
-        data={pageResponse.content}
+        data={data.content}
         columns={chargeColumns}
         fillWidth={true}
         topArea={
           <ChargeTableTop
-            currentPage={pageResponse.page + 1}
-            totalPages={pageResponse.totalPages}
+            currentPage={data.page + 1}
+            totalPages={data.totalPages}
             onPageChange={onPageChange}
           />
         }
         scrollHeight={498}
       />
-      {pageResponse.content.length === 0 && (
+      {data.content.length === 0 && (
         <TableEmpty description="조회된 충전금 현황이 없어요" />
       )}
     </div>

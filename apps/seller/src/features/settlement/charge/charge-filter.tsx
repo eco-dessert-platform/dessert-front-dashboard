@@ -1,36 +1,53 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { Button } from '@dessert/ui'
-import { format, subDays } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
-import { DatePicker } from '@/widgets/date-picker'
 import { IChargeFilter } from '@/entity/settlement/charge/entities'
+import { DatePicker } from '@/widgets/date-picker'
+
+// 1. 날짜 변환 로직들을 헬퍼 함수로 깔끔하게 분리
+const stringToDateRange = (start?: string, end?: string): DateRange => ({
+  from: start ? parseISO(start) : undefined,
+  to: end ? parseISO(end) : undefined,
+})
 
 interface IChargeFilterProps {
+  filtersDate?: {
+    startDate?: string
+    endDate?: string
+  }
   onSearch: (filters: Pick<IChargeFilter, 'startDate' | 'endDate'>) => void
   children: React.ReactNode
 }
 
-const ChargeFilter = ({ onSearch, children }: IChargeFilterProps) => {
-  const [selectedDateValue, setSelectedDateValue] = useState<
-    DateRange | undefined
-  >(() => {
-    const today = new Date()
+const ChargeFilter = ({
+  filtersDate,
 
-    return {
-      from: subDays(today, 7),
-      to: today,
-    }
-  })
+  onSearch,
+  children,
+}: IChargeFilterProps) => {
+  // 직접 선언
+  const startDate = filtersDate?.startDate
+  const endDate = filtersDate?.endDate
+
+  const [dateValue, setDateValue] = useState<DateRange | undefined>(() =>
+    stringToDateRange(startDate, endDate),
+  )
+
+  // 외부(Props)에서 날짜가 변경되었을 때 상태 동기화
+  useEffect(() => {
+    setDateValue(stringToDateRange(startDate, endDate))
+  }, [startDate, endDate])
 
   return (
     <div className="flex items-center justify-between rounded-12 border border-gray-100 bg-white py-16 px-24">
       <div className="flex items-end gap-8 w-[306px]">
         <DatePicker
           label="조회기간"
-          value={selectedDateValue}
-          onChange={setSelectedDateValue}
+          value={dateValue}
+          onChange={setDateValue}
         />
 
         {/* h-[42px] w-[70px] 에 맞는 버튼 사이즈가 없어서 임시 처리
@@ -43,11 +60,11 @@ const ChargeFilter = ({ onSearch, children }: IChargeFilterProps) => {
           className="max-h-[42px] min-w-[70px]"
           onClick={() =>
             onSearch({
-              startDate: selectedDateValue?.from
-                ? format(selectedDateValue.from, 'yyyy-MM-dd')
+              startDate: dateValue?.from
+                ? format(dateValue.from, 'yyyy-MM-dd')
                 : undefined,
-              endDate: selectedDateValue?.to
-                ? format(selectedDateValue.to, 'yyyy-MM-dd')
+              endDate: dateValue?.to
+                ? format(dateValue.to, 'yyyy-MM-dd')
                 : undefined,
             })
           }

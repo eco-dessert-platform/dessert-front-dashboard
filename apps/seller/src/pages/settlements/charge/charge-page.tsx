@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 import { Button, Text } from '@dessert/ui'
 import { format, subDays } from 'date-fns'
+import type { DateRange } from 'react-day-picker'
 import type {
   IChargeFilter,
   IChargePageResponse,
@@ -16,10 +17,19 @@ import ChargeWithdrawModal from '@/features/settlement/charge/modal/charge-withd
 
 const ChargePage: React.FC = () => {
   const today = new Date()
+  const initialDateRange: DateRange = {
+    from: subDays(today, 7),
+    to: today,
+  }
+
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
   const [filters, setFilters] = useState<IChargeFilter>({
-    startDate: format(subDays(today, 7), 'yyyy-MM-dd'),
-    endDate: format(today, 'yyyy-MM-dd'),
+    startDate: initialDateRange.from
+      ? format(initialDateRange.from, 'yyyy-MM-dd')
+      : undefined,
+    endDate: initialDateRange.to
+      ? format(initialDateRange.to, 'yyyy-MM-dd')
+      : undefined,
     page: 0,
   })
 
@@ -28,26 +38,12 @@ const ChargePage: React.FC = () => {
     chargeQueries.getAccountVerification(),
   )
 
-  const updateChargeSearch = (updates: Partial<IChargeFilter>) => {
+  const updateChargeSearch = useCallback((updates: Partial<IChargeFilter>) => {
     setFilters((prev) => ({
       ...prev,
       ...updates,
     }))
-  }
-
-  const pageResponse: IChargePageResponse = useMemo(
-    () =>
-      data?.pageResponse
-        ? data.pageResponse
-        : {
-            content: [],
-            page: filters.page ?? 0,
-            size: 10,
-            totalPages: 1,
-            totalElements: 0,
-          },
-    [data],
-  )
+  }, [])
 
   return (
     <>
@@ -56,8 +52,15 @@ const ChargePage: React.FC = () => {
           충전금 현황
         </Text>
         <ChargeFilter
+          filtersDate={{
+            startDate: filters.startDate,
+            endDate: filters.endDate,
+          }}
           onSearch={(dateFilters) =>
-            updateChargeSearch({ ...dateFilters, page: 0 })
+            updateChargeSearch({
+              ...dateFilters,
+              page: 0,
+            })
           }
         >
           <div className="flex items-center gap-12">
@@ -77,7 +80,7 @@ const ChargePage: React.FC = () => {
           </div>
         </ChargeFilter>
         <ChargeTable
-          pageResponse={pageResponse}
+          pageResponse={data?.pageResponse}
           onPageChange={(nextPage) =>
             updateChargeSearch({ page: nextPage - 1 })
           }
