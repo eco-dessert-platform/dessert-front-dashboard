@@ -20,13 +20,13 @@ const SettlementPage = () => {
           <TabTrigger value="transaction">건별 정산내역</TabTrigger>
         </TabList>
 
-        {/** Tab 컴포넌트에 gap-2가 있어 mt를 -2px만큼 줄여야함 원래는 mt-20임 */}
+        {/** Tab의 gap-2(8px) 때문에 mt-20(80px) 대신 mt-[18px] 사용 */}
         <TabContent value="daily" className="mt-[18px] space-y-10">
           <SettlementOverview />
           <DailySettlementTable />
         </TabContent>
 
-        {/** Tab 컴포넌트에 gap-2가 있어 mt를 -2px만큼 줄여야함 원래는 mt-20임 */}
+        {/** Tab의 gap-2(8px) 때문에 mt-20(80px) 대신 mt-[18px] 사용 */}
         <TabContent value="transaction" className="mt-[18px] space-y-10">
           <SettlementFilter
             filters={draftFilters}

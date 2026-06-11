@@ -3,11 +3,7 @@ import { useCallback, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Button, Text } from '@dessert/ui'
 import { format, subDays } from 'date-fns'
-import type { DateRange } from 'react-day-picker'
-import type {
-  IChargeFilter,
-  IChargePageResponse,
-} from '@/entity/settlement/charge/entities'
+import type { IChargeFilter } from '@/entity/settlement/charge/entities'
 import ChargeFilter from '@/features/settlement/charge/charge-filter'
 import ChargeTable from '@/features/settlement/charge/charge-table'
 import { chargeQueries } from '@/hooks/queries/charge-queries'
@@ -16,21 +12,14 @@ import Layout from '../layout'
 import ChargeWithdrawModal from '@/features/settlement/charge/modal/charge-withdraw-modal'
 
 const ChargePage: React.FC = () => {
-  const today = new Date()
-  const initialDateRange: DateRange = {
-    from: subDays(today, 7),
-    to: today,
-  }
-
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
-  const [filters, setFilters] = useState<IChargeFilter>({
-    startDate: initialDateRange.from
-      ? format(initialDateRange.from, 'yyyy-MM-dd')
-      : undefined,
-    endDate: initialDateRange.to
-      ? format(initialDateRange.to, 'yyyy-MM-dd')
-      : undefined,
-    page: 0,
+  const [filters, setFilters] = useState<IChargeFilter>(() => {
+    const today = new Date()
+    return {
+      startDate: format(subDays(today, 7), 'yyyy-MM-dd'),
+      endDate: format(today, 'yyyy-MM-dd'),
+      page: 0,
+    }
   })
 
   const { data } = useQuery(chargeQueries.getChargeBalance(filters))
@@ -68,7 +57,7 @@ const ChargePage: React.FC = () => {
               충전금 잔액
             </Text>
             <Text as="span" variant="title16-m" color="primary-500">
-              {data?.chargeBalance?.toLocaleString() ?? 0}원
+              {(data?.chargeBalance ?? 0).toLocaleString()}원
             </Text>
             <Button
               title="출금하기"
