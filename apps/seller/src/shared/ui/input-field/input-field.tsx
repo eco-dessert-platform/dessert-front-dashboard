@@ -66,8 +66,7 @@ export function InputField({
             size="md"
             onClick={onButtonClick}
             disabled={
-              disabled ||
-              (!allowEmptyButtonClick && !value?.toString().trim())
+              disabled || (!allowEmptyButtonClick && !value?.toString().trim())
             }
             className="whitespace-nowrap"
           />

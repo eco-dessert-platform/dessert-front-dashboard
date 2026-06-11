@@ -61,7 +61,9 @@ export function StoreAccountInfoForm() {
 
   return (
     <section className="w-full overflow-hidden rounded-20 bg-white p-24">
-      <h2 className="text-[20px] font-semibold text-gray-900">계좌 정보 변경</h2>
+      <h2 className="text-[20px] font-semibold text-gray-900">
+        계좌 정보 변경
+      </h2>
       <p className="mt-8 text-[16px] font-normal text-gray-500">
         예금주는 대표자명 혹은 사업자명과 일치하는 계좌번호만 인증이 가능해요
       </p>

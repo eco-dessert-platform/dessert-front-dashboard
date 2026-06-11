@@ -21,7 +21,8 @@ interface ChargeBalanceResponse extends ApiResponse<ChargeBalanceResult> {
   fieldErrors?: FieldError[]
 }
 
-interface AccountVerificationResponse extends ApiResponse<IAccountVerification> {
+interface AccountVerificationResponse
+  extends ApiResponse<IAccountVerification> {
   fieldErrors?: FieldError[]
 }
 

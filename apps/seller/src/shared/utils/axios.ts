@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-import { getCookie, getExpFromToken, setCookie } from '@/shared/utils/cookieUtils'
+import {
+  getCookie,
+  getExpFromToken,
+  setCookie,
+} from '@/shared/utils/cookieUtils'
 
 const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL
 
@@ -64,7 +68,11 @@ client.interceptors.response.use(
       )
 
       if (newAccessToken) {
-        setCookie('accessToken', newAccessToken, getExpFromToken(newAccessToken))
+        setCookie(
+          'accessToken',
+          newAccessToken,
+          getExpFromToken(newAccessToken),
+        )
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
         pendingRequests.forEach((cb) => cb(newAccessToken))
         pendingRequests = []

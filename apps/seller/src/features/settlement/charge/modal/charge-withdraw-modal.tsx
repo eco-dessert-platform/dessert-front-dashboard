@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
-import {
-  IAccountVerification,
-} from '@/entity/settlement/charge/entities'
+import { IAccountVerification } from '@/entity/settlement/charge/entities'
 import {
   Button,
   Dialog,
