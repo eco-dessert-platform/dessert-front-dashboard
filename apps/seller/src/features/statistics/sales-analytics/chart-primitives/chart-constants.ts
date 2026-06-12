@@ -7,6 +7,13 @@ export const PERIOD_LABEL: Record<PaymentStatsPeriod, string> = {
   MONTH: '월별',
 }
 
+// "7일/7주/7개월 평균" 등 단위 라벨용 (PERIOD_LABEL은 '일별/주별/월별' 타이틀용).
+export const PERIOD_UNIT_LABEL: Record<PaymentStatsPeriod, string> = {
+  DAY: '일',
+  WEEK: '주',
+  MONTH: '개월',
+}
+
 // 디자인 토큰 alignment 필요 시 추후 @dessert/ui 색상 스케일로 교체.
 export const CHART_COLORS = {
   primary: '#3B82F6',

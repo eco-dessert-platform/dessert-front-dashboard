@@ -19,6 +19,7 @@ import {
   ChartContainer,
   ChartTooltip,
   PERIOD_LABEL,
+  PERIOD_UNIT_LABEL,
   formatKRW,
   formatKRWShort,
   formatShortDate,
@@ -38,7 +39,7 @@ export function PaymentAmountChart({ date }: PaymentAmountChartProps) {
   return (
     <ChartCard
       title={`${periodLabel} 결제금액`}
-      info={`결제금액을 ${periodLabel}로 조회할 수 있으며, 7일 평균을 통해 결제금액의 이동 추세를 확인할 수 있습니다.`}
+      info={`결제금액을 ${periodLabel}로 조회할 수 있으며, 7${PERIOD_UNIT_LABEL[period]} 평균을 통해 결제금액의 이동 추세를 확인할 수 있습니다.`}
       headerRight={<UnitToggle value={period} onChange={setPeriod} />}
     >
       <ChartContainer>
@@ -70,7 +71,7 @@ export function PaymentAmountChart({ date }: PaymentAmountChartProps) {
               stroke={CHART_COLORS.accent}
               strokeDasharray="3 3"
               label={{
-                value: '7일 평균',
+                value: `7${PERIOD_UNIT_LABEL[period]} 평균`,
                 position: 'right',
                 fontSize: 11,
                 fill: CHART_COLORS.accent,
