@@ -30,7 +30,7 @@ export const REGISTER_TOAST_MESSAGES = {
     description: '계좌인증 후 다음 단계로 진행할 수 있어요',
   },
   ACCOUNT_EDIT_SUCCESS: {
-    title: '계좌정보가 수정되었어요'
+    title: '계좌정보가 수정되었어요',
   },
   DOCUMENT_REGISTER_ERROR: {
     title: '서류 등록 도중 문제가 발생했어요',

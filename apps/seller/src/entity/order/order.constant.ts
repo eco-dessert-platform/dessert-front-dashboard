@@ -353,7 +353,10 @@ export const COMPLETED_ORDER_ACTION_BAR_CONFIG: Record<
   ],
 }
 
-export const DELIVERY_STATUS_MAP: Record<OrderDeliveryStatusSpec, DeliveryStatus> = {
+export const DELIVERY_STATUS_MAP: Record<
+  OrderDeliveryStatusSpec,
+  DeliveryStatus
+> = {
   PREPARING: 'PRODUCT_PREPARING',
   COLLECTING: 'COLLECTING',
   COLLECT_COMPLETED: 'COLLECT_COMPLETED',

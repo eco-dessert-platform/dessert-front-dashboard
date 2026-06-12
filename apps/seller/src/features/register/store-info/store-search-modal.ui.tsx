@@ -125,7 +125,9 @@ export function StoreSearchModal({
                   <button
                     type="button"
                     key={store.id}
-                    onClick={() => handleSelect({ id: store.id, name: store.name })}
+                    onClick={() =>
+                      handleSelect({ id: store.id, name: store.name })
+                    }
                     className={cn(
                       'flex w-full cursor-pointer items-center rounded-10 p-8 text-left typo-title-16-r text-gray-900',
                       selected?.id === store.id

@@ -12,9 +12,7 @@ export const AuthFlowImage = ({
 }: AuthFlowImageProps) => {
   const isDecorative = alt === ''
   return (
-    <div
-      className={cn('relative flex-1 shrink-0 overflow-hidden', className)}
-    >
+    <div className={cn('relative flex-1 shrink-0 overflow-hidden', className)}>
       <img
         src={loginImg}
         alt={alt}

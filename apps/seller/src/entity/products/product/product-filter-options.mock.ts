@@ -1,6 +1,6 @@
 export const ProductFilterMainOption = [
-    { label: '빵', value: 'bread' },
-    { label: '과자/간식', value: 'snack' },
+  { label: '빵', value: 'bread' },
+  { label: '과자/간식', value: 'snack' },
 ]
 
 export const BreadOptions = [

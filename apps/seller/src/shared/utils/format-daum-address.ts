@@ -10,7 +10,8 @@ export const formatDaumAddress = (data: Address): string => {
     }
 
     if (data.buildingName !== '') {
-      extraAddress += extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName
+      extraAddress +=
+        extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName
     }
 
     fullAddress += extraAddress !== '' ? ` (${extraAddress})` : ''

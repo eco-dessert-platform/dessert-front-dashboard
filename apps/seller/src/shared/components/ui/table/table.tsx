@@ -14,6 +14,7 @@ declare module '@tanstack/react-table' {
     getRowSpan?: (cell: Cell<TData, TValue>) => number
     getColSpan?: (cell: Cell<TData, TValue>) => number
     getCellClassName?: (cell: Cell<TData, TValue>) => string
+    flexible?: boolean
   }
 }
 
@@ -23,6 +24,7 @@ interface TableProps<T> {
   topArea?: React.ReactNode
   scrollHeight?: number // 스크롤 영역 설정
   getRowClassName?: (row: Row<T>) => string
+  fillWidth?: boolean
 }
 
 function Table<T>({
@@ -31,6 +33,7 @@ function Table<T>({
   topArea,
   scrollHeight,
   getRowClassName,
+  fillWidth = false,
 }: TableProps<T>) {
   const table = useReactTable<T>({
     data,
@@ -59,7 +62,11 @@ function Table<T>({
       >
         <table
           className="table-fixed border-collapse"
-          style={{ width: table.getTotalSize() }}
+          style={
+            fillWidth
+              ? { width: '100%', minWidth: table.getTotalSize() }
+              : { width: table.getTotalSize() }
+          }
         >
           <thead className="sticky top-0 z-10">
             {getHeaderGroups().map((headerGroup) => (
@@ -71,7 +78,11 @@ function Table<T>({
                   <th
                     key={header.id}
                     className="text-center align-middle typo-body-12-m text-gray-800"
-                    style={{ width: header.getSize() }}
+                    style={
+                      header.column.columnDef.meta?.flexible
+                        ? undefined
+                        : { width: header.getSize() }
+                    }
                   >
                     <div className="relative flex h-full items-center justify-center">
                       {header.isPlaceholder
@@ -129,7 +140,11 @@ function Table<T>({
                         cell.column.columnDef.meta?.getCellClassName?.(cell) ??
                           '',
                       ].join(' ')}
-                      style={{ width: cell.column.getSize() }}
+                      style={
+                        cell.column.columnDef.meta?.flexible
+                          ? undefined
+                          : { width: cell.column.getSize() }
+                      }
                     >
                       <div className="p-10">
                         {flexRender(

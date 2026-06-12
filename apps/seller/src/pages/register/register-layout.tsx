@@ -4,7 +4,10 @@ import { Outlet, useLocation } from 'react-router-dom'
 
 import { useRegisterForm } from '@/features/register'
 import { ROUTES } from '@/shared/constant/routes'
-import { RegisterProcessStep, RegisterStep } from '@/widgets/register-process-step'
+import {
+  RegisterProcessStep,
+  RegisterStep,
+} from '@/widgets/register-process-step'
 
 const STEP_BY_PATH: Record<string, RegisterStep> = {
   [ROUTES.REGISTER.VERIFICATION]: 1,
