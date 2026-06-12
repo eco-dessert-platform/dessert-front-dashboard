@@ -23,9 +23,10 @@ export function useStatsFilter(): UseStatsFilterResult {
 
   // Calendar single 모드의 invariant(from === to)에 맞춰 두 필드 모두 같은 날짜로 채움.
   const parsed = apiDate ? parseISO(apiDate) : undefined
-  const dateRange: DateRange | undefined = parsed
-    ? { from: parsed, to: parsed }
-    : undefined
+  const dateRange: DateRange | undefined =
+    parsed && !Number.isNaN(parsed.getTime())
+      ? { from: parsed, to: parsed }
+      : undefined
 
   const setDateRange = (range: DateRange | undefined) => {
     setParams(
