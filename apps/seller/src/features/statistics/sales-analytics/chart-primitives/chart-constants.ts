@@ -49,10 +49,6 @@ export const formatPercent = (value: number, fractionDigits = 1): string =>
 export const formatCount = (value: number): string =>
   `${value.toLocaleString('ko-KR')}건`
 
-// 조회 기간 캡션. ("2026-04-18", "2026-06-05") → "2026-04-18 ~ 2026-06-05"
-export const formatDateRange = (start: string, end: string): string =>
-  `${start} ~ ${end}`
-
 // "2026-04-10" → "04-10"
 export const formatShortDate = (dateStr: string): string => {
   const parts = dateStr.split('-')
