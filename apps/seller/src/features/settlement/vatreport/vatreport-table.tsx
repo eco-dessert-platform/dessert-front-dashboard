@@ -121,6 +121,7 @@ interface IVatReportTableProps {
   page?: number
   size?: number
   onPageChange: (page: number) => void
+  onExcelDownload: () => void
 }
 
 const VatReportTable = ({
@@ -128,6 +129,7 @@ const VatReportTable = ({
   page = 0,
   size = DEFAULT_VAT_REPORT_PAGE_SIZE,
   onPageChange,
+  onExcelDownload,
 }: IVatReportTableProps) => {
   const totalPages = Math.max(1, Math.ceil(items.length / size))
   const paginatedItems = items.slice(page * size, (page + 1) * size)
@@ -143,6 +145,7 @@ const VatReportTable = ({
             currentPage={page + 1}
             totalPages={totalPages}
             onPageChange={onPageChange}
+            onExcelDownload={onExcelDownload}
           />
         }
         scrollHeight={498}

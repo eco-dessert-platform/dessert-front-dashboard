@@ -1,18 +1,31 @@
-import { Pagination } from '@dessert/ui'
+import { Button, Pagination } from '@dessert/ui'
+
+import ExcelIcon from '@/assets/icons/icon-excel.svg?react'
 
 interface IVatReportTableTopProps {
   currentPage: number
   totalPages: number
   onPageChange: (page: number) => void
+  onExcelDownload: () => void
 }
 
 const VatReportTableTop = ({
   currentPage,
   totalPages,
   onPageChange,
+  onExcelDownload,
 }: IVatReportTableTopProps) => {
   return (
-    <div className="flex w-full justify-end">
+    <div className="flex w-full items-center justify-between">
+      <Button
+        variant="secondary-outlined"
+        size="sm"
+        className="h-30 gap-4 px-10 py-6 text-gray-800"
+        leftIcon={<ExcelIcon width={16} height={16} />}
+        title="엑셀 다운로드"
+        onClick={onExcelDownload}
+      />
+
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
