@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 
-
 import { PlusIcon, SquarePenIcon } from '@dessert/icons'
 import { Button, Label } from '@dessert/ui'
 import { useNavigate } from 'react-router-dom'

@@ -3,7 +3,6 @@ import { Controller, useFormContext } from 'react-hook-form'
 import type { RegisterForm } from '@/entity/register'
 import { FileUploadInput } from '../../../shared/ui/file-upload-input'
 
-
 import { handleRegisterFileUpload } from '../lib'
 
 export function DocumentUpload() {
@@ -28,7 +27,9 @@ export function DocumentUpload() {
               required
               placeholder="사업자 등록증을 업로드해주세요"
               value={field.value?.name ?? ''}
-              onChange={(file) => handleRegisterFileUpload(file, field.onChange)}
+              onChange={(file) =>
+                handleRegisterFileUpload(file, field.onChange)
+              }
             />
           )}
         />
@@ -41,7 +42,9 @@ export function DocumentUpload() {
               required
               placeholder="통신판매업 신고증을 업로드해주세요"
               value={field.value?.name ?? ''}
-              onChange={(file) => handleRegisterFileUpload(file, field.onChange)}
+              onChange={(file) =>
+                handleRegisterFileUpload(file, field.onChange)
+              }
             />
           )}
         />
@@ -54,7 +57,9 @@ export function DocumentUpload() {
               required
               placeholder="즉석식품제조가공업 & 식품제조업을 업로드해주세요"
               value={field.value?.name ?? ''}
-              onChange={(file) => handleRegisterFileUpload(file, field.onChange)}
+              onChange={(file) =>
+                handleRegisterFileUpload(file, field.onChange)
+              }
             />
           )}
         />

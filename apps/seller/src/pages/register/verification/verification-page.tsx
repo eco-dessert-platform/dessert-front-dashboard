@@ -8,7 +8,8 @@ import {
   DocumentUpload,
   REGISTER_TOAST_MESSAGES,
   RegisterStepFooter,
- useRegisterDocumentsMutation } from '@/features/register'
+  useRegisterDocumentsMutation,
+} from '@/features/register'
 import { ROUTES } from '@/shared/constant/routes'
 
 const FILE_FIELDS = [
