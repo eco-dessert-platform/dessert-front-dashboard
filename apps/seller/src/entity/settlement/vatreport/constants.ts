@@ -7,4 +7,4 @@ export const vatDescriptions = [
 ]
 
 export const VAT_SALES_PERIOD_TOOLTIP =
-  '부가세신고 자료는 전월 1일 ~ 말일까지의 구매확정 기준으로 익월 3일 이내 확인할 수 있습니다.'
+  '조회되는 매출은 구매확정일 기준이에요. 실제 정산일(구매확정일 + 1영업일) 기준 금액과는 차이가 있을 수 있어요.'
