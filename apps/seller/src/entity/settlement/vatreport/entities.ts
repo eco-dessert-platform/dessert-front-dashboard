@@ -5,16 +5,12 @@ export interface IVatReportFilter {
   size?: number
 }
 
-export type TVatReportDateType = 'BASE_DATE'
-export type TVatReportExcelStatus = 'ALL'
+export type TVatExcelDownloadType = 'MONTHLY' | 'DAILY' | 'ORDER'
 
-export interface IVatReportExcelRequest {
-  dateType: TVatReportDateType
+export interface IVatExcelDownloadRequest {
   startDate?: string
   endDate?: string
-  status: TVatReportExcelStatus
-  paymentHoldId: number
-  settlementId: string
+  type: TVatExcelDownloadType
 }
 
 export interface IVatReportRow {

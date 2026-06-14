@@ -12,7 +12,6 @@ import {
   STATUS_LABELS,
 } from '@/entity/settlement/charge/constants'
 import Table from '@/shared/components/ui/table/table'
-import TableEmpty from '@/shared/components/ui/table/table-empty'
 
 const chargeColumns: ColumnDef<IChargeRow>[] = [
   {
@@ -92,28 +91,27 @@ const ChargeTable = ({ pageResponse, onPageChange }: IChargeTableProps) => {
   const data = pageResponse ?? {
     content: [],
     page: 0,
-    totalPages: 0,
+    totalPages: 1,
     totalElements: 0,
   }
+  const totalPages = Math.max(1, data.totalPages)
 
   return (
-    <div className="relative [&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
+    <div className="[&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
       <Table
         data={data.content}
         columns={chargeColumns}
         fillWidth={true}
+        emptyDesc="조회된 충전금 현황이 없어요"
         topArea={
           <ChargeTableTop
             currentPage={data.page + 1}
-            totalPages={data.totalPages}
+            totalPages={totalPages}
             onPageChange={onPageChange}
           />
         }
-        scrollHeight={498}
+        scrollHeight={500}
       />
-      {data.content.length === 0 && (
-        <TableEmpty description="조회된 충전금 현황이 없어요" />
-      )}
     </div>
   )
 }

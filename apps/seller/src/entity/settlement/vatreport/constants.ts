@@ -1,4 +1,21 @@
+import type { TVatExcelDownloadType } from './entities'
+
 export const DEFAULT_VAT_REPORT_PAGE_SIZE = 10
+
+export const VAT_EXCEL_DOWNLOAD_OPTIONS: {
+  label: string
+  value: TVatExcelDownloadType
+}[] = [
+  { label: '월별 엑셀 다운로드', value: 'MONTHLY' },
+  { label: '일별 엑셀 다운로드', value: 'DAILY' },
+  { label: '건별 엑셀 다운로드', value: 'ORDER' },
+]
+
+export const VAT_EXCEL_FILE_NAME: Record<TVatExcelDownloadType, string> = {
+  MONTHLY: '부가세신고내역_월별.xlsx',
+  DAILY: '부가세신고내역_일별.xlsx',
+  ORDER: '부가세신고내역_건별.xlsx',
+}
 
 export const vatDescriptions = [
   '부가세신고는 대행하지 않으며, 판매자님께서 직접 신고를 진행해 주셔야 합니다.',

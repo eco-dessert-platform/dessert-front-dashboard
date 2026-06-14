@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react'
 
 import { Button, Tooltip } from '@dessert/ui'
-import { format, parseISO } from 'date-fns'
 import { Info } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
 
 import { VAT_SALES_PERIOD_TOOLTIP } from '@/entity/settlement/vatreport/constants'
 import { IVatReportFilter } from '@/entity/settlement/vatreport/entities'
+import {
+  dateRangeToFilterDates,
+  stringToDateRange,
+} from '@/shared/utils/fomatter'
 import { DatePicker } from '@/widgets/date-picker'
 import { Text } from '@dessert/ui'
-
-const stringToDateRange = (start?: string, end?: string): DateRange => ({
-  from: start ? parseISO(start) : undefined,
-  to: end ? parseISO(end) : undefined,
-})
 
 interface IVatReportFilterProps {
   filtersDate?: {
@@ -61,16 +59,7 @@ const VatReportFilter = ({ filtersDate, onSearch }: IVatReportFilterProps) => {
           variant="primary-filled"
           size="md"
           className="max-h-[42px] min-w-[70px]"
-          onClick={() =>
-            onSearch({
-              startDate: dateValue?.from
-                ? format(dateValue.from, 'yyyy-MM-dd')
-                : undefined,
-              endDate: dateValue?.to
-                ? format(dateValue.to, 'yyyy-MM-dd')
-                : undefined,
-            })
-          }
+          onClick={() => onSearch(dateRangeToFilterDates(dateValue))}
         />
       </div>
     </div>

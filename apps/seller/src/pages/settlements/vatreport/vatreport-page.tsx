@@ -10,7 +10,10 @@ import {
   DEFAULT_VAT_REPORT_PAGE_SIZE,
   vatDescriptions,
 } from '@/entity/settlement/vatreport/constants'
-import type { IVatReportFilter } from '@/entity/settlement/vatreport/entities'
+import type {
+  IVatReportFilter,
+  TVatExcelDownloadType,
+} from '@/entity/settlement/vatreport/entities'
 import SettlementTitles from '@/features/settlement/common/titles'
 import VatReportFilter from '@/features/settlement/vatreport/vatreport-filter'
 import VatReportTable from '@/features/settlement/vatreport/vatreport-table'
@@ -40,22 +43,29 @@ const Vatreport = () => {
     [],
   )
 
-  const handleExcelDownload = useCallback(async () => {
-    try {
-      await vatService.downloadExcel(filters)
-      toast.info('부가세 신고 내역 엑셀 파일이 다운로드 되었어요.', undefined, {
-        position: 'bottom-right',
-      })
-    } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : '엑셀 다운로드에 실패했습니다.',
-        undefined,
-        { position: 'bottom-right' },
-      )
-    }
-  }, [filters.endDate, filters.startDate])
+  const handleExcelDownload = useCallback(
+    async (type: TVatExcelDownloadType) => {
+      try {
+        await vatService.downloadExcel({
+          startDate: filters.startDate,
+          endDate: filters.endDate,
+          type,
+        })
+        toast.info('부가세 신고 내역 엑셀 파일이 다운로드 되었어요.', undefined, {
+          position: 'bottom-right',
+        })
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : '엑셀 다운로드에 실패했습니다.',
+          undefined,
+          { position: 'bottom-right' },
+        )
+      }
+    },
+    [filters.endDate, filters.startDate],
+  )
 
   return (
     <Layout>
