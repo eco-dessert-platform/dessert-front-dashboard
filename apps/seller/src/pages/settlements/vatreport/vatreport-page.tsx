@@ -6,7 +6,10 @@ import { format, subDays } from 'date-fns'
 
 import { vatQueries } from '@/entity/settlement/vatreport/api/vatreport-queries'
 import { vatService } from '@/entity/settlement/vatreport/api/vatreport-service'
-import { DEFAULT_VAT_REPORT_PAGE_SIZE, vatDescriptions } from '@/entity/settlement/vatreport/constants'
+import {
+  DEFAULT_VAT_REPORT_PAGE_SIZE,
+  vatDescriptions,
+} from '@/entity/settlement/vatreport/constants'
 import type { IVatReportFilter } from '@/entity/settlement/vatreport/entities'
 import SettlementTitles from '@/features/settlement/common/titles'
 import VatReportFilter from '@/features/settlement/vatreport/vatreport-filter'
