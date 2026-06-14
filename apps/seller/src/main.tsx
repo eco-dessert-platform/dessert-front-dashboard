@@ -21,6 +21,7 @@ import App from './App'
 import { SellerInfoPage } from './pages/seller-info/seller-info-page'
 import FixedLayout from './shared/block/fixed-layout/fixed-layout'
 import ChargePage from './pages/settlements/charge/charge-page'
+import VatreportPage from './pages/settlements/vatreport/vatreport-page'
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,7 @@ const router = createBrowserRouter([
 
       { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
       { path: ROUTES.SETTLEMENTS.CHARGE, element: <ChargePage /> },
+      { path: ROUTES.SETTLEMENTS.VAT_REPORT, element: <VatreportPage /> },
       { path: ROUTES.INFO.CHANGE, element: <SellerInfoPage /> },
     ],
   },
