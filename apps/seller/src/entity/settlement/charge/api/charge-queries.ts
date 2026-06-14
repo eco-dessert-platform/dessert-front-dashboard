@@ -1,7 +1,7 @@
 import { queryOptions } from '@tanstack/react-query'
 
 import type { IChargeFilter } from '@/entity/settlement/charge/entities'
-import { chargeService } from '@/services/charge-service'
+import { chargeService } from '@/entity/settlement/charge/api/charge-service'
 
 import { chargeKeys } from './charge-keys'
 
