@@ -22,7 +22,7 @@ export const ROUTES = {
   SETTLEMENTS: {
     ALL: '/settlements',
     CHARGE: '/settlements/charge',
-    WITHHELD: '/settlements/withheld',
+    PAYMENT_HOLD: '/settlements/payment-hold',
     VAT_REPORT: '/settlements/vat-report',
     TAX_INVOICE: '/settlements/tax-invoice',
   },

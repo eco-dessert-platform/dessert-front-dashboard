@@ -15,7 +15,7 @@ import PaymentHoldTable from '@/features/settlement/payment-hold/payment-hold-ta
 
 import Layout from '../layout'
 
-const WithheldPage = () => {
+const PaymentHoldPage = () => {
   const [filters, setFilters] = useState<IPaymentHoldFilter>(() => {
     const today = new Date()
 
@@ -91,4 +91,4 @@ const WithheldPage = () => {
   )
 }
 
-export default WithheldPage
+export default PaymentHoldPage
