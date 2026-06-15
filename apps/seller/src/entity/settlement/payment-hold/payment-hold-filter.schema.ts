@@ -15,7 +15,7 @@ export const paymentHoldSearchFilterSchema = z
     const trimmedKeyword = keyword.trim()
     if (!trimmedKeyword) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: '검색어를 입력해주세요.',
         path: ['keyword'],
       })
@@ -24,7 +24,7 @@ export const paymentHoldSearchFilterSchema = z
 
     if (searchType === 'PAYMENT_HOLD_ID' && !/^\d+$/.test(trimmedKeyword)) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: '지급보류ID는 숫자만 입력할 수 있어요.',
         path: ['keyword'],
       })

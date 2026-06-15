@@ -32,7 +32,7 @@ export const storeDetailSchema = z
     const combined = `${emailLocal}@${emailDomain}`
     if (!z.string().email().safeParse(combined).success) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: '올바른 이메일 형식이 아니에요.',
         path: ['emailLocal'],
       })

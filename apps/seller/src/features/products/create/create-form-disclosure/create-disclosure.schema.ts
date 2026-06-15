@@ -34,7 +34,7 @@ export const disclosureSchema = z
         const val = noticeValue[field.key]
         if (val.trim().length < 3 || val.trim().length >= 50) {
           ctx.addIssue({
-            code: z.ZodIssueCode.custom,
+            code: 'custom',
             message: '3자 이상 50자 미만으로 입력해 주세요',
             path: ['productInfoNotice', field.key],
           })
