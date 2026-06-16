@@ -9,8 +9,13 @@ export {
   UpdateStoreNameListResultSchema,
   UpdateStoreNameListResponseSchema,
   GetUpdateStoreNamesRequestParamsSchema,
+  UpdateStoreNameMutationResponseSchema,
 } from './name-change-approval.contract'
 
-export { getUpdateStoreNames } from './name-change-approval.api'
+export {
+  getUpdateStoreNames,
+  approveUpdateStoreName,
+  rejectUpdateStoreName,
+} from './name-change-approval.api'
 
 export { nameChangeApprovalQueries } from './name-change-approval.query'

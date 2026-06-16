@@ -41,3 +41,8 @@ export const UpdateStoreNameListResponseSchema = z.discriminatedUnion(
 export const GetUpdateStoreNamesRequestParamsSchema = z.object({
   page: z.number().int().positive().optional(),
 })
+
+// 승인/거절은 requestId 단건 처리 — 응답에서 성공 여부만 확인 (result 구조는 사용하지 않음)
+export const UpdateStoreNameMutationResponseSchema = BaseResponseSchema.extend({
+  success: z.boolean(),
+})

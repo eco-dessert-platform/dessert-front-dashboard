@@ -1,8 +1,20 @@
+import { Button } from '@dessert/ui'
+
 import type { UpdateStoreName } from '@/entity/store/name-change-approval'
 
 import type { ColumnDef } from '@tanstack/react-table'
 
-export const NameChangeApprovalColumns: ColumnDef<UpdateStoreName>[] = [
+type NameChangeApprovalColumnsArgs = {
+  onApprove: (requestId: number) => void
+  onReject: (requestId: number) => void
+  isMutating: boolean
+}
+
+export const NameChangeApprovalColumns = ({
+  onApprove,
+  onReject,
+  isMutating,
+}: NameChangeApprovalColumnsArgs): ColumnDef<UpdateStoreName>[] => [
   {
     header: '현재 스토어명',
     accessorKey: 'currentName',
@@ -32,5 +44,28 @@ export const NameChangeApprovalColumns: ColumnDef<UpdateStoreName>[] = [
       </div>
     ),
     size: 120,
+  },
+  {
+    id: 'actions',
+    header: '처리',
+    cell: ({ row }) => (
+      <div className="flex justify-center gap-8">
+        <Button
+          title="승인"
+          variant="primary-outlined"
+          size="sm"
+          onClick={() => onApprove(row.original.requestId)}
+          disabled={isMutating}
+        />
+        <Button
+          title="거절"
+          variant="secondary-outlined"
+          size="sm"
+          onClick={() => onReject(row.original.requestId)}
+          disabled={isMutating}
+        />
+      </div>
+    ),
+    size: 160,
   },
 ]
