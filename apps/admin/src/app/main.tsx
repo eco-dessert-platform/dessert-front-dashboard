@@ -10,6 +10,7 @@ import { AllProductPage } from '@/pages/product/all-product'
 import { UploadApprovalPage } from '@/pages/product/upload-approval'
 import { MemberApprovalPage } from '@/pages/store/member-approval'
 import { NameChangeApprovalPage } from '@/pages/store/name-change-approval'
+import { StoreRegisterPage } from '@/pages/store/store-register'
 import { ROUTES } from '@/shared/constant/routes'
 
 import App from './app'
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.STORE.NAME_CHANGE_APPROVAL,
         element: <NameChangeApprovalPage />,
+      },
+      {
+        path: ROUTES.STORE.REGISTER,
+        element: <StoreRegisterPage />,
       },
       {
         path: ROUTES.PRODUCTS.UPLOAD_APPROVAL,

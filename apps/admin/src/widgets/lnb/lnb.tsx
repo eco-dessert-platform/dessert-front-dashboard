@@ -17,6 +17,7 @@ const MENU_LIST = [
     items: [
       { title: '회원가입 승인', href: ROUTES.STORE.MEMBER_APPROVAL },
       { title: '스토어명 변경 승인', href: ROUTES.STORE.NAME_CHANGE_APPROVAL },
+      { title: '스토어 등록', href: ROUTES.STORE.REGISTER },
     ],
   },
   {
