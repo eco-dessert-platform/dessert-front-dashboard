@@ -6,24 +6,28 @@ import { SettlementOverview } from '@/features/settlement/history/history-overvi
 import { TransactionSettlementTable } from '@/features/settlement/history/history-transaction-table'
 import { useSettlementFilter } from '@/features/settlement/history/model/use-settlement-filter'
 
+import Layout from './layout'
+
 const SettlementPage = () => {
   const { draftFilters, setDraftFilters, appliedFilters, apply, setPage } =
     useSettlementFilter()
 
   return (
-    <div className="mx-[-90px] -my-40 flex min-h-[calc(100vh-80px)] flex-col gap-24 p-40">
+    <Layout>
       <Tab defaultValue="daily" variant="btn">
         <TabList>
           <TabTrigger value="daily">일별 정산내역</TabTrigger>
           <TabTrigger value="transaction">건별 정산내역</TabTrigger>
         </TabList>
 
-        <TabContent value="daily" className="mt-24 space-y-20">
+        {/** Tab의 gap-2(8px) 때문에 mt-20(80px) 대신 mt-[18px] 사용 */}
+        <TabContent value="daily" className="mt-[18px] space-y-10">
           <SettlementOverview />
           <DailySettlementTable />
         </TabContent>
 
-        <TabContent value="transaction" className="mt-24 space-y-20">
+        {/** Tab의 gap-2(8px) 때문에 mt-20(80px) 대신 mt-[18px] 사용 */}
+        <TabContent value="transaction" className="mt-[18px] space-y-10">
           <SettlementFilter
             filters={draftFilters}
             onChange={setDraftFilters}
@@ -35,7 +39,7 @@ const SettlementPage = () => {
           />
         </TabContent>
       </Tab>
-    </div>
+    </Layout>
   )
 }
 

@@ -3,7 +3,10 @@ interface BulkDeleteButtonProps {
   disabled?: boolean
 }
 
-const ProductTopAreaBulkDelete = ({ onDelete, disabled }: BulkDeleteButtonProps) => {
+const ProductTopAreaBulkDelete = ({
+  onDelete,
+  disabled,
+}: BulkDeleteButtonProps) => {
   return (
     <button
       type="button"

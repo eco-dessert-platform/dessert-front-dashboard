@@ -57,7 +57,9 @@ export function StoreInfo() {
   const profileImage = useWatch({ control, name: 'profileImage' }) ?? null
   const isCustomDomain = domainSelectValue === CUSTOM_DOMAIN
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [profilePreviewUrl, setProfilePreviewUrl] = useState<string | null>(null)
+  const [profilePreviewUrl, setProfilePreviewUrl] = useState<string | null>(
+    null,
+  )
 
   useEffect(() => {
     if (!profileImage) {
@@ -203,7 +205,10 @@ export function StoreInfo() {
                 />
               ) : (
                 <>
-                  <ImageIcon aria-hidden className="size-[30px] text-gray-400" />
+                  <ImageIcon
+                    aria-hidden
+                    className="size-[30px] text-gray-400"
+                  />
                   <span className="typo-body-12-r text-gray-800">
                     이미지를 업로드해주세요
                   </span>
