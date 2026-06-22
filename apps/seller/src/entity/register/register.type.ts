@@ -26,7 +26,7 @@ export type StoreApplicationStatus = 'PENDING' | 'APPROVED' | 'REJECTED'
 
 export interface StoreApplicationRequest {
   storeName: string
-  profile: string
+  profile?: string
   introduce: string
   phoneNumber: string
   subPhoneNumber: string | null

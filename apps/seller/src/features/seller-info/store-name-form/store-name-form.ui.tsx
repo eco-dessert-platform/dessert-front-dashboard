@@ -1,29 +1,38 @@
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@dessert/ui'
+import { useForm } from 'react-hook-form'
 
+import { StoreNameFormValues, storeNameSchema } from '@/entity/seller-info'
 import { cn } from '@/shared/libs/utils'
-import { InputField } from '@/widgets/input-field'
+import { InputField } from '../../../shared/ui/input-field'
 
 import {
   SELLER_INFO_CANCEL_DIALOG_CONTENT,
   SELLER_INFO_SUBMIT_DIALOG_CONTENT,
   SellerInfoConfirmDialog,
 } from '../seller-info-confirm-dialog'
-import {
-  STORE_NAME_RULE,
-  getStoreNameValidationState,
-} from './store-name.validation'
 
 type ConfirmDialogType = 'cancel' | 'submit'
 
 export function StoreNameForm() {
-  const [storeName, setStoreName] = useState('')
   const [confirmDialogType, setConfirmDialogType] =
     useState<ConfirmDialogType | null>(null)
 
-  const { hasStoreName, shouldShowStoreNameError, isSubmitButtonDisabled } =
-    getStoreNameValidationState(storeName)
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors, isValid },
+  } = useForm<StoreNameFormValues>({
+    resolver: zodResolver(storeNameSchema),
+    defaultValues: { storeName: '' },
+    mode: 'onChange',
+  })
+
+  const hasStoreName = watch('storeName').length > 0
 
   const confirmDialogContent =
     confirmDialogType === null
@@ -36,23 +45,14 @@ export function StoreNameForm() {
     setConfirmDialogType('cancel')
   }
 
-  const handleSubmitButtonClick = () => {
-    setConfirmDialogType('submit')
-  }
-
   const handleDialogClose = () => {
     setConfirmDialogType(null)
   }
 
-  const handleStoreNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setStoreName(event.target.value)
-  }
-
   const handleDialogConfirm = () => {
     if (confirmDialogType === 'cancel') {
-      setStoreName('')
+      reset()
     }
-
     handleDialogClose()
   }
 
@@ -60,6 +60,10 @@ export function StoreNameForm() {
     if (!open) {
       handleDialogClose()
     }
+  }
+
+  const onSubmit = () => {
+    setConfirmDialogType('submit')
   }
 
   return (
@@ -70,16 +74,15 @@ export function StoreNameForm() {
       </p>
 
       <InputField
+        {...register('storeName')}
         label="스토어명"
         placeholder="스토어명은 3~50자로 작성해주세요"
         required
         buttonText="중복확인"
-        maxLength={STORE_NAME_RULE.MAX_LENGTH}
-        value={storeName}
-        onChange={handleStoreNameChange}
+        maxLength={50}
         onButtonClick={() => {}}
-        error={shouldShowStoreNameError}
-        errorMessage={STORE_NAME_RULE.ERROR_MESSAGE}
+        error={!!errors.storeName}
+        errorMessage={errors.storeName?.message}
         className="mt-[22px]"
       />
 
@@ -98,8 +101,8 @@ export function StoreNameForm() {
           title="수정하기"
           size="md"
           className="w-[160px]"
-          disabled={isSubmitButtonDisabled}
-          onClick={handleSubmitButtonClick}
+          disabled={!isValid}
+          onClick={handleSubmit(onSubmit)}
         />
       </span>
 

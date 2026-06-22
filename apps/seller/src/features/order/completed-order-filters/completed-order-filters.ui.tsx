@@ -12,7 +12,7 @@ import type {
 } from '@/entity/order/order.type'
 import { cn } from '@/shared/libs/utils'
 import { DatePicker } from '@/widgets/date-picker'
-import { InputField } from '@/widgets/input-field'
+import { InputField } from '../../../shared/ui/input-field'
 
 import { ResetButton } from '../reset-button'
 
