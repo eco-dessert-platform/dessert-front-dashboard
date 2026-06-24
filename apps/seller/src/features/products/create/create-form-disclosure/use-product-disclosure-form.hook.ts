@@ -32,9 +32,18 @@ export const useProductDisclosureForm = () => {
 
         if (currentMode === 'default') {
           const resetValue =
-            fieldKey === 'productName' ? (value.productName ?? '') : ''
+            fieldKey === 'productName'
+              ? (value.productName ?? '')
+              : '해당항목 없음'
           setValue(`productInfoNotice.${fieldKey}`, resetValue, {
             shouldValidate: true,
+          })
+        }
+
+        // 추가
+        if (currentMode === 'manual') {
+          setValue(`productInfoNotice.${fieldKey}`, '', {
+            shouldValidate: false,
           })
         }
       }
@@ -60,7 +69,12 @@ export const useProductDisclosureForm = () => {
       const mode = noticeModes[field.key]
       const value = noticeValues[field.key]
 
-      if (mode === 'default') return true
+      if (mode === 'default') {
+        if (field.key === 'productName') {
+          return (value ?? '').trim().length > 0
+        }
+        return true
+      }
       if (mode === 'manual') {
         const trimmed = (value ?? '').trim()
         return trimmed.length >= 3 && trimmed.length < 50
@@ -70,6 +84,20 @@ export const useProductDisclosureForm = () => {
 
     setProductFields({ productDisclosure: isComplete })
   }, [noticeModes, noticeValues, setProductFields])
+
+  //마운트 시 default 필드 초기값 셋팅
+  useEffect(() => {
+    DISCLOSURE_FIELDS.forEach((field) => {
+      const mode = noticeModes?.[field.key]
+      const value = noticeValues?.[field.key]
+
+      if (mode === 'default' && field.key !== 'productName' && value === '') {
+        setValue(`productInfoNotice.${field.key}`, '해당항목 없음', {
+          shouldValidate: true,
+        })
+      }
+    })
+  }, [])
 
   return {
     control,

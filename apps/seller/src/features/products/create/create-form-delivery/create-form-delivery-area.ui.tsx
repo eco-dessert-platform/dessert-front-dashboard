@@ -17,6 +17,7 @@ export const ProductDeliveryArea = () => {
     deliveryFeeInput,
     deliveryMinFeeInput,
     isFormField,
+    handleDeliveryTermsChange,
   } = useProductDeliveryForm()
 
   const {
@@ -46,26 +47,12 @@ export const ProductDeliveryArea = () => {
             required
             className="typo-heading-18-r text-gray-900"
           />
-          <Controller
-            control={control}
-            name="deliveryTerms"
-            render={({ field }) => (
-              <Dropdown
-                options={DeliveryTerms}
-                value={field.value}
-                placeholder="유료"
-                onSelect={(val) => {
-                  field.onChange(val)
-                  if (val === 'free') {
-                    setValue('deliveryFee', null, { shouldValidate: true })
-                    setValue('deliveryMinFee', null, { shouldValidate: true })
-                  } else if (val === 'charged') {
-                    setValue('deliveryMinFee', null, { shouldValidate: true })
-                  }
-                }}
-                className="mt-8"
-              />
-            )}
+          <Dropdown
+            options={DeliveryTerms}
+            value={deliveryTerms}
+            placeholder="유료"
+            onSelect={handleDeliveryTermsChange}
+            className="mt-8"
           />
         </div>
         <div>
