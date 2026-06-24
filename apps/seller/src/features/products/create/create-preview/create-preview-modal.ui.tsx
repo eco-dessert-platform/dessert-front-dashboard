@@ -192,9 +192,11 @@ export const ProductPreviewModal = ({
           <div className="typo-title-14-m text-gray-600">
             배송비
             <span className="ml-4 typo-title-14-r text-gray-800">
-              {deliveryFee ? `${deliveryFee.toLocaleString()}원` : '{{배송비}}'}
+              {deliveryFee != null
+                ? `${deliveryFee.toLocaleString()}원`
+                : '{{배송비}}'}
             </span>
-            {deliveryMinFee && (
+            {deliveryMinFee != null && (
               <span className="ml-2 typo-body-12-r text-gray-500">
                 ({deliveryMinFee.toLocaleString()}원 이상 구매 시 무료)
               </span>
