@@ -7,8 +7,8 @@ import { ProductDiscountType } from '@/entity/products/create/create-info/produc
 import { productionTimes } from '@/entity/products/create/create-info/production-time.constants'
 
 import { useProductInfoForm } from './use-product-info-form.hook'
+import { InfoTooltip, ProductFinalPrice } from '../create-form'
 import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
 
 export const ProductInfoArea = () => {
   const {
@@ -161,23 +161,11 @@ export const ProductInfoArea = () => {
         </div>
       </div>
       {finalPrice !== null && (
-        <div className="mt-32 flex w-full items-center justify-between rounded-10 bg-primary-50 px-24 py-10">
-          <p className="typo-heading-18-b">최종 상품 금액</p>
-
-          <div className="flex items-center gap-8">
-            {price !== null && (
-              <p className="typo-heading-18-r text-gray-600 line-through">
-                {price.toLocaleString('ko-KR')}
-              </p>
-            )}
-            <p className="flex items-center gap-4 typo-heading-18-r text-primary-500">
-              <span className="typo-heading-24-sb">
-                {finalPrice.toLocaleString('ko-KR')}
-              </span>
-              원
-            </p>
-          </div>
-        </div>
+        <ProductFinalPrice
+          title="최종 상품 금액"
+          price={price}
+          finalPrice={finalPrice}
+        />
       )}
     </>
   )

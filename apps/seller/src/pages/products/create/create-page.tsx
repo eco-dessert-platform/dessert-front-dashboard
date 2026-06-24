@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Button } from '@dessert/ui'
-import { FormProvider, useFormContext } from 'react-hook-form'
+import { FormProvider } from 'react-hook-form'
 
 import {
   CreateFormContainer,
-  CreateProductForm,
   FormStepsProvider,
   ProductDeliveryArea,
   ProductDetailArea,
@@ -13,6 +11,7 @@ import {
   ProductHeader,
   ProductInfoArea,
   ProductOptionsArea,
+  ThumbnailUploadArea,
   useCreateProductForm,
 } from '@/features/products/create'
 import {
@@ -20,8 +19,8 @@ import {
   useCreateDraft,
   useCreateDraftStore,
 } from '@/features/products/create/create-draft'
-
-//TODO: FOOTER 컴포넌트 분리 예정으로 useFormContext, CreateProductForm 삭제 예정입니다.
+import { CreateFooter } from '@/features/products/create/create-footer'
+import { ProductPreviewModal } from '@/features/products/create/create-preview'
 
 function CreatePage() {
   const form = useCreateProductForm()
@@ -35,15 +34,12 @@ function CreatePage() {
 }
 
 function CreatePageInner() {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false) //미리보기
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false) //임시저장
   const { draft } = useCreateDraftStore()
   const isInitialMount = useRef(true)
-  const { handleRestoreDraft, clearDraft, handleSaveDraft } = useCreateDraft()
-  const {
-    formState: { isDirty },
-  } = useFormContext<CreateProductForm>()
-  const hasAnyInput = isDirty
-  //TODO : line 39~44 FOOTER 컴포넌트 분리 후 코드 이동 예정입니다.
+  const { handleRestoreDraft, clearDraft } = useCreateDraft()
+
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false
@@ -65,6 +61,10 @@ function CreatePageInner() {
       </CreateFormContainer>
 
       <CreateFormContainer>
+        <ThumbnailUploadArea />
+      </CreateFormContainer>
+
+      <CreateFormContainer>
         <ProductOptionsArea />
       </CreateFormContainer>
 
@@ -76,22 +76,13 @@ function CreatePageInner() {
         <ProductDisclosureArea />
       </CreateFormContainer>
 
-      <div className="mt-40 flex gap-12">
-        <Button
-          title="미리보기"
-          variant="primary-outlined"
-          size="lg"
-          disabled
+      <CreateFooter onPreview={() => setIsPreviewOpen(true)} />
+      {isPreviewOpen && (
+        <ProductPreviewModal
+          isOpen={isPreviewOpen}
+          onClose={() => setIsPreviewOpen(false)}
         />
-        <Button
-          title="임시저장"
-          variant="primary-outlined"
-          size="lg"
-          disabled={!hasAnyInput}
-          onClick={handleSaveDraft}
-        />
-        <Button title="저장하기" variant="primary-filled" size="lg" disabled />
-      </div>
+      )}
 
       {isDraftModalOpen && (
         <CreateDraftModal

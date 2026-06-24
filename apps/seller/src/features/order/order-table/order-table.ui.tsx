@@ -21,10 +21,10 @@ import {
 import Table from '@/shared/components/ui/table/table'
 import { getRowSpanForGroup } from '@/shared/utils/tableSpan'
 
-import { OrderTableEmpty } from './order-table-empty.ui'
 import { OrderTableLoading } from './order-table-loading.ui'
 
 import type { OrderTableLoadingMode } from './order-table-loading.hook'
+import TableEmpty from '@/shared/components/ui/table/table-empty'
 
 type FlatOrderRow = Omit<OrderItem, 'products'> &
   OrderProduct & {
@@ -345,7 +345,7 @@ export function OrderTable({
           <OrderTableLoading mode={loadingMode} onCancel={onCancelLoading} />
         </div>
       )}
-      {showEmpty && <OrderTableEmpty />}
+      {showEmpty && <TableEmpty description="주문내역이 없습니다." />}
     </div>
   )
 }
@@ -356,7 +356,11 @@ interface TrackingNumberCellProps {
   onTrackingOpen?: (mode: 'create' | 'edit', args: TrackingOpenArgs) => void
 }
 
-function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProps) {
+function TrackingNumberCell({
+  row,
+  tab,
+  onTrackingOpen,
+}: TrackingNumberCellProps) {
   const {
     orderNumber,
     orderId,
@@ -368,7 +372,11 @@ function TrackingNumberCell({ row, tab, onTrackingOpen }: TrackingNumberCellProp
 
   // 반품 탭: returnStatus에 따라 운송장 셀 렌더링
   if (tab === 'returned') {
-    if (!returnStatus || returnStatus === 'RETURN_REQUESTED' || returnStatus === 'RETURN_REJECTED') {
+    if (
+      !returnStatus ||
+      returnStatus === 'RETURN_REQUESTED' ||
+      returnStatus === 'RETURN_REJECTED'
+    ) {
       return <p className="typo-body-12-r text-gray-800">-</p>
     }
 

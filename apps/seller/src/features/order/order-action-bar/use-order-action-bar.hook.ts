@@ -75,13 +75,16 @@ export function useOrderActionBar({
     }
   }
 
-  const bulkCompleteActions: Partial<Record<OrderAction,
-    {
-      mutation: typeof completeReturnMutation
-      successMessage: string
-      errorMessage: string
-    }
-  >> = {
+  const bulkCompleteActions: Partial<
+    Record<
+      OrderAction,
+      {
+        mutation: typeof completeReturnMutation
+        successMessage: string
+        errorMessage: string
+      }
+    >
+  > = {
     completeReturn: {
       mutation: completeReturnMutation,
       successMessage: '반품이 완료 처리되었습니다.',

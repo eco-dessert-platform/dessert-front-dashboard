@@ -359,10 +359,7 @@ export async function confirmOrder(
   const { orderId, orderItemIds } = request
   const { data } = await client.post<
     ApiResponse<{ content: ConfirmOrderResult }>
-  >(
-    `/api/v1/seller/orders/${orderId}/confirm`,
-    { orderItemIds },
-  )
+  >(`/api/v1/seller/orders/${orderId}/confirm`, { orderItemIds })
 
   return unwrap(data, '발주 확인에 실패했습니다.').content
 }
