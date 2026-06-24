@@ -1,9 +1,10 @@
-import { clsx } from 'clsx'
+import { cn } from '@/shared/libs/utils'
 
 export interface DaySelectorProps {
   selectedDays?: string[]
   onDayChange?: (days: string[]) => void
   className?: string
+  size?: 'default' | 'small'
 }
 
 const DAYS = [
@@ -20,6 +21,7 @@ export function DaySelector({
   selectedDays = [],
   onDayChange,
   className = '',
+  size = 'default',
 }: DaySelectorProps) {
   const handleDayClick = (dayValue: string) => {
     const newSelectedDays = selectedDays.includes(dayValue)
@@ -30,7 +32,7 @@ export function DaySelector({
   }
 
   return (
-    <div className={clsx('flex gap-8', className)} role="group">
+    <div className={cn('flex gap-8', className)} role="group">
       {DAYS.map((day) => {
         const isSelected = selectedDays.includes(day.value)
 
@@ -39,16 +41,19 @@ export function DaySelector({
             key={day.value}
             type="button"
             onClick={() => handleDayClick(day.value)}
-            className={clsx(
-              'flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-full p-6',
-              'typo-title-16-m transition-colors',
+            className={cn(
+              'flex cursor-pointer items-center justify-center rounded-full p-6',
+              'transition-colors',
               isSelected
                 ? 'bg-primary-50 text-primary-500'
                 : 'bg-white text-gray-800 hover:bg-gray-50',
+              size === 'default'
+                ? 'h-[42px] w-[42px] typo-title-16-m'
+                : 'size-24 typo-body-12-r',
             )}
             aria-pressed={isSelected}
           >
-            {day.label}
+            {day.label} {}
           </button>
         )
       })}

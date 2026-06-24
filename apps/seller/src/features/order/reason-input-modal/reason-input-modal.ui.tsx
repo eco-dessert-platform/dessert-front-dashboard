@@ -46,8 +46,7 @@ export function ReasonInputModal({
   const title = REASON_MODAL_TITLE[action]
   const options = REASON_TYPE_OPTIONS[action]
 
-  const isValid =
-    reasonType !== '' && reasonDetail.length >= MIN_LENGTH
+  const isValid = reasonType !== '' && reasonDetail.length >= MIN_LENGTH
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen) {

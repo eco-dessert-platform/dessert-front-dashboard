@@ -8,7 +8,11 @@ interface AuthFlowCardProps {
   className?: string
 }
 
-export function AuthFlowCard({ image, children, className }: AuthFlowCardProps) {
+export function AuthFlowCard({
+  image,
+  children,
+  className,
+}: AuthFlowCardProps) {
   return (
     <div
       className={cn(

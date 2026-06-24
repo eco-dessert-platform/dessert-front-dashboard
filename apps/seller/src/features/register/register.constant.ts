@@ -29,6 +29,9 @@ export const REGISTER_TOAST_MESSAGES = {
     title: '계좌인증을 먼저 완료해주세요',
     description: '계좌인증 후 다음 단계로 진행할 수 있어요',
   },
+  ACCOUNT_EDIT_SUCCESS: {
+    title: '계좌정보가 수정되었어요',
+  },
   DOCUMENT_REGISTER_ERROR: {
     title: '서류 등록 도중 문제가 발생했어요',
     description: '잠시 후 다시 시도해주세요',
@@ -45,5 +48,13 @@ export const REGISTER_TOAST_MESSAGES = {
   PROFILE_IMAGE_REQUIRED: {
     title: '스토어 프로필 이미지를 업로드해주세요',
     description: 'jpg, jpeg, png 형식의 10MB 이하 파일만 업로드할 수 있어요',
+  },
+  PROFILE_IMAGE_TYPE_INVALID: {
+    title: '지원하지 않는 파일 형식이에요',
+    description: 'jpg, jpeg, png 형식의 파일만 업로드할 수 있어요',
+  },
+  STORE_NAME_CHECK_ERROR: {
+    title: '중복 확인에 실패했어요',
+    description: '잠시 후 다시 시도해주세요',
   },
 } as const
