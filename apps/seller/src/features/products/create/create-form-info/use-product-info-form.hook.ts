@@ -1,6 +1,6 @@
 import { Path, useFormContext } from 'react-hook-form'
 
-import { CreateInfoValidator } from './create-info-validator.utils'
+import { useCreateInfoValidation } from './use-create-info-validation.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
 import { CreateProductForm } from '../create-form/product-create.types'
 
@@ -16,7 +16,7 @@ export function useProductInfoForm() {
   ]
 
   const { isValid: isFormField, values } =
-    CreateInfoValidator<CreateProductForm>(productFields)
+    useCreateInfoValidation<CreateProductForm>(productFields)
 
   const [productName, price, discountAmount, discountType, productionTime] =
     values as [

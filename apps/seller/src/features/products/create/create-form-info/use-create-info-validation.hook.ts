@@ -1,15 +1,15 @@
 import { FieldValues, Path, useFormContext } from 'react-hook-form'
 
-export function CreateInfoValidator<T extends FieldValues>(
+export function useCreateInfoValidation<T extends FieldValues>(
   fields: Array<Path<T>>,
 ) {
-  const {
-    watch,
-    formState: { errors },
-  } = useFormContext<T>()
+  const form = useFormContext<T>()
+  const { watch, formState } = form
 
-  // 에러 객체에 현재 섹션 필드가 있는지 체크
-  const hasError = fields.some((field) => !!errors[field])
+  // getFieldState는 중첩 path도 정확히 판정합니다(errors[field] 직접 접근은 중첩 키를 못 읽음)
+  const hasError = fields.some(
+    (field) => form.getFieldState(field, formState).invalid,
+  )
 
   // 값 존재 여부 체크 (필수값 확인용)
   const isAllFilled = fields.every((field) => {

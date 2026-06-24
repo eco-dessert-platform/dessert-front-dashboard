@@ -29,16 +29,16 @@ export function createOptionsValidator(values: ProductOptionsType): boolean {
     calories,
   ]
   const isNutritionValid =
-    !hasNutrition || nutritionValues.every((val) => val !== null)
+    !hasNutrition || nutritionValues.every((val) => val != null)
 
   return (
     !!mainCategory &&
-    subCategory !== '' &&
+    !!subCategory &&
     optionName.length >= 1 &&
     optionName.length <= 49 &&
     ingredientCategories.length > 0 &&
-    additionalPrice !== null &&
-    stockQuantity !== null &&
+    additionalPrice != null &&
+    stockQuantity != null &&
     isNutritionValid &&
     shippingDays.length >= 1
   )

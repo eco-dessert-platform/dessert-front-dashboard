@@ -25,14 +25,16 @@ export function useProductDeliveryForm() {
 
     if (deliveryTerms === '' || deliveryCompany === '') return false
 
-    if (deliveryTerms === 'conditionalFree') {
-      return deliveryFee !== null && deliveryMinFee !== null
-    }
+    // 허용된 배송 조건만 완료 처리(미허용 값은 fail-closed)
+    if (deliveryTerms === 'free') return true
     if (deliveryTerms === 'charged') {
       return deliveryFee !== null
     }
+    if (deliveryTerms === 'conditionalFree') {
+      return deliveryFee !== null && deliveryMinFee !== null
+    }
 
-    return true
+    return false
   })()
 
   // 조건 변경 시 실시간 에러 갱신
@@ -56,12 +58,19 @@ export function useProductDeliveryForm() {
     form.setValue('deliveryTerms', val as CreateProductForm['deliveryTerms'], {
       shouldValidate: true,
     })
-    form.clearErrors(['deliveryFee', 'deliveryMinFee'])
     if (val === 'free') {
+      // 둘 다 비필수: 값과 에러를 모두 제거
+      form.clearErrors(['deliveryFee', 'deliveryMinFee'])
       form.setValue('deliveryFee', null)
       form.setValue('deliveryMinFee', null)
     } else if (val === 'charged') {
+      // 배송비 필수 / 최소금액 비필수
+      form.clearErrors('deliveryMinFee')
       form.setValue('deliveryMinFee', null)
+      form.trigger('deliveryFee')
+    } else if (val === 'conditionalFree') {
+      // 둘 다 필수: null이어도 검증을 트리거해 누락 에러를 노출
+      form.trigger(['deliveryFee', 'deliveryMinFee'])
     }
   }
 
