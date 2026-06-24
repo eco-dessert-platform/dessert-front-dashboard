@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { FormProvider } from 'react-hook-form'
 
@@ -13,6 +13,11 @@ import {
   ThumbnailUploadArea,
   useCreateProductForm,
 } from '@/features/products/create'
+import {
+  CreateDraftModal,
+  useCreateDraft,
+  useCreateDraftStore,
+} from '@/features/products/create/create-draft'
 import { CreateFooter } from '@/features/products/create/create-footer'
 import { useCreateHeaderSteps } from '@/features/products/create/create-header/use-create-header-steps.hook'
 import { ProductPreviewModal } from '@/features/products/create/create-preview'
@@ -37,8 +42,23 @@ const stepIds = [
 
 function CreatePageInner() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false) //미리보기
+  const [isDraftModalOpen, setIsDraftModalOpen] = useState(false) //임시저장
+  const { draft } = useCreateDraftStore()
+  const isInitialMount = useRef(true)
+  const { handleRestoreDraft, clearDraft } = useCreateDraft()
   const { setCurrentStep, headerHeight } = useCreateHeaderSteps()
 
+  // 임시저장 데이터가 있으면 최초 마운트 시 복원 모달 노출
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      if (draft) {
+        setIsDraftModalOpen(true)
+      }
+    }
+  }, [draft])
+
+  // sticky header: 스크롤 위치에 따라 현재 단계 갱신
   useEffect(() => {
     const elements = stepIds.map((id) => document.getElementById(id))
     const topMargin = headerHeight > 0 ? headerHeight : 100
@@ -102,6 +122,20 @@ function CreatePageInner() {
         <ProductPreviewModal
           isOpen={isPreviewOpen}
           onClose={() => setIsPreviewOpen(false)}
+        />
+      )}
+
+      {isDraftModalOpen && (
+        <CreateDraftModal
+          isOpen={isDraftModalOpen}
+          onConfirm={() => {
+            handleRestoreDraft()
+            setIsDraftModalOpen(false)
+          }}
+          onClose={() => {
+            clearDraft()
+            setIsDraftModalOpen(false)
+          }}
         />
       )}
     </>
