@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-//import { CreateFormType } from '@/entity/products/create/create-form'
 import { CreateProductForm } from '../create-form'
 // 이미지는 localStorage 저장 불가 사유로 제외합니다
 type DraftData = Omit<CreateProductForm, 'mainImage' | 'extraImages'> & {
