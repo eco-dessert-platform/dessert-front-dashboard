@@ -39,9 +39,11 @@ export function StageTab({
             <Component
               key={step}
               {...componentProps}
+              aria-current={isActive ? 'step' : undefined}
               className={cn(
                 'flex shrink-0 items-center gap-2',
-                onStepClick && 'cursor-pointer border-0 bg-transparent p-0',
+                onStepClick &&
+                  'cursor-pointer rounded-4 border-0 bg-transparent p-0 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none',
               )}
             >
               <span

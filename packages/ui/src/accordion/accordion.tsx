@@ -35,7 +35,8 @@ function AccordionItem({
 
 interface CustomTriggerProps
   extends React.ComponentProps<typeof AccordionPrimitive.Trigger> {
-  customIcon?: React.ReactNode
+  // 노드를 렌더링하지 않고 Chevron 아이콘 스타일만 토글하므로 boolean으로 좁힘
+  customIcon?: boolean
 }
 
 function AccordionTrigger({

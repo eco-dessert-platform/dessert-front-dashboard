@@ -31,13 +31,18 @@ export const ProductHeaderTags = ({
       <div className="mt-10 flex gap-4">
         {tagData.map((items) => {
           const isActive = activeTags[items.title] ?? false
+          const chip = (
+            <Chip size="md" selected={isActive}>
+              #{items.title}
+            </Chip>
+          )
+          // tooltip이 없는 태그는 빈 Tooltip 대신 Chip만 노출
+          if (!items.tooltip) {
+            return <span key={items.title}>{chip}</span>
+          }
           return (
             <Tooltip position="bottom" key={items.title}>
-              <Tooltip.Trigger>
-                <Chip size="md" selected={isActive}>
-                  #{items.title}
-                </Chip>
-              </Tooltip.Trigger>
+              <Tooltip.Trigger>{chip}</Tooltip.Trigger>
               <Tooltip.Content className="px-8 py-6">
                 <p>{items.tooltip}</p>
               </Tooltip.Content>
