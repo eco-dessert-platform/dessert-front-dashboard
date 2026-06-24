@@ -1,6 +1,6 @@
 import { ChevronUpIcon } from '@dessert/icons'
 
-import { EssentialOptions } from '@/entity/products/create/create-header/essential-options.constants'
+import { EssentialOptions } from '@/features/products/create/create-header/essential-options.constants'
 import { DaySelector } from '@/widgets/day-selector'
 
 import { ProductOptionsType } from '../create-form-options'
