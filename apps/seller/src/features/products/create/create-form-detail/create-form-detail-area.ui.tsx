@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { PlusIcon, SquarePenIcon } from '@dessert/icons'
 import { Button, Label } from '@dessert/ui'
 import { useNavigate } from 'react-router-dom'
@@ -6,14 +8,21 @@ import AppLogoImage from '@/assets/images/apple-120x120.png'
 import { ROUTES } from '@/shared/constant/routes'
 
 import { useProductCreationStore } from '../create-form'
+import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
 
 export const ProductDetailArea = () => {
   const navigate = useNavigate()
   const { productDetail } = useProductCreationStore()
+  const { setProductFields } = useCreateHeaderSteps()
 
   // Quill 에디터의 빈 콘텐츠 체크 로직 (Zustand 상태 기반)
   const hasContent =
     productDetail.trim() !== '' && productDetail !== '<p><br></p>'
+
+  // 상세페이지 작성 여부를 헤더의 필수 입력 진행 상태에 반영
+  useEffect(() => {
+    setProductFields({ productDetail: hasContent })
+  }, [hasContent, setProductFields])
 
   const handleEditClick = () => {
     navigate(ROUTES.PRODUCTS.CREATE_DETAIL)

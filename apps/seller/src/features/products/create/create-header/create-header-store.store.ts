@@ -6,6 +6,7 @@ import {
   NutritionData,
   ProductFileType,
 } from './create-header-store.type'
+import { CREATE_FORM_STEP_IDS } from './create-header.constant'
 import { EssentialOptions } from './essential-options.constants'
 
 interface CreateFormStoreProps {
@@ -28,6 +29,17 @@ interface CreateFormStoreProps {
   // --- Computed (Derived State) ---
   getActiveTags: () => ActiveTags
 }
+
+// scrollToStep 재진입 시 이전 타이머/리스너를 정리하기 위한 모듈 레벨 토큰
+let scrollUnlockTimer: ReturnType<typeof setTimeout> | null = null
+let scrollUnlockListener: (() => void) | null = null
+
+const isSameNutrition = (a: NutritionData, b: NutritionData) =>
+  a.sugar === b.sugar &&
+  a.protein === b.protein &&
+  a.fat === b.fat &&
+  a.ingredientCategories.length === b.ingredientCategories.length &&
+  a.ingredientCategories.every((c, i) => c === b.ingredientCategories[i])
 
 export const useCreateHeaderStore = create<CreateFormStoreProps>(
   (set, get) => ({
@@ -61,6 +73,9 @@ export const useCreateHeaderStore = create<CreateFormStoreProps>(
 
     setNutritionData: (index, data) =>
       set((state) => {
+        const prev = state.nutritionDataList[index]
+        // 값이 동일하면 새 배열을 만들지 않아 불필요한 리렌더를 방지
+        if (prev && isSameNutrition(prev, data)) return {}
         const next = [...state.nutritionDataList]
         next[index] = data
         return { nutritionDataList: next }
@@ -68,32 +83,38 @@ export const useCreateHeaderStore = create<CreateFormStoreProps>(
 
     // 스크롤 로직 이식
     scrollToStep: (index) => {
-      const stepIds = [
-        'productInfo',
-        'productDelivery',
-        'productThumbnail',
-        'productOptions',
-        'productDetail',
-        'productDisclosure',
-      ]
-      const targetId = stepIds[index]
+      const targetId = CREATE_FORM_STEP_IDS[index]
       const element = document.getElementById(targetId)
       if (!element) return
+
+      // 직전 호출이 걸어둔 타이머/리스너를 먼저 정리해 최신 호출만 unlock되도록 함
+      if (scrollUnlockTimer) clearTimeout(scrollUnlockTimer)
+      if (scrollUnlockListener) {
+        window.removeEventListener('scrollend', scrollUnlockListener)
+        scrollUnlockListener = null
+      }
 
       set({ isScrolling: true, currentStep: index + 1 })
       element.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-      let timeoutId: ReturnType<typeof setTimeout>
       const unlock = () => {
-        clearTimeout(timeoutId)
-        window.removeEventListener('scrollend', unlock)
+        if (scrollUnlockTimer) {
+          clearTimeout(scrollUnlockTimer)
+          scrollUnlockTimer = null
+        }
+        if (scrollUnlockListener) {
+          window.removeEventListener('scrollend', scrollUnlockListener)
+          scrollUnlockListener = null
+        }
         set({ isScrolling: false })
       }
+
       if ('onscrollend' in window) {
+        scrollUnlockListener = unlock
         window.addEventListener('scrollend', unlock, { once: true })
-        timeoutId = setTimeout(unlock, 1000)
+        scrollUnlockTimer = setTimeout(unlock, 1000)
       } else {
-        timeoutId = setTimeout(unlock, 800)
+        scrollUnlockTimer = setTimeout(unlock, 800)
       }
     },
     getActiveTags: () => {

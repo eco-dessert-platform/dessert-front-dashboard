@@ -34,7 +34,8 @@ export const ProductHeader = () => {
 
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        const height = Math.round(entry.target.clientHeight)
+        // clientHeight는 border를 제외하므로 border-b 두께만큼 어긋남 → offsetHeight 사용
+        const height = Math.round((entry.target as HTMLElement).offsetHeight)
         setHeaderHeight(height)
       }
     })

@@ -19,6 +19,7 @@ import {
   useCreateDraftStore,
 } from '@/features/products/create/create-draft'
 import { CreateFooter } from '@/features/products/create/create-footer'
+import { CREATE_FORM_STEP_IDS } from '@/features/products/create/create-header/create-header.constant'
 import { useCreateHeaderSteps } from '@/features/products/create/create-header/use-create-header-steps.hook'
 import { ProductPreviewModal } from '@/features/products/create/create-preview'
 
@@ -30,15 +31,6 @@ function CreatePage() {
     </FormProvider>
   )
 }
-
-const stepIds = [
-  'productInfo',
-  'productDelivery',
-  'productThumbnail',
-  'productOptions',
-  'productDetail',
-  'productDisclosure',
-]
 
 function CreatePageInner() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false) //미리보기
@@ -60,7 +52,9 @@ function CreatePageInner() {
 
   // sticky header: 스크롤 위치에 따라 현재 단계 갱신
   useEffect(() => {
-    const elements = stepIds.map((id) => document.getElementById(id))
+    const elements = CREATE_FORM_STEP_IDS.map((id) =>
+      document.getElementById(id),
+    )
     const topMargin = headerHeight > 0 ? headerHeight : 100
 
     // main 요소 찾기
@@ -87,7 +81,12 @@ function CreatePageInner() {
     }
 
     scrollContainer.addEventListener('scroll', handleScroll, { passive: true })
-    return () => scrollContainer.removeEventListener('scroll', handleScroll)
+    // 초기/복원 스크롤 위치에서도 active step을 한 번 동기화
+    const rafId = requestAnimationFrame(handleScroll)
+    return () => {
+      cancelAnimationFrame(rafId)
+      scrollContainer.removeEventListener('scroll', handleScroll)
+    }
   }, [headerHeight, setCurrentStep])
 
   return (
