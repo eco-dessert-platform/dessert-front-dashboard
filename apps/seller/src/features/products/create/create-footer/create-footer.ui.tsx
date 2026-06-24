@@ -1,23 +1,19 @@
 import { Button } from '@dessert/ui'
 import { useFormContext } from 'react-hook-form'
 
-//import { CreateFormType } from '@/entity/products/create/create-form'
 import { CreateProductForm } from '@/features/products/create/create-form'
 
-//TODO: CreateProductForm -> CreateFormType으로 변경 예정입니다.
+import { useCreateDraft } from '../create-draft'
 
 //import { useSubmitCreateForm } from '@/features/products/create/create-form'
-
-//import { useCreateDraft } from '../create-draft'
-
-// TODO: useSubmitCreateForm, useCreateDraft 별도의 브랜치를 생성 할 예정입니다.
+// TODO: useSubmitCreateForm 별도의 브랜치를 생성 할 예정입니다.
 
 interface ProductFooterProps {
   onPreview: () => void
 }
 
 export const CreateFooter = ({ onPreview }: ProductFooterProps) => {
-  //const { handleSaveDraft } = useCreateDraft()
+  const { handleSaveDraft } = useCreateDraft()
   //const { handleSubmit, isPending } = useSubmitCreateForm()
   const {
     formState: { isDirty },
@@ -37,7 +33,7 @@ export const CreateFooter = ({ onPreview }: ProductFooterProps) => {
         variant="primary-outlined"
         size="lg"
         disabled={!hasAnyInput}
-        //onClick={handleSaveDraft}
+        onClick={handleSaveDraft}
       />
       <Button
         title="저장하기"
