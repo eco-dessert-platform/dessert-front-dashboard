@@ -1,8 +1,19 @@
 import { BbanggreuiOvenLogo } from '@dessert/icons'
 
-function LogoHeader() {
+import { cn } from '../lib/utils'
+
+interface LogoHeaderProps {
+  bordered?: boolean
+}
+
+function LogoHeader({ bordered = true }: LogoHeaderProps) {
   return (
-    <header className="flex h-header max-w-[1920px] shrink-0 items-center border-b border-b-gray-300 bg-white px-24 py-10">
+    <header
+      className={cn(
+        'flex h-header max-w-[1920px] shrink-0 items-center bg-white px-24 py-10',
+        bordered && 'border-b border-b-gray-300',
+      )}
+    >
       <BbanggreuiOvenLogo />
     </header>
   )

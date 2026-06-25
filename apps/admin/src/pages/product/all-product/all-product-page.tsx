@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { managementAllQueries } from '@/entity/product/management-all'
-import { ProductTable } from '@/features/product'
+import { ManagementAllTable } from '@/features/product/management-all'
 
 export function AllProductPage() {
   // @temp
@@ -30,7 +30,7 @@ export function AllProductPage() {
         )}
       </div>
 
-      <ProductTable />
+      <ManagementAllTable />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-//import { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { CopyIcon, TrashIcon } from '@dessert/icons'
 import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
@@ -14,10 +14,8 @@ import { useProductOptionForm } from './use-product-options.form.hook'
 //import { ProductFinalPrice } from '../create-form'
 //ProductFinalPrice는 상품 정보 폼에서도 공통으로 사용되는 디자인이므로
 //개별 브랜치를 생성해 작업하겠습니다.
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
-//import { useCreateHeaderSteps } from '../create-store'
-//useCreateHeaderSteps는 추후 Context API -> zustand로 헤더 기능을 마이그레이션 하는 브랜치를
-//생성 후 작업하겠습니다.
+import { InfoTooltip } from '../create-form'
+import { useCreateHeaderSteps } from '../create-header'
 
 interface ProductOptionFormProps {
   index: number
@@ -34,8 +32,7 @@ export const ProductOptionForm = ({
   onCopy,
   onAdd,
 }: ProductOptionFormProps) => {
-  //   const { productPrice, setProductFields, setNutritionData } =
-  //     useCreateHeaderSteps()
+  const { setProductFields, setNutritionData } = useCreateHeaderSteps()
   const { control: rootControl } = useFormContext()
 
   const rootProductPrice = useWatch({
@@ -64,35 +61,35 @@ export const ProductOptionForm = ({
 
   const { control, register } = form
 
-  //   useEffect(() => {
-  //     setProductFields({ productOptions: isFormField })
-  //   }, [isFormField, setProductFields])
+  useEffect(() => {
+    setProductFields({ productOptions: isFormField })
+  }, [isFormField, setProductFields])
 
-  //   useEffect(() => {
-  //     const sugar = nutritionInputs.sugar?.displayValue
-  //       ? Number(nutritionInputs.sugar.displayValue)
-  //       : null
-  //     const protein = nutritionInputs.protein?.displayValue
-  //       ? Number(nutritionInputs.protein.displayValue)
-  //       : null
-  //     const fat = nutritionInputs.fat?.displayValue
-  //       ? Number(nutritionInputs.fat.displayValue)
-  //       : null
+  useEffect(() => {
+    const sugar = nutritionInputs.sugar?.displayValue
+      ? Number(nutritionInputs.sugar.displayValue)
+      : null
+    const protein = nutritionInputs.protein?.displayValue
+      ? Number(nutritionInputs.protein.displayValue)
+      : null
+    const fat = nutritionInputs.fat?.displayValue
+      ? Number(nutritionInputs.fat.displayValue)
+      : null
 
-  //     setNutritionData(index, {
-  //       sugar,
-  //       protein,
-  //       fat,
-  //       ingredientCategories,
-  //     })
-  //   }, [
-  //     index,
-  //     nutritionInputs.sugar?.displayValue,
-  //     nutritionInputs.protein?.displayValue,
-  //     nutritionInputs.fat?.displayValue,
-  //     ingredientCategories, // Zustand 내부 비교 최적화 가능
-  //     setNutritionData,
-  //   ])
+    setNutritionData(index, {
+      sugar,
+      protein,
+      fat,
+      ingredientCategories,
+    })
+  }, [
+    index,
+    nutritionInputs.sugar?.displayValue,
+    nutritionInputs.protein?.displayValue,
+    nutritionInputs.fat?.displayValue,
+    ingredientCategories, // Zustand 내부 비교 최적화 가능
+    setNutritionData,
+  ])
 
   return (
     <>

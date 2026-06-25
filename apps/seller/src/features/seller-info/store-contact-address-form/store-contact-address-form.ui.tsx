@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { Controller, useFormContext } from 'react-hook-form'
 import { Button, Dropdown, Input, Label } from '@dessert/ui'
+import { Controller, useFormContext } from 'react-hook-form'
 
 import { StoreDetailFormValues } from '@/entity/seller-info'
 
@@ -155,12 +155,7 @@ function AddressSection() {
           <div className="w-full xl:w-[310px] 2xl:shrink-0">
             <Label label="우편번호" required />
             <div className="flex gap-12">
-              <Input
-                placeholder="12345"
-                required
-                className="flex-1"
-                disabled
-              />
+              <Input placeholder="12345" required className="flex-1" disabled />
               <Button
                 title="우편번호 검색"
                 className="shrink-0"

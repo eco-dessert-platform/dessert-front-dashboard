@@ -1,10 +1,7 @@
 import { client } from '@/shared/utils/axios'
 
 import { getMockCompletedOrderListResponse } from './completed-order.mock'
-import {
-  CompletedOrderFilters,
-  CompletedOrderListResponse,
-} from './order.type'
+import { CompletedOrderFilters, CompletedOrderListResponse } from './order.type'
 
 const useMock = import.meta.env.VITE_USE_MOCK === 'true'
 

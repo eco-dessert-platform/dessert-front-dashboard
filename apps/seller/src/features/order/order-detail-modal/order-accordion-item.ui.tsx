@@ -82,16 +82,14 @@ export function OrderAccordionItem({
             <h3 className="mb-24 typo-heading-18-b text-gray-900">주문 정보</h3>
             <div className="flex flex-col gap-4">
               {details.map((detail, idx) => (
-                <div
-                  key={idx}
-                  className="flex h-[22px] items-center gap-10"
-                >
+                <div key={idx} className="flex h-[22px] items-center gap-10">
                   <div className="flex flex-1 items-center gap-10">
                     <span className="max-w-[400px] truncate typo-title-14-r text-gray-900">
                       {detail.orderItem.boardTitle}
                     </span>
                     <span className="typo-body-12-r text-gray-500">
-                      {detail.orderItem.itemName} / {detail.orderItem.quantity}개
+                      {detail.orderItem.itemName} / {detail.orderItem.quantity}
+                      개
                     </span>
                   </div>
                   <span className="w-[80px] text-right typo-body-12-b text-gray-800">

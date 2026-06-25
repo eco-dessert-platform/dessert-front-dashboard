@@ -2,7 +2,9 @@ import { z } from 'zod'
 
 import { BANK_CODES } from './seller-info.const'
 
-const BANK_CODE_SET: ReadonlySet<string> = new Set(BANK_CODES.map((b) => b.code))
+const BANK_CODE_SET: ReadonlySet<string> = new Set(
+  BANK_CODES.map((b) => b.code),
+)
 
 export const storeNameSchema = z.object({
   storeName: z
