@@ -2,16 +2,17 @@ import { Button } from '@dessert/ui'
 
 import type { OrderTableLoadingMode } from './order-table-loading.hook'
 
-const COPY: Record<OrderTableLoadingMode, { title: string; subtitle: string }> = {
-  list: {
-    title: '주문 목록을 불러오고 있어요',
-    subtitle: '잠시만 기다려주세요',
-  },
-  mutation: {
-    title: '선택한 주문의 상태를 변경하고 있습니다',
-    subtitle: '잠시만 기다려주세요',
-  },
-}
+const COPY: Record<OrderTableLoadingMode, { title: string; subtitle: string }> =
+  {
+    list: {
+      title: '주문 목록을 불러오고 있어요',
+      subtitle: '잠시만 기다려주세요',
+    },
+    mutation: {
+      title: '선택한 주문의 상태를 변경하고 있습니다',
+      subtitle: '잠시만 기다려주세요',
+    },
+  }
 
 interface OrderTableLoadingProps {
   mode: OrderTableLoadingMode

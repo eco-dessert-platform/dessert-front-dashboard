@@ -11,6 +11,6 @@ export const useUpdateShipmentMutation = () => {
       queryClient.invalidateQueries({
         queryKey: orderQueries.all(),
       })
-    }
+    },
   })
 }

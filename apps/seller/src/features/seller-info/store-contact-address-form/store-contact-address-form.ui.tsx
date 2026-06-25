@@ -1,7 +1,11 @@
-import { Controller, useFormContext } from 'react-hook-form'
+import { useState } from 'react'
+
 import { Button, Dropdown, Input, Label } from '@dessert/ui'
+import { useKakaoPostcodePopup } from 'react-daum-postcode'
+import { Controller, useFormContext } from 'react-hook-form'
 
 import { StoreDetailFormValues } from '@/entity/seller-info'
+import { formatDaumAddress } from '@/shared/utils/format-daum-address'
 
 const CUSTOM_EMAIL_DOMAIN = 'custom'
 
@@ -68,11 +72,11 @@ function EmailSection() {
     register,
     control,
     setValue,
-    watch,
     formState: { errors },
   } = useFormContext<StoreDetailFormValues>()
 
-  const isCustomDomain = watch('emailDomainSelection') === CUSTOM_EMAIL_DOMAIN
+  const [selectedEmailDomain, setSelectedEmailDomain] = useState('')
+  const isCustomDomain = selectedEmailDomain === CUSTOM_EMAIL_DOMAIN
 
   return (
     <div>
@@ -81,7 +85,7 @@ function EmailSection() {
         <div className="relative flex-1">
           <Input {...register('emailLocal')} placeholder="aaa123" required />
           {errors.emailLocal && (
-            <span className="absolute left-0 top-full mt-6 typo-body-12-r text-error-500">
+            <span className="absolute top-full left-0 mt-6 typo-body-12-r text-error-500">
               {errors.emailLocal.message}
             </span>
           )}
@@ -92,39 +96,40 @@ function EmailSection() {
         </div>
 
         <div className="relative flex-1">
-          <Input
-            {...register('emailDomain')}
-            placeholder="naver.com"
-            required
-            readOnly={!isCustomDomain}
+          <Controller
+            name="emailDomain"
+            control={control}
+            render={({ field }) => (
+              <Input
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                placeholder="naver.com"
+                required
+                disabled={!isCustomDomain}
+              />
+            )}
           />
           {errors.emailDomain && (
-            <span className="absolute left-0 top-full mt-6 typo-body-12-r text-error-500">
+            <span className="absolute top-full left-0 mt-6 typo-body-12-r text-error-500">
               {errors.emailDomain.message}
             </span>
           )}
         </div>
 
-        {/* Dropdown은 forwardRef 미지원 + onSelect 시그니처라 Controller 사용 */}
-        <Controller
-          name="emailDomainSelection"
-          control={control}
-          render={({ field }) => (
-            <Dropdown
-              options={EMAIL_DOMAIN}
-              placeholder="선택하세요"
-              value={field.value}
-              onSelect={(value) => {
-                field.onChange(value)
-                setValue(
-                  'emailDomain',
-                  value === CUSTOM_EMAIL_DOMAIN ? '' : value,
-                  { shouldValidate: true },
-                )
-              }}
-              className="flex-1"
-            />
-          )}
+        <Dropdown
+          options={EMAIL_DOMAIN}
+          placeholder="선택하세요"
+          value={selectedEmailDomain}
+          onSelect={(value) => {
+            setSelectedEmailDomain(value)
+            if (value === CUSTOM_EMAIL_DOMAIN) {
+              setValue('emailDomain', '', { shouldValidate: true })
+              return
+            }
+            setValue('emailDomain', value, { shouldValidate: true })
+          }}
+          className="flex-1"
         />
       </div>
     </div>
@@ -134,15 +139,24 @@ function EmailSection() {
 function AddressSection() {
   const {
     register,
-    watch,
+    setValue,
     formState: { errors },
   } = useFormContext<StoreDetailFormValues>()
 
-  const isPostalCodeSelected = Boolean(watch('originAddress'))
+  const [postalCode, setPostalCode] = useState('')
+  const [isPostalCodeSelected, setIsPostalCodeSelected] = useState(false)
+  const openPostcode = useKakaoPostcodePopup()
 
   const handleClickPostalCodeSearch = () => {
-    // 추후 우편번호 검색 라이브러리 연동
-    // setValue('originAddress', '...')
+    openPostcode({
+      onComplete: (data) => {
+        setPostalCode(data.zonecode)
+        setValue('originAddress', formatDaumAddress(data), {
+          shouldValidate: true,
+        })
+        setIsPostalCodeSelected(true)
+      },
+    })
   }
 
   return (
@@ -156,6 +170,8 @@ function AddressSection() {
                 placeholder="12345"
                 required
                 className="flex-1"
+                value={postalCode}
+                readOnly
                 disabled
               />
               <Button
@@ -172,7 +188,7 @@ function AddressSection() {
               label="출고지 주소"
               placeholder="서울시 강남구 선릉로"
               required
-              readOnly
+              disabled
             />
             {errors.originAddress && (
               <span className="typo-body-12-r text-error-500">

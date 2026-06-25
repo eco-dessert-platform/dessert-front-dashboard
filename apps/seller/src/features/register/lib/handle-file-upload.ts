@@ -1,0 +1,36 @@
+import { toast } from '@dessert/ui'
+
+import { FILE_UPLOAD_LIMITS } from '@/entity/register/register.constant'
+
+import { REGISTER_TOAST_MESSAGES } from '../register.constant'
+
+type FileUploadResult = 'success' | 'size-exceeded' | 'type-invalid' | 'cleared'
+
+export const handleRegisterFileUpload = (
+  file: File | null,
+  onAccept: (file: File | undefined) => void,
+): FileUploadResult => {
+  if (!file) {
+    onAccept(undefined)
+    return 'cleared'
+  }
+
+  if (file.size > FILE_UPLOAD_LIMITS.MAX_SIZE_BYTES) {
+    const msg = REGISTER_TOAST_MESSAGES.FILE_SIZE_EXCEEDED
+    toast.error(msg.title, msg.description)
+    onAccept(undefined)
+    return 'size-exceeded'
+  }
+
+  const allowed: readonly string[] = FILE_UPLOAD_LIMITS.ALLOWED_TYPES
+  if (!allowed.includes(file.type)) {
+    const msg = REGISTER_TOAST_MESSAGES.FILE_TYPE_INVALID
+    toast.error(msg.title, msg.description)
+    onAccept(undefined)
+    return 'type-invalid'
+  }
+
+  onAccept(file)
+  toast.success(REGISTER_TOAST_MESSAGES.FILE_UPLOAD_SUCCESS.title)
+  return 'success'
+}

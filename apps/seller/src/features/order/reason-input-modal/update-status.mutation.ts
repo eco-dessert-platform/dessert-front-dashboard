@@ -11,6 +11,6 @@ export const useUpdateOrderStatusMutation = () => {
       queryClient.invalidateQueries({
         queryKey: orderQueries.all(),
       })
-    }
+    },
   })
 }

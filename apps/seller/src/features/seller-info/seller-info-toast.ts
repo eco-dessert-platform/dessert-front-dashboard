@@ -10,6 +10,15 @@ export const sellerInfoToast = {
   storeNameChangeDuplicateError: () =>
     toast.error('중복된 스토어명이에요', '스토어명을 다시 작성해주세요'),
 
+  storeNameCheckError: () =>
+    toast.error('중복 확인 중 문제가 발생했어요', '잠시 후 다시 시도해주세요'),
+
+  storeNameChangeError: () =>
+    toast.error(
+      '스토어명 변경 신청에 실패했어요',
+      '잠시 후 다시 시도해주세요',
+    ),
+
   accountInfoChangeSuccess: () => toast.success('계좌정보 변경을 완료했어요'),
 
   accountInfoChangeValidationError: () =>

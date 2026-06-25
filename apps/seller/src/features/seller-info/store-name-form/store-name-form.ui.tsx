@@ -1,30 +1,48 @@
 import { useState } from 'react'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@dessert/ui'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useQuery } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 
-import { StoreNameFormValues, storeNameSchema } from '@/entity/seller-info'
+import {
+  StoreNameFormValues,
+  sellerInfoQueries,
+  storeNameSchema,
+  useCheckStoreNameMutation,
+  useRequestStoreNameChangeMutation,
+} from '@/entity/seller-info'
 import { cn } from '@/shared/libs/utils'
-import { InputField } from '@/widgets/input-field'
+import { InputField } from '@/shared/ui/input-field'
 
 import {
   SELLER_INFO_CANCEL_DIALOG_CONTENT,
   SELLER_INFO_SUBMIT_DIALOG_CONTENT,
   SellerInfoConfirmDialog,
 } from '../seller-info-confirm-dialog'
+import { sellerInfoToast } from '../seller-info-toast'
 
 type ConfirmDialogType = 'cancel' | 'submit'
 
 export function StoreNameForm() {
+  const { data, isLoading, isError, refetch } = useQuery({
+    ...sellerInfoQueries.store(),
+  })
+  const { mutate: checkName } = useCheckStoreNameMutation()
+  const { mutate: requestChange, isPending: isRequesting } =
+    useRequestStoreNameChangeMutation()
+
   const [confirmDialogType, setConfirmDialogType] =
     useState<ConfirmDialogType | null>(null)
+  const [lastCheckedName, setLastCheckedName] = useState<string | null>(null)
 
   const {
     register,
     handleSubmit,
     reset,
     watch,
+    setError,
+    clearErrors,
     formState: { errors, isValid },
   } = useForm<StoreNameFormValues>({
     resolver: zodResolver(storeNameSchema),
@@ -32,7 +50,36 @@ export function StoreNameForm() {
     mode: 'onChange',
   })
 
-  const hasStoreName = watch('storeName').length > 0
+  if (isLoading) {
+    return (
+      <div className="py-40 text-center typo-body-14-r text-gray-500">
+        스토어 정보를 불러오는 중이에요.
+      </div>
+    )
+  }
+
+  if (isError || !data) {
+    return (
+      <div className="flex flex-col items-center gap-12 py-40">
+        <p className="typo-body-14-r text-gray-500">
+          스토어 정보를 불러오지 못했어요.
+        </p>
+        <Button
+          title="다시 시도"
+          variant="secondary-outlined"
+          onClick={() => refetch()}
+        />
+      </div>
+    )
+  }
+
+  const { available, store } = data
+  const storeName = watch('storeName').trim()
+  const hasStoreName = storeName.length > 0
+  const isSameAsCurrent = hasStoreName && storeName === store.name
+  const isChecked = lastCheckedName !== null && lastCheckedName === storeName
+  const canSubmit =
+    available && isValid && isChecked && !isSameAsCurrent && !isRequesting
 
   const confirmDialogContent =
     confirmDialogType === null
@@ -40,6 +87,36 @@ export function StoreNameForm() {
       : confirmDialogType === 'cancel'
         ? SELLER_INFO_CANCEL_DIALOG_CONTENT
         : SELLER_INFO_SUBMIT_DIALOG_CONTENT
+
+  const handleCheckClick = () => {
+    if (!hasStoreName || !isValid) return
+    if (isSameAsCurrent) {
+      setError('storeName', {
+        type: 'sameAsCurrent',
+        message: '현재 스토어명과 같아요',
+      })
+      return
+    }
+
+    checkName(storeName, {
+      onSuccess: ({ available: isAvailable }) => {
+        if (!isAvailable) {
+          setLastCheckedName(null)
+          setError('storeName', {
+            type: 'duplicate',
+            message: '이미 사용 중인 스토어명이에요',
+          })
+          sellerInfoToast.storeNameChangeDuplicateError()
+          return
+        }
+        clearErrors('storeName')
+        setLastCheckedName(storeName)
+      },
+      onError: () => {
+        sellerInfoToast.storeNameCheckError()
+      },
+    })
+  }
 
   const handleCancelButtonClick = () => {
     setConfirmDialogType('cancel')
@@ -52,17 +129,33 @@ export function StoreNameForm() {
   const handleDialogConfirm = () => {
     if (confirmDialogType === 'cancel') {
       reset()
+      setLastCheckedName(null)
+      handleDialogClose()
+      return
     }
-    handleDialogClose()
+
+    requestChange(
+      { newName: storeName },
+      {
+        onSuccess: () => {
+          sellerInfoToast.storeNameChangeSuccess()
+          reset()
+          setLastCheckedName(null)
+        },
+        onError: () => {
+          sellerInfoToast.storeNameChangeError()
+        },
+        onSettled: handleDialogClose,
+      },
+    )
   }
 
   const handleDialogOpenChange = (open: boolean) => {
-    if (!open) {
-      handleDialogClose()
-    }
+    if (!open) handleDialogClose()
   }
 
   const onSubmit = () => {
+    if (!canSubmit) return
     setConfirmDialogType('submit')
   }
 
@@ -76,13 +169,15 @@ export function StoreNameForm() {
       <InputField
         {...register('storeName')}
         label="스토어명"
-        placeholder="스토어명은 3~50자로 작성해주세요"
+        placeholder={store.name}
         required
         buttonText="중복확인"
         maxLength={50}
-        onButtonClick={() => {}}
+        onButtonClick={handleCheckClick}
         error={!!errors.storeName}
         errorMessage={errors.storeName?.message}
+        helperText={isChecked ? '✓ 사용 가능한 이름이에요' : undefined}
+        disabled={isRequesting}
         className="mt-[22px]"
       />
 
@@ -101,7 +196,7 @@ export function StoreNameForm() {
           title="수정하기"
           size="md"
           className="w-[160px]"
-          disabled={!isValid}
+          disabled={!canSubmit}
           onClick={handleSubmit(onSubmit)}
         />
       </span>
