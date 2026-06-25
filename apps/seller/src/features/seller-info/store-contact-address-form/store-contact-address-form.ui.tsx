@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
 import { Button, Dropdown, Input, Label } from '@dessert/ui'
+import { useKakaoPostcodePopup } from 'react-daum-postcode'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { StoreDetailFormValues } from '@/entity/seller-info'
+import { formatDaumAddress } from '@/shared/utils/format-daum-address'
 
 const CUSTOM_EMAIL_DOMAIN = 'custom'
 
@@ -137,15 +139,24 @@ function EmailSection() {
 function AddressSection() {
   const {
     register,
+    setValue,
     formState: { errors },
   } = useFormContext<StoreDetailFormValues>()
 
+  const [postalCode, setPostalCode] = useState('')
   const [isPostalCodeSelected, setIsPostalCodeSelected] = useState(false)
+  const openPostcode = useKakaoPostcodePopup()
 
   const handleClickPostalCodeSearch = () => {
-    // 추후 우편번호 검색 라이브러리 연동
-    // setValue('originAddress', '...')
-    // setIsPostalCodeSelected(true)
+    openPostcode({
+      onComplete: (data) => {
+        setPostalCode(data.zonecode)
+        setValue('originAddress', formatDaumAddress(data), {
+          shouldValidate: true,
+        })
+        setIsPostalCodeSelected(true)
+      },
+    })
   }
 
   return (
@@ -155,7 +166,14 @@ function AddressSection() {
           <div className="w-full xl:w-[310px] 2xl:shrink-0">
             <Label label="우편번호" required />
             <div className="flex gap-12">
-              <Input placeholder="12345" required className="flex-1" disabled />
+              <Input
+                placeholder="12345"
+                required
+                className="flex-1"
+                value={postalCode}
+                readOnly
+                disabled
+              />
               <Button
                 title="우편번호 검색"
                 className="shrink-0"

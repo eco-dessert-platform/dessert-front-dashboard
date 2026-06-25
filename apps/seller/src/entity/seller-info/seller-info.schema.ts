@@ -9,6 +9,7 @@ const BANK_CODE_SET: ReadonlySet<string> = new Set(
 export const storeNameSchema = z.object({
   storeName: z
     .string()
+    .trim()
     .min(3, '스토어명은 3~50자 이내로 입력해주세요.')
     .max(50, '스토어명은 3~50자 이내로 입력해주세요.'),
 })
@@ -23,7 +24,8 @@ export const storeAccountInfoSchema = z.object({
   accountNumber: z
     .string()
     .min(1, '계좌번호를 입력해주세요.')
-    .regex(/^[0-9-]+$/, '숫자만 입력해주세요.'),
+    .regex(/^[0-9-]+$/, '숫자만 입력해주세요.')
+    .refine((v) => /\d/.test(v), '계좌번호를 입력해주세요.'),
 })
 
 export type StoreAccountInfoFormValues = z.infer<typeof storeAccountInfoSchema>
