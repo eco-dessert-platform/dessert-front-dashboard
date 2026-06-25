@@ -1,24 +1,31 @@
-import { useFormContext } from 'react-hook-form'
+import { Path, useFormContext } from 'react-hook-form'
 
+import { useCreateInfoValidation } from './use-create-info-validation.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
-import { CreateFormType } from '../create-form'
+import { CreateProductForm } from '../create-form/product-create.types'
 
 export function useProductInfoForm() {
-  const form = useFormContext<CreateFormType>()
+  const form = useFormContext<CreateProductForm>()
 
-  // 실시간으로 가격/할인 최종 금액 계산
-  const productName = form.watch('productName')
-  const price = form.watch('price')
-  const discountAmount = form.watch('discountAmount')
-  const discountType = form.watch('discountType')
-  const productionTime = form.watch('productionTime')
+  const productFields: Array<Path<CreateProductForm>> = [
+    'productName',
+    'price',
+    'discountAmount',
+    'discountType',
+    'productionTime',
+  ]
 
-  const isFormField =
-    price !== null &&
-    discountAmount !== null &&
-    productName.length >= 3 &&
-    productName.length <= 49 &&
-    productionTime !== ''
+  const { isValid: isFormField, values } =
+    useCreateInfoValidation<CreateProductForm>(productFields)
+
+  const [productName, price, discountAmount, discountType, productionTime] =
+    values as [
+      CreateProductForm['productName'],
+      CreateProductForm['price'],
+      CreateProductForm['discountAmount'],
+      CreateProductForm['discountType'],
+      CreateProductForm['productionTime'],
+    ]
 
   const finalPrice =
     price !== null && discountAmount !== null

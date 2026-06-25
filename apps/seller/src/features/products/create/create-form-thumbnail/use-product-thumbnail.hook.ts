@@ -11,7 +11,7 @@ import {
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useFormContext } from 'react-hook-form'
 
-import { CreateFormType } from '../create-form/product-create.types'
+import { CreateProductForm } from '../create-form/product-create.types'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png']
@@ -65,7 +65,7 @@ const validateImage = (
 const generateId = () => Math.random().toString(36).substring(2, 11)
 
 export function useProductThumbnailForm() {
-  const form = useFormContext<CreateFormType>()
+  const form = useFormContext<CreateProductForm>()
 
   // 1. 타입 수정 덕분에 이제 casting 없이 바로 타입을 인식합니다.
   const mainImage = form.watch('mainImage')

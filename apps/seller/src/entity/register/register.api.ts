@@ -76,14 +76,9 @@ export async function getAccountVerification(): Promise<AccountVerificationDetai
 export async function verifyAccount(
   payload: AccountVerificationRequest,
 ): Promise<AccountVerificationResult> {
-  const sanitized: AccountVerificationRequest = {
-    ...payload,
-    accountNumber: payload.accountNumber.replace(/\D/g, ''),
-  }
-
   const { data } = await client.post<ApiResponse<AccountVerificationResult>>(
     '/api/v1/seller/sellers/account-verifications',
-    sanitized,
+    payload,
   )
 
   if (!data.result) {
@@ -91,6 +86,19 @@ export async function verifyAccount(
   }
 
   return data.result
+}
+
+export async function editAccountRequest(
+  payload: AccountVerificationRequest,
+): Promise<void> {
+  const { data } = await client.patch<ApiResponse<never>>(
+    '/api/v1/seller/sellers/account',
+    payload,
+  )
+
+  if (!data.success) {
+    throw new Error(data.message ?? '계좌 정보 수정에 실패했습니다.')
+  }
 }
 
 interface ListApiResponse<T> {
@@ -117,6 +125,7 @@ export async function registerDocuments({
   const { data } = await client.post<ListApiResponse<RegisterDocumentsResult>>(
     '/api/v1/seller/sellers/documents',
     formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } },
   )
 
   if (!data.list) {
@@ -146,6 +155,7 @@ export async function submitStoreApplication({
   const { data } = await client.post<ApiResponse<StoreApplicationResult>>(
     '/api/v1/seller/stores/applications',
     formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } },
   )
 
   if (!data.result) {

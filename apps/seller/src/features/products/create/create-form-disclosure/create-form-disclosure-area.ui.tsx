@@ -1,11 +1,11 @@
 import { Input, Label, Radio } from '@dessert/ui'
 import { Control, Controller, FieldErrors, useWatch } from 'react-hook-form'
 
+import { DISCLOSURE_FIELDS, RADIO_OPTIONS } from '@/entity/products'
 import { cn } from '@/shared/libs/utils'
 
-import { DISCLOSURE_FIELDS, RADIO_OPTIONS } from './product-disclosure.constant'
 import { useProductDisclosureForm } from './use-product-disclosure-form.hook'
-import { CreateFormType } from '../create-form/product-create.types'
+import { CreateProductForm } from '../create-form/product-create.types'
 
 /**
  * [Refactoring] DisclosureFieldItem
@@ -20,8 +20,8 @@ const DisclosureFieldItem = ({
 }: {
   field: (typeof DISCLOSURE_FIELDS)[number]
   index: number
-  control: Control<CreateFormType>
-  errors: FieldErrors<CreateFormType>
+  control: Control<CreateProductForm>
+  errors: FieldErrors<CreateProductForm>
 }) => {
   // 개별 모드 값만 감시하여 리렌더링 범위 최소화
   const modeValue = useWatch({
@@ -61,7 +61,7 @@ const DisclosureFieldItem = ({
         render={({ field: inputField }) => (
           <Input
             placeholder={
-              modeValue === 'default' && field.key !== 'productName'
+              modeValue === 'default'
                 ? '해당항목 없음'
                 : '3자 이상 50자 미만으로 입력해 주세요'
             }

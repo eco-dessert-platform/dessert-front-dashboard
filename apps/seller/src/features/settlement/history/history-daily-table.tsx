@@ -136,7 +136,7 @@ export const DailySettlementTable = () => {
   const data = useMemo(() => getDailySettlementMock(page), [page])
 
   return (
-    <div className="mt-24 [&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
+    <div className="[&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
       <Table
         data={data}
         columns={columns}

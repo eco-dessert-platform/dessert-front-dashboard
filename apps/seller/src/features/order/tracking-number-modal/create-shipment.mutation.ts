@@ -7,8 +7,9 @@ export const useCreateShipmentMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: createShipment,
-    onSuccess: () => queryClient.invalidateQueries({
-      queryKey: orderQueries.all() 
-    })
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: orderQueries.all(),
+      }),
   })
 }

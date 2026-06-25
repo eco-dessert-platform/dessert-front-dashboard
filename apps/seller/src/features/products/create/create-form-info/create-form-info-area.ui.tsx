@@ -3,10 +3,12 @@ import { useEffect } from 'react'
 import { Dropdown, Input, Label, Switch } from '@dessert/ui'
 import { Controller } from 'react-hook-form'
 
-import { PRODUCTION_TIME, PRODUCT_DISCOUNT_TYPE } from './create-info.constant'
+import { ProductDiscountType } from '@/entity/products/create/create-info/product-discount-type.constants'
+import { productionTimes } from '@/entity/products/create/create-info/production-time.constants'
+
 import { useProductInfoForm } from './use-product-info-form.hook'
 import { InfoTooltip, ProductFinalPrice } from '../create-form'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { useCreateHeaderSteps } from '../create-header'
 
 export const ProductInfoArea = () => {
   const {
@@ -27,10 +29,10 @@ export const ProductInfoArea = () => {
     formState: { errors },
   } = form
 
-  const { setProductFields } = useCreateFormSteps()
+  const { setProductFields } = useCreateHeaderSteps()
 
   useEffect(() => {
-    setProductFields((prev) => ({ ...prev, productInfo: isFormField }))
+    setProductFields({ productInfo: isFormField })
   }, [isFormField, setProductFields])
 
   return (
@@ -102,7 +104,7 @@ export const ProductInfoArea = () => {
         name="productionTime"
         render={({ field }) => (
           <Dropdown
-            options={PRODUCTION_TIME}
+            options={productionTimes}
             value={field.value}
             className="mt-8"
             onSelect={field.onChange}
@@ -144,7 +146,7 @@ export const ProductInfoArea = () => {
               name="discountType"
               render={({ field }) => (
                 <Dropdown
-                  options={PRODUCT_DISCOUNT_TYPE}
+                  options={ProductDiscountType}
                   value={field.value}
                   placeholder="원"
                   onSelect={(val) => {

@@ -11,7 +11,7 @@ export const SettlementOverview = () => {
 
   return (
     <div className="rounded-12 border border-gray-100 bg-white p-24">
-      <div className="mb-12 flex items-end gap-8">
+      <div className="mb-10 flex items-end gap-8">
         <div className="w-[228px]">
           <DatePicker
             label="조회기간"

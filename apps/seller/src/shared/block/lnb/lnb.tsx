@@ -55,7 +55,7 @@ const MENU_LIST = [
     items: [
       {
         title: '판매분석',
-        href: '#',
+        href: ROUTES.STATISTICS.SALES_ANALYTICS,
       },
     ],
   },

@@ -15,8 +15,8 @@ import {
   REJECT_CATEGORY_LABELS,
   RejectBodySchema,
   RejectCategorySchema,
-} from '@/entity/product'
-import type { RejectCategory } from '@/entity/product'
+} from '@/entity/product/upload-approval'
+import type { RejectCategory } from '@/entity/product/upload-approval'
 
 import { useDecideUploadApprovalMutation } from './upload-approval.mutation'
 

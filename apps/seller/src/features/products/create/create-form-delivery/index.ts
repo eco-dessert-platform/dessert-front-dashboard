@@ -1,5 +1,3 @@
 export { ProductDeliveryArea } from './create-form-delivery-area.ui'
 export { useProductDeliveryForm } from './use-product-delivery-form.hook'
 export { deliverySchema } from './create-delivery.schema'
-export { DeliveryCompany, DeliveryTerms } from './create-delivery.constant'
-export type { ProductDeliveryType } from './create-form-delivery.type'

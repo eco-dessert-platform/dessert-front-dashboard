@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { DISCLOSURE_FIELDS } from './product-disclosure.constant'
+import { DISCLOSURE_FIELDS } from '@/entity/products'
 
 // DISCLOSURE_FIELDS 상수를 기반으로 스키마 객체를 동적 생성합니다.
 // 타입 추론을 위해 ZodTypeAny를 사용합니다.
@@ -32,6 +32,7 @@ export const disclosureSchema = z
     DISCLOSURE_FIELDS.forEach((field) => {
       if (noticeMode[field.key] === 'manual') {
         const val = noticeValue[field.key]
+        // 빈값을 조기 return으로 건너뛰면 '직접 입력 빈값 불가' 요구를 우회하므로 길이 검증에 포함
         if (val.trim().length < 3 || val.trim().length >= 50) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,

@@ -41,3 +41,8 @@ dist-ssr
 
 *storybook.log
 storybook-static
+
+# Local AI agent skill folders (Claude Code / Gemini CLI / OpenAI Codex CLI)
+.claude/
+.gemini/
+.codex/

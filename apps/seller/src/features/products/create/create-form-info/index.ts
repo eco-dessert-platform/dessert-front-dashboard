@@ -1,5 +1,4 @@
 export { ProductInfoArea } from './create-form-info-area.ui'
 export { useProductInfoForm } from './use-product-info-form.hook'
 export { productSchema } from './create-info.schema'
-export { PRODUCTION_TIME, PRODUCT_DISCOUNT_TYPE } from './create-info.constant'
-export type { ProductInfoType } from './create-form-info.type'
+export { useCreateInfoValidation } from './use-create-info-validation.hook'

@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Resolver, useForm } from 'react-hook-form'
 
-import { DISCLOSURE_FIELDS } from '../create-form-disclosure'
+import { DISCLOSURE_FIELDS } from '@/entity/products'
+
 import { ProductOptionsType } from '../create-form-options'
-import { CreateFormType, createProductSchema } from './product-create.types'
+import { CreateProductForm, createProductSchema } from './product-create.types'
 export const DEFAULT_PRODUCT_OPTION: ProductOptionsType = {
   mainCategory: '',
   subCategory: '',
@@ -23,8 +24,8 @@ export const DEFAULT_PRODUCT_OPTION: ProductOptionsType = {
 }
 
 export const useCreateProductForm = () => {
-  return useForm<CreateFormType>({
-    resolver: zodResolver(createProductSchema) as Resolver<CreateFormType>,
+  return useForm<CreateProductForm>({
+    resolver: zodResolver(createProductSchema) as Resolver<CreateProductForm>,
     defaultValues: {
       productName: '',
       isFresh: true,
@@ -37,22 +38,26 @@ export const useCreateProductForm = () => {
       deliveryCompany: '',
       deliveryFee: null,
       deliveryMinFee: null,
+      mainImage: null,
+      extraImages: [],
 
-      options: [DEFAULT_PRODUCT_OPTION] as unknown as CreateFormType['options'],
+      options: [
+        DEFAULT_PRODUCT_OPTION,
+      ] as unknown as CreateProductForm['options'],
 
       productInfoNotice: DISCLOSURE_FIELDS.reduce(
         (acc, field) => ({
           ...acc,
           [field.key]: '',
         }),
-        {} as CreateFormType['productInfoNotice'],
+        {} as CreateProductForm['productInfoNotice'],
       ),
       productInfoNoticeMode: DISCLOSURE_FIELDS.reduce(
         (acc, field) => ({
           ...acc,
           [field.key]: 'default',
         }),
-        {} as CreateFormType['productInfoNoticeMode'],
+        {} as CreateProductForm['productInfoNoticeMode'],
       ),
     },
     mode: 'onChange',

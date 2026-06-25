@@ -3,12 +3,12 @@ import { useEffect } from 'react'
 import { Dropdown, Input, Label } from '@dessert/ui'
 import { Controller } from 'react-hook-form'
 
+import { DeliveryCompany, DeliveryTerms } from '@/entity/products'
 import { cn } from '@/shared/libs/utils'
 
-import { DeliveryCompany, DeliveryTerms } from './create-delivery.constant'
 import { useProductDeliveryForm } from './use-product-delivery-form.hook'
-import { InfoTooltip } from '../create-form/info-tooltip.ui'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { InfoTooltip } from '../create-form'
+import { useCreateHeaderSteps } from '../create-header'
 
 export const ProductDeliveryArea = () => {
   const {
@@ -17,6 +17,7 @@ export const ProductDeliveryArea = () => {
     deliveryFeeInput,
     deliveryMinFeeInput,
     isFormField,
+    handleDeliveryTermsChange,
   } = useProductDeliveryForm()
 
   const {
@@ -25,10 +26,10 @@ export const ProductDeliveryArea = () => {
     formState: { errors },
   } = form
 
-  const { setProductFields } = useCreateFormSteps()
+  const { setProductFields } = useCreateHeaderSteps()
 
   useEffect(() => {
-    setProductFields((prev) => ({ ...prev, productDelivery: isFormField }))
+    setProductFields({ productDelivery: isFormField })
   }, [isFormField, setProductFields])
 
   return (
@@ -46,26 +47,12 @@ export const ProductDeliveryArea = () => {
             required
             className="typo-heading-18-r text-gray-900"
           />
-          <Controller
-            control={control}
-            name="deliveryTerms"
-            render={({ field }) => (
-              <Dropdown
-                options={DeliveryTerms}
-                value={field.value}
-                placeholder="유료"
-                onSelect={(val) => {
-                  field.onChange(val)
-                  if (val === 'free') {
-                    setValue('deliveryFee', null, { shouldValidate: true })
-                    setValue('deliveryMinFee', null, { shouldValidate: true })
-                  } else if (val === 'charged') {
-                    setValue('deliveryMinFee', null, { shouldValidate: true })
-                  }
-                }}
-                className="mt-8"
-              />
-            )}
+          <Dropdown
+            options={DeliveryTerms}
+            value={deliveryTerms}
+            placeholder="유료"
+            onSelect={handleDeliveryTermsChange}
+            className="mt-8"
           />
         </div>
         <div>
