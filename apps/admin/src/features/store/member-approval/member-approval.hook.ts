@@ -2,64 +2,82 @@ import { useState } from 'react'
 
 import { toast } from '@dessert/ui'
 
-interface BusinessOwner {
-  id: string
-  ownerName: string
-  businessNumber: string
+import type { ApproveSellersRequest } from '@/entity/store/member-approval'
+
+import {
+  useApproveSellersMutation,
+  useRejectSellersMutation,
+} from './member-approval.mutation'
+
+type ApplicantInput = {
+  sellerName: string
+  identifier: string
 }
 
 export const useMemberApproval = () => {
-  const [businessOwners, setBusinessOwners] = useState<BusinessOwner[]>([])
+  const [inputs, setInputs] = useState<Record<number, ApplicantInput>>({})
+  const { mutate, isPending } = useApproveSellersMutation()
+  const { mutate: rejectMutate, isPending: isRejecting } =
+    useRejectSellersMutation()
 
-  const updateBusinessOwner = (
-    rowId: string,
-    field: keyof Omit<BusinessOwner, 'id'>,
+  const updateInput = (
+    applicationId: number,
+    field: keyof ApplicantInput,
     value: string,
   ) => {
-    setBusinessOwners((prev) =>
-      prev.map((owner) =>
-        owner.id === rowId ? { ...owner, [field]: value } : owner,
-      ),
-    )
+    setInputs((prev) => {
+      const current = prev[applicationId] ?? { sellerName: '', identifier: '' }
+      return {
+        ...prev,
+        [applicationId]: { ...current, [field]: value },
+      }
+    })
   }
 
-  const toggleBusinessOwner = (
-    rowId: string,
-    checked: boolean | 'indeterminate',
-  ) => {
-    const isChecked = checked === true
-    setBusinessOwners((prev) =>
-      isChecked
-        ? prev.some((owner) => owner.id === rowId)
-          ? prev
-          : [...prev, { id: rowId, ownerName: '', businessNumber: '' }]
-        : prev.filter((owner) => owner.id !== rowId),
-    )
-  }
-
-  const submitApproval = async () => {
-    const isInvalid = businessOwners.some(
-      (owner) => !owner.ownerName || !owner.businessNumber,
-    )
-
-    if (isInvalid) {
-      // toast 혹은 alert 처리
-      toast.error('항목을 입력하세요', '사업자 번호, 대표자명 입력하세요')
+  const submitApproval = (selectedIds: number[], onSuccess?: () => void) => {
+    if (selectedIds.length === 0) {
+      toast.error('선택된 항목이 없습니다.', '승인할 신청을 선택해주세요.')
       return
     }
 
-    // API 호출로직 추가 예정
+    const body: ApproveSellersRequest = selectedIds.map((applicationId) => ({
+      applicationId,
+      sellerName: inputs[applicationId]?.sellerName.trim() ?? '',
+      identifier: inputs[applicationId]?.identifier.trim() ?? '',
+    }))
+
+    const hasEmpty = body.some((item) => !item.sellerName || !item.identifier)
+    if (hasEmpty) {
+      toast.error(
+        '항목을 입력하세요',
+        '대표자명, 사업자등록번호를 입력해주세요.',
+      )
+      return
+    }
+
+    mutate(body, { onSuccess })
+  }
+
+  const submitReject = (selectedIds: number[], onSuccess?: () => void) => {
+    if (selectedIds.length === 0) {
+      toast.error('선택된 항목이 없습니다.', '거절할 신청을 선택해주세요.')
+      return
+    }
+
+    rejectMutate({ applicationIds: selectedIds }, { onSuccess })
   }
 
   const handleDownloadFile = () => {
-    //서류다운로드 기능 추가 예정
+    // 서류 다운로드 API(GET /api/v1/admin/sellers/documents) 연동 예정
   }
 
   return {
-    businessOwners,
-    updateBusinessOwner,
-    toggleBusinessOwner,
+    inputs,
+    updateInput,
     submitApproval,
+    isApproving: isPending,
+    submitReject,
+    isRejecting,
     handleDownloadFile,
   }
 }

@@ -1,84 +1,100 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
-import { Input, Table, getRowSpanForGroup } from '@dessert/ui'
+import { Input, Table } from '@dessert/ui'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
-import { TableRow, tableData } from '@/entity/store/member-approval'
+import {
+  AdminSellerApplication,
+  memberApprovalQueries,
+} from '@/entity/store/member-approval'
 
 import { MemberApprovalColumns } from './member-approval-columns.util'
 import { useMemberApproval } from './member-approval.hook'
 import { TableTopArea } from './table-top-area.ui'
 
 export const MemberApprovalTable = () => {
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [selectedIds, setSelectedIds] = useState<number[]>([])
+
+  const { data } = useQuery({
+    ...memberApprovalQueries.list({ page: currentPage }),
+    placeholderData: keepPreviousData,
+  })
 
   const {
-    toggleBusinessOwner,
-    updateBusinessOwner,
+    inputs,
+    updateInput,
     submitApproval,
+    isApproving,
+    submitReject,
+    isRejecting,
     handleDownloadFile,
   } = useMemberApproval()
 
+  const applications = data?.adminSellerApplicationList ?? []
+
   const allSelected =
-    tableData.length > 0 && selectedIds.length === tableData.length
+    applications.length > 0 && selectedIds.length === applications.length
 
   const toggleAll = (checked: boolean | 'indeterminate') => {
     const isChecked = checked === true
-    setSelectedIds(isChecked ? tableData.map((row) => row.id) : [])
+    setSelectedIds(
+      isChecked ? applications.map((row) => row.storeApplicationId) : [],
+    )
   }
 
-  const totalCount = tableData.length
-  const selectedCount = selectedIds.length
-
-  const toggleRow = (rowId: string, checked: boolean | 'indeterminate') => {
+  const toggleRow = (id: number, checked: boolean | 'indeterminate') => {
     const isChecked = checked === true
     setSelectedIds((prev) =>
       isChecked
-        ? prev.includes(rowId)
+        ? prev.includes(id)
           ? prev
-          : [...prev, rowId]
-        : prev.filter((id) => id !== rowId),
+          : [...prev, id]
+        : prev.filter((selectedId) => selectedId !== id),
     )
-    toggleBusinessOwner(rowId, checked)
   }
 
-  const getRowSpanForAdmin = useCallback((rowIndex: number) => {
-    return getRowSpanForGroup({
-      rows: tableData,
-      rowIndex,
-      getKey: (row) => row.storeName,
-    })
-  }, [])
-
-  const getRowClassName = (row: TableRow) => {
-    return row.isNewMember ? '' : 'bg-[#FFE8E3]'
+  const handleSubmitApproval = () => {
+    submitApproval(selectedIds, () => setSelectedIds([]))
   }
 
-  const renderSubRow = (row: TableRow) => {
-    if (!selectedIds.includes(row.id)) return null
+  const handleSubmitReject = () => {
+    submitReject(selectedIds, () => setSelectedIds([]))
+  }
+
+  const renderSubRow = (row: AdminSellerApplication) => {
+    if (!selectedIds.includes(row.storeApplicationId)) return null
 
     const labelClassName = 'typo-title-14-b text-center'
+    const input = inputs[row.storeApplicationId]
 
     return (
-      <tr className="bg-gray-50" key={`${row.id}-additional`}>
-        <td colSpan={2} className="border-r border-r-gray-300">
+      <tr className="bg-gray-50" key={`${row.storeApplicationId}-additional`}>
+        <td colSpan={3} className="border-r border-r-gray-300">
           <Input
             label="대표자명"
             labelClassName={labelClassName}
             className="items-center gap-2 border-r border-r-gray-300 p-10"
+            value={input?.sellerName ?? ''}
             onChange={(e) =>
-              updateBusinessOwner(row.id, 'ownerName', e.currentTarget.value)
+              updateInput(
+                row.storeApplicationId,
+                'sellerName',
+                e.currentTarget.value,
+              )
             }
           />
         </td>
-        <td colSpan={6}>
+        <td colSpan={4}>
           <Input
-            label="사업자 번호"
+            label="사업자등록번호"
             labelClassName={labelClassName}
-            className="w-[274px] items-center gap-2 border-r border-r-gray-300 p-10"
+            className="items-center gap-2 border-r border-r-gray-300 p-10"
+            value={input?.identifier ?? ''}
             onChange={(e) =>
-              updateBusinessOwner(
-                row.id,
-                'businessNumber',
+              updateInput(
+                row.storeApplicationId,
+                'identifier',
                 e.currentTarget.value,
               )
             }
@@ -91,25 +107,29 @@ export const MemberApprovalTable = () => {
   const columns = MemberApprovalColumns({
     allSelected,
     selectedIds,
-    getRowSpanForAdmin,
     toggleAll,
     toggleRow,
   })
 
   return (
     <Table
-      data={tableData}
+      data={applications}
       columns={columns}
+      renderSubRow={renderSubRow}
       topArea={
         <TableTopArea
-          totlaCount={totalCount}
-          selectedCount={selectedCount}
-          onSubmitApproval={submitApproval}
+          totalCount={data?.totalElements ?? 0}
+          selectedCount={selectedIds.length}
+          currentPage={currentPage}
+          totalPages={data?.totalPages ?? 0}
+          isApproving={isApproving}
+          isRejecting={isRejecting}
+          onPageChange={setCurrentPage}
+          onSubmitApproval={handleSubmitApproval}
+          onSubmitReject={handleSubmitReject}
           handleDownloadFile={handleDownloadFile}
         />
       }
-      getRowClassName={getRowClassName}
-      renderSubRow={renderSubRow}
     />
   )
 }
