@@ -20,7 +20,7 @@ const renderEllipsisText = (text: string) => (
 )
 
 const renderWrapText = (text: string) => (
-  <span className="block whitespace-normal break-keep text-left typo-body-14-r text-gray-900">
+  <span className="block text-left typo-body-14-r break-keep whitespace-normal text-gray-900">
     {text}
   </span>
 )
