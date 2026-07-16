@@ -10,6 +10,7 @@ export type {
 } from './name-change-approval.type'
 
 export {
+  STORE_NAME_CHANGE_REJECT_CATEGORY_LABELS,
   StoreNameChangeRejectCategorySchema,
   StoreNameChangeStatusSchema,
   UpdateStoreNameApproveResponseSchema,
