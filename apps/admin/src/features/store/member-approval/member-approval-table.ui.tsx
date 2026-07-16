@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Input, Table, getRowSpanForGroup } from '@dessert/ui'
+import { Input, Table, getRowSpanForGroup, toast } from '@dessert/ui'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 
 import {
   AdminSellerApplication,
+  StoreApplicationApprove,
   TableRow,
   memberApprovalQueries,
 } from '@/entity/store/member-approval'
@@ -64,6 +66,16 @@ const getPageFromSearchParams = (searchParams: URLSearchParams) => {
   return Number.isInteger(page) && page > 0 ? page : 1
 }
 
+interface ApprovalFormValues {
+  approvals: Record<
+    string,
+    {
+      ownerName: string
+      businessNumber: string
+    }
+  >
+}
+
 const toTableRow = (application: AdminSellerApplication): TableRow => {
   const { sellerDTO, sellerStoreDTO, storeApplicationId } = application
   const address = [
@@ -94,14 +106,26 @@ export const MemberApprovalTable = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const currentPage = getPageFromSearchParams(searchParams)
   const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const { getValues, handleSubmit, register, reset, unregister } =
+    useForm<ApprovalFormValues>({
+      defaultValues: { approvals: {} },
+    })
 
-  const {
-    toggleBusinessOwner,
-    updateBusinessOwner,
-    submitApproval,
-    handleDownloadFile,
-  } = useMemberApproval({
-    onApprovalSuccess: () => setSelectedIds([]),
+  const { submitApproval, handleDownloadFile } = useMemberApproval({
+    onApprovalSuccess: (result) => {
+      const successIds = new Set(
+        result.successDetails.map((detail) =>
+          String(detail.storeApplicationId),
+        ),
+      )
+
+      setSelectedIds((prev) => prev.filter((id) => !successIds.has(id)))
+      successIds.forEach((id) => unregister(`approvals.${id}`))
+
+      if (result.failDetails.length === 0) {
+        reset({ approvals: {} })
+      }
+    },
   })
 
   const { data } = useQuery({
@@ -135,7 +159,10 @@ export const MemberApprovalTable = () => {
   const toggleAll = (checked: boolean | 'indeterminate') => {
     const isChecked = checked === true
     setSelectedIds(isChecked ? tableData.map((row) => row.id) : [])
-    tableData.forEach((row) => toggleBusinessOwner(row.id, checked))
+
+    if (!isChecked) {
+      tableData.forEach((row) => unregister(`approvals.${row.id}`))
+    }
   }
 
   const totalCount = data?.totalElements ?? 0
@@ -150,7 +177,10 @@ export const MemberApprovalTable = () => {
           : [...prev, rowId]
         : prev.filter((id) => id !== rowId),
     )
-    toggleBusinessOwner(rowId, checked)
+
+    if (!isChecked) {
+      unregister(`approvals.${rowId}`)
+    }
   }
 
   const handlePageChange = useCallback(
@@ -161,9 +191,33 @@ export const MemberApprovalTable = () => {
         return next
       })
       setSelectedIds([])
+      reset({ approvals: {} })
     },
-    [setSearchParams],
+    [reset, setSearchParams],
   )
+
+  const handleInvalidApproval = () => {
+    toast.error('항목을 입력하세요', '사업자 번호, 대표자명 입력하세요')
+  }
+
+  const handleApprove = handleSubmit(() => {
+    const approvals = getValues('approvals')
+    const isInvalid = selectedIds.some((id) => {
+      const approval = approvals?.[id]
+
+      return !approval?.ownerName?.trim() || !approval?.businessNumber?.trim()
+    })
+
+    if (isInvalid) return
+
+    const payload: StoreApplicationApprove[] = selectedIds.map((id) => ({
+      applicationId: Number(id),
+      sellerName: approvals[id].ownerName.trim(),
+      identifier: approvals[id].businessNumber.trim(),
+    }))
+
+    submitApproval(payload)
+  }, handleInvalidApproval)
 
   const getRowSpanForAdmin = useCallback(
     (rowIndex: number) => {
@@ -192,9 +246,9 @@ export const MemberApprovalTable = () => {
             label="대표자명"
             labelClassName={labelClassName}
             className="items-center gap-2 border-r border-r-gray-300 p-10"
-            onChange={(e) =>
-              updateBusinessOwner(row.id, 'ownerName', e.currentTarget.value)
-            }
+            {...register(`approvals.${row.id}.ownerName`, {
+              required: true,
+            })}
           />
         </td>
         <td colSpan={6}>
@@ -202,13 +256,9 @@ export const MemberApprovalTable = () => {
             label="사업자 번호"
             labelClassName={labelClassName}
             className="w-[274px] items-center gap-2 border-r border-r-gray-300 p-10"
-            onChange={(e) =>
-              updateBusinessOwner(
-                row.id,
-                'businessNumber',
-                e.currentTarget.value,
-              )
-            }
+            {...register(`approvals.${row.id}.businessNumber`, {
+              required: true,
+            })}
           />
         </td>
       </tr>
@@ -234,7 +284,7 @@ export const MemberApprovalTable = () => {
           currentPage={currentPage}
           totalPages={data?.totalPages || 1}
           onPageChange={handlePageChange}
-          onSubmitApproval={submitApproval}
+          onSubmitApproval={handleApprove}
           handleDownloadFile={handleDownloadFile}
         />
       }
