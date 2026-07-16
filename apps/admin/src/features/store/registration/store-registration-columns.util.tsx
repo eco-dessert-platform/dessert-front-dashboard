@@ -19,6 +19,12 @@ const renderEllipsisText = (text: string) => (
   <span className="block truncate typo-body-14-r text-gray-900">{text}</span>
 )
 
+const renderWrapText = (text: string) => (
+  <span className="block whitespace-normal break-keep text-left typo-body-14-r text-gray-900">
+    {text}
+  </span>
+)
+
 export const getStoreRegistrationColumns = ({
   allSelected,
   selectedIds,
@@ -62,8 +68,8 @@ export const getStoreRegistrationColumns = ({
   {
     accessorKey: 'introduction',
     header: '한줄소개',
-    cell: ({ row }) => renderEllipsisText(row.original.introduction),
-    size: 140,
+    cell: ({ row }) => renderWrapText(row.original.introduction),
+    size: 180,
     meta: {
       headerClassName: HEADER_CLASS,
       className: CELL_CLASS,

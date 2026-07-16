@@ -62,22 +62,18 @@ export const StoreRegistrationTable = () => {
   )
 
   return (
-    <div className="mx-auto mt-40 w-full max-w-[1092px]">
-      <Table
-        data={storeRegistrationMockData}
-        columns={columns}
-        maxHeight={680}
-        tableClassName="w-full table-fixed"
-        topArea={
-          <StoreRegistrationActionGroup
-            currentPage={currentPage}
-            totalPages={TOTAL_PAGES}
-            onPageChange={setCurrentPage}
-            onCreate={handleCreate}
-            onDelete={handleDelete}
-          />
-        }
-      />
-    </div>
+    <Table
+      data={storeRegistrationMockData}
+      columns={columns}
+      topArea={
+        <StoreRegistrationActionGroup
+          currentPage={currentPage}
+          totalPages={TOTAL_PAGES}
+          onPageChange={setCurrentPage}
+          onCreate={handleCreate}
+          onDelete={handleDelete}
+        />
+      }
+    />
   )
 }
