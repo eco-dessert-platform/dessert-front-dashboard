@@ -46,12 +46,13 @@ export const NameChangeApprovalTable = () => {
 
   useEffect(() => {
     const responseTotalPages = data?.totalPages
-    if (
-      responseTotalPages &&
-      responseTotalPages > 0 &&
-      currentPage > responseTotalPages
-    ) {
-      updatePageSearchParam(responseTotalPages, { replace: true })
+
+    if (responseTotalPages !== undefined) {
+      const maxPage = Math.max(responseTotalPages, 1)
+
+      if (currentPage > maxPage) {
+        updatePageSearchParam(maxPage, { replace: true })
+      }
     }
   }, [currentPage, data?.totalPages, updatePageSearchParam])
 
