@@ -75,6 +75,7 @@ export const getNameChangeApprovalColumns = ({
           title="거절"
           size="sm"
           variant="secondary-outlined"
+          disabled={isApproving}
           onClick={() => onReject(row.original.requestId)}
         />
       </div>
