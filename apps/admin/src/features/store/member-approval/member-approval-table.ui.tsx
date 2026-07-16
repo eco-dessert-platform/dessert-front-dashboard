@@ -141,11 +141,15 @@ export const MemberApprovalTable = () => {
   useEffect(() => {
     const totalPages = data?.totalPages
 
-    if (totalPages && totalPages > 0 && currentPage > totalPages) {
+    if (totalPages !== undefined) {
+      const maxPage = Math.max(totalPages, 1)
+
+      if (currentPage <= maxPage) return
+
       setSearchParams(
         (prev) => {
           const next = new URLSearchParams(prev)
-          next.set('page', String(totalPages))
+          next.set('page', String(maxPage))
           return next
         },
         { replace: true },
