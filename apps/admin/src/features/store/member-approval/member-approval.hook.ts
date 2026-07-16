@@ -2,14 +2,23 @@ import { useState } from 'react'
 
 import { toast } from '@dessert/ui'
 
+import { useApproveMemberApplicationsMutation } from './member-approval.mutation'
+
 interface BusinessOwner {
   id: string
   ownerName: string
   businessNumber: string
 }
 
-export const useMemberApproval = () => {
+interface UseMemberApprovalArgs {
+  onApprovalSuccess?: () => void
+}
+
+export const useMemberApproval = ({
+  onApprovalSuccess,
+}: UseMemberApprovalArgs = {}) => {
   const [businessOwners, setBusinessOwners] = useState<BusinessOwner[]>([])
+  const { mutate: approveApplications } = useApproveMemberApplicationsMutation()
 
   const updateBusinessOwner = (
     rowId: string,
@@ -38,6 +47,11 @@ export const useMemberApproval = () => {
   }
 
   const submitApproval = async () => {
+    if (businessOwners.length === 0) {
+      toast.error('항목을 선택하세요', '승인할 스토어 신청을 선택해주세요')
+      return
+    }
+
     const isInvalid = businessOwners.some(
       (owner) => !owner.ownerName || !owner.businessNumber,
     )
@@ -48,7 +62,19 @@ export const useMemberApproval = () => {
       return
     }
 
-    // API 호출로직 추가 예정
+    approveApplications(
+      businessOwners.map((owner) => ({
+        applicationId: Number(owner.id),
+        sellerName: owner.ownerName,
+        identifier: owner.businessNumber,
+      })),
+      {
+        onSuccess: () => {
+          setBusinessOwners([])
+          onApprovalSuccess?.()
+        },
+      },
+    )
   }
 
   const handleDownloadFile = () => {

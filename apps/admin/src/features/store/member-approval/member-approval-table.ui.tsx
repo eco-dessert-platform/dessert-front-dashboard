@@ -100,7 +100,9 @@ export const MemberApprovalTable = () => {
     updateBusinessOwner,
     submitApproval,
     handleDownloadFile,
-  } = useMemberApproval()
+  } = useMemberApproval({
+    onApprovalSuccess: () => setSelectedIds([]),
+  })
 
   const { data } = useQuery({
     ...memberApprovalQueries.sellerApplicationList({ page: currentPage }),
@@ -133,6 +135,7 @@ export const MemberApprovalTable = () => {
   const toggleAll = (checked: boolean | 'indeterminate') => {
     const isChecked = checked === true
     setSelectedIds(isChecked ? tableData.map((row) => row.id) : [])
+    tableData.forEach((row) => toggleBusinessOwner(row.id, checked))
   }
 
   const totalCount = data?.totalElements ?? 0
