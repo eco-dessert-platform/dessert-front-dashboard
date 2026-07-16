@@ -34,9 +34,9 @@ const STORE_NAME_CHANGE_REJECT_DETAIL_TEMPLATES: Record<
   ADMIN_INAPPROPRIATE:
     '운영정책 또는 서비스 품질 유지를 위해 부적합하다고 판단돼요',
   BRAND_NAME_MISUSE:
-    '등록된 상표 또는 타 브랜드의 명칭을 포함하고 있어 타인의 권리를 침해할 수 있어요',
+    '등록된 상표 또는 타 브랜드의 명칭을 포함하고 있어 타인의 권리를 침해할 우려가 있어요',
   OFFICIAL_STORE_CONFUSION:
-    '특정 브랜드의 공식물로 오인될 수 있는 명칭은 사용할 수 없어요',
+    '특정 브랜드의 공식몰로 오인될 수 있는 명칭은 사용할 수 없어요',
   INAPPROPRIATE_LANGUAGE:
     '사회적으로 부적절하거나 불쾌감을 줄 수 있는 단어가 포함되어 있어요',
   PRODUCT_CATEGORY_NAME:

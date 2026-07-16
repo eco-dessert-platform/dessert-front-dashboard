@@ -32,7 +32,7 @@ export const STORE_NAME_CHANGE_REJECT_CATEGORY_LABELS: Record<
 > = {
   ADMIN_INAPPROPRIATE: '관리자 판단 부적합',
   BRAND_NAME_MISUSE: '브랜드명 무단 사용',
-  OFFICIAL_STORE_CONFUSION: '공식물 오인 가능',
+  OFFICIAL_STORE_CONFUSION: '공식몰 오인 가능',
   INAPPROPRIATE_LANGUAGE: '비속어/부적절한 표현',
   PRODUCT_CATEGORY_NAME: '상품명/카테고리명 포함',
   CONTACT_INFO_INCLUDED: '연락처/URL 포함',
