@@ -111,22 +111,24 @@ export const MemberApprovalTable = () => {
       defaultValues: { approvals: {} },
     })
 
-  const { submitApproval, handleDownloadFile } = useMemberApproval({
-    onApprovalSuccess: (result) => {
-      const successIds = new Set(
-        result.successDetails.map((detail) =>
-          String(detail.storeApplicationId),
-        ),
-      )
+  const { submitApproval, handleDownloadFile, isApproving } = useMemberApproval(
+    {
+      onApprovalSuccess: (result) => {
+        const successIds = new Set(
+          result.successDetails.map((detail) =>
+            String(detail.storeApplicationId),
+          ),
+        )
 
-      setSelectedIds((prev) => prev.filter((id) => !successIds.has(id)))
-      successIds.forEach((id) => unregister(`approvals.${id}`))
+        setSelectedIds((prev) => prev.filter((id) => !successIds.has(id)))
+        successIds.forEach((id) => unregister(`approvals.${id}`))
 
-      if (result.failDetails.length === 0) {
-        reset({ approvals: {} })
-      }
+        if (result.failDetails.length === 0) {
+          reset({ approvals: {} })
+        }
+      },
     },
-  })
+  )
 
   const { data } = useQuery({
     ...memberApprovalQueries.sellerApplicationList({ page: currentPage }),
@@ -287,6 +289,7 @@ export const MemberApprovalTable = () => {
           selectedCount={selectedCount}
           currentPage={currentPage}
           totalPages={data?.totalPages || 1}
+          isApproving={isApproving}
           onPageChange={handlePageChange}
           onSubmitApproval={handleApprove}
           handleDownloadFile={handleDownloadFile}

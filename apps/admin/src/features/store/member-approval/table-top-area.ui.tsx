@@ -5,6 +5,7 @@ interface TableTopAreaProps {
   selectedCount: number
   currentPage: number
   totalPages: number
+  isApproving: boolean
   onPageChange: (page: number) => void
   onSubmitApproval: () => void
   handleDownloadFile: () => void
@@ -15,6 +16,7 @@ export const TableTopArea = ({
   selectedCount,
   currentPage,
   totalPages,
+  isApproving,
   onPageChange,
   onSubmitApproval,
   handleDownloadFile,
@@ -27,6 +29,7 @@ export const TableTopArea = ({
           <Button
             title="승인"
             variant="primary-outlined"
+            disabled={isApproving}
             onClick={onSubmitApproval}
           />
           <Button

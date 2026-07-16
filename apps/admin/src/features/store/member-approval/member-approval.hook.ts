@@ -14,7 +14,8 @@ interface UseMemberApprovalArgs {
 export const useMemberApproval = ({
   onApprovalSuccess,
 }: UseMemberApprovalArgs = {}) => {
-  const { mutate: approveApplications } = useApproveMemberApplicationsMutation()
+  const { mutate: approveApplications, isPending: isApproving } =
+    useApproveMemberApplicationsMutation()
 
   const submitApproval = async (payload: StoreApplicationApprove[]) => {
     if (payload.length === 0) {
@@ -36,5 +37,6 @@ export const useMemberApproval = ({
   return {
     submitApproval,
     handleDownloadFile,
+    isApproving,
   }
 }
