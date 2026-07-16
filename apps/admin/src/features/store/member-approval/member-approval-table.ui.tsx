@@ -1,14 +1,98 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Input, Table, getRowSpanForGroup } from '@dessert/ui'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'react-router-dom'
 
-import { TableRow, tableData } from '@/entity/store/member-approval'
+import {
+  AdminSellerApplication,
+  TableRow,
+  memberApprovalQueries,
+} from '@/entity/store/member-approval'
 
 import { MemberApprovalColumns } from './member-approval-columns.util'
 import { useMemberApproval } from './member-approval.hook'
 import { TableTopArea } from './table-top-area.ui'
 
+const BANK_LABEL_BY_CODE: Record<string, string> = {
+  '02': '한국산업은행',
+  '03': 'IBK기업은행',
+  '06': 'KB국민은행',
+  '07': 'Sh수협은행',
+  '11': 'NH농협은행',
+  '12': '단위농협(지역농축협)',
+  '20': '우리은행',
+  '23': 'SC제일은행',
+  '27': '씨티은행',
+  '30': '수협중앙회',
+  '31': 'iM뱅크(대구)',
+  '32': '부산은행',
+  '34': '광주은행',
+  '35': '제주은행',
+  '37': '전북은행',
+  '39': '경남은행',
+  '45': '새마을금고',
+  '48': '신협',
+  '50': '저축은행중앙회',
+  '64': '산림조합',
+  '71': '우체국예금보험',
+  '81': '하나은행',
+  '88': '신한은행',
+  '89': '케이뱅크',
+  '90': '카카오뱅크',
+  '92': '토스뱅크',
+}
+
+const getBankLabel = (bankCode: string | null | undefined) => {
+  if (!bankCode) return ''
+
+  const normalizedCode = bankCode.replace(/^0+/, '')
+  const twoDigitCode = normalizedCode.padStart(2, '0')
+
+  return BANK_LABEL_BY_CODE[twoDigitCode] ?? bankCode
+}
+
+const formatCreatedAt = (createdAt: string | null | undefined) => {
+  if (!createdAt) return ''
+
+  return createdAt.split('T')[0]?.replace(/-/g, '.') ?? ''
+}
+
+const getPageFromSearchParams = (searchParams: URLSearchParams) => {
+  const page = Number(searchParams.get('page'))
+
+  return Number.isInteger(page) && page > 0 ? page : 1
+}
+
+const toTableRow = (application: AdminSellerApplication): TableRow => {
+  const { sellerDTO, sellerStoreDTO, storeApplicationId } = application
+  const address = [
+    sellerStoreDTO.originAddressLine ?? '',
+    sellerStoreDTO.originAddressDetail ?? '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  return {
+    id: String(storeApplicationId),
+    storeName: sellerStoreDTO.storeName ?? '',
+    phoneNumber: sellerStoreDTO.phone ?? '',
+    additionalPhoneNumber: sellerStoreDTO.subPhone ?? '',
+    emailAddress: sellerStoreDTO.email ?? '',
+    address,
+    depositor: sellerDTO.accountHolder ?? sellerDTO.sellerName ?? '',
+    bankName: getBankLabel(sellerDTO.bankCode),
+    accountNumber: sellerDTO.accountNumber ?? '',
+    joinDate: formatCreatedAt(sellerDTO.createdAt),
+    isNewMember: sellerDTO.sellerStatus
+      ? sellerDTO.sellerStatus === 'NEW'
+      : true,
+  }
+}
+
 export const MemberApprovalTable = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const currentPage = getPageFromSearchParams(searchParams)
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
   const {
@@ -18,6 +102,31 @@ export const MemberApprovalTable = () => {
     handleDownloadFile,
   } = useMemberApproval()
 
+  const { data } = useQuery({
+    ...memberApprovalQueries.sellerApplicationList({ page: currentPage }),
+    placeholderData: keepPreviousData,
+  })
+
+  const tableData = useMemo(
+    () => data?.adminSellerApplicationList.map(toTableRow) ?? [],
+    [data?.adminSellerApplicationList],
+  )
+
+  useEffect(() => {
+    const totalPages = data?.totalPages
+
+    if (totalPages && totalPages > 0 && currentPage > totalPages) {
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev)
+          next.set('page', String(totalPages))
+          return next
+        },
+        { replace: true },
+      )
+    }
+  }, [currentPage, data?.totalPages, setSearchParams])
+
   const allSelected =
     tableData.length > 0 && selectedIds.length === tableData.length
 
@@ -26,7 +135,7 @@ export const MemberApprovalTable = () => {
     setSelectedIds(isChecked ? tableData.map((row) => row.id) : [])
   }
 
-  const totalCount = tableData.length
+  const totalCount = data?.totalElements ?? 0
   const selectedCount = selectedIds.length
 
   const toggleRow = (rowId: string, checked: boolean | 'indeterminate') => {
@@ -41,13 +150,28 @@ export const MemberApprovalTable = () => {
     toggleBusinessOwner(rowId, checked)
   }
 
-  const getRowSpanForAdmin = useCallback((rowIndex: number) => {
-    return getRowSpanForGroup({
-      rows: tableData,
-      rowIndex,
-      getKey: (row) => row.storeName,
-    })
-  }, [])
+  const handlePageChange = useCallback(
+    (page: number) => {
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev)
+        next.set('page', String(page))
+        return next
+      })
+      setSelectedIds([])
+    },
+    [setSearchParams],
+  )
+
+  const getRowSpanForAdmin = useCallback(
+    (rowIndex: number) => {
+      return getRowSpanForGroup({
+        rows: tableData,
+        rowIndex,
+        getKey: (row) => row.storeName,
+      })
+    },
+    [tableData],
+  )
 
   const getRowClassName = (row: TableRow) => {
     return row.isNewMember ? '' : 'bg-[#FFE8E3]'
@@ -102,8 +226,11 @@ export const MemberApprovalTable = () => {
       columns={columns}
       topArea={
         <TableTopArea
-          totlaCount={totalCount}
+          totalCount={totalCount}
           selectedCount={selectedCount}
+          currentPage={currentPage}
+          totalPages={data?.totalPages || 1}
+          onPageChange={handlePageChange}
           onSubmitApproval={submitApproval}
           handleDownloadFile={handleDownloadFile}
         />
