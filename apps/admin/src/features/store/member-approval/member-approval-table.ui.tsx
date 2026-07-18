@@ -66,6 +66,10 @@ const getPageFromSearchParams = (searchParams: URLSearchParams) => {
   return Number.isInteger(page) && page > 0 ? page : 1
 }
 
+const handleInvalidApproval = () => {
+  toast.error('항목을 입력하세요', '사업자 번호, 대표자명 입력하세요')
+}
+
 interface ApprovalFormValues {
   approvals: Record<
     string,
@@ -212,10 +216,6 @@ export const MemberApprovalTable = () => {
     [reset, setSearchParams],
   )
 
-  const handleInvalidApproval = () => {
-    toast.error('항목을 입력하세요', '사업자 번호, 대표자명 입력하세요')
-  }
-
   const handleApprove = handleSubmit(() => {
     if (isTableActionDisabled) return
 
@@ -226,7 +226,10 @@ export const MemberApprovalTable = () => {
       return !approval?.ownerName?.trim() || !approval?.businessNumber?.trim()
     })
 
-    if (isInvalid) return
+    if (isInvalid) {
+      handleInvalidApproval()
+      return
+    }
 
     const payload: StoreApplicationApprove[] = selectedIds.map((id) => ({
       applicationId: Number(id),
