@@ -14,13 +14,13 @@ if (!CUSTOMER_URL) {
 interface NameChangeApprovalColumnsArgs {
   onApprove: (requestId: number) => void
   onReject: (requestId: number) => void
-  isApproving: boolean
+  isTableActionDisabled: boolean
 }
 
 export const getNameChangeApprovalColumns = ({
   onApprove,
   onReject,
-  isApproving,
+  isTableActionDisabled,
 }: NameChangeApprovalColumnsArgs): ColumnDef<UpdateStoreName>[] => [
   {
     accessorKey: 'requestId',
@@ -68,14 +68,14 @@ export const getNameChangeApprovalColumns = ({
           title="승인"
           size="sm"
           variant="primary-outlined"
-          disabled={isApproving}
+          disabled={isTableActionDisabled}
           onClick={() => onApprove(row.original.requestId)}
         />
         <Button
           title="거절"
           size="sm"
           variant="secondary-outlined"
-          disabled={isApproving}
+          disabled={isTableActionDisabled}
           onClick={() => onReject(row.original.requestId)}
         />
       </div>

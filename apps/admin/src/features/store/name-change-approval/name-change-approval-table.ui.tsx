@@ -24,7 +24,7 @@ export const NameChangeApprovalTable = () => {
     useApproveStoreNameChangeMutation()
   const isApprovalSubmittingRef = useRef(false)
 
-  const { data } = useQuery({
+  const { data, isPlaceholderData } = useQuery({
     ...storeNameChangeQueries.nameChangeRequestList({
       page: currentPage,
     }),
@@ -32,6 +32,7 @@ export const NameChangeApprovalTable = () => {
   })
 
   const totalPages = Math.max(data?.totalPages ?? 1, 1)
+  const isTableActionDisabled = isApproving || isPlaceholderData
 
   const updatePageSearchParam = useCallback(
     (page: number, options?: { replace?: boolean }) => {
@@ -58,8 +59,13 @@ export const NameChangeApprovalTable = () => {
     }
   }, [currentPage, data?.totalPages, updatePageSearchParam])
 
+  useEffect(() => {
+    setRejectRequestId(null)
+  }, [currentPage])
+
   const handleApprove = useCallback(
     async (requestId: number) => {
+      if (isTableActionDisabled) return
       if (isApprovalSubmittingRef.current) return
 
       isApprovalSubmittingRef.current = true
@@ -72,12 +78,17 @@ export const NameChangeApprovalTable = () => {
         isApprovalSubmittingRef.current = false
       }
     },
-    [approveStoreNameChange],
+    [approveStoreNameChange, isTableActionDisabled],
   )
 
-  const handleReject = useCallback((requestId: number) => {
-    setRejectRequestId(requestId)
-  }, [])
+  const handleReject = useCallback(
+    (requestId: number) => {
+      if (isTableActionDisabled) return
+
+      setRejectRequestId(requestId)
+    },
+    [isTableActionDisabled],
+  )
 
   const handleRejectDialogClose = useCallback(() => {
     setRejectRequestId(null)
@@ -88,9 +99,9 @@ export const NameChangeApprovalTable = () => {
       getNameChangeApprovalColumns({
         onApprove: handleApprove,
         onReject: handleReject,
-        isApproving,
+        isTableActionDisabled,
       }),
-    [handleApprove, handleReject, isApproving],
+    [handleApprove, handleReject, isTableActionDisabled],
   )
 
   return (
