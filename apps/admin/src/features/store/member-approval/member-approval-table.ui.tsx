@@ -130,7 +130,7 @@ export const MemberApprovalTable = () => {
     },
   )
 
-  const { data } = useQuery({
+  const { data, isPlaceholderData } = useQuery({
     ...memberApprovalQueries.sellerApplicationList({ page: currentPage }),
     placeholderData: keepPreviousData,
   })
@@ -159,10 +159,18 @@ export const MemberApprovalTable = () => {
     }
   }, [currentPage, data?.totalPages, setSearchParams])
 
+  useEffect(() => {
+    setSelectedIds([])
+    reset({ approvals: {} })
+  }, [currentPage, reset])
+
   const allSelected =
     tableData.length > 0 && selectedIds.length === tableData.length
+  const isTableActionDisabled = isApproving || isPlaceholderData
 
   const toggleAll = (checked: boolean | 'indeterminate') => {
+    if (isTableActionDisabled) return
+
     const isChecked = checked === true
     setSelectedIds(isChecked ? tableData.map((row) => row.id) : [])
 
@@ -175,6 +183,8 @@ export const MemberApprovalTable = () => {
   const selectedCount = selectedIds.length
 
   const toggleRow = (rowId: string, checked: boolean | 'indeterminate') => {
+    if (isTableActionDisabled) return
+
     const isChecked = checked === true
     setSelectedIds((prev) =>
       isChecked
@@ -207,6 +217,8 @@ export const MemberApprovalTable = () => {
   }
 
   const handleApprove = handleSubmit(() => {
+    if (isTableActionDisabled) return
+
     const approvals = getValues('approvals')
     const isInvalid = selectedIds.some((id) => {
       const approval = approvals?.[id]
@@ -274,6 +286,7 @@ export const MemberApprovalTable = () => {
   const columns = MemberApprovalColumns({
     allSelected,
     selectedIds,
+    isTableActionDisabled,
     getRowSpanForAdmin,
     toggleAll,
     toggleRow,
@@ -289,7 +302,7 @@ export const MemberApprovalTable = () => {
           selectedCount={selectedCount}
           currentPage={currentPage}
           totalPages={data?.totalPages || 1}
-          isApproving={isApproving}
+          isTableActionDisabled={isTableActionDisabled}
           onPageChange={handlePageChange}
           onSubmitApproval={handleApprove}
           handleDownloadFile={handleDownloadFile}
