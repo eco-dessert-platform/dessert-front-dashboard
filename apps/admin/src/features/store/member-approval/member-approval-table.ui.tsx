@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Input, Table, getRowSpanForGroup, toast } from '@dessert/ui'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { keepPreviousData } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ import {
   AdminSellerApplication,
   StoreApplicationApprove,
   TableRow,
-  memberApprovalQueries,
+  useSellerApplicationListQuery,
 } from '@/entity/store/member-approval'
 
 import { MemberApprovalColumns } from './member-approval-columns.util'
@@ -134,8 +134,8 @@ export const MemberApprovalTable = () => {
     },
   )
 
-  const { data, isPlaceholderData } = useQuery({
-    ...memberApprovalQueries.sellerApplicationList({ page: currentPage }),
+  const { data, isPlaceholderData } = useSellerApplicationListQuery({
+    variables: { page: currentPage },
     placeholderData: keepPreviousData,
   })
 

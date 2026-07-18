@@ -1,18 +1,21 @@
-import { queryOptions } from '@tanstack/react-query'
+import { createQueryKeys } from '@lukemorales/query-key-factory'
+import { createQuery } from 'react-query-kit'
 
 import { getAdminSellerApplications } from './member-approval.api'
 
-import type { GetAdminSellerApplicationsRequestParams } from './member-approval.type'
+import type {
+  AdminSellerApplicationListResult,
+  GetAdminSellerApplicationsRequestParams,
+} from './member-approval.type'
 
-export const memberApprovalQueries = {
-  all: () => ['member-approval'] as const,
-  sellerApplications: () =>
-    [...memberApprovalQueries.all(), 'seller-applications'] as const,
-  sellerApplicationList: (
-    params: GetAdminSellerApplicationsRequestParams = {},
-  ) =>
-    queryOptions({
-      queryKey: [...memberApprovalQueries.sellerApplications(), params],
-      queryFn: () => getAdminSellerApplications(params),
-    }),
-}
+export const memberApprovalQueries = createQueryKeys('member-approval', {
+  sellerApplicationList: null,
+})
+
+export const useSellerApplicationListQuery = createQuery<
+  AdminSellerApplicationListResult,
+  GetAdminSellerApplicationsRequestParams
+>({
+  queryKey: memberApprovalQueries.sellerApplicationList.queryKey,
+  fetcher: (params) => getAdminSellerApplications(params),
+})

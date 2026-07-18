@@ -42,4 +42,7 @@ export {
   rejectAdminSellerApplications,
 } from './member-approval.api'
 
-export { memberApprovalQueries } from './member-approval.query'
+export {
+  memberApprovalQueries,
+  useSellerApplicationListQuery,
+} from './member-approval.query'

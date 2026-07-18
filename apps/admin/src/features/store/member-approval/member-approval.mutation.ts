@@ -1,5 +1,6 @@
 import { toast } from '@dessert/ui'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
+import { createMutation } from 'react-query-kit'
 
 import {
   StoreApplicationApprove,
@@ -7,15 +8,19 @@ import {
   memberApprovalQueries,
 } from '@/entity/store/member-approval'
 
+const useApproveMemberApplicationsMutationBase = createMutation({
+  mutationKey: [...memberApprovalQueries._def, 'approve'],
+  mutationFn: (body: StoreApplicationApprove[]) =>
+    approveAdminSellerApplications(body),
+})
+
 export const useApproveMemberApplicationsMutation = () => {
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: (body: StoreApplicationApprove[]) =>
-      approveAdminSellerApplications(body),
+  return useApproveMemberApplicationsMutationBase({
     onSuccess: (result) => {
       queryClient.invalidateQueries({
-        queryKey: memberApprovalQueries.sellerApplications(),
+        queryKey: memberApprovalQueries.sellerApplicationList.queryKey,
       })
 
       const successCount = result.successDetails.length
