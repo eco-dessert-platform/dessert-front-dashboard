@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Table } from '@dessert/ui'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
@@ -20,7 +20,9 @@ export const NameChangeApprovalTable = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [rejectRequestId, setRejectRequestId] = useState<number | null>(null)
   const currentPage = getPageFromSearchParams(searchParams)
-  const approveMutation = useApproveStoreNameChangeMutation()
+  const { mutateAsync: approveStoreNameChange, isPending: isApproving } =
+    useApproveStoreNameChangeMutation()
+  const isApprovalSubmittingRef = useRef(false)
 
   const { data } = useQuery({
     ...storeNameChangeQueries.nameChangeRequestList({
@@ -57,10 +59,20 @@ export const NameChangeApprovalTable = () => {
   }, [currentPage, data?.totalPages, updatePageSearchParam])
 
   const handleApprove = useCallback(
-    (requestId: number) => {
-      approveMutation.mutate(requestId)
+    async (requestId: number) => {
+      if (isApprovalSubmittingRef.current) return
+
+      isApprovalSubmittingRef.current = true
+
+      try {
+        await approveStoreNameChange(requestId)
+      } catch {
+        // 에러 토스트는 mutation onError에서 처리합니다.
+      } finally {
+        isApprovalSubmittingRef.current = false
+      }
     },
-    [approveMutation],
+    [approveStoreNameChange],
   )
 
   const handleReject = useCallback((requestId: number) => {
@@ -76,9 +88,9 @@ export const NameChangeApprovalTable = () => {
       getNameChangeApprovalColumns({
         onApprove: handleApprove,
         onReject: handleReject,
-        isApproving: approveMutation.isPending,
+        isApproving,
       }),
-    [approveMutation.isPending, handleApprove, handleReject],
+    [handleApprove, handleReject, isApproving],
   )
 
   return (

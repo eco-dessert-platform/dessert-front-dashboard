@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+
 import {
   Button,
   Dialog,
@@ -68,7 +70,9 @@ export const NameChangeRejectDialog = ({
   requestId,
   onClose,
 }: NameChangeRejectDialogProps) => {
-  const { mutate, isPending } = useRejectStoreNameChangeMutation()
+  const { mutateAsync: rejectStoreNameChange, isPending } =
+    useRejectStoreNameChangeMutation()
+  const isRejectSubmittingRef = useRef(false)
   const {
     register,
     control,
@@ -92,20 +96,29 @@ export const NameChangeRejectDialog = ({
     onClose()
   }
 
-  const onSubmit = (data: StoreNameRejectFormValues) => {
+  const onSubmit = async (data: StoreNameRejectFormValues) => {
     if (!requestId) return
+    if (isRejectSubmittingRef.current) return
+
+    isRejectSubmittingRef.current = true
 
     const rejectDetail = data.rejectDetail.trim()
-    mutate(
-      {
+
+    try {
+      await rejectStoreNameChange({
         requestId,
         body: {
           category: data.category,
           rejectDetail: rejectDetail || null,
         },
-      },
-      { onSuccess: handleClose },
-    )
+      })
+      reset()
+      onClose()
+    } catch {
+      // 에러 토스트는 mutation onError에서 처리합니다.
+    } finally {
+      isRejectSubmittingRef.current = false
+    }
   }
 
   const handleCategorySelect = (value: string) => {
