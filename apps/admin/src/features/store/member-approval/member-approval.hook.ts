@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+
 import { toast } from '@dessert/ui'
 
 import {
@@ -14,8 +16,9 @@ interface UseMemberApprovalArgs {
 export const useMemberApproval = ({
   onApprovalSuccess,
 }: UseMemberApprovalArgs = {}) => {
-  const { mutate: approveApplications, isPending: isApproving } =
+  const { mutateAsync: approveApplications, isPending: isApproving } =
     useApproveMemberApplicationsMutation()
+  const isApprovalSubmittingRef = useRef(false)
 
   const submitApproval = async (payload: StoreApplicationApprove[]) => {
     if (payload.length === 0) {
@@ -23,11 +26,19 @@ export const useMemberApproval = ({
       return
     }
 
-    approveApplications(payload, {
-      onSuccess: (result) => {
-        onApprovalSuccess?.(result)
-      },
-    })
+    if (isApprovalSubmittingRef.current) return
+
+    isApprovalSubmittingRef.current = true
+
+    try {
+      const result = await approveApplications(payload)
+
+      onApprovalSuccess?.(result)
+    } catch {
+      // 에러 토스트는 mutation onError에서 처리합니다.
+    } finally {
+      isApprovalSubmittingRef.current = false
+    }
   }
 
   const handleDownloadFile = () => {
