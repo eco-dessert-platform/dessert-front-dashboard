@@ -1,17 +1,21 @@
-import { queryOptions } from '@tanstack/react-query'
+import { createQueryKeys } from '@lukemorales/query-key-factory'
+import { createQuery } from 'react-query-kit'
 
 import { getUpdateStoreNameRequests } from './name-change-approval.api'
 
-import type { GetUpdateStoreNameRequestsParams } from './name-change-approval.type'
+import type {
+  GetUpdateStoreNameRequestsParams,
+  UpdateStoreNameRequestListResult,
+} from './name-change-approval.type'
 
-export const storeNameChangeQueries = {
-  all: () => ['stores'] as const,
-  nameChangeRequests: () =>
-    [...storeNameChangeQueries.all(), 'name-change-requests'] as const,
+export const storeNameChangeQueries = createQueryKeys('stores', {
+  nameChangeRequestList: null,
+})
 
-  nameChangeRequestList: (params: GetUpdateStoreNameRequestsParams = {}) =>
-    queryOptions({
-      queryKey: [...storeNameChangeQueries.nameChangeRequests(), params],
-      queryFn: () => getUpdateStoreNameRequests(params),
-    }),
-}
+export const useStoreNameChangeRequestListQuery = createQuery<
+  UpdateStoreNameRequestListResult,
+  GetUpdateStoreNameRequestsParams
+>({
+  queryKey: storeNameChangeQueries.nameChangeRequestList.queryKey,
+  fetcher: (params) => getUpdateStoreNameRequests(params),
+})

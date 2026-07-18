@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Table } from '@dessert/ui'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { keepPreviousData } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
-import { storeNameChangeQueries } from '@/entity/store/name-change-approval'
+import { useStoreNameChangeRequestListQuery } from '@/entity/store/name-change-approval'
 
 import { NameChangeApprovalActionGroup } from './name-change-approval-action-group.ui'
 import { getNameChangeApprovalColumns } from './name-change-approval-columns.util'
@@ -24,10 +24,10 @@ export const NameChangeApprovalTable = () => {
     useApproveStoreNameChangeMutation()
   const isApprovalSubmittingRef = useRef(false)
 
-  const { data, isPlaceholderData } = useQuery({
-    ...storeNameChangeQueries.nameChangeRequestList({
+  const { data, isPlaceholderData } = useStoreNameChangeRequestListQuery({
+    variables: {
       page: currentPage,
-    }),
+    },
     placeholderData: keepPreviousData,
   })
 

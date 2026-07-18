@@ -30,4 +30,7 @@ export {
   rejectUpdateStoreNameRequest,
 } from './name-change-approval.api'
 
-export { storeNameChangeQueries } from './name-change-approval.query'
+export {
+  storeNameChangeQueries,
+  useStoreNameChangeRequestListQuery,
+} from './name-change-approval.query'
