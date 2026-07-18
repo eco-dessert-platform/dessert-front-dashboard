@@ -36,48 +36,101 @@ const PRESET_EMAIL_DOMAINS = EMAIL_DOMAIN_OPTIONS.filter(
 
 const PROFILE_IMAGE_MAX_SIZE = 10 * 1024 * 1024
 const PROFILE_IMAGE_TYPES = ['image/jpeg', 'image/png']
+const BUSINESS_NUMBER_PATTERN = /^(?:\d{10}|\d{3}-\d{2}-\d{5})$/
+const EMAIL_LOCAL_PATTERN = /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+$/
+const EMAIL_DOMAIN_PATTERN =
+  /^(?=.{1,253}$)(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,63}$/
 
-const storeRegistrationFormSchema = z.object({
-  profileImage: z.custom<File | null>(
-    (value) =>
-      typeof File !== 'undefined' &&
-      value instanceof File &&
-      PROFILE_IMAGE_TYPES.includes(value.type) &&
-      value.size <= PROFILE_IMAGE_MAX_SIZE,
-    'jpg, jpeg, png 형식의 10MB 이하 이미지를 등록해주세요',
-  ),
-  storeName: z
-    .string()
-    .trim()
-    .min(3, '스토어명은 3자 이상 입력해주세요')
-    .max(50, '스토어명은 50자 이하로 입력해주세요'),
-  identifier: z
-    .string()
-    .trim()
-    .min(1, '사업자번호를 입력해주세요')
-    .max(16, '사업자번호는 16자 이하로 입력해주세요'),
-  introduce: z.string().trim().min(1, '한줄소개를 입력해주세요'),
-  phoneNumber: z
-    .string()
-    .trim()
-    .regex(/^[0-9]{9,11}$/, '숫자만 9~11자리로 입력해주세요'),
-  subPhoneNumber: z
-    .string()
-    .trim()
-    .refine(
-      (value) => value === '' || /^[0-9]{9,11}$/.test(value),
-      '숫자만 9~11자리로 입력해주세요',
+const normalizeBusinessNumber = (value: string) => value.replace(/\D/g, '')
+
+const isValidBusinessNumber = (value: string) => {
+  const businessNumber = normalizeBusinessNumber(value)
+
+  if (!/^\d{10}$/.test(businessNumber)) return false
+
+  const digits = businessNumber.split('').map(Number)
+  const weights = [1, 3, 7, 1, 3, 7, 1, 3]
+  const weightedSum = weights.reduce(
+    (sum, weight, index) => sum + digits[index] * weight,
+    0,
+  )
+  const ninthDigitCalculation = digits[8] * 5
+  const checksum =
+    weightedSum +
+    Math.floor(ninthDigitCalculation / 10) +
+    (ninthDigitCalculation % 10)
+  const expectedCheckDigit = (10 - (checksum % 10)) % 10
+
+  return expectedCheckDigit === digits[9]
+}
+
+const businessNumberSchema = z
+  .string()
+  .trim()
+  .min(1, '사업자등록번호를 입력해주세요')
+  .regex(BUSINESS_NUMBER_PATTERN, '사업자등록번호는 10자리 숫자로 입력해주세요')
+  .refine(isValidBusinessNumber, '유효하지 않은 사업자등록번호입니다')
+  .transform(normalizeBusinessNumber)
+
+const storeRegistrationFormSchema = z
+  .object({
+    profileImage: z.custom<File | null>(
+      (value) =>
+        typeof File !== 'undefined' &&
+        value instanceof File &&
+        PROFILE_IMAGE_TYPES.includes(value.type) &&
+        value.size <= PROFILE_IMAGE_MAX_SIZE,
+      'jpg, jpeg, png 형식의 10MB 이하 이미지를 등록해주세요',
     ),
-  emailLocal: z.string().trim().min(1, '이메일을 입력해주세요'),
-  emailDomain: z.string().trim().min(1, '이메일 도메인을 선택해주세요'),
-  postalCode: z.string().trim(),
-  originAddress: z.string().trim().min(1, '출고지 주소를 입력해주세요'),
-  originAddressDetail: z
-    .string()
-    .trim()
-    .min(1, '출고지 상세주소를 입력해주세요')
-    .max(50, '출고지 상세주소는 50자 이하로 입력해주세요'),
-})
+    storeName: z
+      .string()
+      .trim()
+      .min(3, '스토어명은 3자 이상 입력해주세요')
+      .max(50, '스토어명은 50자 이하로 입력해주세요'),
+    identifier: businessNumberSchema,
+    introduce: z.string().trim().min(1, '한줄소개를 입력해주세요'),
+    phoneNumber: z
+      .string()
+      .trim()
+      .regex(/^[0-9]{9,11}$/, '숫자만 9~11자리로 입력해주세요'),
+    subPhoneNumber: z
+      .string()
+      .trim()
+      .refine(
+        (value) => value === '' || /^[0-9]{9,11}$/.test(value),
+        '숫자만 9~11자리로 입력해주세요',
+      ),
+    emailLocal: z
+      .string()
+      .trim()
+      .min(1, '이메일을 입력해주세요')
+      .regex(EMAIL_LOCAL_PATTERN, '이메일 형식이 올바르지 않습니다'),
+    emailDomain: z
+      .string()
+      .trim()
+      .min(1, '이메일 도메인을 선택해주세요')
+      .regex(EMAIL_DOMAIN_PATTERN, '이메일 도메인 형식이 올바르지 않습니다'),
+    postalCode: z.string().trim(),
+    originAddress: z.string().trim().min(1, '출고지 주소를 입력해주세요'),
+    originAddressDetail: z
+      .string()
+      .trim()
+      .min(1, '출고지 상세주소를 입력해주세요')
+      .max(50, '출고지 상세주소는 50자 이하로 입력해주세요'),
+  })
+  .superRefine(({ emailLocal, emailDomain }, context) => {
+    if (!emailLocal || !emailDomain) return
+
+    const email = `${emailLocal}@${emailDomain}`
+
+    if (!z.email().safeParse(email).success) {
+      context.addIssue({
+        code: 'custom',
+        path: ['emailLocal'],
+        message: '유효한 이메일 주소를 입력해주세요',
+      })
+    }
+  })
 
 type StoreRegistrationFormValues = z.infer<typeof storeRegistrationFormSchema>
 
@@ -146,7 +199,7 @@ export const StoreRegistrationFormDialog = ({
 
   const [domainSelectValue, setDomainSelectValue] = useState(() => {
     const domain = getValues('emailDomain')
-    if (!domain) return ''
+    if (!domain) return CUSTOM_EMAIL_DOMAIN
     return PRESET_EMAIL_DOMAINS.includes(domain) ? domain : CUSTOM_EMAIL_DOMAIN
   })
   const profileImage = useWatch({ control, name: 'profileImage' })
@@ -170,7 +223,7 @@ export const StoreRegistrationFormDialog = ({
   const handleClose = () => {
     if (isPending) return
     reset(DEFAULT_VALUES)
-    setDomainSelectValue('')
+    setDomainSelectValue(CUSTOM_EMAIL_DOMAIN)
     onClose()
   }
 
