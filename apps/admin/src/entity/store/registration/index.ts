@@ -32,6 +32,9 @@ export {
   updateAdminStore,
 } from './store-registration.api'
 
-export { storeRegistrationQueries } from './store-registration.query'
+export {
+  storeRegistrationQueries,
+  useRegisteredStoreListQuery,
+} from './store-registration.query'
 
 export { storeRegistrationMockData } from './store-registration.mock'

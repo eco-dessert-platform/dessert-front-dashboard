@@ -1,20 +1,39 @@
 import { toast } from '@dessert/ui'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
+import { createMutation } from 'react-query-kit'
 
 import {
+  CreateAdminStoreInput,
+  StoreDetailResponse,
+  UpdateAdminStoreParams,
   createAdminStore,
   storeRegistrationQueries,
   updateAdminStore,
 } from '@/entity/store/registration'
 
+const useCreateAdminStoreMutationBase = createMutation<
+  StoreDetailResponse,
+  CreateAdminStoreInput
+>({
+  mutationKey: [...storeRegistrationQueries._def, 'create'],
+  mutationFn: createAdminStore,
+})
+
+const useUpdateAdminStoreMutationBase = createMutation<
+  StoreDetailResponse,
+  UpdateAdminStoreParams
+>({
+  mutationKey: [...storeRegistrationQueries._def, 'update'],
+  mutationFn: updateAdminStore,
+})
+
 export const useCreateAdminStoreMutation = () => {
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: createAdminStore,
+  return useCreateAdminStoreMutationBase({
     onSuccess: ({ name }) => {
       queryClient.invalidateQueries({
-        queryKey: storeRegistrationQueries.registrations(),
+        queryKey: storeRegistrationQueries.registeredStoreList.queryKey,
       })
       toast.success('스토어를 생성했습니다.', name)
     },
@@ -30,11 +49,10 @@ export const useCreateAdminStoreMutation = () => {
 export const useUpdateAdminStoreMutation = () => {
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: updateAdminStore,
+  return useUpdateAdminStoreMutationBase({
     onSuccess: ({ name }) => {
       queryClient.invalidateQueries({
-        queryKey: storeRegistrationQueries.registrations(),
+        queryKey: storeRegistrationQueries.registeredStoreList.queryKey,
       })
       toast.success('스토어를 수정했습니다.', name)
     },

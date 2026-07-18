@@ -1,17 +1,21 @@
-import { queryOptions } from '@tanstack/react-query'
+import { createQueryKeys } from '@lukemorales/query-key-factory'
+import { createQuery } from 'react-query-kit'
 
 import { getRegisteredStores } from './store-registration.api'
 
-import type { GetRegisteredStoresRequestParams } from './store-registration.type'
+import type {
+  GetRegisteredStoresRequestParams,
+  RegisteredStoreListResult,
+} from './store-registration.type'
 
-export const storeRegistrationQueries = {
-  all: () => ['stores'] as const,
-  registrations: () =>
-    [...storeRegistrationQueries.all(), 'registrations'] as const,
+export const storeRegistrationQueries = createQueryKeys('stores', {
+  registeredStoreList: null,
+})
 
-  registeredStoreList: (params: GetRegisteredStoresRequestParams = {}) =>
-    queryOptions({
-      queryKey: [...storeRegistrationQueries.registrations(), params],
-      queryFn: () => getRegisteredStores(params),
-    }),
-}
+export const useRegisteredStoreListQuery = createQuery<
+  RegisteredStoreListResult,
+  GetRegisteredStoresRequestParams
+>({
+  queryKey: storeRegistrationQueries.registeredStoreList.queryKey,
+  fetcher: (params) => getRegisteredStores(params),
+})
