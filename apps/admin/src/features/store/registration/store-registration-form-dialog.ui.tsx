@@ -13,10 +13,12 @@ import {
 } from '@dessert/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus } from 'lucide-react'
+import { useKakaoPostcodePopup } from 'react-daum-postcode'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 
 import type { CreateAdminStoreRequest } from '@/entity/store/registration'
+import { formatDaumAddress } from '@/shared/utils'
 
 import { useCreateAdminStoreMutation } from './store-registration.mutation'
 
@@ -190,6 +192,7 @@ export const StoreRegistrationFormDialog = ({
     reset,
     setValue,
     getValues,
+    setFocus,
     formState: { errors, isValid },
   } = useForm<StoreRegistrationFormValues>({
     resolver: zodResolver(storeRegistrationFormSchema),
@@ -205,6 +208,7 @@ export const StoreRegistrationFormDialog = ({
   const profileImage = useWatch({ control, name: 'profileImage' })
   const emailDomain = useWatch({ control, name: 'emailDomain' }) ?? ''
   const isCustomEmailDomain = domainSelectValue === CUSTOM_EMAIL_DOMAIN
+  const openPostcodePopup = useKakaoPostcodePopup()
 
   useEffect(() => {
     if (!profileImage) {
@@ -238,6 +242,22 @@ export const StoreRegistrationFormDialog = ({
 
   const handleCheckStoreName = () => {
     toast.info('스토어명 중복 확인은 추후 연결 예정입니다.')
+  }
+
+  const handleSearchPostalCode = () => {
+    openPostcodePopup({
+      onComplete: (data) => {
+        setValue('postalCode', data.zonecode, {
+          shouldDirty: true,
+          shouldValidate: true,
+        })
+        setValue('originAddress', formatDaumAddress(data), {
+          shouldDirty: true,
+          shouldValidate: true,
+        })
+        setFocus('originAddressDetail')
+      },
+    })
   }
 
   const onSubmit = (values: StoreRegistrationFormValues) => {
@@ -441,9 +461,7 @@ export const StoreRegistrationFormDialog = ({
                 type="button"
                 disabled={isPending}
                 className="mt-[26px]"
-                onClick={() => {
-                  toast.info('우편번호 검색은 추후 연결 예정입니다.')
-                }}
+                onClick={handleSearchPostalCode}
               />
               <Input
                 label="출고지 주소"
