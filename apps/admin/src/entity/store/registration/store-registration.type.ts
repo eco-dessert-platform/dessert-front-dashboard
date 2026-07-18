@@ -15,6 +15,7 @@ export interface StoreRegistration {
   businessNumber: string
   introduction: string
   phone: string
+  subPhoneNumber: string
   email: string
   baseAddress: string
   detailAddress: string

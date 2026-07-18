@@ -7,6 +7,7 @@ import { storeRegistrationMockData } from '@/entity/store/registration'
 import { StoreRegistrationActionGroup } from './store-registration-action-group.ui'
 import { getStoreRegistrationColumns } from './store-registration-columns.util'
 import { StoreRegistrationDeleteConfirmDialog } from './store-registration-delete-confirm-dialog.ui'
+import { StoreRegistrationEditDialog } from './store-registration-edit-dialog.ui'
 import { StoreRegistrationFormDialog } from './store-registration-form-dialog.ui'
 
 const TOTAL_PAGES = 1
@@ -16,6 +17,7 @@ export const StoreRegistrationTable = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([])
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [editingStoreId, setEditingStoreId] = useState<number | null>(null)
 
   const allSelected =
     storeRegistrationMockData.length > 0 &&
@@ -57,8 +59,15 @@ export const StoreRegistrationTable = () => {
   }
 
   const handleEdit = (id: number) => {
-    alert(`스토어 ${id} 수정 폼은 추후 연결 예정입니다.`)
+    setEditingStoreId(id)
   }
+
+  const editingStore = useMemo(
+    () =>
+      storeRegistrationMockData.find((store) => store.id === editingStoreId) ??
+      null,
+    [editingStoreId],
+  )
 
   const columns = useMemo(
     () =>
@@ -96,6 +105,10 @@ export const StoreRegistrationTable = () => {
         open={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
         onConfirm={handleConfirmDelete}
+      />
+      <StoreRegistrationEditDialog
+        store={editingStore}
+        onClose={() => setEditingStoreId(null)}
       />
     </>
   )

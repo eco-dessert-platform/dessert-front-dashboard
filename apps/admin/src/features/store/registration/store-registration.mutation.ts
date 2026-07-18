@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   createAdminStore,
   storeRegistrationQueries,
+  updateAdminStore,
 } from '@/entity/store/registration'
 
 export const useCreateAdminStoreMutation = () => {
@@ -20,6 +21,26 @@ export const useCreateAdminStoreMutation = () => {
     onError: (error) => {
       toast.error(
         '스토어 생성에 실패했습니다.',
+        error.message || '다시 시도해주세요.',
+      )
+    },
+  })
+}
+
+export const useUpdateAdminStoreMutation = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: updateAdminStore,
+    onSuccess: ({ name }) => {
+      queryClient.invalidateQueries({
+        queryKey: storeRegistrationQueries.registrations(),
+      })
+      toast.success('스토어를 수정했습니다.', name)
+    },
+    onError: (error) => {
+      toast.error(
+        '스토어 수정에 실패했습니다.',
         error.message || '다시 시도해주세요.',
       )
     },
