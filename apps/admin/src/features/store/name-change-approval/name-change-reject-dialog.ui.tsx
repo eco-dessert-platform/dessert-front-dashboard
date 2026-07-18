@@ -61,6 +61,11 @@ const StoreNameRejectFormSchema = z.object({
 
 type StoreNameRejectFormValues = z.infer<typeof StoreNameRejectFormSchema>
 
+const DEFAULT_STORE_NAME_REJECT_FORM_VALUES: StoreNameRejectFormValues = {
+  category: 'ADMIN_INAPPROPRIATE',
+  rejectDetail: STORE_NAME_CHANGE_REJECT_DETAIL_TEMPLATES.ADMIN_INAPPROPRIATE,
+}
+
 interface NameChangeRejectDialogProps {
   requestId: number | null
   onClose: () => void
@@ -82,11 +87,7 @@ export const NameChangeRejectDialog = ({
     formState: { errors },
   } = useForm<StoreNameRejectFormValues>({
     resolver: zodResolver(StoreNameRejectFormSchema),
-    defaultValues: {
-      category: 'ADMIN_INAPPROPRIATE',
-      rejectDetail:
-        STORE_NAME_CHANGE_REJECT_DETAIL_TEMPLATES.ADMIN_INAPPROPRIATE,
-    },
+    defaultValues: DEFAULT_STORE_NAME_REJECT_FORM_VALUES,
     reValidateMode: 'onSubmit',
   })
 
@@ -119,20 +120,6 @@ export const NameChangeRejectDialog = ({
     } finally {
       isRejectSubmittingRef.current = false
     }
-  }
-
-  const handleCategorySelect = (value: string) => {
-    const category = value as StoreNameChangeRejectCategory
-
-    setValue('category', category, { shouldValidate: true })
-    setValue(
-      'rejectDetail',
-      STORE_NAME_CHANGE_REJECT_DETAIL_TEMPLATES[category],
-      {
-        shouldDirty: true,
-        shouldValidate: true,
-      },
-    )
   }
 
   return (
@@ -169,7 +156,19 @@ export const NameChangeRejectDialog = ({
                   value={field.value}
                   listClassName="max-h-none overflow-y-visible"
                   disabled={isPending}
-                  onSelect={handleCategorySelect}
+                  onSelect={(value) => {
+                    const category = value as StoreNameChangeRejectCategory
+
+                    field.onChange(category)
+                    setValue(
+                      'rejectDetail',
+                      STORE_NAME_CHANGE_REJECT_DETAIL_TEMPLATES[category],
+                      {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      },
+                    )
+                  }}
                 />
               )}
             />
