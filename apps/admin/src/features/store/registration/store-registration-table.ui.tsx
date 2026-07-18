@@ -6,12 +6,14 @@ import { storeRegistrationMockData } from '@/entity/store/registration'
 
 import { StoreRegistrationActionGroup } from './store-registration-action-group.ui'
 import { getStoreRegistrationColumns } from './store-registration-columns.util'
+import { StoreRegistrationFormDialog } from './store-registration-form-dialog.ui'
 
 const TOTAL_PAGES = 1
 
 export const StoreRegistrationTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedIds, setSelectedIds] = useState<number[]>([])
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
 
   const allSelected =
     storeRegistrationMockData.length > 0 &&
@@ -34,7 +36,7 @@ export const StoreRegistrationTable = () => {
   }
 
   const handleCreate = () => {
-    alert('스토어 등록 폼은 추후 연결 예정입니다.')
+    setIsCreateDialogOpen(true)
   }
 
   const handleDelete = () => {
@@ -62,18 +64,24 @@ export const StoreRegistrationTable = () => {
   )
 
   return (
-    <Table
-      data={storeRegistrationMockData}
-      columns={columns}
-      topArea={
-        <StoreRegistrationActionGroup
-          currentPage={currentPage}
-          totalPages={TOTAL_PAGES}
-          onPageChange={setCurrentPage}
-          onCreate={handleCreate}
-          onDelete={handleDelete}
-        />
-      }
-    />
+    <>
+      <Table
+        data={storeRegistrationMockData}
+        columns={columns}
+        topArea={
+          <StoreRegistrationActionGroup
+            currentPage={currentPage}
+            totalPages={TOTAL_PAGES}
+            onPageChange={setCurrentPage}
+            onCreate={handleCreate}
+            onDelete={handleDelete}
+          />
+        }
+      />
+      <StoreRegistrationFormDialog
+        open={isCreateDialogOpen}
+        onClose={() => setIsCreateDialogOpen(false)}
+      />
+    </>
   )
 }
