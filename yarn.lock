@@ -294,6 +294,7 @@ __metadata:
     playwright: "npm:1.55.1"
     qs: "npm:^6.15.1"
     react: "npm:^19.1.0"
+    react-daum-postcode: "npm:^4.0.0"
     react-day-picker: "npm:^9.11.2"
     react-dom: "npm:^19.1.0"
     react-hook-form: "npm:7.71.2"
