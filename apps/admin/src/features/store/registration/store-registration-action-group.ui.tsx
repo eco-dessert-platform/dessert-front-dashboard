@@ -6,6 +6,7 @@ interface StoreRegistrationActionGroupProps {
   onPageChange: (page: number) => void
   onCreate: () => void
   onDelete: () => void
+  isDeleteDisabled?: boolean
 }
 
 export const StoreRegistrationActionGroup = ({
@@ -14,6 +15,7 @@ export const StoreRegistrationActionGroup = ({
   onPageChange,
   onCreate,
   onDelete,
+  isDeleteDisabled = false,
 }: StoreRegistrationActionGroupProps) => {
   return (
     <div className="flex w-full items-center justify-between">
@@ -28,6 +30,7 @@ export const StoreRegistrationActionGroup = ({
           title="삭제"
           size="sm"
           variant="secondary-outlined"
+          disabled={isDeleteDisabled}
           onClick={onDelete}
         />
       </div>

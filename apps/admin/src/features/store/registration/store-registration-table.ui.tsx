@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react'
 
-import { Table } from '@dessert/ui'
+import { Table, toast } from '@dessert/ui'
 
 import { storeRegistrationMockData } from '@/entity/store/registration'
 
 import { StoreRegistrationActionGroup } from './store-registration-action-group.ui'
 import { getStoreRegistrationColumns } from './store-registration-columns.util'
+import { StoreRegistrationDeleteConfirmDialog } from './store-registration-delete-confirm-dialog.ui'
 import { StoreRegistrationFormDialog } from './store-registration-form-dialog.ui'
 
 const TOTAL_PAGES = 1
@@ -14,6 +15,7 @@ export const StoreRegistrationTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedIds, setSelectedIds] = useState<number[]>([])
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   const allSelected =
     storeRegistrationMockData.length > 0 &&
@@ -40,11 +42,18 @@ export const StoreRegistrationTable = () => {
   }
 
   const handleDelete = () => {
-    alert(
-      selectedIds.length > 0
-        ? `삭제 대상: ${selectedIds.join(', ')}`
-        : '선택된 스토어가 없습니다.',
-    )
+    if (selectedIds.length === 0) {
+      toast.info('선택된 스토어가 없습니다.')
+      return
+    }
+
+    setIsDeleteDialogOpen(true)
+  }
+
+  const handleConfirmDelete = () => {
+    setSelectedIds([])
+    setIsDeleteDialogOpen(false)
+    toast.success('스토어 삭제는 추후 API 연결 예정입니다.')
   }
 
   const handleEdit = (id: number) => {
@@ -75,12 +84,18 @@ export const StoreRegistrationTable = () => {
             onPageChange={setCurrentPage}
             onCreate={handleCreate}
             onDelete={handleDelete}
+            isDeleteDisabled={selectedIds.length === 0}
           />
         }
       />
       <StoreRegistrationFormDialog
         open={isCreateDialogOpen}
         onClose={() => setIsCreateDialogOpen(false)}
+      />
+      <StoreRegistrationDeleteConfirmDialog
+        open={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={handleConfirmDelete}
       />
     </>
   )
