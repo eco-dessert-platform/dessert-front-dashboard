@@ -11,8 +11,8 @@ export function toSettlement(summary: DailySettlementSummary): Settlement {
     commission: summary.fee,
     deduction: summary.deductibleRefund,
     deductionDetails: {
-      shippingFeeChange: summary.deductibleRefundDetail.deliveryFeeChange,
-      chargeOffset: summary.deductibleRefundDetail.balanceOffset,
+      shippingFeeChange: summary.deductibleRefundDetail?.deliveryFeeChange ?? 0,
+      chargeOffset: summary.deductibleRefundDetail?.balanceOffset ?? 0,
     },
     withheld: summary.withHoldingPayment,
     method: summary.settlementMethod,

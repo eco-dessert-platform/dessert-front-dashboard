@@ -11,7 +11,7 @@ export interface DailySettlementSummary {
   amount: number // 결제금액(a)
   fee: number // 수수료(b)
   deductibleRefund: number // 공제/환급(c)
-  deductibleRefundDetail: DeductibleRefundDetail
+  deductibleRefundDetail?: DeductibleRefundDetail | null
   withHoldingPayment: number // 지급보류(d)
   settlementMethod: string // 정산방식
 }
