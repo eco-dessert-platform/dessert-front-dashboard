@@ -22,10 +22,14 @@ export const SettlementOverview = ({
   summary,
 }: SettlementOverviewProps) => {
   const dateValue: DateRange | undefined =
-    filters.startDate && filters.endDate
+    filters.startDate || filters.endDate
       ? {
-          from: parse(filters.startDate, 'yyyy-MM-dd', new Date()),
-          to: parse(filters.endDate, 'yyyy-MM-dd', new Date()),
+          from: filters.startDate
+            ? parse(filters.startDate, 'yyyy-MM-dd', new Date())
+            : undefined,
+          to: filters.endDate
+            ? parse(filters.endDate, 'yyyy-MM-dd', new Date())
+            : undefined,
         }
       : undefined
 
