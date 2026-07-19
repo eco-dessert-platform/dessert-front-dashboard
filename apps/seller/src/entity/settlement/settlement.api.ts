@@ -30,7 +30,12 @@ export async function getDailySettlements(
   const { data } = await client.get<ApiResponse<DailySettlementPageResponse>>(
     '/api/v1/seller/settlements/daily',
     {
-      params: { page, size, startDate, endDate },
+      params: {
+        page,
+        size,
+        startDate: startDate ?? undefined,
+        endDate: endDate ?? undefined,
+      },
     },
   )
 
@@ -49,7 +54,10 @@ export async function getDailySettlementsExcel(
   const { data } = await client.get<Blob>(
     '/api/v1/seller/settlements/daily/excel',
     {
-      params: { startDate, endDate },
+      params: {
+        startDate: startDate ?? undefined,
+        endDate: endDate ?? undefined,
+      },
       responseType: 'blob',
     },
   )
