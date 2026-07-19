@@ -36,3 +36,23 @@ export async function getDailySettlements(
 
   return unwrap(data, '일별 정산내역 조회에 실패했습니다.')
 }
+
+export async function getDailySettlementsExcel(
+  filters: Pick<DailySettlementFilters, 'startDate' | 'endDate'>,
+): Promise<Blob | null> {
+  if (useMock) {
+    return null
+  }
+
+  const { startDate, endDate } = filters
+
+  const { data } = await client.get<Blob>(
+    '/api/v1/seller/settlements/daily/excel',
+    {
+      params: { startDate, endDate },
+      responseType: 'blob',
+    },
+  )
+
+  return data
+}

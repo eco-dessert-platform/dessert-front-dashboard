@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Button, Table } from '@dessert/ui'
+import { Button, Table, toast } from '@dessert/ui'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { getTransactionSettlementMock } from '@/entity/settlement/mock'
@@ -162,6 +162,11 @@ export const TransactionSettlementTable = ({
             currentPage={filters.page}
             totalPages={totalPages}
             onPageChange={onPageChange}
+            onDownloadExcel={() =>
+              toast.info('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
+                position: 'bottom-right',
+              })
+            }
           />
         }
         maxHeight="calc(100vh - 400px)"

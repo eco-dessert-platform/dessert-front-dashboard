@@ -1,6 +1,7 @@
-import { Tab, TabContent, TabList, TabTrigger } from '@dessert/ui'
+import { Tab, TabContent, TabList, TabTrigger, toast } from '@dessert/ui'
 import { useQuery } from '@tanstack/react-query'
 
+import { getDailySettlementsExcel } from '@/entity/settlement/settlement.api'
 import { settlementQueries } from '@/entity/settlement/settlement.query'
 import { DailySettlementTable } from '@/features/settlement/history/history-daily-table'
 import { SettlementFilter } from '@/features/settlement/history/history-filter'
@@ -8,6 +9,7 @@ import { SettlementOverview } from '@/features/settlement/history/history-overvi
 import { TransactionSettlementTable } from '@/features/settlement/history/history-transaction-table'
 import { useDailySettlementFilter } from '@/features/settlement/history/model/use-daily-settlement-filter'
 import { useSettlementFilter } from '@/features/settlement/history/model/use-settlement-filter'
+import { downloadBlob } from '@/shared/utils/download-file'
 
 import Layout from './layout'
 
@@ -26,6 +28,38 @@ const SettlementPage = () => {
 
   const { draftFilters, setDraftFilters, appliedFilters, apply, setPage } =
     useSettlementFilter()
+
+  const handleDownloadDailyExcel = async () => {
+    if (!dailyAppliedFilters.startDate || !dailyAppliedFilters.endDate) {
+      toast.error('조회기간을 먼저 선택한 후 조회해주세요.', undefined, {
+        position: 'bottom-right',
+      })
+      return
+    }
+
+    try {
+      const blob = await getDailySettlementsExcel({
+        startDate: dailyAppliedFilters.startDate,
+        endDate: dailyAppliedFilters.endDate,
+      })
+
+      if (!blob) {
+        toast.info('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
+          position: 'bottom-right',
+        })
+        return
+      }
+
+      downloadBlob(blob, '일별_정산내역.xlsx')
+      toast.success('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
+        position: 'bottom-right',
+      })
+    } catch {
+      toast.error('엑셀 다운로드에 실패했습니다.', undefined, {
+        position: 'bottom-right',
+      })
+    }
+  }
 
   return (
     <Layout>
@@ -46,6 +80,7 @@ const SettlementPage = () => {
           <DailySettlementTable
             pageResponse={dailyData?.settlements}
             onPageChange={(page) => setDailyPage(page - 1)}
+            onDownloadExcel={handleDownloadDailyExcel}
           />
         </TabContent>
 

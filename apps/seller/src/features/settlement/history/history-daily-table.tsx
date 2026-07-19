@@ -131,11 +131,13 @@ const columns: ColumnDef<Settlement>[] = [
 interface DailySettlementTableProps {
   pageResponse?: DailySettlementPageResponse['settlements']
   onPageChange: (page: number) => void
+  onDownloadExcel: () => void
 }
 
 export const DailySettlementTable = ({
   pageResponse,
   onPageChange,
+  onDownloadExcel,
 }: DailySettlementTableProps) => {
   const data = (pageResponse?.content ?? []).map(toSettlement)
   const currentPage = (pageResponse?.page ?? 0) + 1
@@ -151,6 +153,7 @@ export const DailySettlementTable = ({
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={onPageChange}
+            onDownloadExcel={onDownloadExcel}
           />
         }
         maxHeight="calc(100vh - 400px)"

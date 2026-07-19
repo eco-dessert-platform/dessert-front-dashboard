@@ -1,4 +1,4 @@
-import { Button, Pagination, toast } from '@dessert/ui'
+import { Button, Pagination } from '@dessert/ui'
 
 import ExcelIcon from '@/assets/icons/icon-excel.svg?react'
 
@@ -6,12 +6,14 @@ interface SettlementTableTopAreaProps {
   currentPage: number
   totalPages: number
   onPageChange: (page: number) => void
+  onDownloadExcel: () => void
 }
 
 export const SettlementTableTopArea = ({
   currentPage,
   totalPages,
   onPageChange,
+  onDownloadExcel,
 }: SettlementTableTopAreaProps) => {
   return (
     <div className="flex w-full items-center justify-between">
@@ -21,11 +23,7 @@ export const SettlementTableTopArea = ({
         className="h-30 gap-4 px-10 py-6 text-gray-800"
         leftIcon={<ExcelIcon width={16} height={16} />}
         title="엑셀 다운로드"
-        onClick={() =>
-          toast.info('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
-            position: 'bottom-right',
-          })
-        }
+        onClick={onDownloadExcel}
       />
 
       <Pagination
