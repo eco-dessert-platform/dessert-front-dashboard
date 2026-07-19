@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { Button, Table } from '@dessert/ui'
 import { ColumnDef } from '@tanstack/react-table'
 
@@ -139,7 +141,10 @@ export const DailySettlementTable = ({
   onPageChange,
   onDownloadExcel,
 }: DailySettlementTableProps) => {
-  const data = (pageResponse?.content ?? []).map(toSettlement)
+  const data = useMemo(
+    () => (pageResponse?.content ?? []).map(toSettlement),
+    [pageResponse],
+  )
   const currentPage = (pageResponse?.page ?? 0) + 1
   const totalPages = pageResponse?.totalPages ?? 1
 
