@@ -5,7 +5,7 @@ export const paymentHoldSearchFilterSchema = z
     dateType: z.enum(['BASE_DATE', 'COMPLETED_DATE']),
     startDate: z.string().optional(),
     endDate: z.string().optional(),
-    status: z.enum(['ALL', 'HOLD', 'RELEASED']),
+    status: z.enum(['ALL', 'ON_HOLD', 'RELEASED']),
     searchType: z.enum(['PAYMENT_HOLD_ID', 'SETTLEMENT_ID']).optional(),
     keyword: z.string(),
   })

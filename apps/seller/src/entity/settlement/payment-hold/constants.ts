@@ -19,7 +19,7 @@ export const PAYMENT_HOLD_STATUS_OPTIONS: {
   value: TPaymentHoldStatus
 }[] = [
   { label: '전체', value: 'ALL' },
-  { label: '지급보류', value: 'HOLD' },
+  { label: '지급보류', value: 'ON_HOLD' },
   { label: '해제', value: 'RELEASED' },
 ]
 
@@ -35,6 +35,6 @@ export const PAYMENT_HOLD_STATUS_LABELS: Record<
   Exclude<TPaymentHoldStatus, 'ALL'>,
   string
 > = {
-  HOLD: '지급보류',
+  ON_HOLD: '지급보류',
   RELEASED: '해제',
 }

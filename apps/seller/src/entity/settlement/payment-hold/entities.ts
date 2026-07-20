@@ -1,5 +1,5 @@
 export type TPaymentHoldDateType = 'BASE_DATE' | 'COMPLETED_DATE'
-export type TPaymentHoldStatus = 'ALL' | 'HOLD' | 'RELEASED'
+export type TPaymentHoldStatus = 'ALL' | 'ON_HOLD' | 'RELEASED'
 export type TPaymentHoldSearchType = 'PAYMENT_HOLD_ID' | 'SETTLEMENT_ID'
 
 export interface IPaymentHoldFilter {
@@ -36,6 +36,16 @@ export interface IPaymentHoldRow {
   baseDate: string
   completedDate: string
   amount: number
+}
+
+// 실제 API 응답 필드명 (PaymentHoldSummary 스키마 기준)
+export interface IPaymentHoldRowResponse {
+  paymentHoldId: number
+  settlementId: string
+  status: Exclude<TPaymentHoldStatus, 'ALL'>
+  settlementBaseDate: string
+  settlementCompletedDate: string
+  settlementAmount: number
 }
 
 export interface IPaymentHoldPageResponse {
