@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { PlusIcon, SquarePenIcon } from '@dessert/icons'
 import { Button, Label } from '@dessert/ui'
 import { useNavigate } from 'react-router-dom'
@@ -7,25 +5,15 @@ import { useNavigate } from 'react-router-dom'
 import AppLogoImage from '@/assets/images/apple-120x120.png'
 import { ROUTES } from '@/shared/constant/routes'
 
-import { useProductCreationStore } from '../create-form/product-creation.store'
-import { useCreateFormSteps } from '../create-form/use-create-form-steps.hook'
+import { useProductCreationStore } from '../create-form'
 
 export const ProductDetailArea = () => {
   const navigate = useNavigate()
   const { productDetail } = useProductCreationStore()
-  const { setProductFields } = useCreateFormSteps()
 
   // Quill 에디터의 빈 콘텐츠 체크 로직 (Zustand 상태 기반)
   const hasContent =
     productDetail.trim() !== '' && productDetail !== '<p><br></p>'
-
-  // 내용 유무에 따라 상품 등록 폼의 완료 상태 업데이트
-  useEffect(() => {
-    setProductFields((prev) => ({
-      ...prev,
-      productDetail: hasContent,
-    }))
-  }, [hasContent, setProductFields])
 
   const handleEditClick = () => {
     navigate(ROUTES.PRODUCTS.CREATE_DETAIL)

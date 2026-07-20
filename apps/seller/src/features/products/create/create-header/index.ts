@@ -1,2 +1,8 @@
 export { ProductHeader } from './create-header.ui'
 export { ProductHeaderTags } from './create-header-tags.ui'
+export { CategoryOptions } from './category-options.constants'
+export { useCreateHeaderStore } from './create-header-store.store'
+export * from './create-header-store.type'
+export { EssentialOptions } from './essential-options.constants'
+export type { OptionTags } from './options-tag.type'
+export { useCreateHeaderSteps } from './use-create-header-steps.hook'

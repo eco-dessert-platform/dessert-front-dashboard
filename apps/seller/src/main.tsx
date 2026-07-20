@@ -14,6 +14,7 @@ import CompletePage from '@/pages/register/complete/complete-page'
 import RegisterLayout from '@/pages/register/register-layout'
 import StoreInfoPage from '@/pages/register/store-info/store-info-page'
 import VerificationPage from '@/pages/register/verification/verification-page'
+import SalesAnalyticsPage from '@/pages/statistics/sales-analytics/sales-analytics-page'
 import SettlementPage from '@/pages/settlements/index-page'
 import { ROUTES } from '@/shared/constant/routes'
 
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
 
       { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
+      {
+        path: ROUTES.STATISTICS.SALES_ANALYTICS,
+        element: <SalesAnalyticsPage />,
+      },
       { path: ROUTES.SETTLEMENTS.CHARGE, element: <ChargePage /> },
       { path: ROUTES.SETTLEMENTS.PAYMENT_HOLD, element: <PaymentHoldPage /> },
       { path: ROUTES.SETTLEMENTS.VAT_REPORT, element: <VatreportPage /> },

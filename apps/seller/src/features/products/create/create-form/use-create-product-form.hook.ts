@@ -38,6 +38,8 @@ export const useCreateProductForm = () => {
       deliveryCompany: '',
       deliveryFee: null,
       deliveryMinFee: null,
+      mainImage: null,
+      extraImages: [],
 
       options: [
         DEFAULT_PRODUCT_OPTION,

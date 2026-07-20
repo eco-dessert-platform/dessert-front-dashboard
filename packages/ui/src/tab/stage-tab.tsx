@@ -11,9 +11,16 @@ interface StageTabProps {
   steps: string[]
   /** 추가적인 클래스명 */
   className?: string
+  /** 단계 클릭 시 실행될 콜백*/
+  onStepClick?: (index: number) => void
 }
 
-export function StageTab({ currentStep, steps, className }: StageTabProps) {
+export function StageTab({
+  currentStep,
+  steps,
+  className,
+  onStepClick,
+}: StageTabProps) {
   return (
     <div
       className={cn(
@@ -24,9 +31,21 @@ export function StageTab({ currentStep, steps, className }: StageTabProps) {
       <div className="flex shrink-0 items-center justify-center gap-10">
         {steps.map((step, index) => {
           const isActive = index + 1 === currentStep
-
+          const Component = onStepClick ? 'button' : 'div'
+          const componentProps = onStepClick
+            ? { type: 'button' as const, onClick: () => onStepClick(index) }
+            : {}
           return (
-            <div key={step} className="flex shrink-0 items-center gap-2">
+            <Component
+              key={step}
+              {...componentProps}
+              aria-current={isActive ? 'step' : undefined}
+              className={cn(
+                'flex shrink-0 items-center gap-2',
+                onStepClick &&
+                  'cursor-pointer rounded-4 border-0 bg-transparent p-0 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none',
+              )}
+            >
               <span
                 className={cn(
                   'text-[16px] leading-[1.6] font-medium tracking-[-0.32px] whitespace-nowrap transition-colors',
@@ -41,7 +60,7 @@ export function StageTab({ currentStep, steps, className }: StageTabProps) {
                   isActive ? 'text-primary-500' : 'text-gray-600',
                 )}
               />
-            </div>
+            </Component>
           )
         })}
       </div>

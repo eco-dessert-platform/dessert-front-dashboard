@@ -61,7 +61,7 @@ const DisclosureFieldItem = ({
         render={({ field: inputField }) => (
           <Input
             placeholder={
-              modeValue === 'default' && field.key !== 'productName'
+              modeValue === 'default'
                 ? '해당항목 없음'
                 : '3자 이상 50자 미만으로 입력해 주세요'
             }
