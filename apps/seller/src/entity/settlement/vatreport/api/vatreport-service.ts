@@ -34,14 +34,7 @@ const triggerFileDownload = (blob: Blob, fileName: string) => {
   setTimeout(() => URL.revokeObjectURL(url), 0)
 }
 
-interface FieldError {
-  field: string
-  msg: string
-}
-
-interface VatReportResponse extends ApiResponse<IVatReportResponse> {
-  fieldErrors?: FieldError[]
-}
+type VatReportResponse = ApiResponse<IVatReportResponse>
 
 const toMonthParam = (date?: string) => {
   if (!date) {
