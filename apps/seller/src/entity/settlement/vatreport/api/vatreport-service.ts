@@ -27,7 +27,12 @@ const toMonthParam = (date?: string) => {
     return undefined
   }
 
-  return format(parseISO(date), 'yyyy-MM')
+  try {
+    const parsed = parseISO(date)
+    return Number.isNaN(parsed.getTime()) ? undefined : format(parsed, 'yyyy-MM')
+  } catch {
+    return undefined
+  }
 }
 
 class VatService {
@@ -66,10 +71,18 @@ class VatService {
       },
     )
 
-    if (data.type === 'application/json') {
-      const errorText = await data.text()
-      const error = JSON.parse(errorText) as { message?: string }
-      throw new Error(error.message ?? '엑셀 다운로드에 실패했습니다.')
+    if (data.type?.startsWith('application/json')) {
+      const fallbackMessage = '엑셀 다운로드에 실패했습니다.'
+      let message: string | undefined
+
+      try {
+        const errorText = await data.text()
+        message = (JSON.parse(errorText) as { message?: string }).message
+      } catch {
+        // JSON 파싱 실패 시 기본 메시지 사용
+      }
+
+      throw new Error(message ?? fallbackMessage)
     }
 
     const fileName = getFileNameFromContentDisposition(

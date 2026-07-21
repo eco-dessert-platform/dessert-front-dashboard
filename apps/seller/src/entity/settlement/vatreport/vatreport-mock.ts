@@ -41,14 +41,22 @@ const toMonthParam = (date?: string) => {
     return undefined
   }
 
-  return format(parseISO(date), 'yyyy-MM')
+  try {
+    const parsed = parseISO(date)
+    return Number.isNaN(parsed.getTime()) ? undefined : format(parsed, 'yyyy-MM')
+  } catch {
+    return undefined
+  }
 }
+
+const DEFAULT_START_MONTH = MOCK_ITEMS[0].month
+const DEFAULT_END_MONTH = MOCK_ITEMS[MOCK_ITEMS.length - 1].month
 
 export const getVatReportMock = (
   filters: IVatReportFilter = {},
 ): IVatReportResponse => {
-  const startMonth = toMonthParam(filters.startDate) ?? '2024-09'
-  const endMonth = toMonthParam(filters.endDate) ?? '2025-04'
+  const startMonth = toMonthParam(filters.startDate) ?? DEFAULT_START_MONTH
+  const endMonth = toMonthParam(filters.endDate) ?? DEFAULT_END_MONTH
 
   const items = MOCK_ITEMS.filter(
     (item) => item.month >= startMonth && item.month <= endMonth,
