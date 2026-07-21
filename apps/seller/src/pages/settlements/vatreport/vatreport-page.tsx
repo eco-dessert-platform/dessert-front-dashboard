@@ -56,7 +56,10 @@ const Vatreport = () => {
 
   const handleExcelDownload = useCallback(async () => {
     try {
-      await vatService.downloadExcel(filters)
+      await vatService.downloadExcel({
+        startDate: filters.startDate,
+        endDate: filters.endDate,
+      })
       toast.info('부가세 신고 내역 엑셀 파일이 다운로드 되었어요.', undefined, {
         position: 'bottom-right',
       })
@@ -69,7 +72,7 @@ const Vatreport = () => {
         { position: 'bottom-right' },
       )
     }
-  }, [filters.endDate, filters.startDate])
+  }, [filters.startDate, filters.endDate])
 
   return (
     <Layout>
