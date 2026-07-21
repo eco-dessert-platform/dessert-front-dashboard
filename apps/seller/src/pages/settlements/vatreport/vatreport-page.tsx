@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 import { toast } from '@dessert/ui'
@@ -28,7 +28,21 @@ const Vatreport = () => {
     }
   })
 
-  const { data } = useQuery(vatQueries.getVatReport(filters))
+  const { data, error, isError } = useQuery(vatQueries.getVatReport(filters))
+
+  useEffect(() => {
+    if (!isError) {
+      return
+    }
+
+    toast.error(
+      error instanceof Error
+        ? error.message
+        : '부가세 신고 내역 조회에 실패했습니다.',
+      undefined,
+      { position: 'bottom-right' },
+    )
+  }, [isError, error])
 
   const updateVatReportSearch = useCallback(
     (updates: Partial<IVatReportFilter>) => {
