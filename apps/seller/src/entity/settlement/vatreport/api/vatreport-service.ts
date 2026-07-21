@@ -85,7 +85,9 @@ class VatService {
       },
     )
 
-    if (data.type?.startsWith('application/json')) {
+    const mimeType = data.type?.toLowerCase().split(';')[0].trim()
+
+    if (mimeType === 'application/json') {
       const fallbackMessage = '엑셀 다운로드에 실패했습니다.'
       let message: string | undefined
 
