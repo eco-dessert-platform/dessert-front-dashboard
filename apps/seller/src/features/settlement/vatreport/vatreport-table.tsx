@@ -4,7 +4,6 @@ import { Text } from '@dessert/ui'
 import { DEFAULT_VAT_REPORT_PAGE_SIZE } from '@/entity/settlement/vatreport/constants'
 import type { IVatReportRow } from '@/entity/settlement/vatreport/entities'
 import Table from '@/shared/components/ui/table/table'
-import TableEmpty from '@/shared/components/ui/table/table-empty'
 
 import VatReportTableTop from './vatreport-table-top'
 
@@ -135,7 +134,7 @@ const VatReportTable = ({
   const paginatedItems = items.slice(page * size, (page + 1) * size)
 
   return (
-    <div className="relative [&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
+    <div className="[&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
       <Table
         data={paginatedItems}
         columns={vatReportColumns}
@@ -148,11 +147,9 @@ const VatReportTable = ({
             onExcelDownload={onExcelDownload}
           />
         }
+        emptyDesc="조회된 부가세 신고 내역이 없어요"
         scrollHeight={498}
       />
-      {paginatedItems.length === 0 && (
-        <TableEmpty description="조회된 부가세 신고 내역이 없어요" />
-      )}
     </div>
   )
 }
