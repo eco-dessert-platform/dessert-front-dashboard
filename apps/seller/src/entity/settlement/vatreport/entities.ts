@@ -5,17 +5,7 @@ export interface IVatReportFilter {
   size?: number
 }
 
-export type TVatReportDateType = 'BASE_DATE'
-export type TVatReportExcelStatus = 'ALL'
-
-export interface IVatReportExcelRequest {
-  dateType: TVatReportDateType
-  startDate?: string
-  endDate?: string
-  status: TVatReportExcelStatus
-  paymentHoldId: number
-  settlementId: string
-}
+export type TVatReportExcelType = 'MONTHLY' | 'DAILY' | 'ORDER'
 
 export interface IVatReportRow {
   month: string
