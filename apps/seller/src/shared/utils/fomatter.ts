@@ -1,12 +1,22 @@
 import { format, parseISO } from 'date-fns'
 import type { DateRange } from 'react-day-picker'
 
-export const stringToDateRange = (
-  start?: string,
-  end?: string,
-): DateRange => ({
-  from: start ? parseISO(start) : undefined,
-  to: end ? parseISO(end) : undefined,
+const toValidDate = (value?: string) => {
+  if (!value) {
+    return undefined
+  }
+
+  try {
+    const parsed = parseISO(value)
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed
+  } catch {
+    return undefined
+  }
+}
+
+export const stringToDateRange = (start?: string, end?: string): DateRange => ({
+  from: toValidDate(start),
+  to: toValidDate(end),
 })
 
 export const dateToString = (date?: Date) =>
