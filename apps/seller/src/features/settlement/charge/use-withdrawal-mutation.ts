@@ -11,7 +11,7 @@ export const useWithdrawalMutation = () => {
     mutationFn: (request: IWithdrawalRequest) =>
       chargeService.postWithdrawal(request),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: chargeKeys.all() })
+      return queryClient.invalidateQueries({ queryKey: chargeKeys.all() })
     },
   })
 }
