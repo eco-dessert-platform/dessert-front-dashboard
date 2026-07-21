@@ -156,6 +156,7 @@ const ChargeWithdrawModal = ({
               variant="secondary-outlined"
               size="sm"
               className="h-32 min-w-[80px] rounded-8"
+              disabled={isPending}
             />
           </DialogClose>
           <Button
