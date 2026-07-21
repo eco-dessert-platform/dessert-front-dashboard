@@ -10,6 +10,8 @@ import { Button } from '../button/button'
 import { cn } from '../lib/utils'
 
 interface CalendarProps {
+  /** 선택 모드. 'single'은 단일 날짜, 'range'는 시작/종료 범위. 기본 'range'. single 모드에선 항상 from===to. */
+  mode?: 'range' | 'single'
   /** 현재 선택된 날짜 범위 (부모가 관리) */
   selected?: DateRange
   /** 날짜 선택 시 호출 */
@@ -22,6 +24,7 @@ interface CalendarProps {
 }
 
 export function Calendar({
+  mode = 'range',
   selected,
   onSelect,
   onReset,
@@ -31,6 +34,13 @@ export function Calendar({
   const [hoverRange, setHoverRange] = useState<DateRange | undefined>()
 
   const handleSelect = (range: DateRange | undefined, selectedDay: Date) => {
+    // single 모드: 클릭한 날짜를 from/to 둘 다로 설정해 1일짜리 range로 표현.
+    if (mode === 'single') {
+      onSelect({ from: selectedDay, to: selectedDay })
+      setHoverRange(undefined)
+      return
+    }
+
     // 1. 현재 아무것도 선택 안 된 경우 -> 그냥 선택
     if (!selected) {
       onSelect({ from: selectedDay, to: undefined })
