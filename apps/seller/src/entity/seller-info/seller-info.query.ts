@@ -10,6 +10,7 @@ import {
   getStore,
   requestStoreNameChange,
   updateSellerAccount,
+  updateStore,
 } from './seller-info.api'
 
 export const sellerInfoQueries = {
@@ -30,6 +31,19 @@ export const sellerInfoQueries = {
 export function useCheckStoreNameMutation() {
   return useMutation({
     mutationFn: checkStoreName,
+  })
+}
+
+export function useUpdateStoreDetailMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: updateStore,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: sellerInfoQueries.store().queryKey,
+      })
+    },
   })
 }
 
