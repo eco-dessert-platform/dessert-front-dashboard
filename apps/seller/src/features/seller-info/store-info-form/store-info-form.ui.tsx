@@ -35,9 +35,7 @@ export function StoreInfoForm() {
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false)
   const [profileImage, setProfileImage] = useState<File | null>(null)
 
-  const { data, isLoading, isError, refetch } = useQuery(
-    sellerInfoQueries.store(),
-  )
+  const { data } = useQuery(sellerInfoQueries.store())
   const { mutate, isPending } = useUpdateStoreDetailMutation()
 
   const methods = useForm<StoreDetailFormValues>({
@@ -63,32 +61,8 @@ export function StoreInfoForm() {
     })
   }, [data, reset])
 
-  if (isLoading) {
-    return (
-      <section className="rounded-20 bg-white p-24">
-        <div className="py-40 text-center typo-body-14-r text-gray-500">
-          스토어 정보를 불러오는 중이에요.
-        </div>
-      </section>
-    )
-  }
-
-  if (isError || !data) {
-    return (
-      <section className="rounded-20 bg-white p-24">
-        <div className="flex flex-col items-center gap-12 py-40">
-          <p className="typo-body-14-r text-gray-500">
-            스토어 정보를 불러오지 못했어요.
-          </p>
-          <Button
-            title="다시 시도"
-            variant="secondary-outlined"
-            onClick={() => refetch()}
-          />
-        </div>
-      </section>
-    )
-  }
+  // 조회 로딩과 실패는 페이지에서 한 번만 처리한다.
+  if (!data) return null
 
   const onSubmit = () => {
     setIsSubmitDialogOpen(true)
