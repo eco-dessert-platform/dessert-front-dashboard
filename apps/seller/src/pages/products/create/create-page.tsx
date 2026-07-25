@@ -11,6 +11,8 @@ import {
   ProductInfoArea,
   ProductOptionsArea,
   ThumbnailUploadArea,
+  useCreateFormPersistence,
+  useCreateFunnelEntry,
   useCreateProductForm,
 } from '@/features/products/create'
 import {
@@ -18,34 +20,47 @@ import {
   useCreateDraft,
   useCreateDraftStore,
 } from '@/features/products/create/create-draft'
+import { getStoredSessionFormData } from '@/features/products/create/create-form/create-form-session.utils'
 import { CreateFooter } from '@/features/products/create/create-footer'
 import { ProductPreviewModal } from '@/features/products/create/create-preview'
 
 function CreatePage() {
-  const form = useCreateProductForm()
+  const entryMode = useCreateFunnelEntry()
+  const form = useCreateProductForm(entryMode)
+
   return (
     <FormProvider {...form}>
-      <CreatePageInner />
+      <CreatePageInner entryMode={entryMode} />
     </FormProvider>
   )
 }
 
-function CreatePageInner() {
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false) //미리보기
-  const [isDraftModalOpen, setIsDraftModalOpen] = useState(false) //임시저장
+interface CreatePageInnerProps {
+  entryMode: ReturnType<typeof useCreateFunnelEntry>
+}
+
+function CreatePageInner({ entryMode }: CreatePageInnerProps) {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+  const [isDraftModalOpen, setIsDraftModalOpen] = useState(false)
   const { draft } = useCreateDraftStore()
   const isInitialMount = useRef(true)
   const { handleRestoreDraft, clearDraft } = useCreateDraft()
 
-  // 임시저장 데이터가 있으면 최초 마운트 시 복원 모달 노출
+  useCreateFormPersistence(entryMode)
+
+  // 퍼널 외부 진입(reset)이고 자동 저장 데이터가 없을 때만 수동 임시저장 복원 모달을 노출합니다.
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false
-      if (draft) {
+
+      if (entryMode === 'restore') return
+
+      const hasSessionData = !!getStoredSessionFormData()
+      if (!hasSessionData && draft) {
         setIsDraftModalOpen(true)
       }
     }
-  }, [draft])
+  }, [draft, entryMode])
 
   return (
     <>

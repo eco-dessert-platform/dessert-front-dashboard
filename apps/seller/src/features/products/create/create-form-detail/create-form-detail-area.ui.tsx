@@ -23,7 +23,7 @@ export const ProductDetailArea = () => {
   }, [hasContent, setProductFields])
 
   const handleEditClick = () => {
-    navigate(ROUTES.PRODUCTS.CREATE_DETAIL)
+    navigate(ROUTES.PRODUCTS.CREATE_DETAIL, { state: { fromCreatePage: true } })
   }
 
   return (
