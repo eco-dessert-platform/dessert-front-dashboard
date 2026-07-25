@@ -7,9 +7,9 @@ const meta = {
   component: StageTab,
   tags: ['autodocs'],
   argTypes: {
-    currentStep: {
-      control: { type: 'number', min: 1, max: 6 },
-      description: '현재 활성화된 단계 (1부터 시작)',
+    completedSteps: {
+      control: 'object',
+      description: '각 단계의 필수 입력 완료 여부',
     },
     steps: {
       control: 'object',
@@ -23,7 +23,21 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    currentStep: 1,
+    completedSteps: [true, false, false, false, false, false],
+    steps: [
+      '상품 정보',
+      '배송 정보',
+      '썸네일 등록',
+      '상품 옵션 정보',
+      '상세페이지 등록',
+      '상품 정보 제공 고시',
+    ],
+  },
+}
+
+export const AllCompleted: Story = {
+  args: {
+    completedSteps: [true, true, true, true, true, true],
     steps: [
       '상품 정보',
       '배송 정보',
