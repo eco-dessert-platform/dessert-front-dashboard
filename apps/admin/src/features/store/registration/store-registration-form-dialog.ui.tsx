@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+
 import {
   Dialog,
   DialogContent,
@@ -28,6 +30,7 @@ export const StoreRegistrationFormDialog = ({
   onClose,
 }: StoreRegistrationFormDialogProps) => {
   const { mutate, isPending } = useCreateAdminStoreMutation()
+  const isCreateSubmittingRef = useRef(false)
   const form = useForm<StoreRegistrationFormValues>({
     resolver: zodResolver(createStoreRegistrationFormSchema),
     defaultValues: DEFAULT_STORE_REGISTRATION_FORM_VALUES,
@@ -42,13 +45,21 @@ export const StoreRegistrationFormDialog = ({
 
   const onSubmit = (values: StoreRegistrationFormValues) => {
     if (!values.profileImage) return
+    if (isCreateSubmittingRef.current) return
+
+    isCreateSubmittingRef.current = true
 
     mutate(
       {
         request: toStoreDetailRequest(values),
         profileImage: values.profileImage,
       },
-      { onSuccess: handleClose },
+      {
+        onSuccess: handleClose,
+        onSettled: () => {
+          isCreateSubmittingRef.current = false
+        },
+      },
     )
   }
 

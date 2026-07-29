@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import {
   Dialog,
@@ -33,6 +33,7 @@ export const StoreRegistrationEditDialog = ({
   onClose,
 }: StoreRegistrationEditDialogProps) => {
   const { mutate, isPending } = useUpdateAdminStoreMutation()
+  const isUpdateSubmittingRef = useRef(false)
   const form = useForm<StoreRegistrationFormValues>({
     resolver: zodResolver(updateStoreRegistrationFormSchema),
     defaultValues: DEFAULT_STORE_REGISTRATION_FORM_VALUES,
@@ -57,13 +58,21 @@ export const StoreRegistrationEditDialog = ({
 
   const onSubmit = (values: StoreRegistrationFormValues) => {
     if (!store) return
+    if (isUpdateSubmittingRef.current) return
+
+    isUpdateSubmittingRef.current = true
 
     mutate(
       {
         storeId: store.id,
         body: toStoreDetailRequest(values),
       },
-      { onSuccess: handleClose },
+      {
+        onSuccess: handleClose,
+        onSettled: () => {
+          isUpdateSubmittingRef.current = false
+        },
+      },
     )
   }
 
