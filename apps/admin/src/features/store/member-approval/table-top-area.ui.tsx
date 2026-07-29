@@ -6,6 +6,7 @@ interface TableTopAreaProps {
   currentPage: number
   totalPages: number
   isTableActionDisabled?: boolean
+  isDownloadDisabled?: boolean
   onPageChange: (page: number) => void
   onSubmitApproval: () => void
   handleDownloadFile: () => void
@@ -17,6 +18,7 @@ export const TableTopArea = ({
   currentPage,
   totalPages,
   isTableActionDisabled = false,
+  isDownloadDisabled = false,
   onPageChange,
   onSubmitApproval,
   handleDownloadFile,
@@ -35,7 +37,7 @@ export const TableTopArea = ({
           <Button
             title="서류 다운로드"
             variant="secondary-outlined"
-            disabled={isTableActionDisabled}
+            disabled={isDownloadDisabled}
             onClick={handleDownloadFile}
           />
         </div>

@@ -7,7 +7,10 @@ import {
   StoreApplicationApprove,
 } from '@/entity/store/member-approval'
 
-import { useApproveMemberApplicationsMutation } from './member-approval.mutation'
+import {
+  useApproveMemberApplicationsMutation,
+  useDownloadMemberApplicationDocumentsMutation,
+} from './member-approval.mutation'
 
 interface UseMemberApprovalArgs {
   onApprovalSuccess?: (result: AdminSellerApplicationApproveListResult) => void
@@ -18,6 +21,8 @@ export const useMemberApproval = ({
 }: UseMemberApprovalArgs = {}) => {
   const { mutateAsync: approveApplications, isPending: isApproving } =
     useApproveMemberApplicationsMutation()
+  const { mutate: downloadDocuments, isPending: isDownloadingDocuments } =
+    useDownloadMemberApplicationDocumentsMutation()
   const isApprovalSubmittingRef = useRef(false)
 
   const submitApproval = async (payload: StoreApplicationApprove[]) => {
@@ -41,13 +46,24 @@ export const useMemberApproval = ({
     }
   }
 
-  const handleDownloadFile = () => {
-    //서류다운로드 기능 추가 예정
+  const handleDownloadFile = (sellerIds: number[]) => {
+    if (sellerIds.length === 0) {
+      toast.error('항목을 선택하세요', '다운로드할 셀러를 선택해주세요')
+      return
+    }
+
+    if (sellerIds.length > 50) {
+      toast.error('최대 50개까지 다운로드할 수 있습니다.')
+      return
+    }
+
+    downloadDocuments({ sellerIds })
   }
 
   return {
     submitApproval,
     handleDownloadFile,
     isApproving,
+    isDownloadingDocuments,
   }
 }

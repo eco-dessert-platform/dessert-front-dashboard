@@ -3,6 +3,7 @@ import { TableRow } from './member-approval-table.type'
 export const tableData: TableRow[] = [
   {
     id: '1',
+    sellerId: 1,
     storeName: '빵그리 빵집',
     phoneNumber: '010-1234-1234',
     additionalPhoneNumber: '010-0021-0021',
@@ -16,6 +17,7 @@ export const tableData: TableRow[] = [
   },
   {
     id: '2',
+    sellerId: 2,
     storeName: '빵그리 빵집2',
     phoneNumber: '010-1234-1234',
     additionalPhoneNumber: '010-0021-0021',
@@ -29,6 +31,7 @@ export const tableData: TableRow[] = [
   },
   {
     id: '3',
+    sellerId: 3,
     storeName: '빵그리 빵집3',
     phoneNumber: '010-1234-1234',
     additionalPhoneNumber: '010-0021-0021',
@@ -42,6 +45,7 @@ export const tableData: TableRow[] = [
   },
   {
     id: '4',
+    sellerId: 4,
     storeName: '빵그리 빵집4',
     phoneNumber: '010-1234-1234',
     additionalPhoneNumber: '010-0021-0021',

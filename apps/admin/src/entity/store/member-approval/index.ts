@@ -2,6 +2,8 @@ export { tableData } from './member-approval.mock'
 export type { TableRow } from './member-approval-table.type'
 
 export type {
+  AdminSellerDocumentDownloadRequest,
+  AdminSellerDocumentDownloadResult,
   AdminSellerApplication,
   AdminSellerApplicationApproveListResult,
   AdminSellerApplicationListResult,
@@ -18,6 +20,7 @@ export type {
 } from './member-approval.type'
 
 export {
+  AdminSellerDocumentDownloadRequestSchema,
   AdminSellerApplicationApproveListResponseSchema,
   AdminSellerApplicationApproveListResultSchema,
   AdminSellerApplicationListResponseSchema,
@@ -37,6 +40,7 @@ export {
 } from './member-approval.contract'
 
 export {
+  downloadAdminSellerDocuments,
   approveAdminSellerApplications,
   getAdminSellerApplications,
   rejectAdminSellerApplications,

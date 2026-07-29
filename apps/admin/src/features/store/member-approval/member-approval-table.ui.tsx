@@ -91,6 +91,7 @@ const toTableRow = (application: AdminSellerApplication): TableRow => {
 
   return {
     id: String(storeApplicationId),
+    sellerId: sellerDTO.sellerId,
     storeName: sellerStoreDTO.storeName ?? '',
     phoneNumber: sellerStoreDTO.phone ?? '',
     additionalPhoneNumber: sellerStoreDTO.subPhone ?? '',
@@ -115,24 +116,27 @@ export const MemberApprovalTable = () => {
       defaultValues: { approvals: {} },
     })
 
-  const { submitApproval, handleDownloadFile, isApproving } = useMemberApproval(
-    {
-      onApprovalSuccess: (result) => {
-        const successIds = new Set(
-          result.successDetails.map((detail) =>
-            String(detail.storeApplicationId),
-          ),
-        )
+  const {
+    submitApproval,
+    handleDownloadFile,
+    isApproving,
+    isDownloadingDocuments,
+  } = useMemberApproval({
+    onApprovalSuccess: (result) => {
+      const successIds = new Set(
+        result.successDetails.map((detail) =>
+          String(detail.storeApplicationId),
+        ),
+      )
 
-        setSelectedIds((prev) => prev.filter((id) => !successIds.has(id)))
-        successIds.forEach((id) => unregister(`approvals.${id}`))
+      setSelectedIds((prev) => prev.filter((id) => !successIds.has(id)))
+      successIds.forEach((id) => unregister(`approvals.${id}`))
 
-        if (result.failDetails.length === 0) {
-          reset({ approvals: {} })
-        }
-      },
+      if (result.failDetails.length === 0) {
+        reset({ approvals: {} })
+      }
     },
-  )
+  })
 
   const { data, isPlaceholderData } = useSellerApplicationListQuery({
     variables: { page: currentPage },
@@ -170,7 +174,9 @@ export const MemberApprovalTable = () => {
 
   const allSelected =
     tableData.length > 0 && selectedIds.length === tableData.length
-  const isTableActionDisabled = isApproving || isPlaceholderData
+  const isTableActionDisabled =
+    isApproving || isDownloadingDocuments || isPlaceholderData
+  const isDownloadDisabled = isTableActionDisabled || selectedIds.length === 0
 
   const toggleAll = (checked: boolean | 'indeterminate') => {
     if (isTableActionDisabled) return
@@ -240,6 +246,16 @@ export const MemberApprovalTable = () => {
     submitApproval(payload)
   }, handleInvalidApproval)
 
+  const handleDownloadSelectedFiles = () => {
+    if (isDownloadDisabled) return
+
+    const sellerIds = tableData
+      .filter((row) => selectedIds.includes(row.id))
+      .map((row) => row.sellerId)
+
+    handleDownloadFile(sellerIds)
+  }
+
   const getRowSpanForAdmin = useCallback(
     (rowIndex: number) => {
       return getRowSpanForGroup({
@@ -306,9 +322,10 @@ export const MemberApprovalTable = () => {
           currentPage={currentPage}
           totalPages={data?.totalPages || 1}
           isTableActionDisabled={isTableActionDisabled}
+          isDownloadDisabled={isDownloadDisabled}
           onPageChange={handlePageChange}
           onSubmitApproval={handleApprove}
-          handleDownloadFile={handleDownloadFile}
+          handleDownloadFile={handleDownloadSelectedFiles}
         />
       }
       getRowClassName={getRowClassName}

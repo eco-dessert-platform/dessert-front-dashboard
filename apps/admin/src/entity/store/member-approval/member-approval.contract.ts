@@ -82,6 +82,10 @@ export const StoreApplicationIdsSchema = z.object({
   applicationIds: z.array(z.number().int().positive()).min(1),
 })
 
+export const AdminSellerDocumentDownloadRequestSchema = z.object({
+  sellerIds: z.array(z.number().int().positive()).min(1).max(50),
+})
+
 export const SuccessDetailSchema = z.object({
   storeApplicationId: z.number().int(),
   storeApplicationStatus: z.string(),

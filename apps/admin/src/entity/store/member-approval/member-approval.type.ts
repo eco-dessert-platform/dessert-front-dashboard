@@ -3,6 +3,7 @@ import type {
   AdminSellerApplicationListResultSchema,
   AdminSellerApplicationRejectListResultSchema,
   AdminSellerApplicationSchema,
+  AdminSellerDocumentDownloadRequestSchema,
   FailDetailSchema,
   GetAdminSellerApplicationsRequestParamsSchema,
   SellerSchema,
@@ -22,6 +23,13 @@ export type Seller = z.infer<typeof SellerSchema>
 export type AdminSellerApplication = z.infer<
   typeof AdminSellerApplicationSchema
 >
+export type AdminSellerDocumentDownloadRequest = z.infer<
+  typeof AdminSellerDocumentDownloadRequestSchema
+>
+export interface AdminSellerDocumentDownloadResult {
+  blob: Blob
+  filename: string
+}
 export type AdminSellerApplicationListResult = z.infer<
   typeof AdminSellerApplicationListResultSchema
 >
