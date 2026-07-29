@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Table, toast } from '@dessert/ui'
 import { keepPreviousData } from '@tanstack/react-query'
@@ -14,6 +14,7 @@ import { getStoreRegistrationColumns } from './store-registration-columns.util'
 import { StoreRegistrationDeleteConfirmDialog } from './store-registration-delete-confirm-dialog.ui'
 import { StoreRegistrationEditDialog } from './store-registration-edit-dialog.ui'
 import { StoreRegistrationFormDialog } from './store-registration-form-dialog.ui'
+import { useDeleteAdminStoresMutation } from './store-registration.mutation'
 
 const PAGE_SIZE = 20
 const DEFAULT_SORT = ['createdAt,DESC']
@@ -46,6 +47,9 @@ export const StoreRegistrationTable = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [editingStoreId, setEditingStoreId] = useState<number | null>(null)
+  const isDeleteSubmittingRef = useRef(false)
+  const { mutate: deleteStores, isPending: isDeleting } =
+    useDeleteAdminStoresMutation()
 
   const { data, isPlaceholderData } = useRegisteredStoreListQuery({
     variables: {
@@ -61,7 +65,7 @@ export const StoreRegistrationTable = () => {
     [data?.content],
   )
   const totalPages = Math.max(data?.totalPages ?? 1, 1)
-  const isTableActionDisabled = isPlaceholderData
+  const isTableActionDisabled = isPlaceholderData || isDeleting
   const allSelected =
     tableData.length > 0 && selectedIds.length === tableData.length
 
@@ -117,9 +121,23 @@ export const StoreRegistrationTable = () => {
   }
 
   const handleConfirmDelete = () => {
-    setSelectedIds([])
-    setIsDeleteDialogOpen(false)
-    toast.success('스토어 삭제는 추후 API 연결 예정입니다.')
+    if (isTableActionDisabled || selectedIds.length === 0) return
+    if (isDeleteSubmittingRef.current) return
+
+    isDeleteSubmittingRef.current = true
+
+    deleteStores(
+      { storeIds: selectedIds },
+      {
+        onSuccess: () => {
+          setSelectedIds([])
+          setIsDeleteDialogOpen(false)
+        },
+        onSettled: () => {
+          isDeleteSubmittingRef.current = false
+        },
+      },
+    )
   }
 
   const handleEdit = useCallback(
@@ -186,6 +204,7 @@ export const StoreRegistrationTable = () => {
         open={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
         onConfirm={handleConfirmDelete}
+        disabled={isDeleting}
       />
       <StoreRegistrationEditDialog
         store={editingStore}

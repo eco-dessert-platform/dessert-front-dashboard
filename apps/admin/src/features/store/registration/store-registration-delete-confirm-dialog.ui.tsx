@@ -12,18 +12,20 @@ interface StoreRegistrationDeleteConfirmDialogProps {
   open: boolean
   onClose: () => void
   onConfirm: () => void
+  disabled?: boolean
 }
 
 export const StoreRegistrationDeleteConfirmDialog = ({
   open,
   onClose,
   onConfirm,
+  disabled = false,
 }: StoreRegistrationDeleteConfirmDialogProps) => {
   return (
     <Dialog
       open={open}
       onOpenChange={(nextOpen) => {
-        if (!nextOpen) onClose()
+        if (!nextOpen && !disabled) onClose()
       }}
     >
       <DialogContent className="w-[300px] gap-0 px-24 py-20 sm:max-w-[300px]">
@@ -41,12 +43,14 @@ export const StoreRegistrationDeleteConfirmDialog = ({
             type="button"
             variant="secondary-outlined"
             onClick={onClose}
+            disabled={disabled}
             className="w-full"
           />
           <Button
             title="삭제"
             type="button"
             onClick={onConfirm}
+            disabled={disabled}
             className="w-full"
           />
         </DialogFooter>
