@@ -24,6 +24,7 @@ export const useMemberApproval = ({
   const { mutate: downloadDocuments, isPending: isDownloadingDocuments } =
     useDownloadMemberApplicationDocumentsMutation()
   const isApprovalSubmittingRef = useRef(false)
+  const isDocumentDownloadSubmittingRef = useRef(false)
 
   const submitApproval = async (payload: StoreApplicationApprove[]) => {
     if (payload.length === 0) {
@@ -57,7 +58,18 @@ export const useMemberApproval = ({
       return
     }
 
-    downloadDocuments({ sellerIds })
+    if (isDocumentDownloadSubmittingRef.current) return
+
+    isDocumentDownloadSubmittingRef.current = true
+
+    downloadDocuments(
+      { sellerIds },
+      {
+        onSettled: () => {
+          isDocumentDownloadSubmittingRef.current = false
+        },
+      },
+    )
   }
 
   return {
