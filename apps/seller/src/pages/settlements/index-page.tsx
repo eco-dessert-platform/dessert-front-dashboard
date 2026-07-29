@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Tab, TabContent, TabList, TabTrigger, toast } from '@dessert/ui'
 import { useQuery } from '@tanstack/react-query'
 
@@ -29,7 +31,11 @@ const SettlementPage = () => {
   const { draftFilters, setDraftFilters, appliedFilters, apply, setPage } =
     useSettlementFilter()
 
+  const [isDownloadingDailyExcel, setIsDownloadingDailyExcel] = useState(false)
+
   const handleDownloadDailyExcel = async () => {
+    if (isDownloadingDailyExcel) return
+
     if (!dailyAppliedFilters.startDate || !dailyAppliedFilters.endDate) {
       toast.error('조회기간을 먼저 선택한 후 조회해주세요.', undefined, {
         position: 'bottom-right',
@@ -37,14 +43,16 @@ const SettlementPage = () => {
       return
     }
 
+    setIsDownloadingDailyExcel(true)
+
     try {
       const blob = await getDailySettlementsExcel({
         startDate: dailyAppliedFilters.startDate,
         endDate: dailyAppliedFilters.endDate,
       })
 
-      if (!blob) {
-        toast.info('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
+      if (!blob || blob.size === 0) {
+        toast.info('다운로드할 정산 내역이 없어요.', undefined, {
           position: 'bottom-right',
         })
         return
@@ -58,6 +66,8 @@ const SettlementPage = () => {
       toast.error('엑셀 다운로드에 실패했습니다.', undefined, {
         position: 'bottom-right',
       })
+    } finally {
+      setIsDownloadingDailyExcel(false)
     }
   }
 
@@ -81,6 +91,7 @@ const SettlementPage = () => {
             pageResponse={dailyData?.settlements}
             onPageChange={(page) => setDailyPage(page - 1)}
             onDownloadExcel={handleDownloadDailyExcel}
+            isDownloadingExcel={isDownloadingDailyExcel}
           />
         </TabContent>
 

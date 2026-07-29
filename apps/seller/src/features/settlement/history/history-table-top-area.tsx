@@ -7,6 +7,7 @@ interface SettlementTableTopAreaProps {
   totalPages: number
   onPageChange: (page: number) => void
   onDownloadExcel: () => void
+  isDownloadingExcel?: boolean
 }
 
 export const SettlementTableTopArea = ({
@@ -14,6 +15,7 @@ export const SettlementTableTopArea = ({
   totalPages,
   onPageChange,
   onDownloadExcel,
+  isDownloadingExcel,
 }: SettlementTableTopAreaProps) => {
   return (
     <div className="flex w-full items-center justify-between">
@@ -24,6 +26,7 @@ export const SettlementTableTopArea = ({
         leftIcon={<ExcelIcon width={16} height={16} />}
         title="엑셀 다운로드"
         onClick={onDownloadExcel}
+        disabled={isDownloadingExcel}
       />
 
       <Pagination

@@ -134,12 +134,14 @@ interface DailySettlementTableProps {
   pageResponse?: DailySettlementPageResponse['settlements']
   onPageChange: (page: number) => void
   onDownloadExcel: () => void
+  isDownloadingExcel?: boolean
 }
 
 export const DailySettlementTable = ({
   pageResponse,
   onPageChange,
   onDownloadExcel,
+  isDownloadingExcel,
 }: DailySettlementTableProps) => {
   const data = useMemo(
     () => (pageResponse?.content ?? []).map(toSettlement),
@@ -159,6 +161,7 @@ export const DailySettlementTable = ({
             totalPages={totalPages}
             onPageChange={onPageChange}
             onDownloadExcel={onDownloadExcel}
+            isDownloadingExcel={isDownloadingExcel}
           />
         }
         maxHeight="calc(100vh - 400px)"
