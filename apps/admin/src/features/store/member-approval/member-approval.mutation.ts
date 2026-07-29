@@ -3,12 +3,14 @@ import { useQueryClient } from '@tanstack/react-query'
 import { createMutation } from 'react-query-kit'
 
 import {
-  AdminSellerDocumentDownloadRequest,
-  AdminSellerDocumentDownloadResult,
-  StoreApplicationApprove,
   approveAdminSellerApplications,
   downloadAdminSellerDocuments,
   memberApprovalQueries,
+} from '@/entity/store/member-approval'
+import type {
+  AdminSellerDocumentDownloadRequest,
+  AdminSellerDocumentDownloadResult,
+  StoreApplicationApprove,
 } from '@/entity/store/member-approval'
 
 const useApproveMemberApplicationsMutationBase = createMutation({
