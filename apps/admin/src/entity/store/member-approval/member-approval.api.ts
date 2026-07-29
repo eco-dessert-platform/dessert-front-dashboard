@@ -94,7 +94,10 @@ export const downloadAdminSellerDocuments = async (
     const response = await client.post<Blob>(
       '/api/v1/admin/sellers/documents/download',
       requestBody,
-      { responseType: 'blob' },
+      {
+        responseType: 'blob',
+        unauthorizedPolicy: 'throw',
+      },
     )
 
     return {
