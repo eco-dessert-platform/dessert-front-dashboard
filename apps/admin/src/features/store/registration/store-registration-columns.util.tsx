@@ -13,6 +13,7 @@ interface StoreRegistrationColumnsArgs {
   onToggleAll: (checked: boolean | 'indeterminate') => void
   onToggleRow: (id: number, checked: boolean | 'indeterminate') => void
   onEdit: (id: number) => void
+  isTableActionDisabled?: boolean
 }
 
 const renderEllipsisText = (text: string) => (
@@ -31,15 +32,21 @@ export const getStoreRegistrationColumns = ({
   onToggleAll,
   onToggleRow,
   onEdit,
+  isTableActionDisabled = false,
 }: StoreRegistrationColumnsArgs): ColumnDef<StoreRegistration>[] => [
   {
     id: 'select',
     header: () => (
-      <Checkbox checked={allSelected} onCheckedChange={onToggleAll} />
+      <Checkbox
+        checked={allSelected}
+        disabled={isTableActionDisabled}
+        onCheckedChange={onToggleAll}
+      />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={selectedIds.includes(row.original.id)}
+        disabled={isTableActionDisabled}
         onCheckedChange={(checked) => onToggleRow(row.original.id, checked)}
       />
     ),
@@ -123,6 +130,7 @@ export const getStoreRegistrationColumns = ({
         title="수정"
         size="sm"
         variant="primary-outlined"
+        disabled={isTableActionDisabled}
         onClick={() => onEdit(row.original.id)}
       />
     ),
