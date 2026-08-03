@@ -32,13 +32,21 @@ export const ProductOptionForm = ({
   onCopy,
   onAdd,
 }: ProductOptionFormProps) => {
-  const { setProductFields, setNutritionData } = useCreateHeaderSteps()
+  const { setNutritionData } = useCreateHeaderSteps()
   const { control: rootControl } = useFormContext()
 
-  const rootProductPrice = useWatch({
+  // 상품 정보 영역의 가격/할인 값을 실시간으로 감지해 최종 상품 금액을 계산합니다.
+  const [price, discountAmount, discountType] = useWatch({
     control: rootControl,
-    name: 'price',
+    name: ['price', 'discountAmount', 'discountType'],
   })
+
+  const finalProductPrice =
+    price !== null && discountAmount !== null
+      ? discountType === 'won'
+        ? Math.max(price - discountAmount, 0)
+        : Math.max(price * (1 - discountAmount / 100), 0)
+      : null
 
   const {
     form,
@@ -49,7 +57,6 @@ export const ProductOptionForm = ({
     hasNutrition,
     ingredientCategories,
     totalPrice,
-    isFormField,
     errors,
     handleMainCategoryChange,
     toggleIngredient,
@@ -57,13 +64,9 @@ export const ProductOptionForm = ({
     stockInput,
     nutritionInputs,
     toggleShippingDay,
-  } = useProductOptionForm(index, rootProductPrice)
+  } = useProductOptionForm(index, finalProductPrice)
 
   const { control, register } = form
-
-  useEffect(() => {
-    setProductFields({ productOptions: isFormField })
-  }, [isFormField, setProductFields])
 
   useEffect(() => {
     const sugar = nutritionInputs.sugar?.displayValue
@@ -87,7 +90,7 @@ export const ProductOptionForm = ({
     nutritionInputs.sugar?.displayValue,
     nutritionInputs.protein?.displayValue,
     nutritionInputs.fat?.displayValue,
-    ingredientCategories, // Zustand 내부 비교 최적화 가능
+    ingredientCategories,
     setNutritionData,
   ])
 
@@ -185,8 +188,8 @@ export const ProductOptionForm = ({
               placeholder="0~100,000"
               className="flex-1"
               value={
-                rootProductPrice !== null
-                  ? Number(rootProductPrice).toLocaleString('ko-KR')
+                finalProductPrice !== null
+                  ? Number(finalProductPrice).toLocaleString('ko-KR')
                   : ''
               }
               disabled

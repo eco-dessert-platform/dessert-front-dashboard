@@ -5,42 +5,33 @@ import { useFormContext } from 'react-hook-form'
 import { SUB_CATEGORY_MAP } from './create-form-options.constant'
 import { ProductOptionsType } from './create-form-options.type'
 import { productOptionSchema } from './create-options.schema'
+import { createOptionsValidator } from './create-options-validator.utils'
 import { useFloatInput } from '../create-calculation/create-form-float-input.hook'
 import { useNumberInput } from '../create-calculation/create-form-number-input.hook'
 import { CreateProductForm } from '../create-form/product-create.types'
+
 export function useProductOptionForm(
   index: number,
   basePrice: number | null = null,
 ) {
   const form = useFormContext<CreateProductForm>()
   const p = `options.${index}` as const
-  const mainCategory = form.watch(`${p}.mainCategory`)
-  const subCategory = form.watch(`${p}.subCategory`)
-  const optionName = form.watch(`${p}.optionName`)
-  const additionalPrice = form.watch(`${p}.additionalPrice`)
-  const stockQuantity = form.watch(`${p}.stockQuantity`)
-  const shippingDays = form.watch(`${p}.shippingDays`)
-  const hasNutrition = form.watch(`${p}.hasNutrition`)
-  const ingredientCategories = form.watch(`${p}.ingredientCategories`)
-  const nutritionValues = form.watch([
-    `${p}.totalWeight`,
-    `${p}.servingSize`,
-    `${p}.carbohydrate`,
-    `${p}.sugar`,
-    `${p}.protein`,
-    `${p}.fat`,
-    `${p}.calories`,
-  ])
-
-  const [
-    totalWeight,
-    servingSize,
-    carbohydrate,
-    sugar,
-    protein,
-    fat,
-    calories,
-  ] = nutritionValues
+  const optionValues = form.watch(p)
+  const mainCategory = optionValues?.mainCategory
+  const subCategory = optionValues?.subCategory
+  const optionName = optionValues?.optionName ?? ''
+  const additionalPrice = optionValues?.additionalPrice ?? null
+  const stockQuantity = optionValues?.stockQuantity ?? null
+  const shippingDays = optionValues?.shippingDays ?? []
+  const hasNutrition = optionValues?.hasNutrition ?? true
+  const ingredientCategories = optionValues?.ingredientCategories ?? []
+  const totalWeight = optionValues?.totalWeight ?? null
+  const servingSize = optionValues?.servingSize ?? null
+  const carbohydrate = optionValues?.carbohydrate ?? null
+  const sugar = optionValues?.sugar ?? null
+  const protein = optionValues?.protein ?? null
+  const fat = optionValues?.fat ?? null
+  const calories = optionValues?.calories ?? null
 
   const subCategoryOptions = mainCategory
     ? (SUB_CATEGORY_MAP[mainCategory] ?? [])
@@ -138,23 +129,8 @@ export function useProductOptionForm(
     calories: caloriesInput,
   }
 
-  const isNutritionValid =
-    !hasNutrition || nutritionValues.every((val) => val !== null)
-
   const errors = form.formState.errors.options?.[index]
-  const hasOptionErrors = Object.keys(errors ?? {}).length > 0
-
-  const isFormField =
-    !!mainCategory &&
-    subCategory !== '' &&
-    optionName.length >= 1 &&
-    optionName.length <= 49 &&
-    ingredientCategories.length > 0 &&
-    additionalPrice !== null &&
-    stockQuantity !== null &&
-    isNutritionValid &&
-    shippingDays.length >= 1 &&
-    !hasOptionErrors
+  const isFormField = createOptionsValidator(optionValues)
 
   return {
     form,
