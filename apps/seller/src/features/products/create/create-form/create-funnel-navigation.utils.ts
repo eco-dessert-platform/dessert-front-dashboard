@@ -9,6 +9,8 @@ export const CREATE_FUNNEL_ROUTES = [
 
 export type CreateFunnelRoute = (typeof CREATE_FUNNEL_ROUTES)[number]
 
+export const FROM_DETAIL_PAGE_STATE = { fromDetailPage: true } as const
+
 export function isCreateFunnelRoute(pathname: string): boolean {
   return CREATE_FUNNEL_ROUTES.includes(pathname as CreateFunnelRoute)
 }
@@ -46,4 +48,14 @@ export function resolveCreateFormEntryMode(
   locationState: unknown = null,
 ): CreateFormEntryMode {
   return shouldRestoreCreateForm(locationState) ? 'restore' : 'reset'
+}
+
+type NavigateFn = (to: string, options?: { state?: unknown }) => void
+
+export function navigateToCreateDetail(navigate: NavigateFn) {
+  navigate(ROUTES.PRODUCTS.CREATE_DETAIL)
+}
+
+export function navigateBackToCreateFromDetail(navigate: NavigateFn) {
+  navigate(ROUTES.PRODUCTS.CREATE, { state: FROM_DETAIL_PAGE_STATE })
 }

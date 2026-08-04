@@ -5,9 +5,9 @@ import { Button, Editor } from '@dessert/ui'
 import { useNavigate } from 'react-router'
 
 import { useEditorImageInsert } from '@/features/products/create'
+import { navigateBackToCreateFromDetail } from '@/features/products/create/create-form/create-funnel-navigation.utils'
 import { useCreateFormSessionStore } from '@/features/products/create/create-form/create-form-session.store'
 import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
-import { ROUTES } from '@/shared/constant/routes'
 import './create-detail-editor.css'
 import { cn } from '@/shared/libs/utils'
 
@@ -19,7 +19,7 @@ export function DetailEditPage() {
   const { handleImageInsert } = useEditorImageInsert()
 
   const navigateBackToCreate = () => {
-    navigate(ROUTES.PRODUCTS.CREATE, { state: { fromDetailPage: true } })
+    navigateBackToCreateFromDetail(navigate)
   }
 
   return (

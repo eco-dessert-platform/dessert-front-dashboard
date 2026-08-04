@@ -4,6 +4,9 @@ export {
   clearCreateFormSession,
 } from './clear-create-form-persistence.utils'
 export {
+  FROM_DETAIL_PAGE_STATE,
+  navigateBackToCreateFromDetail,
+  navigateToCreateDetail,
   resolveCreateFormEntryMode,
   shouldRestoreCreateForm,
 } from './create-funnel-navigation.utils'
