@@ -1,15 +1,25 @@
 import { Button, Pagination } from '@dessert/ui'
 
 interface TableTopAreaProps {
-  totlaCount: number
+  totalCount: number
   selectedCount: number
+  currentPage: number
+  totalPages: number
+  isTableActionDisabled?: boolean
+  isDownloadDisabled?: boolean
+  onPageChange: (page: number) => void
   onSubmitApproval: () => void
   handleDownloadFile: () => void
 }
 
 export const TableTopArea = ({
-  totlaCount,
+  totalCount,
   selectedCount,
+  currentPage,
+  totalPages,
+  isTableActionDisabled = false,
+  isDownloadDisabled = false,
+  onPageChange,
   onSubmitApproval,
   handleDownloadFile,
 }: TableTopAreaProps) => {
@@ -21,11 +31,13 @@ export const TableTopArea = ({
           <Button
             title="승인"
             variant="primary-outlined"
+            disabled={isTableActionDisabled}
             onClick={onSubmitApproval}
           />
           <Button
             title="서류 다운로드"
             variant="secondary-outlined"
+            disabled={isDownloadDisabled}
             onClick={handleDownloadFile}
           />
         </div>
@@ -34,21 +46,24 @@ export const TableTopArea = ({
           <p className="typo-title-14-r text-gray-700">
             선택{' '}
             <span className="typo-title-14-m text-primary-500">
-              {totlaCount}개
+              {selectedCount}개
             </span>
           </p>
           <span className="h-12 w-2 bg-gray-400" />
           <p className="typo-title-14-r text-gray-700">
             전체{' '}
             <span className="typo-title-14-m text-gray-700">
-              {selectedCount}개
+              {totalCount}개
             </span>
           </p>
         </div>
       </div>
       {/* 페이지네이션 */}
-      {/* currentPage, totalPage는 임시로 하드코딩 값으로 넣었습니다. */}
-      <Pagination currentPage={1} totalPages={1} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+      />
     </div>
   )
 }
