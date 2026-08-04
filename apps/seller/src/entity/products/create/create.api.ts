@@ -15,14 +15,11 @@ export const getMyStore = async () => {
 }
 
 export const createProductBoard = async (formData: FormData) => {
+  // FormData 전달 시 Content-Type을 수동 지정하지 않습니다.
+  // Axios가 boundary를 포함한 multipart/form-data 헤더를 자동으로 설정합니다.
   const response = await client.post<ApiResponse<CreateProductBoardResult>>(
     '/api/v1/seller/boards',
     formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    },
   )
   return response.data
 }
