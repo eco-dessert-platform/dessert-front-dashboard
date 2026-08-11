@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { getPostLoginPath } from '@/entity/auth'
 import { useIssueTokenMutation } from '@/features/auth/login'
 import { ROUTES } from '@/shared/constant/routes'
 
@@ -14,8 +15,12 @@ const SocialCallbackPage = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const issueTokenMutation = useIssueTokenMutation()
+  const startedRef = useRef(false)
 
   useEffect(() => {
+    if (startedRef.current) return
+    startedRef.current = true
+
     const generateToken = searchParams.get('generateToken')
     const error = searchParams.get('error')
 
@@ -26,18 +31,23 @@ const SocialCallbackPage = () => {
       return
     }
 
-    if (generateToken) {
-      issueTokenMutation.mutate(generateToken, {
-        onSuccess: () => {
-          navigate(ROUTES.PRODUCTS.ALL, { replace: true })
-        },
-        onError: () => {
-          toast.error('로그인에 실패했습니다.')
-          navigate(ROUTES.AUTH, { replace: true })
-        },
-      })
+    if (!generateToken) {
+      navigate(ROUTES.AUTH, { replace: true })
+      return
     }
-    // OAuth 콜백은 마운트 시 1회만 실행되어야 하므로 deps 의도적으로 생략
+
+    issueTokenMutation.mutate(generateToken, {
+      onSuccess: ({ result }) => {
+        // 로그인 직후 추가 API 호출은 401 인터셉터와 리다이렉트 루프를 유발할 수 있어
+        // 서버에서 내려준 status만으로 목적지 결정
+        navigate(getPostLoginPath(result.status), { replace: true })
+      },
+      onError: () => {
+        toast.error('로그인에 실패했습니다.')
+        navigate(ROUTES.AUTH, { replace: true })
+      },
+    })
+    // OAuth 콜백은 마운트 시 1회만 실행
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

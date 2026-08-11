@@ -3,6 +3,11 @@ import '@/styles/index.css'
 import ReactDOM from 'react-dom/client'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 
+import {
+  ApprovedOnlyRoute,
+  GuestOnlyRoute,
+  RegisterAccessRoute,
+} from '@/features/auth'
 import AuthPage from '@/pages/auth/auth-page'
 import SocialCallbackPage from '@/pages/auth/social-callback-page'
 import AllOrdersPage from '@/pages/orders/all-orders/all-orders-page'
@@ -25,47 +30,64 @@ import ChargePage from './pages/settlements/charge/charge-page'
 
 const router = createBrowserRouter([
   {
-    path: ROUTES.AUTH,
-    element: <AuthPage />,
+    element: <GuestOnlyRoute />,
+    children: [
+      {
+        path: ROUTES.AUTH,
+        element: <AuthPage />,
+      },
+    ],
   },
   {
     path: ROUTES.CALLBACK.SOCIAL,
     element: <SocialCallbackPage />,
   },
-  { path: ROUTES.PRODUCTS.CREATE_DETAIL, element: <DetailEditPage /> },
   {
-    path: ROUTES.REGISTER.DEFAULT,
-    element: <RegisterLayout />,
+    element: <ApprovedOnlyRoute />,
     children: [
       {
-        index: true,
-        element: <Navigate to={ROUTES.REGISTER.VERIFICATION} replace />,
+        path: ROUTES.PRODUCTS.CREATE_DETAIL,
+        element: <DetailEditPage />,
       },
-      { path: ROUTES.REGISTER.VERIFICATION, element: <VerificationPage /> },
-      { path: ROUTES.REGISTER.STORE_INFO, element: <StoreInfoPage /> },
-      { path: ROUTES.REGISTER.COMPLETE, element: <CompletePage /> },
+      {
+        path: ROUTES.HOME,
+        element: <FixedLayout />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to={ROUTES.PRODUCTS.ALL} replace />,
+          },
+          { path: ROUTES.ORDERS.ALL, element: <AllOrdersPage /> },
+          { path: ROUTES.ORDERS.COMPLETED, element: <CompletedOrdersPage /> },
+          { path: ROUTES.PRODUCTS.ALL, element: <ProductsPage /> },
+          { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
+          { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
+          {
+            path: ROUTES.STATISTICS.SALES_ANALYTICS,
+            element: <SalesAnalyticsPage />,
+          },
+          { path: ROUTES.SETTLEMENTS.CHARGE, element: <ChargePage /> },
+          { path: ROUTES.INFO.CHANGE, element: <SellerInfoPage /> },
+        ],
+      },
     ],
   },
   {
-    path: ROUTES.HOME,
-    element: <FixedLayout />,
+    element: <RegisterAccessRoute />,
     children: [
       {
-        index: true,
-        element: <Navigate to={ROUTES.PRODUCTS.ALL} replace />,
+        path: ROUTES.REGISTER.DEFAULT,
+        element: <RegisterLayout />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to={ROUTES.REGISTER.VERIFICATION} replace />,
+          },
+          { path: ROUTES.REGISTER.VERIFICATION, element: <VerificationPage /> },
+          { path: ROUTES.REGISTER.STORE_INFO, element: <StoreInfoPage /> },
+          { path: ROUTES.REGISTER.COMPLETE, element: <CompletePage /> },
+        ],
       },
-      { path: ROUTES.ORDERS.ALL, element: <AllOrdersPage /> },
-      { path: ROUTES.ORDERS.COMPLETED, element: <CompletedOrdersPage /> },
-      { path: ROUTES.PRODUCTS.ALL, element: <ProductsPage /> },
-      { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
-
-      { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
-      {
-        path: ROUTES.STATISTICS.SALES_ANALYTICS,
-        element: <SalesAnalyticsPage />,
-      },
-      { path: ROUTES.SETTLEMENTS.CHARGE, element: <ChargePage /> },
-      { path: ROUTES.INFO.CHANGE, element: <SellerInfoPage /> },
     ],
   },
 ])

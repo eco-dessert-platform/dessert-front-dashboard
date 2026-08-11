@@ -1,6 +1,8 @@
 import axios from 'axios'
 
+import { useAuthStore } from '@/entity/auth/auth-store'
 import {
+  deleteCookie,
   getCookie,
   getExpFromToken,
   setCookie,
@@ -15,6 +17,14 @@ export const client = axios.create({
   },
   withCredentials: true,
 })
+
+const clearSessionAndRedirectToAuth = () => {
+  deleteCookie('accessToken')
+  useAuthStore.getState().logout()
+  if (window.location.pathname !== '/auth') {
+    window.location.href = '/auth'
+  }
+}
 
 // 모든 요청에 Bearer Token 추가
 client.interceptors.request.use(
@@ -44,8 +54,12 @@ client.interceptors.response.use(
     }
 
     if (isRefreshing) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         pendingRequests.push((token: string) => {
+          if (!token) {
+            reject(error)
+            return
+          }
           originalRequest.headers.Authorization = `Bearer ${token}`
           resolve(client(originalRequest))
         })
@@ -78,8 +92,14 @@ client.interceptors.response.use(
         pendingRequests = []
         return client(originalRequest)
       }
+
+      pendingRequests.forEach((cb) => cb(''))
+      pendingRequests = []
+      clearSessionAndRedirectToAuth()
     } catch {
-      window.location.href = '/auth'
+      pendingRequests.forEach((cb) => cb(''))
+      pendingRequests = []
+      clearSessionAndRedirectToAuth()
     } finally {
       isRefreshing = false
     }
