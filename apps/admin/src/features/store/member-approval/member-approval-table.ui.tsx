@@ -1,33 +1,63 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Input, Table, getRowSpanForGroup } from '@dessert/ui'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
-import { TableRow, tableData } from '@/entity/store/member-approval'
+import {
+  TableRow,
+  mapApplicationToTableRow,
+  memberApprovalQueries,
+} from '@/entity/store/member-approval'
 
 import { MemberApprovalColumns } from './member-approval-columns.util'
 import { useMemberApproval } from './member-approval.hook'
 import { TableTopArea } from './table-top-area.ui'
 
 export const MemberApprovalTable = () => {
+  const [currentPage, setCurrentPage] = useState(1)
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
   const {
     toggleBusinessOwner,
     updateBusinessOwner,
+    clearBusinessOwners,
     submitApproval,
     handleDownloadFile,
+    isApproving,
   } = useMemberApproval()
+
+  const { data, isLoading, isError } = useQuery({
+    ...memberApprovalQueries.list({ page: currentPage }),
+    placeholderData: keepPreviousData,
+  })
+
+  const tableData = useMemo(
+    () => (data?.adminSellerApplicationList ?? []).map(mapApplicationToTableRow),
+    [data],
+  )
+
+  const totalCount = data?.totalElements ?? 0
+  const totalPages = data?.totalPages ?? 1
+
+  useEffect(() => {
+    setSelectedIds([])
+    clearBusinessOwners()
+  }, [currentPage, clearBusinessOwners])
 
   const allSelected =
     tableData.length > 0 && selectedIds.length === tableData.length
 
   const toggleAll = (checked: boolean | 'indeterminate') => {
     const isChecked = checked === true
-    setSelectedIds(isChecked ? tableData.map((row) => row.id) : [])
-  }
+    if (isChecked) {
+      setSelectedIds(tableData.map((row) => row.id))
+      tableData.forEach((row) => toggleBusinessOwner(row.id, true))
+      return
+    }
 
-  const totalCount = tableData.length
-  const selectedCount = selectedIds.length
+    setSelectedIds([])
+    tableData.forEach((row) => toggleBusinessOwner(row.id, false))
+  }
 
   const toggleRow = (rowId: string, checked: boolean | 'indeterminate') => {
     const isChecked = checked === true
@@ -41,17 +71,16 @@ export const MemberApprovalTable = () => {
     toggleBusinessOwner(rowId, checked)
   }
 
-  const getRowSpanForAdmin = useCallback((rowIndex: number) => {
-    return getRowSpanForGroup({
-      rows: tableData,
-      rowIndex,
-      getKey: (row) => row.storeName,
-    })
-  }, [])
-
-  const getRowClassName = (row: TableRow) => {
-    return row.isNewMember ? '' : 'bg-[#FFE8E3]'
-  }
+  const getRowSpanForAdmin = useCallback(
+    (rowIndex: number) => {
+      return getRowSpanForGroup({
+        rows: tableData,
+        rowIndex,
+        getKey: (row) => row.storeName,
+      })
+    },
+    [tableData],
+  )
 
   const renderSubRow = (row: TableRow) => {
     if (!selectedIds.includes(row.id)) return null
@@ -96,19 +125,30 @@ export const MemberApprovalTable = () => {
     toggleRow,
   })
 
+  if (isError) {
+    return (
+      <p className="typo-title-14-r text-gray-700">
+        승인 대기 목록을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.
+      </p>
+    )
+  }
+
   return (
     <Table
       data={tableData}
       columns={columns}
       topArea={
         <TableTopArea
-          totlaCount={totalCount}
-          selectedCount={selectedCount}
-          onSubmitApproval={submitApproval}
+          totalCount={totalCount}
+          selectedCount={selectedIds.length}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          onSubmitApproval={() => submitApproval(() => setSelectedIds([]))}
           handleDownloadFile={handleDownloadFile}
+          isApproving={isApproving || isLoading}
         />
       }
-      getRowClassName={getRowClassName}
       renderSubRow={renderSubRow}
     />
   )
