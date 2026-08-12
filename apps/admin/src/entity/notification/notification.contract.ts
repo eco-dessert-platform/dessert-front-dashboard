@@ -1,11 +1,30 @@
 import { z } from 'zod'
 
+const OptionalNotificationIdSchema = z
+  .union([z.number().int(), z.string()])
+  .optional()
+  .transform((value) => {
+    if (value === undefined || value === '') return undefined
+
+    const id = Number(value)
+
+    return Number.isInteger(id) ? id : undefined
+  })
+
 export const AdminNotificationSearchResponseSchema = z.object({
-  id: z.number().int().optional(),
-  noticeId: z.number().int().optional(),
-  notificationId: z.number().int().optional(),
-  adminNotificationId: z.number().int().optional(),
+  id: OptionalNotificationIdSchema,
+  noticeId: OptionalNotificationIdSchema,
+  noticeID: OptionalNotificationIdSchema,
+  noticeNo: OptionalNotificationIdSchema,
+  notificationId: OptionalNotificationIdSchema,
+  notificationID: OptionalNotificationIdSchema,
+  notificationNo: OptionalNotificationIdSchema,
+  adminNoticeId: OptionalNotificationIdSchema,
+  adminNoticeID: OptionalNotificationIdSchema,
+  adminNotificationId: OptionalNotificationIdSchema,
+  adminNotificationID: OptionalNotificationIdSchema,
   title: z.string(),
+  content: z.string().optional(),
   createAt: z.string(),
   modifiedAt: z.string(),
 })

@@ -8,7 +8,7 @@ interface NoticeManagementColumnsArgs {
   customerUrl: string
   isActionPending: boolean
   selectedIds: string[]
-  onEdit: (id: string) => void
+  onEdit: (row: NoticeManagementTableRow) => void
   toggleAll: (checked: boolean | 'indeterminate') => void
   toggleRow: (rowId: string, checked: boolean | 'indeterminate') => void
 }
@@ -50,7 +50,10 @@ export const getNoticeManagementColumns = ({
     cell: ({ row }) => {
       if (row.original.noticeId === null) {
         return (
-          <p className="text-center typo-title-16-r text-gray-900">
+          <p
+            className="text-center typo-title-16-r text-gray-900"
+            title="목록 응답에 공지사항 ID가 없어 이동할 수 없습니다."
+          >
             {row.original.title}
           </p>
         )
@@ -98,8 +101,8 @@ export const getNoticeManagementColumns = ({
           title="수정"
           size="sm"
           variant="primary-outlined"
-          onClick={() => onEdit(row.original.id)}
-          disabled={isActionPending}
+          onClick={() => onEdit(row.original)}
+          disabled={isActionPending || row.original.noticeId === null}
         />
       </div>
     ),

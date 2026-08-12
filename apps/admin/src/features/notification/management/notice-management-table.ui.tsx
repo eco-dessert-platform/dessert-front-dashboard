@@ -32,27 +32,59 @@ const formatNoticeDateTime = (value: string) => {
   return format(date, DATE_TIME_FORMAT)
 }
 
+const pickNoticeId = (item: {
+  id?: number
+  noticeId?: number
+  noticeID?: number
+  noticeNo?: number
+  notificationId?: number
+  notificationID?: number
+  notificationNo?: number
+  adminNoticeId?: number
+  adminNoticeID?: number
+  adminNotificationId?: number
+  adminNotificationID?: number
+}) =>
+  item.id ??
+  item.noticeId ??
+  item.noticeID ??
+  item.noticeNo ??
+  item.notificationId ??
+  item.notificationID ??
+  item.notificationNo ??
+  item.adminNoticeId ??
+  item.adminNoticeID ??
+  item.adminNotificationId ??
+  item.adminNotificationID
+
 const toTableRow = (
   item: {
     id?: number
     noticeId?: number
+    noticeID?: number
+    noticeNo?: number
     notificationId?: number
+    notificationID?: number
+    notificationNo?: number
+    adminNoticeId?: number
+    adminNoticeID?: number
     adminNotificationId?: number
+    adminNotificationID?: number
     title: string
+    content?: string
     createAt: string
     modifiedAt: string
   },
   index: number,
   page: number,
 ): NoticeManagementTableRow => {
-  const noticeId =
-    item.id ?? item.noticeId ?? item.notificationId ?? item.adminNotificationId
+  const noticeId = pickNoticeId(item)
 
   return {
     id: String(noticeId ?? `${page}-${index}`),
     noticeId: noticeId ?? null,
     title: item.title,
-    content: '',
+    content: item.content ?? '',
     createdAt: formatNoticeDateTime(item.createAt),
     modifiedAt: formatNoticeDateTime(item.modifiedAt),
   }
@@ -142,9 +174,28 @@ export const NoticeManagementTable = () => {
     })
   }
 
-  const handleEdit = (id: string) => {
+  const handleEdit = (row: NoticeManagementTableRow) => {
+    if (row.noticeId === null) {
+      toast.error(
+        '공지사항을 수정할 수 없습니다.',
+        '목록 응답에 공지사항 ID가 없어 수정 화면으로 이동할 수 없습니다.',
+      )
+      return
+    }
+
     void runWithActionGuard('update', async () => {
-      navigate(ROUTES.HOMEPAGE.NOTICE_EDIT.replace(':noticeId', id))
+      navigate(
+        ROUTES.HOMEPAGE.NOTICE_EDIT.replace(':noticeId', String(row.noticeId)),
+        {
+          state: {
+            notice: {
+              noticeId: row.noticeId,
+              title: row.title,
+              content: row.content,
+            },
+          },
+        },
+      )
     })
   }
 
