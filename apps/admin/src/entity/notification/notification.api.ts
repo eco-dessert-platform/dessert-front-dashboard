@@ -37,7 +37,7 @@ const createNotificationFormData = ({
 export const getAdminNotifications = async (
   params: GetAdminNotificationsParams = {},
 ): Promise<AdminNotificationListResult> => {
-  const response = await client.get('/api/v1/admin/notification', { params })
+  const response = await client.get('/api/v1/admin/notifications', { params })
   const parsed = AdminNotificationListResponseSchema.parse(response.data)
 
   if (!parsed.success) throw new Error(parsed.message)
@@ -48,7 +48,7 @@ export const getAdminNotifications = async (
 export const deleteAdminNotifications = async (
   noticeIds: DeleteAdminNotificationsRequest,
 ): Promise<DeleteAdminNotificationsResult> => {
-  const response = await client.delete('/api/v1/admin/notification', {
+  const response = await client.delete('/api/v1/admin/notifications', {
     data: noticeIds,
   })
   const parsed = AdminNotificationDeleteResponseSchema.parse(response.data)
@@ -60,11 +60,10 @@ export const deleteAdminNotifications = async (
 
 export const createAdminNotification = async ({
   adminId,
-  noticeId,
   body,
 }: CreateAdminNotificationVariables): Promise<AdminNotificationDetailResponse> => {
   const response = await client.post(
-    `/api/v1/admin/notification/${adminId}/${noticeId}`,
+    `/api/v1/admin/notifications/${adminId}/register`,
     createNotificationFormData(body),
     { headers: { 'Content-Type': undefined } },
   )
@@ -80,7 +79,7 @@ export const updateAdminNotification = async ({
   body,
 }: UpdateAdminNotificationVariables): Promise<AdminNotificationDetailResponse> => {
   const response = await client.put(
-    `/api/v1/admin/notification/${noticeId}`,
+    `/api/v1/admin/notifications/${noticeId}`,
     createNotificationFormData(body),
     { headers: { 'Content-Type': undefined } },
   )

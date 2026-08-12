@@ -10,6 +10,8 @@ export const ROUTES = {
   },
   HOMEPAGE: {
     NOTICE: '/homepage/notice',
+    NOTICE_CREATE: '/homepage/notice/create',
+    NOTICE_EDIT: '/homepage/notice/:noticeId/edit',
   },
   LOGIN: '/login',
 } as const

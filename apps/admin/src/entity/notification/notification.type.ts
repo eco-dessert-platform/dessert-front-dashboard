@@ -42,7 +42,6 @@ export type UpsertAdminNotificationRequest = z.infer<
 
 export type CreateAdminNotificationVariables = {
   adminId: number
-  noticeId: number
   body: UpsertAdminNotificationRequest
 }
 
