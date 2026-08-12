@@ -8,13 +8,14 @@ import { useSearchParams } from 'react-router-dom'
 import {
   AdminSellerApplication,
   StoreApplicationApprove,
-  TableRow,
   useSellerApplicationListQuery,
 } from '@/entity/store/member-approval'
 
 import { MemberApprovalColumns } from './member-approval-columns.util'
 import { useMemberApproval } from './member-approval.hook'
 import { TableTopArea } from './table-top-area.ui'
+
+import type { TableRow } from './member-approval-table.type'
 
 const BANK_LABEL_BY_CODE: Record<string, string> = {
   '02': '한국산업은행',

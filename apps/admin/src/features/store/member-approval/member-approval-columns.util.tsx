@@ -1,7 +1,6 @@
 import { Checkbox } from '@dessert/ui'
 
-import type { TableRow } from '@/entity/store/member-approval'
-
+import type { TableRow } from './member-approval-table.type'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type MemberApprovalArgs = {

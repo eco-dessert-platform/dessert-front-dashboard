@@ -125,7 +125,7 @@ export async function registerDocuments({
   const { data } = await client.post<ListApiResponse<RegisterDocumentsResult>>(
     '/api/v1/seller/sellers/documents',
     formData,
-    { headers: { 'Content-Type': 'multipart/form-data' } },
+    { headers: { 'Content-Type': undefined } },
   )
 
   if (!data.list) {
@@ -152,10 +152,11 @@ export async function submitStoreApplication({
     formData.append('profileImage', profileImage)
   }
 
+  // FormData는 브라우저가 boundary 포함 Content-Type을 설정해야 함
   const { data } = await client.post<ApiResponse<StoreApplicationResult>>(
     '/api/v1/seller/stores/applications',
     formData,
-    { headers: { 'Content-Type': 'multipart/form-data' } },
+    { headers: { 'Content-Type': undefined } },
   )
 
   if (!data.result) {
