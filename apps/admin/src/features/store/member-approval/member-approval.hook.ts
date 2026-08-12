@@ -1,96 +1,81 @@
-import { useCallback, useState } from 'react'
+import { useRef } from 'react'
 
 import { toast } from '@dessert/ui'
 
-import { useApproveSellersMutation } from './member-approval.mutation'
+import {
+  AdminSellerApplicationApproveListResult,
+  StoreApplicationApprove,
+} from '@/entity/store/member-approval'
 
-interface BusinessOwner {
-  id: string
-  ownerName: string
-  businessNumber: string
+import {
+  useApproveMemberApplicationsMutation,
+  useDownloadMemberApplicationDocumentsMutation,
+} from './member-approval.mutation'
+
+interface UseMemberApprovalArgs {
+  onApprovalSuccess?: (result: AdminSellerApplicationApproveListResult) => void
 }
 
-export const useMemberApproval = () => {
-  const [businessOwners, setBusinessOwners] = useState<BusinessOwner[]>([])
-  const { mutate: approveSellers, isPending } = useApproveSellersMutation()
+export const useMemberApproval = ({
+  onApprovalSuccess,
+}: UseMemberApprovalArgs = {}) => {
+  const { mutateAsync: approveApplications, isPending: isApproving } =
+    useApproveMemberApplicationsMutation()
+  const { mutate: downloadDocuments, isPending: isDownloadingDocuments } =
+    useDownloadMemberApplicationDocumentsMutation()
+  const isApprovalSubmittingRef = useRef(false)
+  const isDocumentDownloadSubmittingRef = useRef(false)
 
-  const updateBusinessOwner = useCallback(
-    (
-      rowId: string,
-      field: keyof Omit<BusinessOwner, 'id'>,
-      value: string,
-    ) => {
-      setBusinessOwners((prev) =>
-        prev.map((owner) =>
-          owner.id === rowId ? { ...owner, [field]: value } : owner,
-        ),
-      )
-    },
-    [],
-  )
+  const submitApproval = async (payload: StoreApplicationApprove[]) => {
+    if (payload.length === 0) {
+      toast.error('항목을 선택하세요', '승인할 스토어 신청을 선택해주세요')
+      return
+    }
 
-  const toggleBusinessOwner = useCallback(
-    (rowId: string, checked: boolean | 'indeterminate') => {
-      const isChecked = checked === true
-      setBusinessOwners((prev) =>
-        isChecked
-          ? prev.some((owner) => owner.id === rowId)
-            ? prev
-            : [...prev, { id: rowId, ownerName: '', businessNumber: '' }]
-          : prev.filter((owner) => owner.id !== rowId),
-      )
-    },
-    [],
-  )
+    if (isApprovalSubmittingRef.current) return
 
-  const clearBusinessOwners = useCallback(() => setBusinessOwners([]), [])
+    isApprovalSubmittingRef.current = true
 
-  const submitApproval = useCallback(
-    (onApproved?: () => void) => {
-      if (businessOwners.length === 0) {
-        toast.error('승인할 셀러를 선택하세요')
-        return
-      }
+    try {
+      const result = await approveApplications(payload)
 
-      const isInvalid = businessOwners.some(
-        (owner) => !owner.ownerName.trim() || !owner.businessNumber.trim(),
-      )
+      onApprovalSuccess?.(result)
+    } catch {
+      // 에러 토스트는 mutation onError에서 처리합니다.
+    } finally {
+      isApprovalSubmittingRef.current = false
+    }
+  }
 
-      if (isInvalid) {
-        toast.error('항목을 입력하세요', '사업자 번호, 대표자명 입력하세요')
-        return
-      }
+  const handleDownloadFile = (sellerIds: number[]) => {
+    if (sellerIds.length === 0) {
+      toast.error('항목을 선택하세요', '다운로드할 셀러를 선택해주세요')
+      return
+    }
 
-      approveSellers(
-        businessOwners.map((owner) => ({
-          applicationId: Number(owner.id),
-          sellerName: owner.ownerName.trim(),
-          identifier: owner.businessNumber.trim(),
-        })),
-        {
-          onSuccess: (result) => {
-            if (result.successDetails.length > 0) {
-              clearBusinessOwners()
-              onApproved?.()
-            }
-          },
+    if (sellerIds.length > 50) {
+      toast.error('최대 50개까지 다운로드할 수 있습니다.')
+      return
+    }
+
+    if (isDocumentDownloadSubmittingRef.current) return
+
+    isDocumentDownloadSubmittingRef.current = true
+
+    downloadDocuments(
+      { sellerIds },
+      {
+        onSettled: () => {
+          isDocumentDownloadSubmittingRef.current = false
         },
-      )
-    },
-    [approveSellers, businessOwners, clearBusinessOwners],
-  )
-
-  const handleDownloadFile = useCallback(() => {
-    toast.error('서류 다운로드는 아직 지원하지 않습니다.')
-  }, [])
+      },
+    )
+  }
 
   return {
-    businessOwners,
-    updateBusinessOwner,
-    toggleBusinessOwner,
-    clearBusinessOwners,
     submitApproval,
     handleDownloadFile,
-    isApproving: isPending,
+    isApproving,
+    isDownloadingDocuments,
   }
 }

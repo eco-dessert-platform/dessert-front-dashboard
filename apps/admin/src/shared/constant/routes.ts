@@ -3,6 +3,7 @@ export const ROUTES = {
   STORE: {
     MEMBER_APPROVAL: '/store/member-approval',
     NAME_CHANGE_APPROVAL: '/store/name-change-approval',
+    REGISTRATION: '/store/registration',
   },
   PRODUCTS: {
     UPLOAD_APPROVAL: '/products/upload-approval',

@@ -1,45 +1,86 @@
 import { toast } from '@dessert/ui'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
+import { createMutation } from 'react-query-kit'
 
 import {
-  ApproveSellersRequest,
-  approveSellers,
+  approveAdminSellerApplications,
+  downloadAdminSellerDocuments,
   memberApprovalQueries,
 } from '@/entity/store/member-approval'
+import type {
+  AdminSellerDocumentDownloadRequest,
+  AdminSellerDocumentDownloadResult,
+  StoreApplicationApprove,
+} from '@/entity/store/member-approval'
 
-export const useApproveSellersMutation = () => {
+const useApproveMemberApplicationsMutationBase = createMutation({
+  mutationKey: [...memberApprovalQueries._def, 'approve'],
+  mutationFn: (body: StoreApplicationApprove[]) =>
+    approveAdminSellerApplications(body),
+})
+
+const useDownloadMemberApplicationDocumentsMutationBase = createMutation<
+  AdminSellerDocumentDownloadResult,
+  AdminSellerDocumentDownloadRequest
+>({
+  mutationKey: [...memberApprovalQueries._def, 'download-documents'],
+  mutationFn: downloadAdminSellerDocuments,
+})
+
+const downloadBlob = ({
+  blob,
+  filename,
+}: AdminSellerDocumentDownloadResult) => {
+  const url = URL.createObjectURL(blob)
+  const anchor = document.createElement('a')
+
+  anchor.href = url
+  anchor.download = filename
+  document.body.appendChild(anchor)
+  anchor.click()
+  anchor.remove()
+  URL.revokeObjectURL(url)
+}
+
+export const useApproveMemberApplicationsMutation = () => {
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: (body: ApproveSellersRequest) => approveSellers(body),
+  return useApproveMemberApplicationsMutationBase({
     onSuccess: (result) => {
       queryClient.invalidateQueries({
-        queryKey: memberApprovalQueries.lists(),
+        queryKey: memberApprovalQueries.sellerApplicationList.queryKey,
       })
 
       const successCount = result.successDetails.length
       const failCount = result.failDetails.length
 
-      if (successCount > 0 && failCount === 0) {
-        toast.success(`${successCount}건의 셀러를 승인했습니다.`)
-        return
-      }
-
-      if (successCount > 0 && failCount > 0) {
-        toast.success(
-          `${successCount}건 승인, ${failCount}건 실패`,
-          result.failDetails.map((item) => item.reason).join('\n'),
+      if (failCount > 0) {
+        toast.error(
+          '일부 회원가입 승인이 실패했습니다.',
+          `성공 ${successCount}건, 실패 ${failCount}건`,
         )
         return
       }
 
-      toast.error(
-        '승인에 실패했습니다.',
-        result.failDetails[0]?.reason ?? '다시 시도해주세요.',
-      )
+      toast.success(`${successCount}건의 회원가입을 승인했습니다.`)
     },
     onError: () => {
-      toast.error('승인에 실패했습니다.', '다시 시도해주세요.')
+      toast.error('회원가입 승인에 실패했습니다.', '다시 시도해주세요.')
+    },
+  })
+}
+
+export const useDownloadMemberApplicationDocumentsMutation = () => {
+  return useDownloadMemberApplicationDocumentsMutationBase({
+    onSuccess: (result) => {
+      downloadBlob(result)
+      toast.success('셀러 제출 서류를 다운로드했습니다.', result.filename)
+    },
+    onError: (error) => {
+      toast.error(
+        '셀러 제출 서류 다운로드에 실패했습니다.',
+        error.message || '다시 시도해주세요.',
+      )
     },
   })
 }
