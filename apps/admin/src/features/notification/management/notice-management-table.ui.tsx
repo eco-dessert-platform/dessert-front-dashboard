@@ -1,9 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Table } from '@dessert/ui'
+import { Table, toast } from '@dessert/ui'
+import { useQueryClient } from '@tanstack/react-query'
+import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 
-import { useAdminNotificationsQuery } from '@/entity/notification'
+import {
+  notificationQueries,
+  useAdminNotificationsQuery,
+  useDeleteAdminNotificationsMutation,
+} from '@/entity/notification'
 import { ROUTES } from '@/shared/constant/routes'
 
 import { useNoticeManagementActionGuard } from './notice-management-action-guard.hook'
@@ -14,30 +20,51 @@ import type { NoticeManagementTableRow } from './notice-management.type'
 
 const PAGE_SIZE = 10
 const DEFAULT_SORT = 'createdAt,desc'
+const DATE_TIME_FORMAT = 'yyyy-MM-dd HH:mm:ss'
+
+const formatNoticeDateTime = (value: string) => {
+  const date = new Date(value)
+
+  if (Number.isNaN(date.getTime())) return value
+
+  return format(date, DATE_TIME_FORMAT)
+}
 
 const toTableRow = (
   item: {
     id?: number
+    noticeId?: number
+    notificationId?: number
+    adminNotificationId?: number
     title: string
     createAt: string
     modifiedAt: string
   },
   index: number,
   page: number,
-): NoticeManagementTableRow => ({
-  id: String(item.id ?? `${page}-${index}`),
-  title: item.title,
-  content: '',
-  createdAt: item.createAt,
-  modifiedAt: item.modifiedAt,
-})
+): NoticeManagementTableRow => {
+  const noticeId =
+    item.id ?? item.noticeId ?? item.notificationId ?? item.adminNotificationId
+
+  return {
+    id: String(noticeId ?? `${page}-${index}`),
+    noticeId: noticeId ?? null,
+    title: item.title,
+    content: '',
+    createdAt: formatNoticeDateTime(item.createAt),
+    modifiedAt: formatNoticeDateTime(item.modifiedAt),
+  }
+}
 
 export const NoticeManagementTable = () => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const { isActionPending, runWithActionGuard } =
     useNoticeManagementActionGuard()
+  const { mutateAsync: deleteNotifications } =
+    useDeleteAdminNotificationsMutation()
 
   const queryVariables = useMemo(
     () => ({
@@ -120,7 +147,43 @@ export const NoticeManagementTable = () => {
   const handleDelete = () => {
     if (selectedIds.length === 0) return
 
-    void runWithActionGuard('delete', async () => {})
+    void runWithActionGuard('delete', async () => {
+      const noticeIds = tableData
+        .filter((row) => selectedIds.includes(row.id))
+        .map((row) => row.noticeId)
+        .filter((noticeId): noticeId is number => noticeId !== null)
+
+      if (noticeIds.length === 0) {
+        toast.error(
+          '공지사항을 삭제할 수 없습니다.',
+          '목록 응답에 공지사항 ID가 없어 삭제 요청을 보낼 수 없습니다.',
+        )
+        return
+      }
+
+      try {
+        const result = await deleteNotifications(noticeIds)
+        await queryClient.invalidateQueries({
+          queryKey: notificationQueries.list.queryKey,
+        })
+        setSelectedIds([])
+
+        if (result.failureCount > 0) {
+          toast.error(
+            `${result.successCount}건 삭제, ${result.failureCount}건 실패`,
+            result.failedNotices.map((notice) => notice.title).join('\n'),
+          )
+          return
+        }
+
+        toast.success(`${result.successCount}건의 공지사항을 삭제했습니다.`)
+      } catch (error) {
+        toast.error(
+          '공지사항 삭제에 실패했습니다.',
+          error instanceof Error ? error.message : '다시 시도해주세요.',
+        )
+      }
+    })
   }
 
   const columns = getNoticeManagementColumns({

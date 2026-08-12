@@ -12,6 +12,19 @@ interface UseNoticeFormArgs {
   onSubmit: (values: NoticeFormValues) => Promise<void> | void
 }
 
+const getUsedEditorImageFiles = (
+  content: string,
+  editorImageFiles: Map<string, File>,
+) => {
+  const usedBlobUrls = Array.from(content.matchAll(/src="(blob:[^"]+)"/g)).map(
+    ([, blobUrl]) => blobUrl,
+  )
+
+  return usedBlobUrls
+    .map((blobUrl) => editorImageFiles.get(blobUrl))
+    .filter((file): file is File => !!file)
+}
+
 export const useNoticeForm = ({
   defaultValues,
   onSubmit,
@@ -41,7 +54,10 @@ export const useNoticeForm = ({
     try {
       await onSubmit({
         ...values,
-        profileImage: Array.from(editorImageFilesRef.current.values()),
+        profileImage: getUsedEditorImageFiles(
+          values.content,
+          editorImageFilesRef.current,
+        ),
       })
     } finally {
       submitLockRef.current = false

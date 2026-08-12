@@ -25,8 +25,12 @@ const createNotificationFormData = ({
 }: UpsertAdminNotificationRequest) => {
   const formData = new FormData()
 
-  formData.append('title', title)
-  formData.append('content', content)
+  formData.append(
+    'request',
+    new Blob([JSON.stringify({ title, content })], {
+      type: 'application/json',
+    }),
+  )
   profileImage.forEach((file) => {
     formData.append('profileImage', file)
   })

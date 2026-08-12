@@ -24,7 +24,11 @@ export const getNoticeManagementColumns = ({
     id: 'select',
     header: () => (
       <div className="flex justify-center">
-        <Checkbox checked={allSelected} onCheckedChange={toggleAll} />
+        <Checkbox
+          checked={allSelected}
+          onCheckedChange={toggleAll}
+          disabled={isActionPending}
+        />
       </div>
     ),
     cell: ({ row }) => (
@@ -32,6 +36,7 @@ export const getNoticeManagementColumns = ({
         <Checkbox
           checked={selectedIds.includes(row.original.id)}
           onCheckedChange={(checked) => toggleRow(row.original.id, checked)}
+          disabled={isActionPending}
         />
       </div>
     ),

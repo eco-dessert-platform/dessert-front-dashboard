@@ -2,6 +2,9 @@ import { z } from 'zod'
 
 export const AdminNotificationSearchResponseSchema = z.object({
   id: z.number().int().optional(),
+  noticeId: z.number().int().optional(),
+  notificationId: z.number().int().optional(),
+  adminNotificationId: z.number().int().optional(),
   title: z.string(),
   createAt: z.string(),
   modifiedAt: z.string(),
