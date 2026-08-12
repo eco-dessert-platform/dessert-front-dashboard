@@ -5,6 +5,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 
 interface NoticeManagementColumnsArgs {
   allSelected: boolean
+  customerUrl: string
   isActionPending: boolean
   selectedIds: string[]
   onEdit: (id: string) => void
@@ -14,6 +15,7 @@ interface NoticeManagementColumnsArgs {
 
 export const getNoticeManagementColumns = ({
   allSelected,
+  customerUrl,
   isActionPending,
   selectedIds,
   onEdit,
@@ -45,11 +47,26 @@ export const getNoticeManagementColumns = ({
   {
     header: '공지사항명',
     accessorKey: 'title',
-    cell: ({ row }) => (
-      <p className="text-center typo-title-16-r text-gray-900">
-        {row.original.title}
-      </p>
-    ),
+    cell: ({ row }) => {
+      if (row.original.noticeId === null) {
+        return (
+          <p className="text-center typo-title-16-r text-gray-900">
+            {row.original.title}
+          </p>
+        )
+      }
+
+      return (
+        <a
+          href={`${customerUrl}/mypage/notifications/${encodeURIComponent(row.original.noticeId)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="typo-title-16-r text-primary-500 underline"
+        >
+          {row.original.title}
+        </a>
+      )
+    },
     size: 420,
   },
   {

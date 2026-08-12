@@ -21,6 +21,8 @@ import type { NoticeManagementTableRow } from './notice-management.type'
 const PAGE_SIZE = 10
 const DEFAULT_SORT = 'createdAt,desc'
 const DATE_TIME_FORMAT = 'yyyy-MM-dd HH:mm:ss'
+const CUSTOMER_URL =
+  import.meta.env.VITE_PUBLIC_CUSTOMER_URL ?? 'https://www.bbanggree.com'
 
 const formatNoticeDateTime = (value: string) => {
   const date = new Date(value)
@@ -63,7 +65,7 @@ export const NoticeManagementTable = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const { isActionPending, runWithActionGuard } =
     useNoticeManagementActionGuard()
-  const { mutateAsync: deleteNotifications } =
+  const { isPending: isDeleting, mutateAsync: deleteNotifications } =
     useDeleteAdminNotificationsMutation()
 
   const queryVariables = useMemo(
@@ -107,6 +109,8 @@ export const NoticeManagementTable = () => {
 
   const allSelected =
     tableData.length > 0 && selectedIds.length === tableData.length
+
+  const isTableActionDisabled = isActionPending || isLoading || isDeleting
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
@@ -188,7 +192,8 @@ export const NoticeManagementTable = () => {
 
   const columns = getNoticeManagementColumns({
     allSelected,
-    isActionPending: isActionPending || isLoading,
+    customerUrl: CUSTOMER_URL,
+    isActionPending: isTableActionDisabled,
     selectedIds,
     onEdit: handleEdit,
     toggleAll,
@@ -212,7 +217,7 @@ export const NoticeManagementTable = () => {
       topArea={
         <NoticeManagementTopArea
           currentPage={currentPage}
-          isActionPending={isActionPending || isLoading}
+          isActionPending={isTableActionDisabled}
           selectedCount={selectedIds.length}
           totalPages={totalPages}
           onCreate={handleCreate}
