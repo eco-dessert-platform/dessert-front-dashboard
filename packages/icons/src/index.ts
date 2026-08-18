@@ -54,6 +54,7 @@ export { default as HeartRedShadowIcon } from './filled/meaning/heart-red-shadow
 export { default as HeartWhiteShadowIcon } from './filled/meaning/heart-white-shadow'
 export { default as StarIcon } from './filled/meaning/star'
 export { default as StarFilledIcon } from './filled/meaning/star-filled'
+export { default as StarHalfIcon } from './filled/meaning/star-half'
 export { default as CheckboxCheckedIcon } from './filled/meaning/checkbox-checked'
 export { default as CheckboxCheckedGrayIcon } from './filled/meaning/checkbox-checked-gray'
 export { default as CheckboxCheckedLightIcon } from './filled/meaning/checkbox-checked-light'
