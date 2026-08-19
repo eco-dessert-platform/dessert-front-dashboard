@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Input, Table, getRowSpanForGroup, toast } from '@dessert/ui'
 import { keepPreviousData } from '@tanstack/react-query'
@@ -152,6 +152,7 @@ export const MemberApprovalTable = () => {
     [data?.adminSellerApplicationList],
   )
   const totalPages = data?.totalPages ?? 0
+  const shouldSkipSelectionResetRef = useRef(false)
 
   const setCurrentPage = useCallback(
     (page: number) => {
@@ -171,11 +172,17 @@ export const MemberApprovalTable = () => {
     const maxPage = Math.max(totalPages, 1)
 
     if (currentPage > maxPage) {
+      shouldSkipSelectionResetRef.current = true
       setCurrentPage(maxPage)
     }
   }, [currentPage, totalPages, setCurrentPage])
 
   useEffect(() => {
+    if (shouldSkipSelectionResetRef.current) {
+      shouldSkipSelectionResetRef.current = false
+      return
+    }
+
     setSelectedIds([])
     reset({ approvals: {} })
   }, [currentPage, reset])
