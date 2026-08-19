@@ -31,7 +31,7 @@ export const ProductOptionsArea = () => {
     price !== null && discountAmount !== null
       ? discountType === 'won'
         ? Math.max(price - discountAmount, 0)
-        : Math.max(price * (1 - discountAmount / 100), 0)
+        : Math.max(Math.round(price * (1 - discountAmount / 100)), 0)
       : null
 
   // StageTab 완료 여부는 옵션 배열 전체를 기준으로만 갱신합니다.
