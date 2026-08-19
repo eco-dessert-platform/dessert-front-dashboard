@@ -1,4 +1,4 @@
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, useWatch } from 'react-hook-form'
 
 //import { CreateFormType } from '@/entity/products/create/create-form'
 // CreateProductForm -> CreateFormType변경 예정입니다.
@@ -16,22 +16,27 @@ export function useProductOptionForm(
 ) {
   const form = useFormContext<CreateProductForm>()
   const p = `options.${index}` as const
-  const optionValues = form.watch(p)
-  const mainCategory = optionValues?.mainCategory
-  const subCategory = optionValues?.subCategory
-  const optionName = optionValues?.optionName ?? ''
-  const additionalPrice = optionValues?.additionalPrice ?? null
-  const stockQuantity = optionValues?.stockQuantity ?? null
-  const shippingDays = optionValues?.shippingDays ?? []
-  const hasNutrition = optionValues?.hasNutrition ?? true
-  const ingredientCategories = optionValues?.ingredientCategories ?? []
-  const totalWeight = optionValues?.totalWeight ?? null
-  const servingSize = optionValues?.servingSize ?? null
-  const carbohydrate = optionValues?.carbohydrate ?? null
-  const sugar = optionValues?.sugar ?? null
-  const protein = optionValues?.protein ?? null
-  const fat = optionValues?.fat ?? null
-  const calories = optionValues?.calories ?? null
+  const optionValues = useWatch({
+    control: form.control,
+    name: p,
+  })
+  const {
+    mainCategory,
+    subCategory,
+    optionName = '',
+    additionalPrice = null,
+    stockQuantity = null,
+    shippingDays = [],
+    hasNutrition = true,
+    ingredientCategories = [],
+    totalWeight = null,
+    servingSize = null,
+    carbohydrate = null,
+    sugar = null,
+    protein = null,
+    fat = null,
+    calories = null,
+  } = optionValues ?? {}
 
   const subCategoryOptions = mainCategory
     ? (SUB_CATEGORY_MAP[mainCategory] ?? [])
