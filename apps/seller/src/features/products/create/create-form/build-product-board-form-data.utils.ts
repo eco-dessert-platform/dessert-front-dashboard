@@ -57,8 +57,8 @@ function mapOptionToRequest(option: ProductOptionsType): ProductOptionRequest {
     stock: option.stockQuantity ?? 0,
     dietaryTags: {
       glutenFreeTag: option.ingredientCategories.includes('glutenFree'),
-      highProteinTag: (option.protein ?? 0) >= 11,
-      sugarFreeTag: (option.sugar ?? 0) < 5,
+      highProteinTag: option.protein != null && option.protein >= 11,
+      sugarFreeTag: option.sugar != null && option.sugar < 5,
       veganTag: option.ingredientCategories.includes('vegan'),
       ketogenicTag: false,
     },
