@@ -259,6 +259,7 @@ __metadata:
   resolution: "@dessert/admin@workspace:apps/admin"
   dependencies:
     "@dessert/config": "npm:*"
+    "@dessert/core": "npm:*"
     "@dessert/ui": "npm:*"
     "@hookform/error-message": "npm:^2.0.1"
     "@hookform/resolvers": "npm:^5.2.2"
@@ -342,6 +343,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@dessert/core@npm:*, @dessert/core@workspace:packages/core":
+  version: 0.0.0-use.local
+  resolution: "@dessert/core@workspace:packages/core"
+  languageName: unknown
+  linkType: soft
+
 "@dessert/icons@npm:*, @dessert/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@dessert/icons@workspace:packages/icons"
@@ -361,6 +368,7 @@ __metadata:
   resolution: "@dessert/seller@workspace:apps/seller"
   dependencies:
     "@dessert/config": "npm:*"
+    "@dessert/core": "npm:*"
     "@dessert/ui": "npm:*"
     "@dnd-kit/core": "npm:^6.3.1"
     "@dnd-kit/sortable": "npm:^10.0.0"

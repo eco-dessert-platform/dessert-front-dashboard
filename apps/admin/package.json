@@ -12,6 +12,7 @@
     "test:run": "vitest run"
   },
   "dependencies": {
+    "@dessert/core": "*",
     "@dessert/ui": "*",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^5.2.2",
