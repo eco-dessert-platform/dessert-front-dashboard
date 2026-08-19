@@ -1,44 +1,50 @@
 import type {
+  AdminSellerApplicationApproveListResultSchema,
+  AdminSellerApplicationListResultSchema,
+  AdminSellerApplicationRejectListResultSchema,
   AdminSellerApplicationSchema,
-  ApproveFailDetailSchema,
-  ApproveSellerItemSchema,
-  ApproveSellersRequestSchema,
-  ApproveSellersResultSchema,
-  ApproveSuccessDetailSchema,
-  GetMemberApprovalsParamsSchema,
-  MemberApprovalListResultSchema,
-  SellerDtoSchema,
-  SellerStoreDtoSchema,
+  AdminSellerDocumentDownloadRequestSchema,
+  FailDetailSchema,
+  GetAdminSellerApplicationsRequestParamsSchema,
+  SellerSchema,
+  SellerStatusSchema,
+  SellerStoreSchema,
+  StoreApplicationApproveSchema,
+  StoreApplicationIdsSchema,
+  StoreSchema,
+  SuccessDetailSchema,
 } from './member-approval.contract'
 import type { z } from 'zod'
 
-export type SellerStoreDto = z.infer<typeof SellerStoreDtoSchema>
-export type SellerDto = z.infer<typeof SellerDtoSchema>
+export type SellerStatus = z.infer<typeof SellerStatusSchema>
+export type SellerStore = z.infer<typeof SellerStoreSchema>
+export type Store = z.infer<typeof StoreSchema>
+export type Seller = z.infer<typeof SellerSchema>
 export type AdminSellerApplication = z.infer<
   typeof AdminSellerApplicationSchema
 >
-export type MemberApprovalListResult = z.infer<
-  typeof MemberApprovalListResultSchema
+export type AdminSellerDocumentDownloadRequest = z.infer<
+  typeof AdminSellerDocumentDownloadRequestSchema
 >
-export type GetMemberApprovalsParams = z.infer<
-  typeof GetMemberApprovalsParamsSchema
->
-export type ApproveSellerItem = z.infer<typeof ApproveSellerItemSchema>
-export type ApproveSellersRequest = z.infer<typeof ApproveSellersRequestSchema>
-export type ApproveSuccessDetail = z.infer<typeof ApproveSuccessDetailSchema>
-export type ApproveFailDetail = z.infer<typeof ApproveFailDetailSchema>
-export type ApproveSellersResult = z.infer<typeof ApproveSellersResultSchema>
-
-export type TableRow = {
-  id: string
-  storeApplicationId: number
-  storeName: string
-  phoneNumber: string
-  additionalPhoneNumber: string
-  emailAddress: string
-  address: string
-  depositor: string
-  bankName: string
-  accountNumber: string
-  joinDate: string
+export interface AdminSellerDocumentDownloadResult {
+  blob: Blob
+  filename: string
 }
+export type AdminSellerApplicationListResult = z.infer<
+  typeof AdminSellerApplicationListResultSchema
+>
+export type GetAdminSellerApplicationsRequestParams = z.infer<
+  typeof GetAdminSellerApplicationsRequestParamsSchema
+>
+export type StoreApplicationApprove = z.infer<
+  typeof StoreApplicationApproveSchema
+>
+export type StoreApplicationIds = z.infer<typeof StoreApplicationIdsSchema>
+export type SuccessDetail = z.infer<typeof SuccessDetailSchema>
+export type FailDetail = z.infer<typeof FailDetailSchema>
+export type AdminSellerApplicationApproveListResult = z.infer<
+  typeof AdminSellerApplicationApproveListResultSchema
+>
+export type AdminSellerApplicationRejectListResult = z.infer<
+  typeof AdminSellerApplicationRejectListResultSchema
+>
