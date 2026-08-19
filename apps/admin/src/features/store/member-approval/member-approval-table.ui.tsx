@@ -148,25 +148,29 @@ export const MemberApprovalTable = () => {
     () => data?.adminSellerApplicationList.map(toTableRow) ?? [],
     [data?.adminSellerApplicationList],
   )
+  const totalPages = data?.totalPages ?? 0
 
-  useEffect(() => {
-    const totalPages = data?.totalPages
-
-    if (totalPages !== undefined) {
-      const maxPage = Math.max(totalPages, 1)
-
-      if (currentPage <= maxPage) return
-
+  const setCurrentPage = useCallback(
+    (page: number) => {
       setSearchParams(
         (prev) => {
           const next = new URLSearchParams(prev)
-          next.set('page', String(maxPage))
+          next.set('page', String(page))
           return next
         },
         { replace: true },
       )
+    },
+    [setSearchParams],
+  )
+
+  useEffect(() => {
+    const maxPage = Math.max(totalPages, 1)
+
+    if (currentPage > maxPage) {
+      setCurrentPage(maxPage)
     }
-  }, [currentPage, data?.totalPages, setSearchParams])
+  }, [currentPage, totalPages, setCurrentPage])
 
   useEffect(() => {
     setSelectedIds([])
@@ -321,7 +325,7 @@ export const MemberApprovalTable = () => {
           totalCount={totalCount}
           selectedCount={selectedCount}
           currentPage={currentPage}
-          totalPages={data?.totalPages || 1}
+          totalPages={Math.max(totalPages, 1)}
           isTableActionDisabled={isTableActionDisabled}
           isDownloadDisabled={isDownloadDisabled}
           onPageChange={handlePageChange}
