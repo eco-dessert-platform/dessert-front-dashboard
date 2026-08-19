@@ -36,9 +36,12 @@ export const useCreateFormSessionStore = create<CreateFormSessionStore>()(
       saveSession: (formData, fileData) => set({ formData, fileData }),
 
       updateProductDetail: (productDetail) => {
-        const { formData, fileData } = get()
-        if (!formData) return
-        set({ formData: { ...formData, productDetail } })
+        const { formData } = get()
+        set({
+          formData: formData
+            ? { ...formData, productDetail }
+            : ({ productDetail } as SerializableFormData),
+        })
       },
 
       clearSession: () => set({ formData: null, fileData: null }),
