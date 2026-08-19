@@ -123,19 +123,22 @@ export const MemberApprovalTable = () => {
     isApproving,
     isDownloadingDocuments,
   } = useMemberApproval({
-    onApprovalSuccess: (result) => {
-      const successIds = new Set(
-        result.successDetails.map((detail) =>
-          String(detail.storeApplicationId),
-        ),
-      )
+    onApproved: (failedIds) => {
+      setSelectedIds(failedIds)
 
-      setSelectedIds((prev) => prev.filter((id) => !successIds.has(id)))
-      successIds.forEach((id) => unregister(`approvals.${id}`))
-
-      if (result.failDetails.length === 0) {
+      if (failedIds.length === 0) {
         reset({ approvals: {} })
+        return
       }
+
+      const failedIdSet = new Set(failedIds)
+      const approvals = getValues('approvals')
+
+      Object.keys(approvals).forEach((id) => {
+        if (!failedIdSet.has(id)) {
+          unregister(`approvals.${id}`)
+        }
+      })
     },
   })
 
