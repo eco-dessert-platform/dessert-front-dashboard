@@ -4,7 +4,10 @@ import { useFormContext } from 'react-hook-form'
 
 import { debounce } from '@/shared/utils/debounce'
 
-import { CreateFormEntryMode } from './create-funnel-navigation.utils'
+import {
+  CreateFormEntryMode,
+  isCreateFunnelRoute,
+} from './create-funnel-navigation.utils'
 import { useCreateFormSessionStore } from './create-form-session.store'
 import {
   buildSessionPayload,
@@ -61,7 +64,10 @@ export function useCreateFormPersistence(entryMode: CreateFormEntryMode) {
     return () => {
       debouncedPersist.cancel()
       subscription.unsubscribe()
-      persistCurrentState()
+
+      if (isCreateFunnelRoute(window.location.pathname)) {
+        persistCurrentState()
+      }
     }
   }, [form, saveSession])
 }
