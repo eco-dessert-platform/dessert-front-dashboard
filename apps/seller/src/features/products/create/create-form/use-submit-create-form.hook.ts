@@ -19,10 +19,10 @@ export function useSubmitCreateForm() {
   const { productDetail, editorImageFiles } = useProductCreationStore()
   const { mutateAsync, isPending } = useCreateProductBoardMutation()
 
-  const showSaveErrorToast = () => {
+  const showSaveErrorToast = (errorMessage?: string) => {
     toast.error(
       CREATE_FORM_TOAST.SAVE_ERROR.title,
-      CREATE_FORM_TOAST.SAVE_ERROR.description,
+      errorMessage || CREATE_FORM_TOAST.SAVE_ERROR.description,
     )
   }
 
@@ -44,8 +44,10 @@ export function useSubmitCreateForm() {
         clearCreateFormPersistence()
         form.reset(CREATE_PRODUCT_DEFAULT_VALUES)
         navigate(ROUTES.PRODUCTS.ALL)
-      } catch {
-        showSaveErrorToast()
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error && error.message ? error.message : undefined
+        showSaveErrorToast(errorMessage)
       }
     },
     () => {
