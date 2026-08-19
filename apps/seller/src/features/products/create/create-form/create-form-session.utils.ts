@@ -1,4 +1,5 @@
 import {
+  PRODUCT_CREATE_SESSION_KEY,
   SerializableFormData,
   useCreateFormSessionStore,
 } from './create-form-session.store'
@@ -6,7 +7,7 @@ import { CreateProductForm } from './product-create.types'
 
 function readSessionFormDataFromStorage(): SerializableFormData | null {
   try {
-    const raw = sessionStorage.getItem('product-create-session')
+    const raw = sessionStorage.getItem(PRODUCT_CREATE_SESSION_KEY)
     if (!raw) return null
 
     const parsed = JSON.parse(raw) as {

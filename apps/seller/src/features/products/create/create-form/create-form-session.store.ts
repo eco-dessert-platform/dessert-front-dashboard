@@ -3,6 +3,8 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { CreateProductForm } from './product-create.types'
 
+export const PRODUCT_CREATE_SESSION_KEY = 'product-create-session'
+
 /** File 객체는 직렬화할 수 없어 sessionStorage 저장에서 제외합니다. */
 export type SerializableFormData = Omit<
   CreateProductForm,
@@ -47,7 +49,7 @@ export const useCreateFormSessionStore = create<CreateFormSessionStore>()(
       clearSession: () => set({ formData: null, fileData: null }),
     }),
     {
-      name: 'product-create-session',
+      name: PRODUCT_CREATE_SESSION_KEY,
       storage: createJSONStorage(() => sessionStorage),
       partialize: (state) => ({ formData: state.formData }),
     },
