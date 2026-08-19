@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useLocation } from 'react-router-dom'
 
@@ -11,13 +11,13 @@ import {
 export function useCreateFunnelEntry(): CreateFormEntryMode {
   const { state: locationState } = useLocation()
 
-  const [entryMode] = useState(() => {
-    const mode = resolveCreateFormEntryMode(locationState)
-    if (mode === 'reset') {
+  const [entryMode] = useState(() => resolveCreateFormEntryMode(locationState))
+
+  useEffect(() => {
+    if (entryMode === 'reset') {
       clearCreateFormSession()
     }
-    return mode
-  })
+  }, [entryMode])
 
   return entryMode
 }
