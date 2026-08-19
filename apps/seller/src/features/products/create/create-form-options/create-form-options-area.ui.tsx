@@ -22,6 +22,18 @@ export const ProductOptionsArea = () => {
   const allOptionsValid = areAllOptionsValid(options)
   const { setProductFields } = useCreateHeaderSteps()
 
+  const [price, discountAmount, discountType] = useWatch({
+    control: form.control,
+    name: ['price', 'discountAmount', 'discountType'],
+  })
+
+  const finalProductPrice =
+    price !== null && discountAmount !== null
+      ? discountType === 'won'
+        ? Math.max(price - discountAmount, 0)
+        : Math.max(price * (1 - discountAmount / 100), 0)
+      : null
+
   // StageTab 완료 여부는 옵션 배열 전체를 기준으로만 갱신합니다.
   useEffect(() => {
     setProductFields({ productOptions: allOptionsValid })
@@ -53,6 +65,7 @@ export const ProductOptionsArea = () => {
             })
           }}
           onAdd={() => insert(index + 1, DEFAULT_PRODUCT_OPTION)}
+          finalProductPrice={finalProductPrice}
         />
       ))}
     </>

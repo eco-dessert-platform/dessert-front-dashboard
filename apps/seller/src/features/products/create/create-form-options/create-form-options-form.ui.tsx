@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { CopyIcon, TrashIcon } from '@dessert/icons'
 import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
-import { Controller, useFormContext, useWatch } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import { DaySelector } from '@/widgets/day-selector'
 
@@ -23,6 +23,7 @@ interface ProductOptionFormProps {
   onDelete: () => void
   onCopy: () => void
   onAdd: () => void
+  finalProductPrice: number | null
 }
 
 export const ProductOptionForm = ({
@@ -31,22 +32,9 @@ export const ProductOptionForm = ({
   onDelete,
   onCopy,
   onAdd,
+  finalProductPrice,
 }: ProductOptionFormProps) => {
   const { setNutritionData } = useCreateHeaderSteps()
-  const { control: rootControl } = useFormContext()
-
-  // 상품 정보 영역의 가격/할인 값을 실시간으로 감지해 최종 상품 금액을 계산합니다.
-  const [price, discountAmount, discountType] = useWatch({
-    control: rootControl,
-    name: ['price', 'discountAmount', 'discountType'],
-  })
-
-  const finalProductPrice =
-    price !== null && discountAmount !== null
-      ? discountType === 'won'
-        ? Math.max(price - discountAmount, 0)
-        : Math.max(price * (1 - discountAmount / 100), 0)
-      : null
 
   const {
     form,
