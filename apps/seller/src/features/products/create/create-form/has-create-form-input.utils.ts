@@ -1,3 +1,5 @@
+import { isEqual } from 'lodash-es'
+
 import { CREATE_PRODUCT_DEFAULT_VALUES } from './use-create-product-form.hook'
 import { CreateProductForm } from './product-create.types'
 
@@ -28,8 +30,8 @@ export function hasCreateFormInput(
   if (values.mainImage !== null) return true
   if ((values.extraImages?.length ?? 0) > 0) return true
 
-  return (
-    JSON.stringify(stripFiles(values)) !==
-    JSON.stringify(stripFiles(CREATE_PRODUCT_DEFAULT_VALUES))
+  return !isEqual(
+    stripFiles(values),
+    stripFiles(CREATE_PRODUCT_DEFAULT_VALUES),
   )
 }
