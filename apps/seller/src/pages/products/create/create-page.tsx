@@ -20,7 +20,6 @@ import {
   useCreateDraft,
   useCreateDraftStore,
 } from '@/features/products/create/create-draft'
-import { getStoredSessionFormData } from '@/features/products/create/create-form/create-form-session.utils'
 import { CreateFooter } from '@/features/products/create/create-footer'
 import { ProductPreviewModal } from '@/features/products/create/create-preview'
 
@@ -48,15 +47,14 @@ function CreatePageInner({ entryMode }: CreatePageInnerProps) {
 
   useCreateFormPersistence(entryMode)
 
-  // 퍼널 외부 진입(reset)이고 자동 저장 데이터가 없을 때만 수동 임시저장 복원 모달을 노출합니다.
+  // 퍼널 외부 진입(reset)이고 수동 임시저장 데이터가 있으면 복원 모달을 노출합니다.
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false
 
       if (entryMode === 'restore') return
 
-      const hasSessionData = !!getStoredSessionFormData()
-      if (!hasSessionData && draft) {
+      if (draft) {
         setIsDraftModalOpen(true)
       }
     }
