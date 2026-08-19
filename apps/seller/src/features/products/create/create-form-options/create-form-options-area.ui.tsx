@@ -3,11 +3,11 @@ import { useEffect } from 'react'
 import { Label } from '@dessert/ui'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 
-import { ProductOptionForm } from './create-form-options-form.ui'
-import { DEFAULT_PRODUCT_OPTION } from '../create-form'
-import { areAllOptionsValid } from './create-options-validator.utils'
 import { CreateProductForm } from '../create-form/product-create.types'
+import { DEFAULT_PRODUCT_OPTION } from '../create-form/use-create-product-form.hook'
 import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
+import { ProductOptionForm } from './create-form-options-form.ui'
+import { areAllOptionsValid } from './create-options-validator.utils'
 
 const SUFFIX = ' (복사본)'
 const MAX_LENGTH = 50
