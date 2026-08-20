@@ -14,6 +14,13 @@ type Args = {
   onCopyRow: (row: ProductType) => void
 }
 
+const widthMeta = (widthClass: string) =>
+  ({
+    flexible: true,
+    headerClassName: widthClass,
+    className: widthClass,
+  }) as const
+
 export const getResultColumns = ({
   allSelected,
   selectedIdSet,
@@ -34,24 +41,24 @@ export const getResultColumns = ({
         />
       )
     },
-    size: 40,
+    meta: widthMeta('w-[5%]'),
   },
   {
     header: '등록상품',
     accessorKey: 'productName',
     cell: ({ row }) => (
-      <div className="flex items-center gap-16">
+      <div className="flex min-w-0 items-center gap-16">
         <img
           src={row.original.thumbnailUrl}
           alt={row.original.productName}
           className="h-header w-[80px] shrink-0 rounded-8 bg-gray-100 object-cover"
         />
-        <div className="line-clamp-2 text-left typo-title-14-r text-gray-900">
+        <div className="line-clamp-2 min-w-0 flex-1 text-left typo-title-14-r text-gray-900">
           {row.original.productName}
         </div>
       </div>
     ),
-    size: 440,
+    meta: widthMeta('w-[32%]'),
   },
   {
     header: '재고상태',
@@ -61,53 +68,51 @@ export const getResultColumns = ({
         {row.original.stockStatus}
       </div>
     ),
-    size: 100,
+    meta: widthMeta('w-[11%]'),
   },
   {
     header: '판매가',
     accessorKey: 'salePrice',
     cell: ({ row }) => (
-      <div className="flex flex-col items-end">
-        <div className="text-center typo-body-12-r text-gray-500 line-through">
+      <div className="flex flex-col items-center">
+        <div className="typo-body-12-r text-gray-500 line-through">
           {`${row.original.originPrice.toLocaleString()}원`}
         </div>
-        <div className="text-center typo-title-14-sb text-gray-900">
+        <div className="typo-title-14-sb text-gray-900">
           {`${row.original.salePrice.toLocaleString()}원`}
         </div>
       </div>
     ),
-    size: 120,
+    meta: widthMeta('w-[14%]'),
   },
   {
     header: '배송비',
     accessorKey: 'shipping',
     cell: ({ row }) => (
-      <div className="flex flex-col items-end">
-        <div className="flex flex-col items-end">
-          <div className="text-center typo-title-14-sb text-gray-900">
-            {`${row.original.shipping.price.toLocaleString()}원`}
-          </div>
-          <div className="text-center typo-body-12-r text-primary-500">
-            {row.original.shipping.type}
-          </div>
+      <div className="flex flex-col items-center">
+        <div className="typo-title-14-sb text-gray-900">
+          {`${row.original.shipping.price.toLocaleString()}원`}
+        </div>
+        <div className="typo-body-12-r text-primary-500">
+          {row.original.shipping.type}
         </div>
         {row.original.shipping.minimumPrice != null && (
-          <div className="text-center typo-body-12-r text-gray-500">
+          <div className="typo-body-12-r text-gray-500">
             {`${row.original.shipping.minimumPrice.toLocaleString()}원`}
           </div>
         )}
       </div>
     ),
-    size: 160,
+    meta: widthMeta('w-[12%]'),
   },
   {
     header: '판매상태',
     accessorKey: 'status',
     cell: ({ row }) => <ProductListCellStatus status={row.original.status} />,
-    size: 100,
+    meta: widthMeta('w-[12%]'),
   },
   {
-    header: '',
+    header: '관리',
     id: 'actions',
     cell: ({ row }) => {
       const onEdit = () => {}
@@ -129,6 +134,6 @@ export const getResultColumns = ({
         </div>
       )
     },
-    size: 100,
+    meta: widthMeta('w-[14%]'),
   },
 ]
