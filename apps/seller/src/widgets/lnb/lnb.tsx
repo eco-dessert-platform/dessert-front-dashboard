@@ -1,3 +1,4 @@
+import { cn } from '@dessert/core'
 import {
   Accordion,
   AccordionContent,
@@ -8,7 +9,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import logoutIcon from '@/assets/icons/logout.svg'
 import { ROUTES } from '@/shared/constant/routes'
-import { cn } from '@/shared/libs/utils'
 
 const MENU_LIST = [
   {

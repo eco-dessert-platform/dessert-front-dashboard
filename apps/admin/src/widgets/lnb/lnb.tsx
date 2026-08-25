@@ -1,3 +1,4 @@
+import { cn } from '@dessert/core'
 import { LogOutIcon } from '@dessert/icons'
 import {
   Accordion,
@@ -9,7 +10,6 @@ import { Link, useLocation } from 'react-router'
 
 import { useLogout } from '@/features/auth'
 import { ROUTES } from '@/shared/constant/routes'
-import { cn } from '@/shared/libs/utils'
 
 const MENU_LIST = [
   {

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useQuery } from '@tanstack/react-query'
-
+import { cn } from '@dessert/core'
 import { ChevronRightIcon, XIcon } from '@dessert/icons'
 import {
   Button,
@@ -12,9 +11,11 @@ import {
   DialogTitle,
   Input,
 } from '@dessert/ui'
+import { useQuery } from '@tanstack/react-query'
+
 
 import { registerQueries } from '@/entity/register'
-import { cn } from '@/shared/libs/utils'
+
 
 export interface StoreSelection {
   id: number | null
@@ -78,7 +79,7 @@ export function StoreSearchModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={false}
-        className="w-[900px] max-w-[calc(100%-2rem)] min-w-[326px] gap-0 overflow-hidden rounded-[16px] border-0 bg-white p-0 sm:max-w-[calc(100%-2rem)]"
+        className="w-[900px] max-w-[calc(100%-2rem)] min-w-[326px] gap-0 overflow-hidden rounded-16 border-0 bg-white p-0 sm:max-w-[calc(100%-2rem)]"
       >
         <div className="flex w-full flex-col gap-0 bg-white px-20 pt-16 pb-12">
           <div className="flex w-full items-center gap-8">
@@ -87,7 +88,7 @@ export function StoreSearchModal({
             </DialogTitle>
             <DialogClose
               aria-label="닫기"
-              className="relative flex size-[30px] shrink-0 cursor-pointer items-center justify-center text-gray-800"
+              className="relative flex size-30 shrink-0 cursor-pointer items-center justify-center text-gray-800"
             >
               <XIcon className="size-[15px]" />
             </DialogClose>
@@ -98,7 +99,7 @@ export function StoreSearchModal({
           </DialogDescription>
         </div>
 
-        <div className="flex w-full flex-col gap-16 rounded-b-[16px] bg-white px-20 pt-10 pb-16">
+        <div className="flex w-full flex-col gap-16 rounded-b-16 bg-white px-20 pt-10 pb-16">
           <div className="flex w-full items-start gap-16">
             <Input
               placeholder="스토어를 검색해주세요"

@@ -1,9 +1,9 @@
 import * as React from 'react'
 
+import { cn } from '@dessert/core'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 import { X } from 'lucide-react'
 
-import { cn } from '@/shared/libs/utils'
 
 const Popover = PopoverPrimitive.Root
 

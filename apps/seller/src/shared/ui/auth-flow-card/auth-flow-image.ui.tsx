@@ -1,5 +1,6 @@
+import { cn } from '@dessert/core'
+
 import loginImg from '@/assets/images/login.png'
-import { cn } from '@/shared/libs/utils'
 
 interface AuthFlowImageProps {
   className?: string

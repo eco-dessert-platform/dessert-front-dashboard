@@ -1,3 +1,4 @@
+import { cn } from '@dessert/core'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -12,7 +13,6 @@ import NoThumb from '@/assets/icons/bbangle-cry.svg'
 import BadgeGoodIcon from '@/assets/icons/reviewBadge/badge-good.svg'
 import BadgePlainIcon from '@/assets/icons/reviewBadge/badge-plain.svg'
 import BadgeSoftIcon from '@/assets/icons/reviewBadge/badge-soft.svg'
-import { cn } from '@/shared/libs/utils'
 
 import { CreatePreviewOptionItemUi } from './create-preview-option-item.ui'
 import { usePreviewSlider } from './create-preview-slider.hook'

@@ -1,3 +1,4 @@
+import { cn } from '@dessert/core'
 import { Select } from '@dessert/ui'
 import { format, parseISO } from 'date-fns'
 
@@ -10,10 +11,9 @@ import type {
   CompletedOrderStatus,
   SearchType,
 } from '@/entity/order/order.type'
-import { cn } from '@/shared/libs/utils'
 import { DatePicker } from '@/widgets/date-picker'
-import { InputField } from '../../../shared/ui/input-field'
 
+import { InputField } from '../../../shared/ui/input-field'
 import { ResetButton } from '../reset-button'
 
 interface CompletedOrderFiltersProps {

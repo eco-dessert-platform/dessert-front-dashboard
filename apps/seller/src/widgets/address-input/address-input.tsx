@@ -1,7 +1,7 @@
+import { formatDaumAddress } from '@dessert/core'
 import { Input, Label } from '@dessert/ui'
 import { useKakaoPostcodePopup } from 'react-daum-postcode'
 
-import { formatDaumAddress } from '@/shared/utils/format-daum-address'
 
 interface AddressSearchResult {
   postalCode: string

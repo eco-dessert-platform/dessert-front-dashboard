@@ -1,9 +1,10 @@
+import { cn } from '@dessert/core'
 import { Checkbox } from '@dessert/ui'
-import type { CheckedState } from '@radix-ui/react-checkbox'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import { RegisterForm } from '@/entity/register'
-import { cn } from '@/shared/libs/utils'
+
+import type { CheckedState } from '@radix-ui/react-checkbox'
 
 interface TermsItem {
   id: string
@@ -58,8 +59,8 @@ export function TermsAgreement() {
     }
 
   return (
-    <section className="flex w-full flex-col overflow-clip rounded-[16px] bg-white">
-      <header className="flex items-center justify-between px-24 pb-12 pt-16">
+    <section className="flex w-full flex-col overflow-clip rounded-16 bg-white">
+      <header className="flex items-center justify-between px-24 pt-16 pb-12">
         <h2 className="typo-heading-20-sb text-gray-900">이용 약관 동의</h2>
       </header>
 

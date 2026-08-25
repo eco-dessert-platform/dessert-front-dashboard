@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 
+import { cn } from '@dessert/core'
 import { Dropdown, Input, Label } from '@dessert/ui'
 import { Controller } from 'react-hook-form'
 
 import { DeliveryCompany, DeliveryTerms } from '@/entity/products'
-import { cn } from '@/shared/libs/utils'
 
 import { useProductDeliveryForm } from './use-product-delivery-form.hook'
 import { InfoTooltip } from '../create-form'

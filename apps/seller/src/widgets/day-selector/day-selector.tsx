@@ -1,4 +1,4 @@
-import { cn } from '@/shared/libs/utils'
+import { cn } from '@dessert/core'
 
 export interface DaySelectorProps {
   selectedDays?: string[]
