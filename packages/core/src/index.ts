@@ -2,3 +2,9 @@
 // 공통 유틸/쿠키/HTTP/Auth 로직을 이 패키지로 점진적으로 이관한다.
 export { cn } from './utils/cn'
 export { formatDaumAddress } from './utils/format-daum-address'
+export {
+  setCookie,
+  getCookie,
+  deleteCookie,
+  getExpFromToken,
+} from './auth/cookie'
