@@ -6,7 +6,11 @@ import { Navigate, createBrowserRouter } from 'react-router-dom'
 
 import { GuestOnlyRoute, ProtectedRoute } from '@/features/auth'
 import AuthPage from '@/pages/auth/auth-page'
-import { NoticePage } from '@/pages/home-page/notice'
+import {
+  NoticeCreatePage,
+  NoticeEditPage,
+  NoticePage,
+} from '@/pages/home-page/notice'
 import { AllProductPage } from '@/pages/product/all-product'
 import { UploadApprovalPage } from '@/pages/product/upload-approval'
 import { MemberApprovalPage } from '@/pages/store/member-approval'
@@ -52,6 +56,14 @@ const router = createBrowserRouter([
           {
             path: ROUTES.HOMEPAGE.NOTICE,
             element: <NoticePage />,
+          },
+          {
+            path: ROUTES.HOMEPAGE.NOTICE_CREATE,
+            element: <NoticeCreatePage />,
+          },
+          {
+            path: ROUTES.HOMEPAGE.NOTICE_EDIT,
+            element: <NoticeEditPage />,
           },
         ],
       },
