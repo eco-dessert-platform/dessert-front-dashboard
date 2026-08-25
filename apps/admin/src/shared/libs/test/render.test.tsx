@@ -1,4 +1,4 @@
-import { render, screen } from '@/shared/libs/test/render'
+import { render, screen } from '@dessert/core/test'
 
 describe('커스텀 render 유틸리티', () => {
   it('JSX를 DOM에 렌더링한다', () => {

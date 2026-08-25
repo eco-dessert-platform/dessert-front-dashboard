@@ -1,9 +1,10 @@
-import { useState, type ReactElement, type ReactNode } from 'react'
+import { type ReactElement, type ReactNode, useState } from 'react'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { type RenderOptions, render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 
+// retry: false → 테스트에서 API 에러를 즉시 확인할 수 있도록 재시도 비활성화
 function createTestQueryClient() {
   return new QueryClient({
     defaultOptions: {
@@ -29,6 +30,8 @@ function customRender(
   return render(ui, { wrapper: AllProviders, ...options })
 }
 
+// RTL에서 사용하는 유틸리티를 re-export하고 render만 커스텀 버전으로 덮어씀
+// 테스트 파일에서 '@dessert/core/test' 하나만 import하면 됨
 export {
   act,
   cleanup,
