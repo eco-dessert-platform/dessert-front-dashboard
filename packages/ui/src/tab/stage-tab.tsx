@@ -5,19 +5,19 @@ import { CheckIcon } from '@dessert/icons'
 import { cn } from '../lib/utils'
 
 interface StageTabProps {
-  /** 1부터 시작하는 현재 단계 번호 */
-  currentStep: number
   /** 각 단계의 라벨 배열 */
   steps: string[]
+  /** 각 단계의 필수 입력 완료 여부 (steps와 동일한 길이) */
+  completedSteps: boolean[]
   /** 추가적인 클래스명 */
   className?: string
-  /** 단계 클릭 시 실행될 콜백*/
+  /** 단계 클릭 시 실행될 콜백 */
   onStepClick?: (index: number) => void
 }
 
 export function StageTab({
-  currentStep,
   steps,
+  completedSteps,
   className,
   onStepClick,
 }: StageTabProps) {
@@ -30,7 +30,7 @@ export function StageTab({
     >
       <div className="flex shrink-0 items-center justify-center gap-10">
         {steps.map((step, index) => {
-          const isActive = index + 1 === currentStep
+          const isCompleted = completedSteps[index] ?? false
           const Component = onStepClick ? 'button' : 'div'
           const componentProps = onStepClick
             ? { type: 'button' as const, onClick: () => onStepClick(index) }
@@ -39,7 +39,7 @@ export function StageTab({
             <Component
               key={step}
               {...componentProps}
-              aria-current={isActive ? 'step' : undefined}
+              aria-current={isCompleted ? 'step' : undefined}
               className={cn(
                 'flex shrink-0 items-center gap-2',
                 onStepClick &&
@@ -49,7 +49,9 @@ export function StageTab({
               <span
                 className={cn(
                   'text-[16px] leading-[1.6] font-medium tracking-[-0.32px] whitespace-nowrap transition-colors',
-                  isActive ? 'font-semibold text-primary-500' : 'text-gray-600',
+                  isCompleted
+                    ? 'font-semibold text-primary-500'
+                    : 'text-gray-600',
                 )}
               >
                 {step}
@@ -57,7 +59,7 @@ export function StageTab({
               <CheckIcon
                 className={cn(
                   'size-24 shrink-0 transition-colors',
-                  isActive ? 'text-primary-500' : 'text-gray-600',
+                  isCompleted ? 'text-primary-500' : 'text-gray-600',
                 )}
               />
             </Component>

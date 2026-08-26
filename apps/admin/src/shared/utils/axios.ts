@@ -5,12 +5,19 @@ import { TOKEN_COOKIE_KEYS } from '@/shared/constant'
 import { getCookie } from '@/shared/utils/cookieUtils'
 const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL
 
+declare module 'axios' {
+  interface AxiosRequestConfig {
+    unauthorizedPolicy?: 'redirect' | 'throw'
+  }
+}
+
 export const client = axios.create({
   baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
-  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat', skipNulls: true }),
+  paramsSerializer: (params) =>
+    qs.stringify(params, { arrayFormat: 'repeat', skipNulls: true }),
 })
 
 client.interceptors.request.use(
@@ -37,8 +44,11 @@ export const setupAuthResponseInterceptor = (
         const isLoginRequest = /\/api\/v1\/admin\/login(?:\?|$)/.test(
           requestUrl,
         )
+        const unauthorizedPolicy =
+          error.config?.unauthorizedPolicy ?? 'redirect'
+
         // 로그인 요청의 401은 무시 (onError에서 처리)
-        if (!isLoginRequest) {
+        if (!isLoginRequest && unauthorizedPolicy === 'redirect') {
           onUnauthorized()
           window.location.href = '/login'
         }

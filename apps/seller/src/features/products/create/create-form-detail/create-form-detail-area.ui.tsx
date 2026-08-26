@@ -1,22 +1,29 @@
+import { useEffect } from 'react'
+
 import { PlusIcon, SquarePenIcon } from '@dessert/icons'
 import { Button, Label } from '@dessert/ui'
 import { useNavigate } from 'react-router-dom'
 
 import AppLogoImage from '@/assets/images/apple-120x120.png'
-import { ROUTES } from '@/shared/constant/routes'
 
 import { useProductCreationStore } from '../create-form'
+import { navigateToCreateDetail } from '../create-form/create-funnel-navigation.utils'
+import { useCreateHeaderSteps } from '../create-header'
 
 export const ProductDetailArea = () => {
   const navigate = useNavigate()
   const { productDetail } = useProductCreationStore()
+  const { setProductFields } = useCreateHeaderSteps()
 
-  // Quill 에디터의 빈 콘텐츠 체크 로직 (Zustand 상태 기반)
   const hasContent =
     productDetail.trim() !== '' && productDetail !== '<p><br></p>'
 
+  useEffect(() => {
+    setProductFields({ productDetail: hasContent })
+  }, [hasContent, setProductFields])
+
   const handleEditClick = () => {
-    navigate(ROUTES.PRODUCTS.CREATE_DETAIL)
+    navigateToCreateDetail(navigate)
   }
 
   return (
@@ -30,7 +37,6 @@ export const ProductDetailArea = () => {
       </div>
 
       {hasContent ? (
-        // 1. 작성된 데이터가 있을 때 나오는 UI
         <div className="flex w-full flex-col">
           <div className="flex flex-col items-center justify-center gap-8 pt-10 pb-20">
             <img
@@ -53,7 +59,6 @@ export const ProductDetailArea = () => {
           />
         </div>
       ) : (
-        // 2. 처음 렌더링 시 빈 화면 UI
         <Button
           type="button"
           title="상세페이지 등록"
