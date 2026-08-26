@@ -1,5 +1,5 @@
+import { XIcon } from '@dessert/icons'
 import { clsx } from 'clsx'
-import { X } from 'lucide-react'
 
 interface ToastProps {
   message: string
@@ -102,7 +102,7 @@ const Toast = ({
           className="shrink-0 transition-opacity hover:opacity-70"
           aria-label="닫기"
         >
-          <X className={clsx('size-5', iconClasses[variant])} strokeWidth={1} />
+          <XIcon className={clsx('size-5', iconClasses[variant])} />
         </button>
       )}
     </div>

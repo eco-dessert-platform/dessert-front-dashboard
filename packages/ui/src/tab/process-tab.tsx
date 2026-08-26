@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { ChevronRight } from 'lucide-react'
+import { ChevronRightIcon } from '@dessert/icons'
 
 import { cn } from '../lib/utils'
 
@@ -34,12 +34,11 @@ export function ProcessTab({ currentStep, steps, className }: ProcessTabProps) {
                 {step}
               </span>
               {!isLast && (
-                <ChevronRight
+                <ChevronRightIcon
                   className={cn(
                     'size-24 shrink-0 transition-colors',
                     isActive ? 'text-primary-500' : 'text-gray-200',
                   )}
-                  strokeWidth={2}
                 />
               )}
             </React.Fragment>
