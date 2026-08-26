@@ -11,8 +11,10 @@ export interface CreateProductRequest {
   deliveryCompany: string
   deliveryFee: number
   freeShippingConditions: number
-  content: string
   products: ProductOptionRequest[]
+  boardDetailRequest: {
+    content: string
+  }
   productInfoNoticeRequest: Record<string, string>
 }
 
@@ -56,6 +58,11 @@ export interface StoreInfo {
   profile: string
   phoneNumber: string
   email: string
+}
+
+export interface CreateProductBoardResult {
+  boardId?: number
+  [key: string]: unknown
 }
 
 export interface ApiResponse<T> {

@@ -21,6 +21,7 @@ import StoreInfoPage from '@/pages/register/store-info/store-info-page'
 import VerificationPage from '@/pages/register/verification/verification-page'
 import SalesAnalyticsPage from '@/pages/statistics/sales-analytics/sales-analytics-page'
 import SettlementPage from '@/pages/settlements/index-page'
+import { initCreateFunnelRouterSubscription } from '@/features/products/create/create-form/init-create-funnel-router-subscription'
 import { ROUTES } from '@/shared/constant/routes'
 
 import App from './App'
@@ -91,6 +92,8 @@ const router = createBrowserRouter([
     ],
   },
 ])
+
+initCreateFunnelRouterSubscription(router)
 
 const rootElement = document.getElementById('root')
 if (!rootElement) {
