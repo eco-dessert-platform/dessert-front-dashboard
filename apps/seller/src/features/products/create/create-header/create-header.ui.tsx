@@ -24,7 +24,7 @@ const stagestep = [
 ]
 
 export const ProductHeader = () => {
-  const { productFields, currentStep, scrollToStep, setHeaderHeight } =
+  const { productFields, completedSteps, scrollToStep, setHeaderHeight } =
     useCreateHeaderSteps()
   const headerRef = useRef<HTMLDivElement>(null)
   const steps = Object.values(productFields).filter((e) => e === true).length
@@ -51,7 +51,7 @@ export const ProductHeader = () => {
       <div className="flex w-full items-center justify-between">
         <div className="relative">
           <StageTab
-            currentStep={currentStep}
+            completedSteps={completedSteps}
             steps={stagestep}
             className="w-fit justify-start border-none"
             onStepClick={(idx) => scrollToStep(idx)}

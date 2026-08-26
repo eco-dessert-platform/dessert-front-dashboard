@@ -16,3 +16,17 @@ export * from './create/create-info/production-time.constants'
 export * from './create/create-options/product-nutritions.constant'
 export * from './create/create-options/product-options.constant'
 export * from './create/create-options/product-shipping-days.constant'
+
+export {
+  getMyStore,
+  createProductBoard,
+  createProduct,
+  productQueries,
+} from './create'
+export type {
+  CreateProductRequest,
+  ProductOptionRequest,
+  CreateProductBoardResult,
+  StoreInfo,
+  ApiResponse,
+} from './create'

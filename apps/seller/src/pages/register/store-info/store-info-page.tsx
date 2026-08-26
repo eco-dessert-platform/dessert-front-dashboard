@@ -3,6 +3,7 @@ import { isAxiosError } from 'axios'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
+import { useAuthStore } from '@/entity/auth'
 import { RegisterForm, STORE_INFO_FIELDS } from '@/entity/register'
 import {
   REGISTER_TOAST_MESSAGES,
@@ -32,6 +33,7 @@ const StoreInfoPage = () => {
     name: 'agreeToPrivacyPolicy',
   })
   const navigate = useNavigate()
+  const setSellerStatus = useAuthStore((s) => s.setSellerStatus)
   const { mutate: submitApplication, isPending } =
     useSubmitStoreApplicationMutation()
 
@@ -46,6 +48,17 @@ const StoreInfoPage = () => {
     if (!valid) return
 
     const values = getValues()
+
+    if (!values.profileImage) {
+      const msg = REGISTER_TOAST_MESSAGES.PROFILE_IMAGE_TYPE_INVALID
+      toast.error('스토어 프로필을 업로드해주세요')
+      return
+    }
+
+    if (!values.agreeToServiceTerms || !values.agreeToPrivacyPolicy) {
+      toast.error('필수 약관에 동의해주세요')
+      return
+    }
 
     submitApplication(
       {
@@ -62,7 +75,10 @@ const StoreInfoPage = () => {
         profileImage: values.profileImage,
       },
       {
-        onSuccess: () => navigate(ROUTES.REGISTER.COMPLETE),
+        onSuccess: () => {
+          setSellerStatus('PENDING')
+          navigate(ROUTES.REGISTER.COMPLETE, { replace: true })
+        },
         onError: (err) => {
           const serverMessage =
             isAxiosError(err) && typeof err.response?.data?.message === 'string'

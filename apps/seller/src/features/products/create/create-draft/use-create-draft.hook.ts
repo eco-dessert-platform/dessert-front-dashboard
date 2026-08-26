@@ -1,27 +1,30 @@
 import { toast } from '@dessert/ui'
 import { useFormContext } from 'react-hook-form'
 
-import { CreateProductForm } from '../create-form'
+import {
+  clearCreateFormPersistence,
+  CREATE_PRODUCT_DEFAULT_VALUES,
+  CreateProductForm,
+} from '../create-form'
+import { CREATE_FORM_TOAST } from '../create-form/create-form-toast.constants'
 import { useCreateDraftStore } from './create-draft-store'
 import { useProductCreationStore } from '../create-form/product-creation.store'
 
 export const useCreateDraft = () => {
   const form = useFormContext<CreateProductForm>()
   const { productDetail, setProductDetail } = useProductCreationStore()
-  const { draft, saveDraft, clearDraft } = useCreateDraftStore()
+  const { draft, saveDraft } = useCreateDraftStore()
 
   const handleSaveDraft = () => {
-    // 이미지(File)는 직렬화 불가하므로 rest 구조분해로 저장에서 제외합니다
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { mainImage, extraImages, ...formData } = form.getValues()
     saveDraft({
       ...formData,
       productDetail,
     })
-    toast.success('임시저장을 완료했어요')
+    toast.success(CREATE_FORM_TOAST.DRAFT_SUCCESS)
   }
 
-  // 폼에 임시저장 데이터 복원
   const handleRestoreDraft = () => {
     if (!draft) return
     const { productDetail: savedDetail, ...formValues } = draft
@@ -29,10 +32,15 @@ export const useCreateDraft = () => {
     setProductDetail(savedDetail)
   }
 
+  const handleClearDraft = () => {
+    clearCreateFormPersistence()
+    form.reset(CREATE_PRODUCT_DEFAULT_VALUES)
+  }
+
   return {
     draft,
     handleSaveDraft,
     handleRestoreDraft,
-    clearDraft,
+    clearDraft: handleClearDraft,
   }
 }
