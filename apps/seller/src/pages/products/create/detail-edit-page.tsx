@@ -5,6 +5,8 @@ import { Button, Editor } from '@dessert/ui'
 import { useNavigate } from 'react-router'
 
 import { useEditorImageInsert } from '@/features/products/create'
+import { navigateBackToCreateFromDetail } from '@/features/products/create/create-form/create-funnel-navigation.utils'
+import { useCreateFormSessionStore } from '@/features/products/create/create-form/create-form-session.store'
 import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
 import './create-detail-editor.css'
 import { cn } from '@/shared/libs/utils'
@@ -16,16 +18,17 @@ export function DetailEditPage() {
   const localDetailRef = useRef(productDetail)
   const { handleImageInsert } = useEditorImageInsert()
 
+  const navigateBackToCreate = () => {
+    navigateBackToCreateFromDetail(navigate)
+  }
+
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden">
-      {/* Header */}
       <header className="flex h-header shrink-0 items-center border-b border-gray-300 bg-white px-24 py-10">
         <div className="flex items-center">
           <BbanggreuiOvenLogo className="h-[42px] w-auto" />
         </div>
       </header>
-
-      {/* Content Body */}
 
       <main
         className={cn(
@@ -33,7 +36,6 @@ export function DetailEditPage() {
           'detail-edit-page flex flex-1 flex-col items-center overflow-auto',
         )}
       >
-        {/* Editor wrapper */}
         <div className="flex size-full flex-col bg-white">
           <Editor
             value={productDetail}
@@ -47,14 +49,14 @@ export function DetailEditPage() {
           />
         </div>
       </main>
-      {/* Footer Nav */}
+
       <footer className="flex w-full shrink-0 items-center justify-end gap-12 border-t border-gray-200 p-24">
         <Button
           type="button"
           title="취소"
           variant="primary-outlined"
           size="lg"
-          onClick={() => navigate(-1)}
+          onClick={navigateBackToCreate}
         />
         <Button
           type="button"
@@ -63,7 +65,10 @@ export function DetailEditPage() {
           size="lg"
           onClick={() => {
             setProductDetail(localDetailRef.current)
-            navigate(-1)
+            useCreateFormSessionStore
+              .getState()
+              .updateProductDetail(localDetailRef.current)
+            navigateBackToCreate()
           }}
         />
       </footer>

@@ -1,12 +1,12 @@
 import { Checkbox } from '@dessert/ui'
 
-import type { TableRow } from '@/entity/store/member-approval'
-
+import type { TableRow } from './member-approval-table.type'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type MemberApprovalArgs = {
   allSelected: boolean
   selectedIds: string[]
+  isTableActionDisabled?: boolean
   getRowSpanForAdmin: (rowIndex: number) => number
   toggleAll: (checked: boolean | 'indeterminate') => void
   toggleRow: (rowId: string, checked: boolean | 'indeterminate') => void
@@ -15,6 +15,7 @@ type MemberApprovalArgs = {
 export const MemberApprovalColumns = ({
   allSelected,
   selectedIds,
+  isTableActionDisabled = false,
   getRowSpanForAdmin,
   toggleAll,
   toggleRow,
@@ -22,11 +23,16 @@ export const MemberApprovalColumns = ({
   {
     id: 'select',
     header: () => (
-      <Checkbox checked={allSelected} onCheckedChange={toggleAll} />
+      <Checkbox
+        checked={allSelected}
+        disabled={isTableActionDisabled}
+        onCheckedChange={toggleAll}
+      />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={selectedIds.includes(row.original.id)}
+        disabled={isTableActionDisabled}
         onCheckedChange={(checked) => toggleRow(row.original.id, checked)}
       />
     ),
