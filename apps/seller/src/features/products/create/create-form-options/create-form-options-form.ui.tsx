@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { CopyIcon, TrashIcon } from '@dessert/icons'
 import { Button, Checkbox, Input, Label, Select, Switch } from '@dessert/ui'
-import { Controller, useFormContext, useWatch } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import { DaySelector } from '@/widgets/day-selector'
 
@@ -23,6 +23,7 @@ interface ProductOptionFormProps {
   onDelete: () => void
   onCopy: () => void
   onAdd: () => void
+  finalProductPrice: number | null
 }
 
 export const ProductOptionForm = ({
@@ -31,14 +32,9 @@ export const ProductOptionForm = ({
   onDelete,
   onCopy,
   onAdd,
+  finalProductPrice,
 }: ProductOptionFormProps) => {
-  const { setProductFields, setNutritionData } = useCreateHeaderSteps()
-  const { control: rootControl } = useFormContext()
-
-  const rootProductPrice = useWatch({
-    control: rootControl,
-    name: 'price',
-  })
+  const { setNutritionData } = useCreateHeaderSteps()
 
   const {
     form,
@@ -49,7 +45,6 @@ export const ProductOptionForm = ({
     hasNutrition,
     ingredientCategories,
     totalPrice,
-    isFormField,
     errors,
     handleMainCategoryChange,
     toggleIngredient,
@@ -57,13 +52,9 @@ export const ProductOptionForm = ({
     stockInput,
     nutritionInputs,
     toggleShippingDay,
-  } = useProductOptionForm(index, rootProductPrice)
+  } = useProductOptionForm(index, finalProductPrice)
 
   const { control, register } = form
-
-  useEffect(() => {
-    setProductFields({ productOptions: isFormField })
-  }, [isFormField, setProductFields])
 
   useEffect(() => {
     const sugar = nutritionInputs.sugar?.displayValue
@@ -87,7 +78,7 @@ export const ProductOptionForm = ({
     nutritionInputs.sugar?.displayValue,
     nutritionInputs.protein?.displayValue,
     nutritionInputs.fat?.displayValue,
-    ingredientCategories, // Zustand 내부 비교 최적화 가능
+    ingredientCategories,
     setNutritionData,
   ])
 
@@ -185,8 +176,8 @@ export const ProductOptionForm = ({
               placeholder="0~100,000"
               className="flex-1"
               value={
-                rootProductPrice !== null
-                  ? Number(rootProductPrice).toLocaleString('ko-KR')
+                finalProductPrice !== null
+                  ? Number(finalProductPrice).toLocaleString('ko-KR')
                   : ''
               }
               disabled

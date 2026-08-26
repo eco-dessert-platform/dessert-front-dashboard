@@ -2,9 +2,14 @@ import { Button } from '@dessert/ui'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
-import { StoreApplicationStatus, registerQueries } from '@/entity/register'
+import { useAuthStore } from '@/entity/auth'
+import {
+  StoreApplicationStatus,
+  registerQueries,
+} from '@/entity/register'
 import { ROUTES } from '@/shared/constant/routes'
 import { AuthFlowCard, AuthFlowImage } from '@/shared/ui/auth-flow-card'
+import { deleteCookie } from '@/shared/utils/cookieUtils'
 
 import { REGISTER_MESSAGES } from '../register.constant'
 
@@ -16,7 +21,33 @@ const STATUS_LABEL: Record<StoreApplicationStatus, string> = {
 
 const CompletePage = () => {
   const navigate = useNavigate()
-  const { data: application } = useQuery(registerQueries.application())
+  const sellerStatus = useAuthStore((s) => s.sellerStatus)
+  const logout = useAuthStore((s) => s.logout)
+  const { data: application, isLoading } = useQuery({
+    ...registerQueries.application(),
+    retry: false,
+  })
+
+  const status: StoreApplicationStatus =
+    application?.status ??
+    (sellerStatus === 'APPROVED' ||
+    sellerStatus === 'PENDING' ||
+    sellerStatus === 'REJECTED'
+      ? sellerStatus
+      : 'PENDING')
+
+  const copy = REGISTER_MESSAGES.COMPLETE[status]
+
+  const handleCta = () => {
+    if (status === 'APPROVED') {
+      navigate(ROUTES.PRODUCTS.ALL, { replace: true })
+      return
+    }
+
+    deleteCookie('accessToken')
+    logout()
+    navigate(ROUTES.AUTH, { replace: true })
+  }
 
   return (
     <div className="flex flex-1 items-center justify-center pb-40">
@@ -26,10 +57,8 @@ const CompletePage = () => {
         }
       >
         <div className="flex flex-col items-start gap-1">
-          <h1 className="typo-heading-18-b text-gray-900">
-            {REGISTER_MESSAGES.COMPLETE.TITLE}
-          </h1>
-          {application && (
+          <h1 className="typo-heading-18-b text-gray-900">{copy.TITLE}</h1>
+          {!isLoading && application && (
             <div className="flex items-center gap-8 pt-4">
               <span className="typo-title-16-sb text-gray-900">
                 {application.name}
@@ -40,16 +69,16 @@ const CompletePage = () => {
             </div>
           )}
           <p className="typo-title-16-m whitespace-pre-wrap text-gray-700">
-            {REGISTER_MESSAGES.COMPLETE.DESCRIPTION}
+            {copy.DESCRIPTION}
           </p>
         </div>
 
         <Button
-          title="첫 화면으로 이동"
+          title={copy.CTA}
           variant="primary-outlined"
           size="lg"
           className="w-[408px]"
-          onClick={() => navigate(ROUTES.HOME)}
+          onClick={handleCta}
         />
       </AuthFlowCard>
     </div>

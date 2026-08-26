@@ -3,6 +3,11 @@ import '@/styles/index.css'
 import ReactDOM from 'react-dom/client'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 
+import {
+  ApprovedOnlyRoute,
+  GuestOnlyRoute,
+  RegisterAccessRoute,
+} from '@/features/auth'
 import AuthPage from '@/pages/auth/auth-page'
 import SocialCallbackPage from '@/pages/auth/social-callback-page'
 import AllOrdersPage from '@/pages/orders/all-orders/all-orders-page'
@@ -16,6 +21,7 @@ import StoreInfoPage from '@/pages/register/store-info/store-info-page'
 import VerificationPage from '@/pages/register/verification/verification-page'
 import SalesAnalyticsPage from '@/pages/statistics/sales-analytics/sales-analytics-page'
 import SettlementPage from '@/pages/settlements/index-page'
+import { initCreateFunnelRouterSubscription } from '@/features/products/create/create-form/init-create-funnel-router-subscription'
 import { ROUTES } from '@/shared/constant/routes'
 
 import App from './App'
@@ -26,17 +32,20 @@ import VatreportPage from './pages/settlements/vatreport/vatreport-page'
 
 const router = createBrowserRouter([
   {
-    path: ROUTES.AUTH,
-    element: <AuthPage />,
+    element: <GuestOnlyRoute />,
+    children: [
+      {
+        path: ROUTES.AUTH,
+        element: <AuthPage />,
+      },
+    ],
   },
   {
     path: ROUTES.CALLBACK.SOCIAL,
     element: <SocialCallbackPage />,
   },
-  { path: ROUTES.PRODUCTS.CREATE_DETAIL, element: <DetailEditPage /> },
   {
-    path: ROUTES.REGISTER.DEFAULT,
-    element: <RegisterLayout />,
+    element: <ApprovedOnlyRoute />,
     children: [
       {
         index: true,
@@ -71,6 +80,8 @@ const router = createBrowserRouter([
     ],
   },
 ])
+
+initCreateFunnelRouterSubscription(router)
 
 const rootElement = document.getElementById('root')
 if (!rootElement) {
