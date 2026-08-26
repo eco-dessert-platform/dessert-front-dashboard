@@ -1,5 +1,4 @@
 export {
-  checkStoreName,
   getAccountVerification,
   getStoreApplication,
   getStoreNames,
@@ -27,11 +26,9 @@ export type {
   SellerDocument,
   SellerDocumentStatus,
   SellerDocumentType,
-  Store,
   StoreApplicationRequest,
   StoreApplicationResult,
   StoreApplicationStatus,
-  StoreNameCheckResult,
   StoreNamesResult,
   SubmitStoreApplicationInput,
 } from './register.type'

@@ -1,5 +1,4 @@
 export {
-  checkStoreName,
   getAccountVerification,
   getStore,
   requestStoreNameChange,
@@ -19,8 +18,6 @@ export type {
   AccountVerificationResult,
   MyStoreSummary,
   SellerAccountUpdateRequest,
-  Store,
-  StoreNameCheckResult,
   StoreNameRejectCategory,
   StoreNameRequestStatus,
   UpdateStoreDetailInput,

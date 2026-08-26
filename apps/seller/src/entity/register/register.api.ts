@@ -10,7 +10,6 @@ import type {
   RegisterDocumentsRequest,
   RegisterDocumentsResult,
   StoreApplicationResult,
-  StoreNameCheckResult,
   StoreNamesResult,
   SubmitStoreApplicationInput,
 } from './register.type'
@@ -39,23 +38,6 @@ export async function getStoreNames(
 
   if (!data.result) {
     throw new Error(data.message ?? '스토어 목록을 불러오지 못했습니다.')
-  }
-
-  return data.result
-}
-
-export async function checkStoreName(
-  storeName: string,
-): Promise<StoreNameCheckResult> {
-  const { data } = await client.get<ApiResponse<StoreNameCheckResult>>(
-    '/api/v1/seller/stores/check-name',
-    {
-      params: { storeName: storeName.trim() },
-    },
-  )
-
-  if (!data.result) {
-    throw new Error(data.message ?? '스토어 중복 확인에 실패했습니다.')
   }
 
   return data.result

@@ -7,7 +7,6 @@ import type {
   AccountVerificationDetail,
   MyStoreSummary,
   SellerAccountUpdateRequest,
-  StoreNameCheckResult,
   UpdateStoreNameRequest,
   UpdateStoreNameResult,
 } from './seller-info.type'
@@ -19,23 +18,6 @@ export async function getStore(): Promise<MyStoreSummary> {
 
   if (!data.result) {
     throw new Error(data.message ?? '스토어 정보 조회에 실패했습니다.')
-  }
-
-  return data.result
-}
-
-export async function checkStoreName(
-  storeName: string,
-): Promise<StoreNameCheckResult> {
-  const { data } = await client.get<ApiResponse<StoreNameCheckResult>>(
-    '/api/v1/seller/stores/check-name',
-    {
-      params: { storeName: storeName.trim() },
-    },
-  )
-
-  if (!data.result) {
-    throw new Error(data.message ?? '스토어 중복 확인에 실패했습니다.')
   }
 
   return data.result
