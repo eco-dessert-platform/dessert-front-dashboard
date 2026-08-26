@@ -36,16 +36,6 @@ export interface AccountVerificationResult {
   createdAt: string
 }
 
-export interface AccountVerificationDetail {
-  id: number
-  sellerId: number
-  bankCode: string
-  accountNumber: string
-  accountHolder: string
-  verified: boolean
-  createdAt: string
-}
-
 export type SellerDocumentType =
   | 'BUSINESS_REGISTRATION_CERTIFICATE'
   | 'MAIL_ORDER_SALES_REPORT'

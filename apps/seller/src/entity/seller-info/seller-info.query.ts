@@ -4,10 +4,10 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 
+import { getAccountVerification } from '@/entity/account'
 import { checkStoreName } from '@/entity/store'
 
 import {
-  getAccountVerification,
   getStore,
   requestStoreNameChange,
   updateSellerAccount,

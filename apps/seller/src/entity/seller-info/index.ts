@@ -1,5 +1,4 @@
 export {
-  getAccountVerification,
   getStore,
   requestStoreNameChange,
   updateSellerAccount,
@@ -13,7 +12,6 @@ export {
   useUpdateSellerAccountMutation,
 } from './seller-info.query'
 export type {
-  AccountVerificationDetail,
   AccountVerificationRequest,
   AccountVerificationResult,
   MyStoreSummary,

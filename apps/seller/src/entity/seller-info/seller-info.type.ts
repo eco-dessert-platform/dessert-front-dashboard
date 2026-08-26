@@ -50,16 +50,6 @@ export interface UpdateStoreDetailInput {
 
 export type UpdateStoreDetailResult = Store
 
-export interface AccountVerificationDetail {
-  id: number
-  sellerId: number
-  bankCode: string
-  accountNumber: string
-  accountHolder: string
-  verified: boolean
-  createdAt: string
-}
-
 export interface AccountVerificationRequest {
   bankCode: string
   accountNumber: string

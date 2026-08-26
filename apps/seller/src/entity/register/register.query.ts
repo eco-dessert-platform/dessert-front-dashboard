@@ -1,10 +1,8 @@
 import { queryOptions } from '@tanstack/react-query'
 
-import {
-  getAccountVerification,
-  getStoreApplication,
-  getStoreNames,
-} from './register.api'
+import { getAccountVerification } from '@/entity/account'
+
+import { getStoreApplication, getStoreNames } from './register.api'
 
 export const registerQueries = {
   all: () => ['register'],
