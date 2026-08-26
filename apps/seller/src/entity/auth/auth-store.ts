@@ -41,8 +41,18 @@ export const useAuthStore = create<AuthState>()(
         sellerId: state.sellerId,
         sellerStatus: state.sellerStatus,
       }),
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true)
+      onRehydrateStorage: (initialState) => (_state, error) => {
+        if (error) {
+          console.error('Auth store rehydration failed:', error)
+        }
+
+        if (_state) {
+          _state.setHasHydrated(true)
+        } else {
+          queueMicrotask(() => {
+            initialState?.setHasHydrated(true)
+          })
+        }
       },
     },
   ),
