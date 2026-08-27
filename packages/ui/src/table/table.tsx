@@ -28,6 +28,8 @@ interface TableProps<T> {
   tableClassName?: string
   getRowClassName?: (row: T) => string
   renderSubRow?: (row: T) => React.ReactNode
+  /** 데이터가 없을 때 표 아래에 노출할 문구 */
+  emptyMessage?: string
 }
 
 function Table<T>({
@@ -38,6 +40,7 @@ function Table<T>({
   tableClassName,
   getRowClassName,
   renderSubRow,
+  emptyMessage,
 }: TableProps<T>) {
   const table = useReactTable<T>({
     data,
@@ -134,6 +137,11 @@ function Table<T>({
             ))}
           </tbody>
         </table>
+        {data.length === 0 && emptyMessage && (
+          <p className="py-40 text-center typo-body-14-r text-gray-500">
+            {emptyMessage}
+          </p>
+        )}
       </div>
     </div>
   )

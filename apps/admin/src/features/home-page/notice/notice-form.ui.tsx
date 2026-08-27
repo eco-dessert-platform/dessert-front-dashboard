@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
-import { Button, Editor, Input, Label } from '@dessert/ui'
+import { Button, Editor, Input } from '@dessert/ui'
 
 import type { NoticeFormValues } from '@/entity/home-page/notice'
 
@@ -12,11 +12,16 @@ const TITLE_HELPER_TEXT = `${TITLE_MIN_LENGTH}~${TITLE_MAX_LENGTH} 글자를 입
 const isEditorEmpty = (value: string) =>
   value.replace(/<(p|div|br)[^>]*>|<\/(p|div)>|&nbsp;|\s/g, '') === ''
 
+export interface NoticeSubmitValues extends NoticeFormValues {
+  /** 본문에 새로 삽입된 이미지 파일. 서버가 파일 파트로 따로 받는다 */
+  images: File[]
+}
+
 interface NoticeFormProps {
   heading: string
   submitTitle: string
   defaultValues?: NoticeFormValues
-  onSubmit: (values: NoticeFormValues) => void
+  onSubmit: (values: NoticeSubmitValues) => void
   isSubmitting?: boolean
 }
 
@@ -29,14 +34,24 @@ export const NoticeForm = ({
 }: NoticeFormProps) => {
   const [title, setTitle] = useState(defaultValues?.title ?? '')
   const [content, setContent] = useState(defaultValues?.content ?? '')
+  const insertedImagesRef = useRef<Map<string, File>>(new Map())
 
   const isTitleValid =
     title.trim().length >= TITLE_MIN_LENGTH &&
     title.trim().length <= TITLE_MAX_LENGTH
   const canSubmit = isTitleValid && !isEditorEmpty(content) && !isSubmitting
 
-  /** 이미지 업로드 API 연동 전까지 로컬 미리보기 URL로 삽입한다 */
-  const handleImageUpload = async (file: File) => URL.createObjectURL(file)
+  /** 업로드 API가 따로 없어 미리보기 주소로 삽입하고 파일은 제출까지 들고 있는다 */
+  const handleImageUpload = async (file: File) => {
+    const previewUrl = URL.createObjectURL(file)
+    insertedImagesRef.current.set(previewUrl, file)
+    return previewUrl
+  }
+
+  const collectUsedImages = (html: string) =>
+    [...insertedImagesRef.current.entries()]
+      .filter(([previewUrl]) => html.includes(previewUrl))
+      .map(([, file]) => file)
 
   return (
     <form
@@ -45,7 +60,11 @@ export const NoticeForm = ({
         event.preventDefault()
         if (!canSubmit) return
 
-        onSubmit({ title: title.trim(), content })
+        onSubmit({
+          title: title.trim(),
+          content,
+          images: collectUsedImages(content),
+        })
       }}
     >
       <h2 className="typo-heading-20-sb text-gray-900">{heading}</h2>
@@ -57,20 +76,19 @@ export const NoticeForm = ({
         helperText={TITLE_HELPER_TEXT}
         value={title}
         maxLength={TITLE_MAX_LENGTH}
+        disabled={isSubmitting}
         onChange={(event) => setTitle(event.target.value)}
       />
 
-      <div className="flex flex-col gap-8">
-        <Label label="내용" required className="sr-only" />
-        <Editor
-          value={content}
-          onChange={setContent}
-          image
-          onImageUpload={handleImageUpload}
-          placeholder="내용을 입력하세요. (권장크기 : 가로 860px)"
-          height={480}
-        />
-      </div>
+      <Editor
+        value={content}
+        onChange={setContent}
+        image
+        onImageUpload={handleImageUpload}
+        placeholder="내용을 입력하세요. (권장크기 : 가로 860px)"
+        height={480}
+        disabled={isSubmitting}
+      />
 
       <div className="flex justify-end">
         <Button
