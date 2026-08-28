@@ -17,12 +17,14 @@ export const getAdminIdFromToken = (): number | null => {
   const token = getCookie(TOKEN_COOKIE_KEYS.ACCESS)
   if (!token) return null
 
-  let payload: AdminTokenPayload
+  let payload: AdminTokenPayload | null
   try {
     payload = jwtDecode<AdminTokenPayload>(token)
   } catch {
     return null
   }
+
+  if (typeof payload !== 'object' || payload === null) return null
 
   for (const claim of ADMIN_ID_CLAIMS) {
     const value = payload[claim]

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button, Editor, Input } from '@dessert/ui'
 
@@ -40,6 +40,16 @@ export const NoticeForm = ({
     title.trim().length >= TITLE_MIN_LENGTH &&
     title.trim().length <= TITLE_MAX_LENGTH
   const canSubmit = isTitleValid && !isEditorEmpty(content) && !isSubmitting
+
+  // 미리보기 주소는 화면을 벗어날 때 해제해 파일이 메모리에 남지 않게 한다
+  useEffect(() => {
+    const insertedImages = insertedImagesRef.current
+
+    return () => {
+      insertedImages.forEach((_, previewUrl) => URL.revokeObjectURL(previewUrl))
+      insertedImages.clear()
+    }
+  }, [])
 
   /** 업로드 API가 따로 없어 미리보기 주소로 삽입하고 파일은 제출까지 들고 있는다 */
   const handleImageUpload = async (file: File) => {

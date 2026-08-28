@@ -40,7 +40,7 @@ export const NoticeTable = () => {
   const { mutate: removeNotices, isPending: isDeleting } =
     useDeleteNoticesMutation()
 
-  const { data, isPlaceholderData, isLoading } = useNoticeListQuery({
+  const { data, isPlaceholderData, isSuccess } = useNoticeListQuery({
     variables: {
       page: currentPage - 1,
       size: PAGE_SIZE,
@@ -162,6 +162,8 @@ export const NoticeTable = () => {
   )
 
   const handlePageChange = (page: number) => {
+    if (isTableActionDisabled) return
+
     setCurrentPage(page)
     setSelectedIds([])
   }
@@ -171,7 +173,7 @@ export const NoticeTable = () => {
       <Table
         data={tableData}
         columns={columns}
-        emptyMessage={isLoading ? undefined : '등록된 공지사항이 없습니다.'}
+        emptyMessage={isSuccess ? '등록된 공지사항이 없습니다.' : undefined}
         topArea={
           <NoticeActionGroup
             currentPage={currentPage}
