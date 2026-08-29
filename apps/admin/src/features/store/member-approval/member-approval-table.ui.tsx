@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Input, Table, getRowSpanForGroup, toast } from '@dessert/ui'
 import { keepPreviousData } from '@tanstack/react-query'
@@ -123,19 +123,22 @@ export const MemberApprovalTable = () => {
     isApproving,
     isDownloadingDocuments,
   } = useMemberApproval({
-    onApprovalSuccess: (result) => {
-      const successIds = new Set(
-        result.successDetails.map((detail) =>
-          String(detail.storeApplicationId),
-        ),
-      )
+    onApproved: (failedIds) => {
+      setSelectedIds(failedIds)
 
-      setSelectedIds((prev) => prev.filter((id) => !successIds.has(id)))
-      successIds.forEach((id) => unregister(`approvals.${id}`))
-
-      if (result.failDetails.length === 0) {
+      if (failedIds.length === 0) {
         reset({ approvals: {} })
+        return
       }
+
+      const failedIdSet = new Set(failedIds)
+      const approvals = getValues('approvals')
+
+      Object.keys(approvals).forEach((id) => {
+        if (!failedIdSet.has(id)) {
+          unregister(`approvals.${id}`)
+        }
+      })
     },
   })
 
@@ -148,27 +151,38 @@ export const MemberApprovalTable = () => {
     () => data?.adminSellerApplicationList.map(toTableRow) ?? [],
     [data?.adminSellerApplicationList],
   )
+  const totalPages = data?.totalPages ?? 0
+  const shouldSkipSelectionResetRef = useRef(false)
 
-  useEffect(() => {
-    const totalPages = data?.totalPages
-
-    if (totalPages !== undefined) {
-      const maxPage = Math.max(totalPages, 1)
-
-      if (currentPage <= maxPage) return
-
+  const setCurrentPage = useCallback(
+    (page: number) => {
       setSearchParams(
         (prev) => {
           const next = new URLSearchParams(prev)
-          next.set('page', String(maxPage))
+          next.set('page', String(page))
           return next
         },
         { replace: true },
       )
-    }
-  }, [currentPage, data?.totalPages, setSearchParams])
+    },
+    [setSearchParams],
+  )
 
   useEffect(() => {
+    const maxPage = Math.max(totalPages, 1)
+
+    if (currentPage > maxPage) {
+      shouldSkipSelectionResetRef.current = true
+      setCurrentPage(maxPage)
+    }
+  }, [currentPage, totalPages, setCurrentPage])
+
+  useEffect(() => {
+    if (shouldSkipSelectionResetRef.current) {
+      shouldSkipSelectionResetRef.current = false
+      return
+    }
+
     setSelectedIds([])
     reset({ approvals: {} })
   }, [currentPage, reset])
@@ -321,7 +335,7 @@ export const MemberApprovalTable = () => {
           totalCount={totalCount}
           selectedCount={selectedCount}
           currentPage={currentPage}
-          totalPages={data?.totalPages || 1}
+          totalPages={Math.max(totalPages, 1)}
           isTableActionDisabled={isTableActionDisabled}
           isDownloadDisabled={isDownloadDisabled}
           onPageChange={handlePageChange}
