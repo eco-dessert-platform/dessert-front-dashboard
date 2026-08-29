@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button, Editor, Input, Label } from '@dessert/ui'
 
@@ -29,14 +29,30 @@ export const NoticeForm = ({
 }: NoticeFormProps) => {
   const [title, setTitle] = useState(defaultValues?.title ?? '')
   const [content, setContent] = useState(defaultValues?.content ?? '')
+  const previewUrlsRef = useRef<string[]>([])
 
   const isTitleValid =
     title.trim().length >= TITLE_MIN_LENGTH &&
     title.trim().length <= TITLE_MAX_LENGTH
   const canSubmit = isTitleValid && !isEditorEmpty(content) && !isSubmitting
 
+  // 미리보기 주소는 화면을 벗어날 때 해제해 파일이 메모리에 남지 않게 한다
+  useEffect(() => {
+    const previewUrls = previewUrlsRef.current
+
+    return () => {
+      previewUrls.forEach((previewUrl) => URL.revokeObjectURL(previewUrl))
+      previewUrls.length = 0
+    }
+  }, [])
+
   /** 이미지 업로드 API 연동 전까지 로컬 미리보기 URL로 삽입한다 */
-  const handleImageUpload = async (file: File) => URL.createObjectURL(file)
+  const handleImageUpload = async (file: File) => {
+    const previewUrl = URL.createObjectURL(file)
+    previewUrlsRef.current.push(previewUrl)
+
+    return previewUrl
+  }
 
   return (
     <form
