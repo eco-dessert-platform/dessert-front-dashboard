@@ -6,21 +6,41 @@ on:
   pull_request:
     branches: [develop]
 
+# 같은 PR에 새 커밋이 올라오면 진행 중이던 검사를 중단한다
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   lint:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+
+      # setup-node가 yarn 캐시 경로를 조회하려면 yarn이 먼저 준비되어야 한다
+      - name: Enable Corepack
+        run: corepack enable
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Enable Corepack
-        run: corepack enable
+          cache: yarn
+
       - name: Install dependencies
         run: yarn install --immutable
+
+      - name: Turbo Cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-lint-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-lint-
+
       - name: Lint
-        # run: yarn lint --max-warnings=0
-        run: yarn lint
+        # run: yarn lint --max-warnings=0 --cache-dir=.turbo
+        run: yarn lint --cache-dir=.turbo
+
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
@@ -30,22 +50,31 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Enable Corepack
-        run: corepack enable
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Turbo Cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-build-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-build-
+
       - name: Build dependencies
-        run: yarn build
+        run: yarn build --cache-dir=.turbo
 
       - name: Build UI Storybook
-        run: yarn build-storybook:ui
+        run: yarn build-storybook:ui --cache-dir=.turbo
 
       - name: Run Chromatic (UI)
         uses: chromaui/action@latest
