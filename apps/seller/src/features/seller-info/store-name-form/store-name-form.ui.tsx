@@ -168,6 +168,7 @@ export function StoreNameForm() {
 
       <InputField
         {...register('storeName')}
+        value={watch('storeName')}
         label="스토어명"
         placeholder={store.name}
         required
