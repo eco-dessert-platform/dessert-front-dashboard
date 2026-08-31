@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button, Dropdown, Input, Label } from '@dessert/ui'
 import { useKakaoPostcodePopup } from 'react-daum-postcode'
@@ -72,11 +72,27 @@ function EmailSection() {
     register,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useFormContext<StoreDetailFormValues>()
 
   const [selectedEmailDomain, setSelectedEmailDomain] = useState('')
   const isCustomDomain = selectedEmailDomain === CUSTOM_EMAIL_DOMAIN
+
+  const emailDomain = watch('emailDomain')
+
+  // prefill 로 도메인이 채워지면 드롭다운도 동기화 (프리셋이면 그 값, 아니면 직접 입력)
+  useEffect(() => {
+    if (!emailDomain || selectedEmailDomain !== '') return
+
+    const matched = EMAIL_DOMAIN.find(
+      (option) =>
+        option.value === emailDomain &&
+        option.value !== '' &&
+        option.value !== CUSTOM_EMAIL_DOMAIN,
+    )
+    setSelectedEmailDomain(matched ? matched.value : CUSTOM_EMAIL_DOMAIN)
+  }, [emailDomain, selectedEmailDomain])
 
   return (
     <div>
