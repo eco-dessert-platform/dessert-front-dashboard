@@ -1,10 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '@dessert/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQuery } from '@tanstack/react-query'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { StoreDetailFormValues, storeDetailSchema } from '@/entity/seller-info'
+import {
+  StoreDetailFormValues,
+  sellerInfoQueries,
+  storeDetailSchema,
+} from '@/entity/seller-info'
 
 import {
   SELLER_INFO_SUBMIT_DIALOG_CONTENT,
@@ -15,6 +20,8 @@ import { StoreProfileForm } from '../store-profile-form'
 
 export function StoreInfoForm() {
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false)
+
+  const { data } = useQuery(sellerInfoQueries.store())
 
   const methods = useForm<StoreDetailFormValues>({
     resolver: zodResolver(storeDetailSchema),
@@ -29,6 +36,27 @@ export function StoreInfoForm() {
     },
     mode: 'onChange',
   })
+
+  const { reset } = methods
+
+  // 스토어 정보 응답이 도착하면 폼에 prefill (이메일은 local@domain 으로 분리)
+  useEffect(() => {
+    if (!data) return
+
+    const { store } = data
+    const email = store.email ?? ''
+    const atIndex = email.lastIndexOf('@')
+
+    reset({
+      introduce: store.introduce ?? '',
+      phoneNumber: store.phoneNumber ?? '',
+      subPhoneNumber: store.subPhoneNumber ?? '',
+      emailLocal: atIndex >= 0 ? email.slice(0, atIndex) : email,
+      emailDomain: atIndex >= 0 ? email.slice(atIndex + 1) : '',
+      originAddress: store.originAddress ?? '',
+      originAddressDetail: store.originAddressDetail ?? '',
+    })
+  }, [data, reset])
 
   const onSubmit = () => {
     setIsSubmitDialogOpen(true)
