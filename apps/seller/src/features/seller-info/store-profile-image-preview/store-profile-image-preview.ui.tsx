@@ -7,16 +7,19 @@ import { cn } from '@/shared/libs/utils'
 interface StoreProfileImagePreviewProps {
   className?: string
   file?: File | null
+  initialUrl?: string
   onChange: (file: File | null) => void
 }
 
 export function StoreProfileImagePreview({
   className,
   file,
+  initialUrl,
   onChange,
 }: StoreProfileImagePreviewProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [previewUrl, setPreviewUrl] = useState<string>('')
+  const [isInitialCleared, setIsInitialCleared] = useState(false)
 
   const handleUploadAreaClick = () => {
     inputRef.current?.click()
@@ -30,11 +33,13 @@ export function StoreProfileImagePreview({
     }
 
     onChange(nextFile)
+    setIsInitialCleared(false)
     event.target.value = ''
   }
 
   const handleRemove = () => {
     onChange(null)
+    setIsInitialCleared(true)
 
     if (inputRef.current) {
       inputRef.current.value = ''
@@ -55,6 +60,13 @@ export function StoreProfileImagePreview({
     }
   }, [file])
 
+  // 서버에 저장된 프로필 이미지 URL 이 도착하면 다시 노출
+  useEffect(() => {
+    if (initialUrl) setIsInitialCleared(false)
+  }, [initialUrl])
+
+  const displayUrl = previewUrl || (isInitialCleared ? '' : (initialUrl ?? ''))
+
   return (
     <div className={cn('flex flex-col gap-8', className)}>
       <input
@@ -65,10 +77,10 @@ export function StoreProfileImagePreview({
         onChange={handleFileChange}
       />
       <div className="relative size-[200px] overflow-hidden rounded-32 border border-gray-100">
-        {previewUrl ? (
+        {displayUrl ? (
           <div className="relative size-full">
             <img
-              src={previewUrl}
+              src={displayUrl}
               alt="스토어 프로필 미리보기"
               className="size-full object-cover"
             />

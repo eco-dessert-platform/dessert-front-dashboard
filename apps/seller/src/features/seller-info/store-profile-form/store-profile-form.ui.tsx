@@ -2,8 +2,9 @@ import { useState } from 'react'
 
 import { Controller, useFormContext } from 'react-hook-form'
 import { Textarea } from '@dessert/ui'
+import { useQuery } from '@tanstack/react-query'
 
-import { StoreDetailFormValues } from '@/entity/seller-info'
+import { StoreDetailFormValues, sellerInfoQueries } from '@/entity/seller-info'
 
 import { StoreProfileImagePreview } from '../store-profile-image-preview'
 
@@ -12,6 +13,8 @@ const IMG_NOTICE_FORMAT = 'jpg,jpeg,png 형식 10MB 이하 파일만 업로드 �
 
 export function StoreProfileForm() {
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null)
+
+  const { data } = useQuery(sellerInfoQueries.store())
 
   const {
     control,
@@ -24,6 +27,7 @@ export function StoreProfileForm() {
       <StoreProfileImagePreview
         className="mt-4"
         file={profileImageFile}
+        initialUrl={data?.store.profile}
         onChange={setProfileImageFile}
       />
       <div className="text-[10px] font-normal text-gray-500">
