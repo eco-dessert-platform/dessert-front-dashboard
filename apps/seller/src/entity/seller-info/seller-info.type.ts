@@ -1,19 +1,4 @@
-export interface Store {
-  storeId: number
-  name: string
-  introduce: string
-  profile: string
-  phoneNumber: string
-  subPhoneNumber: string
-  email: string
-  originAddress: string
-  originAddressDetail: string
-}
-
-export interface StoreNameCheckResult {
-  available: boolean
-  store: Store | null
-}
+import type { Store } from '@/entity/store'
 
 export interface MyStoreSummary {
   // 변경 신청 가능 여부: 이미 변경했거나 PENDING 이면 false
@@ -64,16 +49,6 @@ export interface UpdateStoreDetailInput {
 }
 
 export type UpdateStoreDetailResult = Store
-
-export interface AccountVerificationDetail {
-  id: number
-  sellerId: number
-  bankCode: string
-  accountNumber: string
-  accountHolder: string
-  verified: boolean
-  createdAt: string
-}
 
 export interface AccountVerificationRequest {
   bankCode: string

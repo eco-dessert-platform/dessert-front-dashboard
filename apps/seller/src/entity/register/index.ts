@@ -1,6 +1,4 @@
 export {
-  checkStoreName,
-  getAccountVerification,
   getStoreApplication,
   getStoreNames,
   registerDocuments,
@@ -19,7 +17,6 @@ export {
 } from './register.schema'
 export type { RegisterForm } from './register.schema'
 export type {
-  AccountVerificationDetail,
   AccountVerificationRequest,
   AccountVerificationResult,
   RegisterDocumentsRequest,
@@ -27,11 +24,9 @@ export type {
   SellerDocument,
   SellerDocumentStatus,
   SellerDocumentType,
-  Store,
   StoreApplicationRequest,
   StoreApplicationResult,
   StoreApplicationStatus,
-  StoreNameCheckResult,
   StoreNamesResult,
   SubmitStoreApplicationInput,
 } from './register.type'

@@ -1,8 +1,8 @@
 import { Fragment } from 'react'
 
+import { cn } from '@dessert/core'
 import { ChevronRightIcon } from '@dessert/icons'
 
-import { cn } from '@/shared/libs/utils'
 
 const STEPS = ['판매자 인증', '스토어 정보 등록', '회원가입 완료'] as const
 

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { cn } from '@dessert/core'
 import { Button } from '@dessert/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
@@ -12,7 +13,6 @@ import {
   useCheckStoreNameMutation,
   useRequestStoreNameChangeMutation,
 } from '@/entity/seller-info'
-import { cn } from '@/shared/libs/utils'
 import { InputField } from '@/shared/ui/input-field'
 
 import {

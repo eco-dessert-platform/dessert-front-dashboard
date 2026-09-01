@@ -1,7 +1,7 @@
+import { cn } from '@dessert/core'
 import { Tooltip } from '@dessert/ui'
 import { Info } from 'lucide-react'
 
-import { cn } from '@/shared/libs/utils'
 
 interface InfoTooltipProps {
   iconSize?: number

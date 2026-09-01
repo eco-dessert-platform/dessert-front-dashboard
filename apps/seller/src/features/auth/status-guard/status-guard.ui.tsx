@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
+
+import { getCookie } from '@dessert/core'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 import { getPostLoginPath, useAuthStore } from '@/entity/auth'
 import { ROUTES } from '@/shared/constant/routes'
-import { getCookie } from '@/shared/utils/cookieUtils'
 
 function AuthBootstrapping() {
   return (

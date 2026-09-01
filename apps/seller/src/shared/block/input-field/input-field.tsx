@@ -1,8 +1,8 @@
 import { InputHTMLAttributes } from 'react'
 
+import { cn } from '@dessert/core'
 import { Button, Input, Label } from '@dessert/ui'
 
-import { cn } from '@/shared/libs/utils'
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string

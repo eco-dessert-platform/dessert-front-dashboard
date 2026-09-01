@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Button, Input, Label, Select, toast } from '@dessert/ui'
+import { formatDaumAddress } from '@dessert/core'
 import { ImageIcon } from '@dessert/icons'
-import { Controller, useFormContext, useWatch } from 'react-hook-form'
+import { Button, Input, Label, Select, toast } from '@dessert/ui'
 import { useKakaoPostcodePopup } from 'react-daum-postcode'
+import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 import { FILE_UPLOAD_LIMITS, RegisterForm } from '@/entity/register'
-import { formatDaumAddress } from '@/shared/utils/format-daum-address'
-import { InputField } from '../../../shared/ui/input-field'
 
+
+import { InputField } from '../../../shared/ui/input-field'
 import { REGISTER_TOAST_MESSAGES } from '../register.constant'
 import { useCheckStoreNameMutation } from './check-store-name.mutation'
 import { ConfirmStoreAlert } from './confirm-store-alert.ui'
@@ -168,12 +169,12 @@ export function StoreInfo() {
   }
 
   return (
-    <section className="flex w-full flex-col overflow-clip rounded-[16px] bg-white">
-      <header className="sticky top-0 flex items-center justify-between bg-white px-24 pb-12 pt-16">
+    <section className="flex w-full flex-col overflow-clip rounded-16 bg-white">
+      <header className="sticky top-0 flex items-center justify-between bg-white px-24 pt-16 pb-12">
         <h2 className="typo-heading-20-sb text-gray-900">스토어 정보 등록</h2>
       </header>
 
-      <div className="flex flex-col items-start bg-white px-24 pb-16 pt-10">
+      <div className="flex flex-col items-start bg-white px-24 pt-10 pb-16">
         <InputField
           label="스토어명"
           required
@@ -189,12 +190,12 @@ export function StoreInfo() {
       </div>
 
       <div className="flex items-start pb-16">
-        <div className="flex h-[398px] flex-col items-start gap-8 bg-white py-10 pl-24 pr-20">
+        <div className="flex h-[398px] flex-col items-start gap-8 bg-white py-10 pr-20 pl-24">
           <div className="flex w-full flex-col items-start gap-4">
             <p className="typo-title-14-m text-gray-800">스토어 프로필</p>
             <button
               type="button"
-              className="flex size-[200px] shrink-0 cursor-pointer flex-col items-center justify-center gap-0 overflow-hidden rounded-[16px] border border-gray-200 bg-white p-10"
+              className="flex size-[200px] shrink-0 cursor-pointer flex-col items-center justify-center gap-0 overflow-hidden rounded-16 border border-gray-200 bg-white p-10"
               onClick={() => fileInputRef.current?.click()}
             >
               {profilePreviewUrl ? (
@@ -207,7 +208,7 @@ export function StoreInfo() {
                 <>
                   <ImageIcon
                     aria-hidden
-                    className="size-[30px] text-gray-400"
+                    className="size-30 text-gray-400"
                   />
                   <span className="typo-body-12-r text-gray-800">
                     이미지를 업로드해주세요
@@ -246,7 +247,7 @@ export function StoreInfo() {
         </div>
 
         <div className="flex flex-1 flex-col items-start justify-center self-stretch">
-          <div className="flex w-full items-start gap-16 pl-20 pr-24">
+          <div className="flex w-full items-start gap-16 pr-24 pl-20">
             <div className="flex flex-1 py-10">
               <Controller
                 control={control}
@@ -281,7 +282,7 @@ export function StoreInfo() {
             </div>
           </div>
 
-          <div className="flex w-full items-end gap-16 bg-white py-10 pl-20 pr-24">
+          <div className="flex w-full items-end gap-16 bg-white py-10 pr-24 pl-20">
             <Controller
               control={control}
               name="emailLocal"
@@ -323,7 +324,7 @@ export function StoreInfo() {
             />
           </div>
 
-          <div className="flex w-full items-start gap-16 bg-white py-10 pl-20 pr-24">
+          <div className="flex w-full items-start gap-16 bg-white py-10 pr-24 pl-20">
             <div className="flex w-[336px] shrink-0 flex-col items-start gap-4">
               <Label label="우편번호" required />
               <div className="flex w-full items-start gap-16">
@@ -356,7 +357,7 @@ export function StoreInfo() {
             />
           </div>
 
-          <div className="flex w-full flex-col items-start bg-white py-10 pl-20 pr-24">
+          <div className="flex w-full flex-col items-start bg-white py-10 pr-24 pl-20">
             <Controller
               control={control}
               name="originAddressDetail"

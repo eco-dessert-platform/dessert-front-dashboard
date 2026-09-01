@@ -1,8 +1,8 @@
+import { cn } from '@dessert/core'
 import { Input, Label, Radio } from '@dessert/ui'
 import { Control, Controller, FieldErrors, useWatch } from 'react-hook-form'
 
 import { DISCLOSURE_FIELDS, RADIO_OPTIONS } from '@/entity/products'
-import { cn } from '@/shared/libs/utils'
 
 import { useProductDisclosureForm } from './use-product-disclosure-form.hook'
 import { CreateProductForm } from '../create-form/product-create.types'

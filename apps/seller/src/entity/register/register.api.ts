@@ -1,16 +1,12 @@
-import { isAxiosError } from 'axios'
-
 import type { ApiResponse } from '@/entity/auth/types'
 import { client } from '@/shared/utils/axios'
 
 import type {
-  AccountVerificationDetail,
   AccountVerificationRequest,
   AccountVerificationResult,
   RegisterDocumentsRequest,
   RegisterDocumentsResult,
   StoreApplicationResult,
-  StoreNameCheckResult,
   StoreNamesResult,
   SubmitStoreApplicationInput,
 } from './register.type'
@@ -42,35 +38,6 @@ export async function getStoreNames(
   }
 
   return data.result
-}
-
-export async function checkStoreName(
-  storeName: string,
-): Promise<StoreNameCheckResult> {
-  const { data } = await client.get<ApiResponse<StoreNameCheckResult>>(
-    '/api/v1/seller/stores/check-name',
-    {
-      params: { storeName: storeName.trim() },
-    },
-  )
-
-  if (!data.result) {
-    throw new Error(data.message ?? '스토어 중복 확인에 실패했습니다.')
-  }
-
-  return data.result
-}
-
-export async function getAccountVerification(): Promise<AccountVerificationDetail | null> {
-  try {
-    const { data } = await client.get<ApiResponse<AccountVerificationDetail>>(
-      '/api/v1/seller/sellers/account-verifications',
-    )
-    return data.result ?? null
-  } catch (err) {
-    if (isAxiosError(err) && err.response?.status === 400) return null
-    throw err
-  }
 }
 
 export async function verifyAccount(

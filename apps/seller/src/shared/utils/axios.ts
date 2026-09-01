@@ -1,12 +1,12 @@
-import axios from 'axios'
-
-import { useAuthStore } from '@/entity/auth/auth-store'
 import {
   deleteCookie,
   getCookie,
   getExpFromToken,
   setCookie,
-} from '@/shared/utils/cookieUtils'
+} from '@dessert/core'
+import axios from 'axios'
+
+import { useAuthStore } from '@/entity/auth/auth-store'
 
 const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL
 

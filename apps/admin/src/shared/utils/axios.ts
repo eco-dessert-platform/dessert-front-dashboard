@@ -1,8 +1,8 @@
+import { getCookie } from '@dessert/core'
 import axios from 'axios'
 import qs from 'qs'
 
 import { TOKEN_COOKIE_KEYS } from '@/shared/constant'
-import { getCookie } from '@/shared/utils/cookieUtils'
 const baseURL = import.meta.env.VITE_PUBLIC_SERVER_URL
 
 declare module 'axios' {

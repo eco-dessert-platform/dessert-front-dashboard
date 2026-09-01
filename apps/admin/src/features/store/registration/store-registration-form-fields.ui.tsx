@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
+import { formatDaumAddress } from '@dessert/core'
 import { Button, Input, Select, toast } from '@dessert/ui'
 import { Plus } from 'lucide-react'
 import { useKakaoPostcodePopup } from 'react-daum-postcode'
 import { Controller, useWatch } from 'react-hook-form'
 
-import { formatDaumAddress } from '@/shared/utils'
 
 import {
   CUSTOM_EMAIL_DOMAIN,

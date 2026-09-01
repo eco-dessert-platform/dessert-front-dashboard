@@ -3,8 +3,6 @@ export {
   getCookie,
   deleteCookie,
   getExpFromToken,
-} from './cookieUtils'
+} from '@dessert/core'
 
 export { client, setupAuthResponseInterceptor } from './axios'
-
-export { formatDaumAddress } from './format-daum-address'

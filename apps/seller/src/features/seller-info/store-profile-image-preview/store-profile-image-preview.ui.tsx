@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 
+import { cn } from '@dessert/core'
 import { CameraIcon, XIcon } from '@dessert/icons'
 
-import { cn } from '@/shared/libs/utils'
 
 interface StoreProfileImagePreviewProps {
   className?: string

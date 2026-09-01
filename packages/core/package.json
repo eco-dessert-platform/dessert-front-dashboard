@@ -1,0 +1,29 @@
+{
+  "name": "@dessert/core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test": "./src/test/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@testing-library/react": "^16.3.0",
+    "clsx": "^2.1.1",
+    "jwt-decode": "^4.0.0",
+    "msw": "^2.10.0",
+    "tailwind-merge": "^3.3.1"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.90.0",
+    "react": "^19.0.0",
+    "react-daum-postcode": "^4.0.0",
+    "react-router": "^7.9.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

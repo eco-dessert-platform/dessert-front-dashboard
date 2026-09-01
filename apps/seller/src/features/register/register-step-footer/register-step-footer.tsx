@@ -1,6 +1,6 @@
+import { cn } from '@dessert/core'
 import { Button } from '@dessert/ui'
 
-import { cn } from '@/shared/libs/utils'
 
 interface RegisterStepFooterProps {
   nextLabel?: string

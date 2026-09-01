@@ -1,3 +1,4 @@
+import { deleteCookie } from '@dessert/core'
 import { Button } from '@dessert/ui'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
@@ -9,7 +10,6 @@ import {
 } from '@/entity/register'
 import { ROUTES } from '@/shared/constant/routes'
 import { AuthFlowCard, AuthFlowImage } from '@/shared/ui/auth-flow-card'
-import { deleteCookie } from '@/shared/utils/cookieUtils'
 
 import { REGISTER_MESSAGES } from '../register.constant'
 
@@ -65,7 +65,7 @@ const CompletePage = () => {
               <span className="typo-title-16-sb text-gray-900">
                 {application.name}
               </span>
-              <span className="typo-body-12-m rounded-full bg-gray-100 px-8 py-2 text-gray-700">
+              <span className="rounded-full bg-gray-100 px-8 py-2 typo-body-12-m text-gray-700">
                 {STATUS_LABEL[application.status]}
               </span>
             </div>

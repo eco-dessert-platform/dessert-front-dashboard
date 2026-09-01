@@ -1,25 +1,8 @@
-export interface Store {
-  storeId: number
-  name: string
-  introduce: string
-  profile: string
-  phoneNumber: string
-  subPhoneNumber: string
-  email: string
-  originAddress: string
-  originAddressDetail: string
-}
-
 export interface StoreNamesResult {
   content: { id: number; name: string }[]
   nextCursor: number
   hasNext: boolean
   totalCount: number | null
-}
-
-export interface StoreNameCheckResult {
-  available: boolean
-  store: Store | null
 }
 
 export type StoreApplicationStatus = 'PENDING' | 'APPROVED' | 'REJECTED'
@@ -49,16 +32,6 @@ export interface AccountVerificationRequest {
 export interface AccountVerificationResult {
   id: number
   sellerId: number
-  verified: boolean
-  createdAt: string
-}
-
-export interface AccountVerificationDetail {
-  id: number
-  sellerId: number
-  bankCode: string
-  accountNumber: string
-  accountHolder: string
   verified: boolean
   createdAt: string
 }

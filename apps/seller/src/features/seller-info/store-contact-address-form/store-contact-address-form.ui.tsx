@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
+import { formatDaumAddress } from '@dessert/core'
 import { Button, Dropdown, Input, Label } from '@dessert/ui'
 import { useKakaoPostcodePopup } from 'react-daum-postcode'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { StoreDetailFormValues } from '@/entity/seller-info'
-import { formatDaumAddress } from '@/shared/utils/format-daum-address'
 
 const CUSTOM_EMAIL_DOMAIN = 'custom'
 

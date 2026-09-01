@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { cn } from '@/shared/libs/utils'
+import { cn } from '@dessert/core'
 
 import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
 

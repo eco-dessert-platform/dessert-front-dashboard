@@ -1,7 +1,7 @@
+import { getExpFromToken, setCookie } from '@dessert/core'
 import { useMutation } from '@tanstack/react-query'
 
 import { authKeys, issueToken, useAuthStore } from '@/entity/auth'
-import { getExpFromToken, setCookie } from '@/shared/utils/cookieUtils'
 
 export const useIssueTokenMutation = () => {
   const setAuth = useAuthStore((state) => state.setAuth)

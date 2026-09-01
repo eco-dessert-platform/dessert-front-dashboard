@@ -8,8 +8,9 @@ import { useEditorImageInsert } from '@/features/products/create'
 import { navigateBackToCreateFromDetail } from '@/features/products/create/create-form/create-funnel-navigation.utils'
 import { useCreateFormSessionStore } from '@/features/products/create/create-form/create-form-session.store'
 import { useProductCreationStore } from '@/features/products/create/create-form/product-creation.store'
+
 import './create-detail-editor.css'
-import { cn } from '@/shared/libs/utils'
+import { cn } from '@dessert/core'
 
 export function DetailEditPage() {
   const navigate = useNavigate()

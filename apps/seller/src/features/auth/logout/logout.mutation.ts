@@ -1,8 +1,8 @@
+import { deleteCookie } from '@dessert/core'
 import { useMutation } from '@tanstack/react-query'
 
 import { authKeys, logout, useAuthStore } from '@/entity/auth'
 import { ROUTES } from '@/shared/constant/routes'
-import { deleteCookie } from '@/shared/utils/cookieUtils'
 
 export const useLogoutMutation = () => {
   const logoutStore = useAuthStore((state) => state.logout)
