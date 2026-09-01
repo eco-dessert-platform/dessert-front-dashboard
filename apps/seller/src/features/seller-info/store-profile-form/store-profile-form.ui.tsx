@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Controller, useFormContext } from 'react-hook-form'
 import { Textarea } from '@dessert/ui'
 import { useQuery } from '@tanstack/react-query'
@@ -14,11 +12,15 @@ const IMG_NOTICE_FORMAT = 'jpg,jpeg,png 형식 10MB 이하 파일만 업로드 �
 
 interface StoreProfileFormProps {
   isEditable: boolean
+  profileImageFile: File | null
+  onProfileImageChange: (file: File | null) => void
 }
 
-export function StoreProfileForm({ isEditable }: StoreProfileFormProps) {
-  const [profileImageFile, setProfileImageFile] = useState<File | null>(null)
-
+export function StoreProfileForm({
+  isEditable,
+  profileImageFile,
+  onProfileImageChange,
+}: StoreProfileFormProps) {
   const { data } = useQuery(sellerInfoQueries.store())
 
   const {
@@ -34,7 +36,7 @@ export function StoreProfileForm({ isEditable }: StoreProfileFormProps) {
         file={profileImageFile}
         initialUrl={data?.store.profile}
         disabled={!isEditable}
-        onChange={setProfileImageFile}
+        onChange={onProfileImageChange}
       />
       <div className="text-[10px] font-normal text-gray-500">
         <p>{IMG_NOTICE_SIZE}</p>

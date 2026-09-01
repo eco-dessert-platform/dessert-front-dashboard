@@ -208,9 +208,12 @@ function AddressSection({ isEditable }: SectionProps) {
     openPostcode({
       onComplete: (data) => {
         setPostalCode(data.zonecode)
-        setValue('originAddress', formatDaumAddress(data), {
-          shouldValidate: true,
-        })
+        // 백엔드는 우편번호를 originAddress 안에 "(우편번호) 주소" 형태로 받음
+        setValue(
+          'originAddress',
+          `(${data.zonecode}) ${formatDaumAddress(data)}`,
+          { shouldValidate: true },
+        )
         setIsPostalCodeSelected(true)
       },
     })

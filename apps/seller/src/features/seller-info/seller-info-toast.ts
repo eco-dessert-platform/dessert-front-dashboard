@@ -39,6 +39,9 @@ export const sellerInfoToast = {
 
   saveValidationError: () => toast.error('작성되지 않은 항목이 있어요'),
 
+  saveError: () =>
+    toast.error('변경사항 저장에 실패했어요', '잠시 후 다시 시도해주세요'),
+
   profileImageFormatError: () =>
     toast.error(
       '지원하지 않는 이미지 형식이에요',

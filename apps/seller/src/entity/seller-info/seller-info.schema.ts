@@ -49,7 +49,10 @@ export const storeDetailSchema = z
     emailLocal: z.string().min(1, '이메일을 입력해주세요.'),
     emailDomain: z.string().min(1, '도메인을 선택해주세요.'),
     originAddress: z.string().min(1, '주소를 입력해주세요.'),
-    originAddressDetail: z.string().min(1, '상세주소를 입력해주세요.'),
+    originAddressDetail: z
+      .string()
+      .min(1, '상세주소를 입력해주세요.')
+      .max(50, '상세주소는 50자 이내로 입력해주세요.'),
   })
   .superRefine(({ emailLocal, emailDomain }, ctx) => {
     const combined = `${emailLocal}@${emailDomain}`

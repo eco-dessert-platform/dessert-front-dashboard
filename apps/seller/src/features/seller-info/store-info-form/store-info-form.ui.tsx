@@ -8,8 +8,10 @@ import { FormProvider, useForm } from 'react-hook-form'
 import {
   Store,
   StoreDetailFormValues,
+  UpdateStoreDetailRequest,
   sellerInfoQueries,
   storeDetailSchema,
+  useUpdateStoreDetailMutation,
 } from '@/entity/seller-info'
 
 import {
@@ -17,6 +19,7 @@ import {
   SELLER_INFO_SUBMIT_DIALOG_CONTENT,
   SellerInfoConfirmDialog,
 } from '../seller-info-confirm-dialog'
+import { sellerInfoToast } from '../seller-info-toast'
 import { StoreContactAddressForm } from '../store-contact-address-form'
 import { StoreProfileForm } from '../store-profile-form'
 
@@ -35,11 +38,23 @@ const toFormValues = (store: Store): StoreDetailFormValues => {
   }
 }
 
+// 폼값 → 수정 요청 (이메일 합치기, 선택 필드는 빈 값이면 omit)
+const toRequest = (values: StoreDetailFormValues): UpdateStoreDetailRequest => ({
+  introduce: values.introduce || undefined,
+  phoneNumber: values.phoneNumber,
+  subPhoneNumber: values.subPhoneNumber || undefined,
+  email: `${values.emailLocal}@${values.emailDomain}`,
+  originAddress: values.originAddress,
+  originAddressDetail: values.originAddressDetail,
+})
+
 export function StoreInfoForm() {
   const [isEditable, setIsEditable] = useState(false)
   const [dialogType, setDialogType] = useState<'cancel' | 'submit' | null>(null)
+  const [profileImageFile, setProfileImageFile] = useState<File | null>(null)
 
   const { data } = useQuery(sellerInfoQueries.store())
+  const { mutate: updateStore, isPending } = useUpdateStoreDetailMutation()
 
   const methods = useForm<StoreDetailFormValues>({
     resolver: zodResolver(storeDetailSchema),
@@ -71,14 +86,29 @@ export function StoreInfoForm() {
   const handleDialogConfirm = () => {
     if (dialogType === 'cancel') {
       if (data) reset(toFormValues(data.store))
+      setProfileImageFile(null)
       setIsEditable(false)
       setDialogType(null)
       return
     }
 
-    // TODO(290): 스토어 정보 수정 API 연결 (현재 백엔드 엔드포인트 확인 대기)
-    setIsEditable(false)
-    setDialogType(null)
+    if (isPending) return
+
+    updateStore(
+      { request: toRequest(methods.getValues()), profileImage: profileImageFile },
+      {
+        onSuccess: () => {
+          sellerInfoToast.saveSuccess()
+          setProfileImageFile(null)
+          setIsEditable(false)
+          setDialogType(null)
+        },
+        onError: () => {
+          sellerInfoToast.saveError()
+          setDialogType(null)
+        },
+      },
+    )
   }
 
   return (
@@ -88,7 +118,11 @@ export function StoreInfoForm() {
 
         <div className="flex flex-col gap-20 2xl:flex-row">
           <div className="w-full xl:w-[220px] 2xl:shrink-0">
-            <StoreProfileForm isEditable={isEditable} />
+            <StoreProfileForm
+              isEditable={isEditable}
+              profileImageFile={profileImageFile}
+              onProfileImageChange={setProfileImageFile}
+            />
           </div>
           <div className="w-full min-w-0 2xl:flex-1">
             <StoreContactAddressForm isEditable={isEditable} />
@@ -107,6 +141,7 @@ export function StoreInfoForm() {
               <Button
                 title="수정하기"
                 className="min-w-[160px]"
+                disabled={isPending}
                 onClick={methods.handleSubmit(() => setDialogType('submit'))}
               />
             </>
