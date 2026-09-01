@@ -11,7 +11,7 @@ import { formatDaumAddress } from '@/shared/utils/format-daum-address'
 const CUSTOM_EMAIL_DOMAIN = 'custom'
 
 const EMAIL_DOMAIN = [
-  { label: '선택하세요', value: '' },
+  { label: '직접 입력', value: CUSTOM_EMAIL_DOMAIN },
   { label: 'naver.com', value: 'naver.com' },
   { label: 'gmail.com', value: 'gmail.com' },
   { label: 'kakao.com', value: 'kakao.com' },
@@ -19,7 +19,6 @@ const EMAIL_DOMAIN = [
   { label: 'hanmail.net', value: 'hanmail.net' },
   { label: 'hotmail.com', value: 'hotmail.com' },
   { label: 'outlook.com', value: 'outlook.com' },
-  { label: '직접 입력', value: CUSTOM_EMAIL_DOMAIN },
 ]
 
 interface StoreContactAddressFormProps {
