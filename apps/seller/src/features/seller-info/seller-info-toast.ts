@@ -38,4 +38,16 @@ export const sellerInfoToast = {
   saveSuccess: () => toast.success('변경사항이 저장되었어요'),
 
   saveValidationError: () => toast.error('작성되지 않은 항목이 있어요'),
+
+  profileImageFormatError: () =>
+    toast.error(
+      '지원하지 않는 이미지 형식이에요',
+      'jpg, jpeg, png 형식만 업로드할 수 있어요',
+    ),
+
+  profileImageSizeError: () =>
+    toast.error(
+      '이미지 용량이 너무 커요',
+      '10MB 이하 파일만 업로드할 수 있어요',
+    ),
 }

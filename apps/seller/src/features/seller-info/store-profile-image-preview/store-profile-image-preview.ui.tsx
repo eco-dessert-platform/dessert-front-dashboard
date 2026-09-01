@@ -4,6 +4,11 @@ import { CameraIcon, XIcon } from '@dessert/icons'
 
 import { cn } from '@/shared/libs/utils'
 
+import { sellerInfoToast } from '../seller-info-toast'
+
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png']
+const MAX_IMAGE_SIZE = 10 * 1024 * 1024 // 10MB
+
 interface StoreProfileImagePreviewProps {
   className?: string
   file?: File | null
@@ -29,14 +34,24 @@ export function StoreProfileImagePreview({
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const nextFile = event.target.files?.[0]
+    event.target.value = ''
 
     if (!nextFile) {
       return
     }
 
+    if (!ALLOWED_IMAGE_TYPES.includes(nextFile.type)) {
+      sellerInfoToast.profileImageFormatError()
+      return
+    }
+
+    if (nextFile.size > MAX_IMAGE_SIZE) {
+      sellerInfoToast.profileImageSizeError()
+      return
+    }
+
     onChange(nextFile)
     setIsInitialCleared(false)
-    event.target.value = ''
   }
 
   const handleRemove = () => {
