@@ -8,6 +8,7 @@ interface StoreProfileImagePreviewProps {
   className?: string
   file?: File | null
   initialUrl?: string
+  disabled?: boolean
   onChange: (file: File | null) => void
 }
 
@@ -15,6 +16,7 @@ export function StoreProfileImagePreview({
   className,
   file,
   initialUrl,
+  disabled = false,
   onChange,
 }: StoreProfileImagePreviewProps) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -84,20 +86,23 @@ export function StoreProfileImagePreview({
               alt="스토어 프로필 미리보기"
               className="size-full object-cover"
             />
-            <button
-              type="button"
-              onClick={handleRemove}
-              aria-label="이미지 제거"
-              className="absolute top-12 right-12 flex size-20 cursor-pointer items-center justify-center"
-            >
-              <XIcon className="size-20" />
-            </button>
+            {!disabled && (
+              <button
+                type="button"
+                onClick={handleRemove}
+                aria-label="이미지 제거"
+                className="absolute top-12 right-12 flex size-20 cursor-pointer items-center justify-center"
+              >
+                <XIcon className="size-20" />
+              </button>
+            )}
           </div>
         ) : (
           <button
             type="button"
             onClick={handleUploadAreaClick}
-            className="flex size-full cursor-pointer flex-col items-center justify-center text-gray-400"
+            disabled={disabled}
+            className="flex size-full cursor-pointer flex-col items-center justify-center text-gray-400 disabled:cursor-not-allowed"
           >
             <CameraIcon
               className="size-24 text-gray-300"

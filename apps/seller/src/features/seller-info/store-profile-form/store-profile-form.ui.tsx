@@ -5,13 +5,18 @@ import { Textarea } from '@dessert/ui'
 import { useQuery } from '@tanstack/react-query'
 
 import { StoreDetailFormValues, sellerInfoQueries } from '@/entity/seller-info'
+import { cn } from '@/shared/libs/utils'
 
 import { StoreProfileImagePreview } from '../store-profile-image-preview'
 
 const IMG_NOTICE_SIZE = '권장 크기 1000x1000, 최소 160 이상 (1:1 비율)'
 const IMG_NOTICE_FORMAT = 'jpg,jpeg,png 형식 10MB 이하 파일만 업로드 가능해요'
 
-export function StoreProfileForm() {
+interface StoreProfileFormProps {
+  isEditable: boolean
+}
+
+export function StoreProfileForm({ isEditable }: StoreProfileFormProps) {
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null)
 
   const { data } = useQuery(sellerInfoQueries.store())
@@ -28,6 +33,7 @@ export function StoreProfileForm() {
         className="mt-4"
         file={profileImageFile}
         initialUrl={data?.store.profile}
+        disabled={!isEditable}
         onChange={setProfileImageFile}
       />
       <div className="text-[10px] font-normal text-gray-500">
@@ -45,7 +51,11 @@ export function StoreProfileForm() {
             placeholder="빵그리입니다!"
             maxLength={100}
             showCount
-            className="mt-8"
+            readOnly={!isEditable}
+            className={cn(
+              'mt-8',
+              !isEditable && 'pointer-events-none [&_textarea]:text-gray-400',
+            )}
           />
         )}
       />

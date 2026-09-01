@@ -6,20 +6,38 @@ import { useQuery } from '@tanstack/react-query'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import {
+  Store,
   StoreDetailFormValues,
   sellerInfoQueries,
   storeDetailSchema,
 } from '@/entity/seller-info'
 
 import {
+  SELLER_INFO_CANCEL_DIALOG_CONTENT,
   SELLER_INFO_SUBMIT_DIALOG_CONTENT,
   SellerInfoConfirmDialog,
 } from '../seller-info-confirm-dialog'
 import { StoreContactAddressForm } from '../store-contact-address-form'
 import { StoreProfileForm } from '../store-profile-form'
 
+const toFormValues = (store: Store): StoreDetailFormValues => {
+  const email = store.email ?? ''
+  const atIndex = email.lastIndexOf('@')
+
+  return {
+    introduce: store.introduce ?? '',
+    phoneNumber: store.phoneNumber ?? '',
+    subPhoneNumber: store.subPhoneNumber ?? '',
+    emailLocal: atIndex >= 0 ? email.slice(0, atIndex) : email,
+    emailDomain: atIndex >= 0 ? email.slice(atIndex + 1) : '',
+    originAddress: store.originAddress ?? '',
+    originAddressDetail: store.originAddressDetail ?? '',
+  }
+}
+
 export function StoreInfoForm() {
-  const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false)
+  const [isEditable, setIsEditable] = useState(false)
+  const [dialogType, setDialogType] = useState<'cancel' | 'submit' | null>(null)
 
   const { data } = useQuery(sellerInfoQueries.store())
 
@@ -42,24 +60,25 @@ export function StoreInfoForm() {
   // 스토어 정보 응답이 도착하면 폼에 prefill (이메일은 local@domain 으로 분리)
   useEffect(() => {
     if (!data) return
-
-    const { store } = data
-    const email = store.email ?? ''
-    const atIndex = email.lastIndexOf('@')
-
-    reset({
-      introduce: store.introduce ?? '',
-      phoneNumber: store.phoneNumber ?? '',
-      subPhoneNumber: store.subPhoneNumber ?? '',
-      emailLocal: atIndex >= 0 ? email.slice(0, atIndex) : email,
-      emailDomain: atIndex >= 0 ? email.slice(atIndex + 1) : '',
-      originAddress: store.originAddress ?? '',
-      originAddressDetail: store.originAddressDetail ?? '',
-    })
+    reset(toFormValues(data.store))
   }, [data, reset])
 
-  const onSubmit = () => {
-    setIsSubmitDialogOpen(true)
+  const dialogCopy =
+    dialogType === 'cancel'
+      ? SELLER_INFO_CANCEL_DIALOG_CONTENT
+      : SELLER_INFO_SUBMIT_DIALOG_CONTENT
+
+  const handleDialogConfirm = () => {
+    if (dialogType === 'cancel') {
+      if (data) reset(toFormValues(data.store))
+      setIsEditable(false)
+      setDialogType(null)
+      return
+    }
+
+    // TODO(290): 스토어 정보 수정 API 연결 (현재 백엔드 엔드포인트 확인 대기)
+    setIsEditable(false)
+    setDialogType(null)
   }
 
   return (
@@ -69,27 +88,45 @@ export function StoreInfoForm() {
 
         <div className="flex flex-col gap-20 2xl:flex-row">
           <div className="w-full xl:w-[220px] 2xl:shrink-0">
-            <StoreProfileForm />
+            <StoreProfileForm isEditable={isEditable} />
           </div>
           <div className="w-full min-w-0 2xl:flex-1">
-            <StoreContactAddressForm />
+            <StoreContactAddressForm isEditable={isEditable} />
           </div>
         </div>
 
-        <div className="mt-16 flex justify-end">
-          <Button
-            title="수정하기"
-            className="min-w-[160px]"
-            onClick={methods.handleSubmit(onSubmit)}
-          />
+        <div className="mt-16 flex justify-end gap-10">
+          {isEditable ? (
+            <>
+              <Button
+                title="취소하기"
+                variant="primary-outlined"
+                className="min-w-[160px]"
+                onClick={() => setDialogType('cancel')}
+              />
+              <Button
+                title="수정하기"
+                className="min-w-[160px]"
+                onClick={methods.handleSubmit(() => setDialogType('submit'))}
+              />
+            </>
+          ) : (
+            <Button
+              title="수정하기"
+              className="min-w-[160px]"
+              onClick={() => setIsEditable(true)}
+            />
+          )}
         </div>
 
         <SellerInfoConfirmDialog
-          open={isSubmitDialogOpen}
-          title={SELLER_INFO_SUBMIT_DIALOG_CONTENT.title}
-          description={SELLER_INFO_SUBMIT_DIALOG_CONTENT.description}
-          onOpenChange={setIsSubmitDialogOpen}
-          onConfirm={() => setIsSubmitDialogOpen(false)}
+          open={dialogType !== null}
+          title={dialogCopy.title}
+          description={dialogCopy.description}
+          onOpenChange={(open) => {
+            if (!open) setDialogType(null)
+          }}
+          onConfirm={handleDialogConfirm}
         />
       </section>
     </FormProvider>
