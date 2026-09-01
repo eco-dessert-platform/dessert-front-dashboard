@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import { Button, Dropdown, Input, Label } from '@dessert/ui'
 import { useKakaoPostcodePopup } from 'react-daum-postcode'
@@ -42,18 +42,34 @@ interface SectionProps {
   isEditable: boolean
 }
 
+const MAX_PHONE_LENGTH = 11
+
 function ContactSection({ isEditable }: SectionProps) {
   const {
     register,
     formState: { errors },
   } = useFormContext<StoreDetailFormValues>()
 
+  const phoneField = register('phoneNumber')
+  const subPhoneField = register('subPhoneNumber')
+
+  // 입력 단계에서 숫자만 + 11자로 제한 (하이픈·문자 원천 차단)
+  const handleDigitsOnly =
+    (onChange: (event: ChangeEvent<HTMLInputElement>) => void) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      event.target.value = event.target.value
+        .replace(/\D/g, '')
+        .slice(0, MAX_PHONE_LENGTH)
+      onChange(event)
+    }
+
   return (
     <div>
       <div className="flex w-full flex-col gap-20 2xl:flex-row">
         <div className="flex flex-1 flex-col gap-6">
           <Input
-            {...register('phoneNumber')}
+            {...phoneField}
+            onChange={handleDigitsOnly(phoneField.onChange)}
             placeholder={isEditable ? '하이픈(-) 없이 입력해주세요' : ''}
             required
             label="연락처"
@@ -70,7 +86,8 @@ function ContactSection({ isEditable }: SectionProps) {
         </div>
         <div className="flex flex-1 flex-col gap-6">
           <Input
-            {...register('subPhoneNumber')}
+            {...subPhoneField}
+            onChange={handleDigitsOnly(subPhoneField.onChange)}
             placeholder={isEditable ? '하이픈(-) 없이 입력해주세요' : ''}
             label="추가 연락처"
             readOnly={!isEditable}
