@@ -14,6 +14,7 @@ import {
 } from '@dessert/ui'
 
 import { IAccountVerification } from '@/entity/settlement/charge/entities'
+import { getBankLabel } from '@/entity/seller-info'
 import { useWithdrawalMutation } from '@/features/settlement/charge/use-withdrawal-mutation'
 
 interface ChargeWithdrawModalProps {
@@ -57,7 +58,7 @@ const ChargeWithdrawModal = ({
     requestWithdrawal(
       {
         withdrawalAmount: amount,
-        bankName: accountVerification.bankCode,
+        bankName: getBankLabel(accountVerification.bankCode),
         accountHolder: accountVerification.accountHolder,
         accountNumber: accountVerification.accountNumber,
       },
@@ -126,7 +127,9 @@ const ChargeWithdrawModal = ({
               은행명
             </Text>
             <Text as="span" variant="title16-sb" className="text-right">
-              {accountVerification?.bankCode ?? '-'}
+              {accountVerification
+                ? getBankLabel(accountVerification.bankCode)
+                : '-'}
             </Text>
           </div>
 
