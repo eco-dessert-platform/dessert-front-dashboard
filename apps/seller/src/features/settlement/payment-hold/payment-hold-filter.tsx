@@ -105,58 +105,65 @@ const PaymentHoldFilter = ({
           </div>
         </div>
 
-        <div className="flex items-end gap-8">
-          <div className="w-[150px]">
-            <Controller
-              name="searchType"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="검색구분"
-                  options={PAYMENT_HOLD_SEARCH_TYPE_OPTIONS}
-                  value={field.value}
-                  placeholder="선택"
-                  onValueChange={(value) => {
-                    field.onChange(value as TPaymentHoldSearchType)
-                    setValue('keyword', '')
-                    clearErrors('keyword')
-                  }}
-                />
-              )}
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-end gap-8">
+            <div className="w-[150px]">
+              <Controller
+                name="searchType"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="검색구분"
+                    options={PAYMENT_HOLD_SEARCH_TYPE_OPTIONS}
+                    value={field.value}
+                    placeholder="선택"
+                    onValueChange={(value) => {
+                      field.onChange(value as TPaymentHoldSearchType)
+                      setValue('keyword', '')
+                      clearErrors('keyword')
+                    }}
+                  />
+                )}
+              />
+            </div>
+            <div className="flex-1">
+              <Controller
+                name="keyword"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    placeholder="검색어를 입력해주세요"
+                    value={field.value ?? ''}
+                    disabled={!searchType}
+                    inputMode={
+                      searchType === 'PAYMENT_HOLD_ID' ? 'numeric' : 'text'
+                    }
+                    error={!!errors.keyword}
+                    onChange={(event) => {
+                      const value =
+                        searchType === 'PAYMENT_HOLD_ID'
+                          ? event.target.value.replace(/\D/g, '')
+                          : event.target.value
+                      field.onChange(value)
+                    }}
+                  />
+                )}
+              />
+            </div>
+            <Button
+              type="submit"
+              title="조회"
+              variant="primary-filled"
+              size="md"
+              className="ml-auto h-[38px] min-w-[60px]"
             />
           </div>
-          <div className="flex-1">
-            <Controller
-              name="keyword"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  placeholder="검색어를 입력해주세요"
-                  value={field.value ?? ''}
-                  disabled={!searchType}
-                  inputMode={
-                    searchType === 'PAYMENT_HOLD_ID' ? 'numeric' : 'text'
-                  }
-                  error={!!errors.keyword}
-                  errorMessage={errors.keyword?.message}
-                  onChange={(event) => {
-                    const value =
-                      searchType === 'PAYMENT_HOLD_ID'
-                        ? event.target.value.replace(/\D/g, '')
-                        : event.target.value
-                    field.onChange(value)
-                  }}
-                />
-              )}
-            />
-          </div>
-          <Button
-            type="submit"
-            title="조회"
-            variant="primary-filled"
-            size="md"
-            className="ml-auto h-[38px] min-w-[60px]"
-          />
+          {/* 에러 문구는 행 밖(아래)에 렌더해 items-end 정렬이 깨지지 않게 함 */}
+          {errors.keyword?.message && (
+            <span className="pl-[158px] typo-body-12-r text-error-500">
+              {errors.keyword.message}
+            </span>
+          )}
         </div>
       </form>
     </FormProvider>
