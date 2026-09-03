@@ -23,8 +23,8 @@ export interface IPaymentHoldRequest {
   startDate?: string
   endDate?: string
   status: TPaymentHoldStatus
-  paymentHoldId: number
-  settlementId: string
+  paymentHoldId?: number
+  settlementId?: string
   page?: number
   size?: number
 }
