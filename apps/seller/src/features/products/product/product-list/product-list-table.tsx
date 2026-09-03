@@ -62,8 +62,9 @@ export const ResultTable = ({
       <Table
         data={tableData}
         columns={columns}
+        tableClassName="w-full table-fixed"
         topArea={
-          <div className="flex w-full justify-between px-[19px] py-16 pb-12">
+          <div className="flex w-full items-center justify-between gap-16">
             <div className="flex items-center gap-10">
               <ProductTopAreaSort sortBy={sortBy} onSortChange={onSortChange} />
               <ProductTopAreaCounter
