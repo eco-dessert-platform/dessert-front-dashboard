@@ -1,3 +1,4 @@
+import { DailySettlementFilters, DailySettlementPageResponse } from './settlement.type'
 import { Settlement, TransactionSettlement } from './types'
 
 export const getTransactionSettlementMock = (
@@ -58,3 +59,43 @@ export const getDailySettlementMock = (
       withheld: 123456,
       method: '계좌이체',
     }))
+
+export const getMockDailySettlementPageResponse = (
+  filters: DailySettlementFilters,
+): DailySettlementPageResponse => {
+  const { page, size } = filters
+  const totalElements = 50
+
+  const content = Array(size)
+    .fill(null)
+    .map((_, i) => ({
+      settlementNumber: `DAILY-${page}-${i + 1}`,
+      scheduledDate: '2025.09.01',
+      completedDate: '2025.09.01',
+      totalSettlementAmount: 1000000 + page * 10000 + i * 1000,
+      amount: 1200000 + i * 1000,
+      fee: 123456,
+      deductibleRefund: 1234,
+      deductibleRefundDetail: {
+        deliveryFeeChange: 1234,
+        balanceOffset: 1234,
+      },
+      withHoldingPayment: 123456,
+      settlementMethod: '계좌이체',
+    }))
+
+  return {
+    settlements: {
+      content,
+      page,
+      size,
+      totalPages: Math.ceil(totalElements / size),
+      totalElements,
+    },
+    summary: {
+      scheduledDateMin: filters.startDate ?? '2025.09.01',
+      scheduledDateMax: filters.endDate ?? '2025.09.01',
+      totalSettlementAmount: 2000000,
+    },
+  }
+}

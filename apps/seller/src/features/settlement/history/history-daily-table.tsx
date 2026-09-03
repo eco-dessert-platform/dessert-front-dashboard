@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import { Button, Table } from '@dessert/ui'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { getDailySettlementMock } from '@/entity/settlement/mock'
+import { toSettlement } from '@/entity/settlement/settlement.transformer'
+import { DailySettlementPageResponse } from '@/entity/settlement/settlement.type'
 import { Settlement } from '@/entity/settlement/types'
 
 import {
@@ -129,11 +130,25 @@ const columns: ColumnDef<Settlement>[] = [
   },
 ]
 
-export const DailySettlementTable = () => {
-  const [page, setPage] = useState(1)
-  const totalPages = 10
+interface DailySettlementTableProps {
+  pageResponse?: DailySettlementPageResponse['settlements']
+  onPageChange: (page: number) => void
+  onDownloadExcel: () => void
+  isDownloadingExcel?: boolean
+}
 
-  const data = useMemo(() => getDailySettlementMock(page), [page])
+export const DailySettlementTable = ({
+  pageResponse,
+  onPageChange,
+  onDownloadExcel,
+  isDownloadingExcel,
+}: DailySettlementTableProps) => {
+  const data = useMemo(
+    () => (pageResponse?.content ?? []).map(toSettlement),
+    [pageResponse],
+  )
+  const currentPage = (pageResponse?.page ?? 0) + 1
+  const totalPages = pageResponse?.totalPages ?? 1
 
   return (
     <div className="[&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
@@ -142,9 +157,11 @@ export const DailySettlementTable = () => {
         columns={columns}
         topArea={
           <SettlementTableTopArea
-            currentPage={page}
+            currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={setPage}
+            onPageChange={onPageChange}
+            onDownloadExcel={onDownloadExcel}
+            isDownloadingExcel={isDownloadingExcel}
           />
         }
         maxHeight="calc(100vh - 400px)"
