@@ -1,10 +1,16 @@
 import type { ApiResponse } from '@/entity/auth/types'
 import { client } from '@/shared/utils/axios'
 
-import { getMockDailySettlementPageResponse } from './mock'
+import { SettlementFilters } from './types'
+
+import {
+  getMockDailySettlementPageResponse,
+  getMockSettlementItemPageResponse,
+} from './mock'
 import {
   DailySettlementFilters,
   DailySettlementPageResponse,
+  SettlementItemPageResponse,
 } from './settlement.type'
 
 // VITE_USE_MOCK=true 일 때 mock 응답 사용
@@ -40,6 +46,30 @@ export async function getDailySettlements(
   )
 
   return unwrap(data, '일별 정산내역 조회에 실패했습니다.')
+}
+
+export async function getSettlementItems(
+  filters: SettlementFilters,
+): Promise<SettlementItemPageResponse> {
+  if (useMock) {
+    return getMockSettlementItemPageResponse(filters)
+  }
+
+  const { page, size, startDate, endDate } = filters
+
+  const { data } = await client.get<ApiResponse<SettlementItemPageResponse>>(
+    '/api/v1/seller/settlements/items',
+    {
+      params: {
+        page: Math.max(0, page - 1), // 필터는 1-based, API는 0-based
+        size,
+        startDate: startDate ?? undefined,
+        endDate: endDate ?? undefined,
+      },
+    },
+  )
+
+  return unwrap(data, '건별 정산내역 조회에 실패했습니다.')
 }
 
 export async function getDailySettlementsExcel(

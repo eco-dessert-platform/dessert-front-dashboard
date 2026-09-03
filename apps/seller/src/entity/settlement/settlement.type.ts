@@ -39,3 +39,34 @@ export interface DailySettlementFilters {
   startDate: string | null
   endDate: string | null
 }
+
+// 건별 정산내역 (GET /api/v1/seller/settlements/items) 응답 shape
+export interface SettlementItemSummary {
+  orderNumber: string // 주문번호
+  orderItemId: number // 상품주문번호(OrderItem ID)
+  sellerId: number // 판매자 ID (건별엔 정산ID가 없어 임시로 정산ID 컬럼에 사용)
+  buyerName: string // 구매자명
+  productTitle: string // 상품명
+  scheduledAmount: number // 정산 예정 금액
+  quantity: number // 수량
+  settlementStartDate: string // 정산 시작일
+  settlementEndDate: string // 정산 종료일
+  scheduledDate: string // 정산 예정일
+  status: string // 정산 상태
+}
+
+export interface SettlementItemSummaryInfo {
+  totalCount: number // 총 정산 건수
+  totalScheduledAmount: number // 총 정산 예정 금액
+}
+
+export interface SettlementItemPageResponse {
+  settlements: {
+    content: SettlementItemSummary[]
+    page: number
+    size: number
+    totalPages: number
+    totalElements: number
+  }
+  summary: SettlementItemSummaryInfo
+}

@@ -31,6 +31,8 @@ const SettlementPage = () => {
   const { draftFilters, setDraftFilters, appliedFilters, apply, setPage } =
     useSettlementFilter()
 
+  const { data: itemData } = useQuery(settlementQueries.items(appliedFilters))
+
   const [isDownloadingDailyExcel, setIsDownloadingDailyExcel] = useState(false)
 
   const handleDownloadDailyExcel = async () => {
@@ -103,7 +105,7 @@ const SettlementPage = () => {
             onSearch={apply}
           />
           <TransactionSettlementTable
-            filters={appliedFilters}
+            pageResponse={itemData?.settlements}
             onPageChange={setPage}
           />
         </TabContent>

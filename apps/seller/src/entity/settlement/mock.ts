@@ -1,40 +1,50 @@
-import { DailySettlementFilters, DailySettlementPageResponse } from './settlement.type'
-import { Settlement, TransactionSettlement } from './types'
+import {
+  DailySettlementFilters,
+  DailySettlementPageResponse,
+  SettlementItemPageResponse,
+  SettlementItemSummary,
+} from './settlement.type'
+import { Settlement, SettlementFilters } from './types'
 
-export const getTransactionSettlementMock = (
-  page: number,
-  size: number = 10,
-  keyword: string = '',
-): { data: TransactionSettlement[]; total: number } => {
-  const total = 50
+export const getMockSettlementItemPageResponse = (
+  filters: SettlementFilters,
+): SettlementItemPageResponse => {
+  const { page, size } = filters
+  const totalElements = 50
   const safePage = Math.max(1, page)
-  const allData = Array.from({ length: total }, (_, i) => ({
-    orderNumber: `ORD-${i + 1}`,
-    productOrderNumber: `PORD-${i + 1}`,
-    settlementId: `ST-${i + 1}`,
-    category: i % 2 === 0 ? '판매금액' : '배송비',
-    productName: `키토빵앗간 휘낭시에 ${i + 1}`,
-    expectedSettlementAmount: 123456 + i * 100,
-    settlementBaseDate: '2025.09.01',
-    expectedDate: '2025.09.01',
-    completedDate: '2025.09.01',
-    status: '정산완료',
-    paymentMethod: '카카오페이 카드',
-    commissionRate: '1.23%',
-    paymentAmount: 123456 + i * 100,
-  }))
 
-  const filtered = keyword
-    ? allData.filter(
-        (item) =>
-          item.orderNumber.includes(keyword) ||
-          item.productName.includes(keyword),
-      )
-    : allData
+  const content: SettlementItemSummary[] = Array.from(
+    { length: size },
+    (_, i) => {
+      const n = (safePage - 1) * size + i + 1
+      return {
+        orderNumber: `ORD-${n}`,
+        orderItemId: 1000 + n,
+        sellerId: 9001,
+        buyerName: `구매자${n}`,
+        productTitle: `키토빵앗간 휘낭시에 ${n}`,
+        scheduledAmount: 123456 + n * 100,
+        quantity: (n % 3) + 1,
+        settlementStartDate: '2025-09-01',
+        settlementEndDate: '2025-09-01',
+        scheduledDate: '2025-09-01',
+        status: '정산완료',
+      }
+    },
+  )
 
   return {
-    data: filtered.slice((safePage - 1) * size, safePage * size),
-    total: filtered.length,
+    settlements: {
+      content,
+      page: safePage - 1,
+      size,
+      totalPages: Math.ceil(totalElements / size),
+      totalElements,
+    },
+    summary: {
+      totalCount: totalElements,
+      totalScheduledAmount: 6172800,
+    },
   }
 }
 

@@ -1,7 +1,8 @@
 import { queryOptions } from '@tanstack/react-query'
 
-import { getDailySettlements } from './settlement.api'
+import { getDailySettlements, getSettlementItems } from './settlement.api'
 import { DailySettlementFilters } from './settlement.type'
+import { SettlementFilters } from './types'
 
 export const settlementQueries = {
   all: () => ['settlement'],
@@ -10,5 +11,11 @@ export const settlementQueries = {
     queryOptions({
       queryKey: [...settlementQueries.dailyLists(), filters],
       queryFn: () => getDailySettlements(filters),
+    }),
+  itemLists: () => [...settlementQueries.all(), 'items'],
+  items: (filters: SettlementFilters) =>
+    queryOptions({
+      queryKey: [...settlementQueries.itemLists(), filters],
+      queryFn: () => getSettlementItems(filters),
     }),
 }
