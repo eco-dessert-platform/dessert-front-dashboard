@@ -28,6 +28,7 @@ import App from './App'
 import { SellerInfoPage } from './pages/seller-info/seller-info-page'
 import FixedLayout from './shared/block/fixed-layout/fixed-layout'
 import ChargePage from './pages/settlements/charge/charge-page'
+import VatreportPage from './pages/settlements/vatreport/vatreport-page'
 
 const router = createBrowserRouter([
   {
@@ -47,48 +48,35 @@ const router = createBrowserRouter([
     element: <ApprovedOnlyRoute />,
     children: [
       {
-        path: ROUTES.PRODUCTS.CREATE_DETAIL,
-        element: <DetailEditPage />,
+        index: true,
+        element: <Navigate to={ROUTES.REGISTER.VERIFICATION} replace />,
       },
-      {
-        path: ROUTES.HOME,
-        element: <FixedLayout />,
-        children: [
-          {
-            index: true,
-            element: <Navigate to={ROUTES.PRODUCTS.ALL} replace />,
-          },
-          { path: ROUTES.ORDERS.ALL, element: <AllOrdersPage /> },
-          { path: ROUTES.ORDERS.COMPLETED, element: <CompletedOrdersPage /> },
-          { path: ROUTES.PRODUCTS.ALL, element: <ProductsPage /> },
-          { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
-          { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
-          {
-            path: ROUTES.STATISTICS.SALES_ANALYTICS,
-            element: <SalesAnalyticsPage />,
-          },
-          { path: ROUTES.SETTLEMENTS.CHARGE, element: <ChargePage /> },
-          { path: ROUTES.INFO.CHANGE, element: <SellerInfoPage /> },
-        ],
-      },
+      { path: ROUTES.REGISTER.VERIFICATION, element: <VerificationPage /> },
+      { path: ROUTES.REGISTER.STORE_INFO, element: <StoreInfoPage /> },
+      { path: ROUTES.REGISTER.COMPLETE, element: <CompletePage /> },
     ],
   },
   {
-    element: <RegisterAccessRoute />,
+    path: ROUTES.HOME,
+    element: <FixedLayout />,
     children: [
       {
-        path: ROUTES.REGISTER.DEFAULT,
-        element: <RegisterLayout />,
-        children: [
-          {
-            index: true,
-            element: <Navigate to={ROUTES.REGISTER.VERIFICATION} replace />,
-          },
-          { path: ROUTES.REGISTER.VERIFICATION, element: <VerificationPage /> },
-          { path: ROUTES.REGISTER.STORE_INFO, element: <StoreInfoPage /> },
-          { path: ROUTES.REGISTER.COMPLETE, element: <CompletePage /> },
-        ],
+        index: true,
+        element: <Navigate to={ROUTES.PRODUCTS.ALL} replace />,
       },
+      { path: ROUTES.ORDERS.ALL, element: <AllOrdersPage /> },
+      { path: ROUTES.ORDERS.COMPLETED, element: <CompletedOrdersPage /> },
+      { path: ROUTES.PRODUCTS.ALL, element: <ProductsPage /> },
+      { path: ROUTES.PRODUCTS.CREATE, element: <CreatePage /> },
+
+      { path: ROUTES.SETTLEMENTS.ALL, element: <SettlementPage /> },
+      {
+        path: ROUTES.STATISTICS.SALES_ANALYTICS,
+        element: <SalesAnalyticsPage />,
+      },
+      { path: ROUTES.SETTLEMENTS.CHARGE, element: <ChargePage /> },
+      { path: ROUTES.SETTLEMENTS.VAT_REPORT, element: <VatreportPage /> },
+      { path: ROUTES.INFO.CHANGE, element: <SellerInfoPage /> },
     ],
   },
 ])
