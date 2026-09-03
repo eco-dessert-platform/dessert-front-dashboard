@@ -4,18 +4,10 @@ import { client } from '@/shared/utils/axios'
 import { SettlementFilters } from './types'
 
 import {
-  getMockDailySettlementPageResponse,
-  getMockSettlementItemPageResponse,
-} from './mock'
-import {
   DailySettlementFilters,
   DailySettlementPageResponse,
   SettlementItemPageResponse,
 } from './settlement.type'
-
-// VITE_USE_MOCK=true 일 때 mock 응답 사용
-// 미설정(false) 기타 값이면 실서버호출
-const useMock = import.meta.env.VITE_USE_MOCK === 'true'
 
 function unwrap<T>(data: ApiResponse<T>, fallback: string): T {
   if (!data.success || data.result == null) {
@@ -27,10 +19,6 @@ function unwrap<T>(data: ApiResponse<T>, fallback: string): T {
 export async function getDailySettlements(
   filters: DailySettlementFilters,
 ): Promise<DailySettlementPageResponse> {
-  if (useMock) {
-    return getMockDailySettlementPageResponse(filters)
-  }
-
   const { page, size, startDate, endDate } = filters
 
   const { data } = await client.get<ApiResponse<DailySettlementPageResponse>>(
@@ -51,10 +39,6 @@ export async function getDailySettlements(
 export async function getSettlementItems(
   filters: SettlementFilters,
 ): Promise<SettlementItemPageResponse> {
-  if (useMock) {
-    return getMockSettlementItemPageResponse(filters)
-  }
-
   const { page, size, startDate, endDate } = filters
 
   const { data } = await client.get<ApiResponse<SettlementItemPageResponse>>(
@@ -75,10 +59,6 @@ export async function getSettlementItems(
 export async function getDailySettlementsExcel(
   filters: Pick<DailySettlementFilters, 'startDate' | 'endDate'>,
 ): Promise<Blob | null> {
-  if (useMock) {
-    return null
-  }
-
   const { startDate, endDate } = filters
 
   const { data } = await client.get<Blob>(
