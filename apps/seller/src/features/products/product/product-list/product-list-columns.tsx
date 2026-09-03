@@ -42,9 +42,9 @@ export const getResultColumns = ({
     cell: ({ row }) => (
       <div className="flex items-center gap-16">
         <img
-          src="https://picsum.photos/200/300"
+          src={row.original.thumbnailUrl}
           alt={row.original.productName}
-          className="h-header w-[80px] shrink-0 rounded-8"
+          className="h-header w-[80px] shrink-0 rounded-8 bg-gray-100 object-cover"
         />
         <div className="line-clamp-2 text-left typo-title-14-r text-gray-900">
           {row.original.productName}
