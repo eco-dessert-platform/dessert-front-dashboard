@@ -3,7 +3,10 @@ import { useState } from 'react'
 import { Tab, TabContent, TabList, TabTrigger, toast } from '@dessert/ui'
 import { useQuery } from '@tanstack/react-query'
 
-import { getDailySettlementsExcel } from '@/entity/settlement/settlement.api'
+import {
+  getDailySettlementsExcel,
+  getSettlementItemsExcel,
+} from '@/entity/settlement/settlement.api'
 import { settlementQueries } from '@/entity/settlement/settlement.query'
 import { DailySettlementTable } from '@/features/settlement/history/history-daily-table'
 import { SettlementFilter } from '@/features/settlement/history/history-filter'
@@ -73,6 +76,39 @@ const SettlementPage = () => {
     }
   }
 
+  const [isDownloadingItemsExcel, setIsDownloadingItemsExcel] = useState(false)
+
+  const handleDownloadItemsExcel = async () => {
+    if (isDownloadingItemsExcel) return
+
+    setIsDownloadingItemsExcel(true)
+
+    try {
+      const blob = await getSettlementItemsExcel({
+        startDate: appliedFilters.startDate,
+        endDate: appliedFilters.endDate,
+      })
+
+      if (!blob || blob.size === 0) {
+        toast.info('다운로드할 정산 내역이 없어요.', undefined, {
+          position: 'bottom-right',
+        })
+        return
+      }
+
+      downloadBlob(blob, '건별_정산내역.xlsx')
+      toast.success('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
+        position: 'bottom-right',
+      })
+    } catch {
+      toast.error('엑셀 다운로드에 실패했습니다.', undefined, {
+        position: 'bottom-right',
+      })
+    } finally {
+      setIsDownloadingItemsExcel(false)
+    }
+  }
+
   return (
     <Layout>
       <Tab defaultValue="daily" variant="btn">
@@ -107,6 +143,8 @@ const SettlementPage = () => {
           <TransactionSettlementTable
             pageResponse={itemData?.settlements}
             onPageChange={setPage}
+            onDownloadExcel={handleDownloadItemsExcel}
+            isDownloadingExcel={isDownloadingItemsExcel}
           />
         </TabContent>
       </Tab>

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Button, toast } from '@dessert/ui'
+import { Button } from '@dessert/ui'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { toTransactionSettlement } from '@/entity/settlement/settlement.transformer'
@@ -137,11 +137,15 @@ const columns: ColumnDef<TransactionSettlement>[] = [
 interface TransactionSettlementTableProps {
   pageResponse?: SettlementItemPageResponse['settlements']
   onPageChange: (page: number) => void
+  onDownloadExcel: () => void
+  isDownloadingExcel?: boolean
 }
 
 export const TransactionSettlementTable = ({
   pageResponse,
   onPageChange,
+  onDownloadExcel,
+  isDownloadingExcel,
 }: TransactionSettlementTableProps) => {
   const data = useMemo(
     () => (pageResponse?.content ?? []).map(toTransactionSettlement),
@@ -162,11 +166,8 @@ export const TransactionSettlementTable = ({
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={onPageChange}
-          onDownloadExcel={() =>
-            toast.info('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
-              position: 'bottom-right',
-            })
-          }
+          onDownloadExcel={onDownloadExcel}
+          isDownloadingExcel={isDownloadingExcel}
         />
       }
       scrollHeight={500}
