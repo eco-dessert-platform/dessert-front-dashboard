@@ -1,11 +1,12 @@
 import { useMemo } from 'react'
 
-import { Button, Table, toast } from '@dessert/ui'
+import { Button, toast } from '@dessert/ui'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { toTransactionSettlement } from '@/entity/settlement/settlement.transformer'
 import { SettlementItemPageResponse } from '@/entity/settlement/settlement.type'
 import { TransactionSettlement } from '@/entity/settlement/types'
+import Table from '@/shared/components/ui/table/table'
 
 import {
   Popover,
@@ -151,24 +152,24 @@ export const TransactionSettlementTable = ({
   const totalPages = pageResponse?.totalPages ?? 1
 
   return (
-    <div className="[&_td]:border-r [&_td]:border-gray-300 [&_td:last-child]:border-r-0 [&_th]:border-r [&_th]:border-gray-300 [&_th:last-child]:border-r-0">
-      <Table
-        data={data}
-        columns={columns}
-        topArea={
-          <SettlementTableTopArea
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={onPageChange}
-            onDownloadExcel={() =>
-              toast.info('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
-                position: 'bottom-right',
-              })
-            }
-          />
-        }
-        maxHeight="calc(100vh - 400px)"
-      />
-    </div>
+    <Table
+      data={data}
+      columns={columns}
+      fillWidth
+      emptyDesc="조회된 건별 정산내역이 없어요"
+      topArea={
+        <SettlementTableTopArea
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+          onDownloadExcel={() =>
+            toast.info('정산목록 엑셀 파일이 다운로드 되었어요.', undefined, {
+              position: 'bottom-right',
+            })
+          }
+        />
+      }
+      scrollHeight={500}
+    />
   )
 }

@@ -86,6 +86,7 @@ function Table<T>({
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
+                    colSpan={header.colSpan}
                     className="text-center align-middle typo-body-12-m text-gray-800"
                     style={
                       header.column.columnDef.meta?.flexible
