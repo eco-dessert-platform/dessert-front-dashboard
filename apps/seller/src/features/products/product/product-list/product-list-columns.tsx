@@ -12,6 +12,7 @@ type Args = {
   onToggleAll: (checked: boolean | 'indeterminate') => void
   onToggleRow: (id: string, checked: boolean | 'indeterminate') => void
   onCopyRow: (row: ProductType) => void
+  onStatusChange: (id: string, status: ProductType['status']) => void
 }
 
 const widthMeta = (widthClass: string) =>
@@ -27,6 +28,7 @@ export const getResultColumns = ({
   onToggleAll,
   onToggleRow,
   onCopyRow,
+  onStatusChange,
 }: Args): ColumnDef<ProductType>[] => [
   {
     id: 'select',
@@ -108,7 +110,12 @@ export const getResultColumns = ({
   {
     header: '판매상태',
     accessorKey: 'status',
-    cell: ({ row }) => <ProductListCellStatus status={row.original.status} />,
+    cell: ({ row }) => (
+      <ProductListCellStatus
+        status={row.original.status}
+        onStatusChange={(status) => onStatusChange(row.original.id, status)}
+      />
+    ),
     meta: widthMeta('w-[12%]'),
   },
   {

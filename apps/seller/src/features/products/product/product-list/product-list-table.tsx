@@ -42,6 +42,7 @@ export const ResultTable = ({
     allSelected,
     selectedIdSet,
     handleCopyRow,
+    handleStatusChange,
     handleDelete,
     isDeleting,
   } = useProductList({ data })
@@ -53,6 +54,7 @@ export const ResultTable = ({
     onToggleAll: toggleAll,
     onToggleRow: toggleRow,
     onCopyRow: handleCopyRow,
+    onStatusChange: handleStatusChange,
   })
 
   const isEmpty = !isLoading && !isError && tableData.length === 0

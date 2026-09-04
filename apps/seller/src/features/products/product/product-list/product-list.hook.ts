@@ -51,6 +51,15 @@ export const useProductList = ({ data }: { data: ProductType[] }) => {
     ])
   }
 
+  const handleStatusChange = (
+    id: string,
+    status: ProductType['status'],
+  ) => {
+    setTableData((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, status } : item)),
+    )
+  }
+
   const handleDelete = async () => {
     if (selectedIds.length === 0 || isDeleting) return
 
@@ -74,6 +83,7 @@ export const useProductList = ({ data }: { data: ProductType[] }) => {
     toggleAll,
     toggleRow,
     handleCopyRow,
+    handleStatusChange,
     handleDelete,
     isDeleting,
   }
