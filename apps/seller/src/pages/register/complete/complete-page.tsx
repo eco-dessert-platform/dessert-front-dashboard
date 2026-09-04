@@ -22,6 +22,7 @@ const STATUS_LABEL: Record<StoreApplicationStatus, string> = {
 const CompletePage = () => {
   const navigate = useNavigate()
   const sellerStatus = useAuthStore((s) => s.sellerStatus)
+  const setSellerStatus = useAuthStore((s) => s.setSellerStatus)
   const logout = useAuthStore((s) => s.logout)
   const { data: application, isLoading } = useQuery({
     ...registerQueries.application(),
@@ -40,6 +41,7 @@ const CompletePage = () => {
 
   const handleCta = () => {
     if (status === 'APPROVED') {
+      setSellerStatus('APPROVED')
       navigate(ROUTES.PRODUCTS.ALL, { replace: true })
       return
     }
