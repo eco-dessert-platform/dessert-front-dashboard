@@ -293,7 +293,6 @@ __metadata:
     i18next: "npm:^24.2.3"
     i18next-browser-languagedetector: "npm:^8.0.4"
     jwt-decode: "npm:^4.0.0"
-    lucide-react: "npm:^0.562.0"
     playwright: "npm:1.55.1"
     qs: "npm:^6.15.1"
     radash: "npm:^12.1.1"

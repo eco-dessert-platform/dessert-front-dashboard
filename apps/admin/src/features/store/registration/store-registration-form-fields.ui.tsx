@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { PlusIcon } from '@dessert/icons'
 import { Button, Input, Select, toast } from '@dessert/ui'
-import { Plus } from 'lucide-react'
 import { useKakaoPostcodePopup } from 'react-daum-postcode'
 import { Controller, useWatch } from 'react-hook-form'
 
@@ -102,7 +102,7 @@ export const StoreRegistrationFormFields = ({
                       className="size-full object-cover"
                     />
                   ) : (
-                    <Plus size={56} className="text-gray-600" />
+                    <PlusIcon className="size-56 text-gray-600" />
                   )}
                   <input
                     type="file"

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
+import { XIcon } from '@dessert/icons'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
-import { X } from 'lucide-react'
 
 import { cn } from '@/shared/libs/utils'
 
@@ -54,7 +54,7 @@ const PopoverContent = React.forwardRef<
               )}
               {showClose && (
                 <PopoverPrimitive.Close className="cursor-pointer rounded-sm border-none opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none">
-                  <X className="size-30 text-gray-800" />
+                  <XIcon className="size-30 text-gray-800" />
                   <span className="sr-only">Close</span>
                 </PopoverPrimitive.Close>
               )}

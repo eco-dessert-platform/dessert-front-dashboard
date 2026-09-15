@@ -1,5 +1,5 @@
+import { ChevronDownIcon } from '@dessert/icons'
 import * as SelectPrimitive from '@radix-ui/react-select'
-import { ChevronDown } from 'lucide-react'
 
 import { Label } from '../label/label'
 import { cn } from '../lib/utils'
@@ -62,7 +62,7 @@ const Select = ({
         >
           <SelectPrimitive.Value placeholder={placeholder} />
           <SelectPrimitive.Icon className="transition-transform duration-200 data-[state=open]:rotate-180">
-            <ChevronDown size={20} className="text-gray-400" />
+            <ChevronDownIcon className="size-20 text-gray-400" />
           </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
         <SelectPrimitive.Portal>
