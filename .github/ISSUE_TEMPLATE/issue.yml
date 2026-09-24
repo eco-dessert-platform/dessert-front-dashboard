@@ -18,7 +18,7 @@ body:
         ⛑️ QA
 
   - type: textarea
-    id: title
+    id: summary
     attributes:
       label: ✨ 작업 내용
       description: 해야할 작업에 대해서 간단하게 적어주세요
@@ -30,16 +30,15 @@ body:
     attributes:
       label: ⚙ 상세한 작업 내용
       description: 상세한 작업 내용을 적어주세요
-      value: '- [ ] :
-
-        - [ ] :
-
-        - [ ] : '
+      value: |
+        - [ ] 
+        - [ ] 
+        - [ ]
     validations:
       required: true
 
   - type: dropdown
-    id: browsers
+    id: estimate
     attributes:
       label: 🛠 예상 소요시간
       multiple: false
@@ -50,3 +49,13 @@ body:
         - 3시간 이내
         - 1시간 이내
         - 30분 이내
+    validations:
+      required: true
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: 📎 참고
+      description: 관련 이슈/PR, 스웨거 링크, 디자인 등 참고 자료가 있으면 적어주세요
+    validations:
+      required: false
