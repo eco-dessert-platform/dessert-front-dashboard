@@ -1,5 +1,6 @@
 export type TableRow = {
   id: string
+  sellerId: number
   storeName: string
   phoneNumber: string
   additionalPhoneNumber: string
