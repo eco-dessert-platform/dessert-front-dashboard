@@ -1,12 +1,14 @@
 import { Button } from '@dessert/ui'
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, useWatch } from 'react-hook-form'
 
-import { CreateProductForm } from '@/features/products/create/create-form'
+import {
+  CreateProductForm,
+  hasCreateFormInput,
+  useProductCreationStore,
+  useSubmitCreateForm,
+} from '@/features/products/create/create-form'
 
 import { useCreateDraft } from '../create-draft'
-
-//import { useSubmitCreateForm } from '@/features/products/create/create-form'
-// TODO: useSubmitCreateForm 별도의 브랜치를 생성 할 예정입니다.
 
 interface ProductFooterProps {
   onPreview: () => void
@@ -14,11 +16,15 @@ interface ProductFooterProps {
 
 export const CreateFooter = ({ onPreview }: ProductFooterProps) => {
   const { handleSaveDraft } = useCreateDraft()
-  //const { handleSubmit, isPending } = useSubmitCreateForm()
+  const { handleSubmit, isPending } = useSubmitCreateForm()
   const {
+    control,
     formState: { isDirty },
   } = useFormContext<CreateProductForm>()
-  const hasAnyInput = isDirty
+  const values = useWatch({ control }) as CreateProductForm
+  const { productDetail } = useProductCreationStore()
+
+  const hasAnyInput = hasCreateFormInput(values, productDetail, isDirty)
 
   return (
     <div className="sticky bottom-0 left-0 z-20 -mb-36 -ml-[90px] flex w-[calc(100%+180px)] justify-end gap-12 border-t border-t-gray-200 bg-white px-[90px] py-24">
@@ -32,15 +38,15 @@ export const CreateFooter = ({ onPreview }: ProductFooterProps) => {
         title="임시저장"
         variant="primary-outlined"
         size="lg"
-        disabled={!hasAnyInput}
+        disabled={!hasAnyInput || isPending}
         onClick={handleSaveDraft}
       />
       <Button
         title="저장하기"
         variant="primary-filled"
         size="lg"
-        disabled={!hasAnyInput}
-        //onClick={handleSubmit}
+        disabled={!hasAnyInput || isPending}
+        onClick={handleSubmit}
       />
     </div>
   )

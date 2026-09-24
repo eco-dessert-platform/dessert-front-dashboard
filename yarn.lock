@@ -262,11 +262,13 @@ __metadata:
     "@dessert/ui": "npm:*"
     "@hookform/error-message": "npm:^2.0.1"
     "@hookform/resolvers": "npm:^5.2.2"
+    "@lukemorales/query-key-factory": "npm:^1.3.4"
     "@storybook/addon-essentials": "npm:^8.6.12"
     "@storybook/react": "npm:^8.6.12"
     "@storybook/react-vite": "npm:^8.6.12"
     "@storybook/test": "npm:^8.6.12"
     "@tailwindcss/vite": "npm:^4.0.17"
+    "@tanstack/query-core": "npm:5.90.20"
     "@tanstack/react-query": "npm:^5.90.20"
     "@tanstack/react-query-devtools": "npm:^5.91.3"
     "@tanstack/react-table": "npm:^8.21.3"
@@ -286,6 +288,7 @@ __metadata:
     culori: "npm:^4.0.1"
     cypress: "npm:^14.3.0"
     date-fns: "npm:^4.1.0"
+    es-toolkit: "npm:^1.49.0"
     framer-motion: "npm:^12.18.1"
     i18next: "npm:^24.2.3"
     i18next-browser-languagedetector: "npm:^8.0.4"
@@ -293,11 +296,14 @@ __metadata:
     lucide-react: "npm:^0.562.0"
     playwright: "npm:1.55.1"
     qs: "npm:^6.15.1"
+    radash: "npm:^12.1.1"
     react: "npm:^19.1.0"
+    react-daum-postcode: "npm:^4.0.0"
     react-day-picker: "npm:^9.11.2"
     react-dom: "npm:^19.1.0"
     react-hook-form: "npm:7.71.2"
     react-i18next: "npm:^15.4.1"
+    react-query-kit: "npm:^3.3.4"
     react-router-dom: "npm:^7.9.5"
     react-toastify: "npm:^11.0.5"
     recharts: "npm:2.15.4"
@@ -386,6 +392,7 @@ __metadata:
     "@tanstack/react-virtual": "npm:^3.13.12"
     "@types/aws-lambda": "npm:^8.10.143"
     "@types/culori": "npm:^4"
+    "@types/lodash-es": "npm:^4.17.12"
     "@types/node": "npm:^22.13.14"
     "@types/react": "npm:^19.0.10"
     "@types/react-dom": "npm:^19.0.4"
@@ -401,6 +408,7 @@ __metadata:
     framer-motion: "npm:^12.18.1"
     i18next: "npm:^24.2.3"
     i18next-browser-languagedetector: "npm:^8.0.4"
+    lodash-es: "npm:^4.18.1"
     lucide-react: "npm:^0.562.0"
     playwright: "npm:1.55.1"
     react: "npm:^19.1.0"
@@ -1256,6 +1264,16 @@ __metadata:
     "@jridgewell/resolve-uri": "npm:^3.1.0"
     "@jridgewell/sourcemap-codec": "npm:^1.4.14"
   checksum: 10c0/4b30ec8cd56c5fd9a661f088230af01e0c1a3888d11ffb6b47639700f71225be21d1f7e168048d6d4f9449207b978a235c07c8f15c07705685d16dc06280e9d9
+  languageName: node
+  linkType: hard
+
+"@lukemorales/query-key-factory@npm:^1.3.4":
+  version: 1.3.4
+  resolution: "@lukemorales/query-key-factory@npm:1.3.4"
+  peerDependencies:
+    "@tanstack/query-core": ">= 4.0.0"
+    "@tanstack/react-query": ">= 4.0.0"
+  checksum: 10c0/d4e829aad970c159e3e3d6545f4f1e47d1a02621cd692bc0e13b7cc36861541e205f801d7ab8081ed8b1c8c3fd365483e1656537ef1ab165cb14743b4b1f1d6c
   languageName: node
   linkType: hard
 
@@ -3613,6 +3631,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash-es@npm:^4.17.12":
+  version: 4.17.12
+  resolution: "@types/lodash-es@npm:4.17.12"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: 10c0/5d12d2cede07f07ab067541371ed1b838a33edb3c35cb81b73284e93c6fd0c4bbeaefee984e69294bffb53f62d7272c5d679fdba8e595ff71e11d00f2601dde0
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.17.25
+  resolution: "@types/lodash@npm:4.17.25"
+  checksum: 10c0/ca2049f16bf527e04d6e27702e3912a484faaff587de77a5c58e0d243b9292a655e1d7f7e5bdf2ffdf49a76da10673097f8dd4901990679058d47ccd99051877
+  languageName: node
+  linkType: hard
+
 "@types/mdx@npm:^2.0.0":
   version: 2.0.13
   resolution: "@types/mdx@npm:2.0.13"
@@ -5640,6 +5674,20 @@ __metadata:
     is-date-object: "npm:^1.0.5"
     is-symbol: "npm:^1.0.4"
   checksum: 10c0/c7e87467abb0b438639baa8139f701a06537d2b9bc758f23e8622c3b42fd0fdb5bde0f535686119e446dd9d5e4c0f238af4e14960f4771877cf818d023f6730b
+  languageName: node
+  linkType: hard
+
+"es-toolkit@npm:^1.49.0":
+  version: 1.49.0
+  resolution: "es-toolkit@npm:1.49.0"
+  dependenciesMeta:
+    "@trivago/prettier-plugin-sort-imports@4.3.0":
+      unplugged: true
+    prettier-plugin-sort-re-exports@0.0.1:
+      unplugged: true
+    vitepress-plugin-sandpack@1.1.4:
+      unplugged: true
+  checksum: 10c0/ab0864bb0c5c494ed09043d53a74b58a0ab9df1b89b9b54bce72a63de2869152d7d65e489dc89ab671f0fea243728922c8a8f8c873f1b2a53350a23360b3e2df
   languageName: node
   linkType: hard
 
@@ -7723,6 +7771,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.18.1":
+  version: 4.18.1
+  resolution: "lodash-es@npm:4.18.1"
+  checksum: 10c0/35d4dcf87ef07f8d090f409447575800108057e360b445f590d0d25d09e3d1e33a163d2fc100d4d072b0f901d5e2fc533cd7c4bfd8eeb38a06abec693823c8b8
+  languageName: node
+  linkType: hard
+
 "lodash.clonedeep@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.clonedeep@npm:4.5.0"
@@ -8734,6 +8789,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"radash@npm:^12.1.1":
+  version: 12.1.1
+  resolution: "radash@npm:12.1.1"
+  checksum: 10c0/f8cbe85c0a8a444f1d2892c82875e00333e58a7b8afdbf3d8d04574d0532d895484bae20650c197c87dd91abfbd1e0af1c819cd12e6dc306633acec30222af7e
+  languageName: node
+  linkType: hard
+
 "react-daum-postcode@npm:^4.0.0":
   version: 4.0.0
   resolution: "react-daum-postcode@npm:4.0.0"
@@ -8843,6 +8905,18 @@ __metadata:
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
   checksum: 10c0/f2f1e60010c683479e74c63f96b09fb41603527cd131a9959e2aee1e5a8b0caf270b365e5ca77d4a6b18aae659b60a86150bb3979073528877029b35aecd2072
+  languageName: node
+  linkType: hard
+
+"react-query-kit@npm:^3.3.4":
+  version: 3.3.4
+  resolution: "react-query-kit@npm:3.3.4"
+  peerDependencies:
+    "@tanstack/react-query": ^4 || ^5
+  peerDependenciesMeta:
+    "@tanstack/react-query":
+      optional: true
+  checksum: 10c0/e08fbd08e230c19216c321150a833e0956f7ebae86ee3d4854a8b70ff3d8b85f475aa5b4ca9449a061ee1acd2b2ecff1879c14d97d27d45e2a7608c4df547ebf
   languageName: node
   linkType: hard
 

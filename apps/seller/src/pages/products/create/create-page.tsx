@@ -11,6 +11,8 @@ import {
   ProductInfoArea,
   ProductOptionsArea,
   ThumbnailUploadArea,
+  useCreateFormPersistence,
+  useCreateFunnelEntry,
   useCreateProductForm,
 } from '@/features/products/create'
 import {
@@ -19,75 +21,44 @@ import {
   useCreateDraftStore,
 } from '@/features/products/create/create-draft'
 import { CreateFooter } from '@/features/products/create/create-footer'
-import { CREATE_FORM_STEP_IDS } from '@/features/products/create/create-header/create-header.constant'
-import { useCreateHeaderSteps } from '@/features/products/create/create-header/use-create-header-steps.hook'
 import { ProductPreviewModal } from '@/features/products/create/create-preview'
 
 function CreatePage() {
-  const form = useCreateProductForm()
+  const entryMode = useCreateFunnelEntry()
+  const form = useCreateProductForm(entryMode)
+
   return (
     <FormProvider {...form}>
-      <CreatePageInner />
+      <CreatePageInner entryMode={entryMode} />
     </FormProvider>
   )
 }
 
-function CreatePageInner() {
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false) //미리보기
-  const [isDraftModalOpen, setIsDraftModalOpen] = useState(false) //임시저장
+interface CreatePageInnerProps {
+  entryMode: ReturnType<typeof useCreateFunnelEntry>
+}
+
+function CreatePageInner({ entryMode }: CreatePageInnerProps) {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+  const [isDraftModalOpen, setIsDraftModalOpen] = useState(false)
   const { draft } = useCreateDraftStore()
   const isInitialMount = useRef(true)
   const { handleRestoreDraft, clearDraft } = useCreateDraft()
-  const { setCurrentStep, headerHeight } = useCreateHeaderSteps()
 
-  // 임시저장 데이터가 있으면 최초 마운트 시 복원 모달 노출
+  useCreateFormPersistence(entryMode)
+
+  // 퍼널 외부 진입(reset)이고 수동 임시저장 데이터가 있으면 복원 모달을 노출합니다.
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false
+
+      if (entryMode === 'restore') return
+
       if (draft) {
         setIsDraftModalOpen(true)
       }
     }
-  }, [draft])
-
-  // sticky header: 스크롤 위치에 따라 현재 단계 갱신
-  useEffect(() => {
-    const elements = CREATE_FORM_STEP_IDS.map((id) =>
-      document.getElementById(id),
-    )
-    const topMargin = headerHeight > 0 ? headerHeight : 100
-
-    // main 요소 찾기
-    const scrollContainer = document.querySelector('main')
-    if (!scrollContainer) return
-
-    const handleScroll = () => {
-      const containerTop = scrollContainer.getBoundingClientRect().top
-
-      const offsets = elements.map((el) => {
-        if (!el) return Infinity
-        // main의 top 위치를 빼서 보정
-        return el.getBoundingClientRect().top - containerTop - topMargin - 20
-      })
-
-      let activeIndex = 0
-      for (let i = 0; i < offsets.length; i++) {
-        if (offsets[i] <= 0) {
-          activeIndex = i
-        }
-      }
-
-      setCurrentStep(activeIndex + 1)
-    }
-
-    scrollContainer.addEventListener('scroll', handleScroll, { passive: true })
-    // 초기/복원 스크롤 위치에서도 active step을 한 번 동기화
-    const rafId = requestAnimationFrame(handleScroll)
-    return () => {
-      cancelAnimationFrame(rafId)
-      scrollContainer.removeEventListener('scroll', handleScroll)
-    }
-  }, [headerHeight, setCurrentStep])
+  }, [draft, entryMode])
 
   return (
     <>

@@ -1,33 +1,43 @@
 import { useEffect } from 'react'
 
 import { Label } from '@dessert/ui'
-import { useFieldArray, useFormContext } from 'react-hook-form'
-//import { CreateFormType } from '@/entity/products/create/create-form'
-//추후 CreateProductForm -> CreateFormType 변경 예정입니다.
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 
-import { ProductOptionForm } from './create-form-options-form.ui'
-import { DEFAULT_PRODUCT_OPTION } from '../create-form'
-import { createOptionsValidator } from './create-options-validator.utils'
 import { CreateProductForm } from '../create-form/product-create.types'
+import { DEFAULT_PRODUCT_OPTION } from '../create-form/use-create-product-form.hook'
 import { useCreateHeaderSteps } from '../create-header/use-create-header-steps.hook'
+import { ProductOptionForm } from './create-form-options-form.ui'
+import { areAllOptionsValid } from './create-options-validator.utils'
 
 const SUFFIX = ' (복사본)'
 const MAX_LENGTH = 50
 
 export const ProductOptionsArea = () => {
   const form = useFormContext<CreateProductForm>()
-  const options = form.watch('options')
+  const options = useWatch({ control: form.control, name: 'options' })
   const { fields, remove, insert } = useFieldArray({
     control: form.control,
     name: 'options',
   })
-  const allOptionsValid = options.every((opt) => createOptionsValidator(opt))
-
+  const allOptionsValid = areAllOptionsValid(options)
   const { setProductFields } = useCreateHeaderSteps()
 
+  const [price, discountAmount, discountType] = useWatch({
+    control: form.control,
+    name: ['price', 'discountAmount', 'discountType'],
+  })
+
+  const finalProductPrice =
+    price !== null && discountAmount !== null
+      ? discountType === 'won'
+        ? Math.max(price - discountAmount, 0)
+        : Math.max(Math.round(price * (1 - discountAmount / 100)), 0)
+      : null
+
+  // StageTab 완료 여부는 옵션 배열 전체를 기준으로만 갱신합니다.
   useEffect(() => {
     setProductFields({ productOptions: allOptionsValid })
-  }, [allOptionsValid])
+  }, [allOptionsValid, setProductFields])
 
   return (
     <>
@@ -55,6 +65,7 @@ export const ProductOptionsArea = () => {
             })
           }}
           onAdd={() => insert(index + 1, DEFAULT_PRODUCT_OPTION)}
+          finalProductPrice={finalProductPrice}
         />
       ))}
     </>

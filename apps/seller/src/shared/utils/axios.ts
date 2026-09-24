@@ -1,6 +1,8 @@
 import axios from 'axios'
 
+import { useAuthStore } from '@/entity/auth/auth-store'
 import {
+  deleteCookie,
   getCookie,
   getExpFromToken,
   setCookie,
@@ -16,9 +18,22 @@ export const client = axios.create({
   withCredentials: true,
 })
 
-// 모든 요청에 Bearer Token 추가
+const clearSessionAndRedirectToAuth = () => {
+  deleteCookie('accessToken')
+  useAuthStore.getState().logout()
+  if (window.location.pathname !== '/auth') {
+    window.location.href = '/auth'
+  }
+}
+
+// FormData는 Content-Type을 수동 지정하지 않음.
+// axios 기본 application/json을 제거해야 boundary 포함 multipart가 설정됩니다.
 client.interceptors.request.use(
   (config) => {
+    if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+      config.headers.delete('Content-Type')
+    }
+
     const token = getCookie('accessToken')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
@@ -44,8 +59,12 @@ client.interceptors.response.use(
     }
 
     if (isRefreshing) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         pendingRequests.push((token: string) => {
+          if (!token) {
+            reject(error)
+            return
+          }
           originalRequest.headers.Authorization = `Bearer ${token}`
           resolve(client(originalRequest))
         })
@@ -78,8 +97,14 @@ client.interceptors.response.use(
         pendingRequests = []
         return client(originalRequest)
       }
+
+      pendingRequests.forEach((cb) => cb(''))
+      pendingRequests = []
+      clearSessionAndRedirectToAuth()
     } catch {
-      window.location.href = '/auth'
+      pendingRequests.forEach((cb) => cb(''))
+      pendingRequests = []
+      clearSessionAndRedirectToAuth()
     } finally {
       isRefreshing = false
     }
