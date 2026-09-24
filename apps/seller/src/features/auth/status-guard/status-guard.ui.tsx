@@ -68,7 +68,17 @@ export function RegisterAccessRoute() {
     return <Navigate to={ROUTES.PRODUCTS.ALL} replace />
   }
 
-  // 승인 대기/거절은 완료 화면만 허용
+  if (sellerStatus === 'NEW') {
+    const isCompletePage = location.pathname === ROUTES.REGISTER.COMPLETE
+    const isAllowedRegisterPath =
+      location.pathname === ROUTES.REGISTER.VERIFICATION ||
+      location.pathname === ROUTES.REGISTER.STORE_INFO
+
+    if (isCompletePage || !isAllowedRegisterPath) {
+      return <Navigate to={ROUTES.REGISTER.VERIFICATION} replace />
+    }
+  }
+
   if (
     (sellerStatus === 'PENDING' || sellerStatus === 'REJECTED') &&
     location.pathname !== ROUTES.REGISTER.COMPLETE

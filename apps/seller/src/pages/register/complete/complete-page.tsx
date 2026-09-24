@@ -3,10 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
 import { useAuthStore } from '@/entity/auth'
-import {
-  StoreApplicationStatus,
-  registerQueries,
-} from '@/entity/register'
+import { StoreApplicationStatus, registerQueries } from '@/entity/register'
 import { ROUTES } from '@/shared/constant/routes'
 import { AuthFlowCard, AuthFlowImage } from '@/shared/ui/auth-flow-card'
 import { deleteCookie } from '@/shared/utils/cookieUtils'
@@ -22,6 +19,7 @@ const STATUS_LABEL: Record<StoreApplicationStatus, string> = {
 const CompletePage = () => {
   const navigate = useNavigate()
   const sellerStatus = useAuthStore((s) => s.sellerStatus)
+  const setSellerStatus = useAuthStore((s) => s.setSellerStatus)
   const logout = useAuthStore((s) => s.logout)
   const { data: application, isLoading } = useQuery({
     ...registerQueries.application(),
@@ -40,6 +38,7 @@ const CompletePage = () => {
 
   const handleCta = () => {
     if (status === 'APPROVED') {
+      setSellerStatus('APPROVED')
       navigate(ROUTES.PRODUCTS.ALL, { replace: true })
       return
     }

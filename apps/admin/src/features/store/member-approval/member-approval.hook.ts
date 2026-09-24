@@ -2,10 +2,7 @@ import { useRef } from 'react'
 
 import { toast } from '@dessert/ui'
 
-import {
-  AdminSellerApplicationApproveListResult,
-  StoreApplicationApprove,
-} from '@/entity/store/member-approval'
+import { StoreApplicationApprove } from '@/entity/store/member-approval'
 
 import {
   useApproveMemberApplicationsMutation,
@@ -13,11 +10,11 @@ import {
 } from './member-approval.mutation'
 
 interface UseMemberApprovalArgs {
-  onApprovalSuccess?: (result: AdminSellerApplicationApproveListResult) => void
+  onApproved?: (failedIds: string[]) => void
 }
 
 export const useMemberApproval = ({
-  onApprovalSuccess,
+  onApproved,
 }: UseMemberApprovalArgs = {}) => {
   const { mutateAsync: approveApplications, isPending: isApproving } =
     useApproveMemberApplicationsMutation()
@@ -38,8 +35,11 @@ export const useMemberApproval = ({
 
     try {
       const result = await approveApplications(payload)
+      const failedIds = result.failDetails.map((detail) =>
+        String(detail.storeApplicationId),
+      )
 
-      onApprovalSuccess?.(result)
+      onApproved?.(failedIds)
     } catch {
       // 에러 토스트는 mutation onError에서 처리합니다.
     } finally {
