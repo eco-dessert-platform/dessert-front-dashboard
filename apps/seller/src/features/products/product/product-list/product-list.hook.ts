@@ -51,10 +51,7 @@ export const useProductList = ({ data }: { data: ProductType[] }) => {
     ])
   }
 
-  const handleStatusChange = (
-    id: string,
-    status: ProductType['status'],
-  ) => {
+  const handleStatusChange = (id: string, status: ProductType['status']) => {
     setTableData((prev) =>
       prev.map((item) => (item.id === id ? { ...item, status } : item)),
     )

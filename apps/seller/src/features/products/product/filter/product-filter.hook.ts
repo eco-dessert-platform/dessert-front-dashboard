@@ -38,9 +38,7 @@ export function useProductBoardFilter(
   }
 
   const reset = (saleStatus?: ProductBoardStatus) => {
-    const next = createInitialProductBoardFilters(
-      saleStatus ?? initialStatus,
-    )
+    const next = createInitialProductBoardFilters(saleStatus ?? initialStatus)
     setDraftFilters(next)
     setAppliedFilters(next)
   }

@@ -1,10 +1,6 @@
 import { client } from '@/shared/utils/axios'
 
-import {
-  ApiResponse,
-  CreateProductBoardResult,
-  StoreInfo,
-} from './create.type'
+import { ApiResponse, CreateProductBoardResult, StoreInfo } from './create.type'
 
 function unwrap<T>(data: ApiResponse<T>, fallback: string): T {
   if (!data.success || data.result == null) {

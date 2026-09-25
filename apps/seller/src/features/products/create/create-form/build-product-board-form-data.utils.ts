@@ -208,27 +208,16 @@ export function buildUpdateProductBoardFormData({
   appendFormValue(formData, 'deliveryCondition', data.deliveryTerms)
   appendFormValue(formData, 'deliveryCompany', data.deliveryCompany)
   appendFormValue(formData, 'deliveryFee', data.deliveryFee ?? 0)
-  appendFormValue(
-    formData,
-    'freeShippingConditions',
-    data.deliveryMinFee ?? 0,
-  )
+  appendFormValue(formData, 'freeShippingConditions', data.deliveryMinFee ?? 0)
   appendFormValue(formData, 'boardDetailRequest.content', productDetail)
-  appendFormValue(
-    formData,
-    'productInfoNoticeRequest',
-    data.productInfoNotice,
-  )
+  appendFormValue(formData, 'productInfoNoticeRequest', data.productInfoNotice)
 
   data.options.forEach((option, index) => {
     const productId = productIdsByOptionIndex[index]
     appendFormValue(
       formData,
       `products[${index}]`,
-      mapOptionToRequest(
-        option,
-        productId === undefined ? null : productId,
-      ),
+      mapOptionToRequest(option, productId === undefined ? null : productId),
     )
   })
 

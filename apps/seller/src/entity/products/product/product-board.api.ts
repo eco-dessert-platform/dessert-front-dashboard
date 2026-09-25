@@ -28,8 +28,7 @@ function toCleanParams(
     : DEFAULT_PRODUCT_BOARD_SORT
 
   const params: Record<string, string | number | undefined> = {
-    saleStatus:
-      filters.saleStatus === '전체' ? undefined : filters.saleStatus,
+    saleStatus: filters.saleStatus === '전체' ? undefined : filters.saleStatus,
     mainCategory: filters.mainCategory,
     category: filters.category,
     keyword: filters.keyword,
