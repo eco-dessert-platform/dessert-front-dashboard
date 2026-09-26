@@ -18,6 +18,8 @@
     "test": "turbo run test",
     "test:seller": "turbo run test --filter=@dessert/seller",
     "test:admin": "turbo run test --filter=@dessert/admin",
+    "test:e2e:seller": "yarn workspace @dessert/seller test:e2e",
+    "test:e2e:admin": "yarn workspace @dessert/admin test:e2e",
     "format": "prettier --write .",
     "prepare": "husky",
     "storybook:ui": "turbo run storybook --filter=@dessert/ui",

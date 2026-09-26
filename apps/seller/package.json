@@ -11,6 +11,8 @@
     "format": "prettier --write .",
     "test": "vitest",
     "test:run": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -65,6 +67,7 @@
   },
   "devDependencies": {
     "@dessert/config": "*",
+    "@playwright/test": "1.55.1",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/react": "^8.6.12",
     "@storybook/react-vite": "^8.6.12",

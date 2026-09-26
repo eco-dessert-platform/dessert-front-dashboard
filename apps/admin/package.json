@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@dessert/ui": "*",
@@ -51,6 +53,7 @@
   },
   "devDependencies": {
     "@dessert/config": "*",
+    "@playwright/test": "1.55.1",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/react": "^8.6.12",
     "@storybook/react-vite": "^8.6.12",

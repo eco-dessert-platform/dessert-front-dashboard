@@ -14,6 +14,10 @@ export default tseslint.config(
       '**/storybook-static',
       // 테스트 커버리지 리포트
       '**/coverage',
+      // Playwright 리포트·실행 결과
+      '**/playwright-report',
+      '**/test-results',
+      '**/blob-report',
       // Turbo 캐시
       '**/.turbo',
       // Yarn 내부 파일
@@ -161,6 +165,14 @@ export default tseslint.config(
           project: './packages/icons/tsconfig.json',
         },
       },
+    },
+  },
+
+  // ── Playwright E2E: fixture의 use()는 React 훅이 아니다 ──
+  {
+    files: ['apps/*/e2e/**/*.ts'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
     },
   },
 )
