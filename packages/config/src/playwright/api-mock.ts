@@ -13,13 +13,18 @@ interface MockResponse {
   json: unknown
 }
 
-// 셀러 axios는 withCredentials를 쓰므로 와일드카드 대신 요청 origin을 그대로 허용해야 한다
-const corsHeaders = (route: Route) => ({
-  'access-control-allow-origin': route.request().headers()['origin'] ?? '*',
-  'access-control-allow-credentials': 'true',
-  'access-control-allow-methods': 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
-  'access-control-allow-headers': '*',
-})
+// 셀러 axios는 withCredentials를 쓴다. 자격 증명이 있는 요청에는 와일드카드(*)가 적용되지 않고
+// Authorization은 원래 와일드카드로 허용되지 않으므로, 요청 origin과 요청 헤더를 그대로 돌려준다
+const corsHeaders = (route: Route) => {
+  const headers = route.request().headers()
+  return {
+    'access-control-allow-origin': headers['origin'] ?? '*',
+    'access-control-allow-credentials': 'true',
+    'access-control-allow-methods': 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
+    'access-control-allow-headers':
+      headers['access-control-request-headers'] ?? 'authorization,content-type',
+  }
+}
 
 /** 백엔드 공통 성공 응답 형태로 감싼다. */
 export const apiSuccess = <T>(result: T) => ({
@@ -32,7 +37,9 @@ export const apiSuccess = <T>(result: T) => ({
 
 /**
  * 모킹하지 않은 API 요청을 501로 막는다. 테스트마다 가장 먼저 등록하고,
- * 이후 mockApi로 등록한 라우트가 우선 적용된다. CORS preflight도 여기서 응답한다.
+ * 이후 mockApi로 등록한 라우트가 우선 적용된다.
+ * Chromium은 가로챈 요청의 CORS preflight를 Playwright가 직접 처리하지만,
+ * 다른 브라우저 엔진에 대비해 preflight가 넘어오면 여기서 응답한다.
  */
 export async function blockUnmockedApi(
   page: Page,

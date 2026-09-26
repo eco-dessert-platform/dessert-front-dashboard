@@ -12,7 +12,8 @@ interface PlaywrightConfigOptions {
 
 export function createPlaywrightConfig({ port }: PlaywrightConfigOptions) {
   const baseURL = `http://localhost:${port}`
-  const isCI = Boolean(process.env.CI)
+  // CI=false처럼 문자열로 끄는 경우도 있어 값까지 비교한다
+  const isCI = process.env.CI === 'true'
 
   return defineConfig({
     testDir: './e2e',
