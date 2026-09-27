@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url'
+
 import { defineConfig, devices } from '@playwright/test'
 
 import { E2E_API_URL } from './api-mock.js'
@@ -8,15 +10,24 @@ interface PlaywrightConfigOptions {
    * 실서버를 바라보는 dev 서버를 테스트가 재사용하는 일이 없게 한다.
    */
   port: number
+  /**
+   * 앱이 필요로 하는 추가 환경변수. 로컬 .env가 없는 환경(CI 등)에서도
+   * 같은 값으로 뜨도록 E2E용 값을 고정한다.
+   */
+  env?: Record<string, string>
 }
 
-export function createPlaywrightConfig({ port }: PlaywrightConfigOptions) {
+export function createPlaywrightConfig({
+  port,
+  env = {},
+}: PlaywrightConfigOptions) {
   const baseURL = `http://localhost:${port}`
   // CI=false처럼 문자열로 끄는 경우도 있어 값까지 비교한다
   const isCI = process.env.CI === 'true'
 
   return defineConfig({
     testDir: './e2e',
+    globalSetup: fileURLToPath(new URL('./warmup.js', import.meta.url)),
     fullyParallel: true,
     forbidOnly: isCI,
     retries: isCI ? 2 : 0,
@@ -45,6 +56,7 @@ export function createPlaywrightConfig({ port }: PlaywrightConfigOptions) {
         VITE_PUBLIC_SERVER_URL: E2E_API_URL,
         VITE_API_HOST: E2E_API_URL,
         VITE_API_BASE_URL: E2E_API_URL,
+        ...env,
       },
     },
   })
