@@ -22,6 +22,14 @@
     "./vite/plugins": {
       "import": "./dist/vite/plugins.js",
       "types": "./dist/vite/plugins.d.ts"
+    },
+    "./playwright/create-config": {
+      "import": "./dist/playwright/create-config.js",
+      "types": "./dist/playwright/create-config.d.ts"
+    },
+    "./playwright/api-mock": {
+      "import": "./dist/playwright/api-mock.js",
+      "types": "./dist/playwright/api-mock.d.ts"
     }
   },
   "devDependencies": {
@@ -35,6 +43,7 @@
     "msw": "^2.10.0"
   },
   "peerDependencies": {
+    "@playwright/test": "^1.55.0",
     "@tailwindcss/vite": "^4.0.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "react": "^19.0.0",

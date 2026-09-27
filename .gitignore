@@ -46,3 +46,8 @@ storybook-static
 .claude/
 .gemini/
 .codex/
+
+# Playwright
+playwright-report
+test-results
+blob-report
